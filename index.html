@@ -28,15 +28,34 @@
                             800: '#065f46', 900: '#064e3b', 950: '#022c22',
                         },
                     },
+                    transitionTimingFunction: {
+                        'apple': 'cubic-bezier(0.32, 0.72, 0, 1)',
+                    },
                     animation: {
                         'spin-slow': 'spin 12s linear infinite',
                         'spin-reverse': 'spin-reverse 15s linear infinite',
                         'float': 'float 6s ease-in-out infinite',
+                        'marquee': 'marquee 30s linear infinite',
+                        'gradient-x': 'gradient-x 3s ease infinite',
                     },
                     keyframes: {
                         float: {
                             '0%, 100%': { transform: 'translateY(0)' },
                             '50%': { transform: 'translateY(-10px)' },
+                        },
+                        marquee: {
+                            '0%': { transform: 'translateX(0)' },
+                            '100%': { transform: 'translateX(-50%)' },
+                        },
+                        'gradient-x': {
+                            '0%, 100%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'left center'
+                            },
+                            '50%': {
+                                'background-size': '200% 200%',
+                                'background-position': 'right center'
+                            }
                         }
                     }
                 }
@@ -44,7 +63,7 @@
         }
     </script>
 </head>
-<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-white transition-colors duration-300">
+<body class="bg-slate-50 text-slate-900 dark:bg-slate-900 dark:text-white transition-colors duration-500 ease-apple">
     <div id="root"></div>
 
     <script type="text/babel">
@@ -97,15 +116,15 @@
         // --- DATA ---
         const DATA = {
           leadership: [
-            { id: "mohammed", name: "Mohammed Elfatih", role: "Founder & CEO", image: "assets/elfatih.jpg", bio: "As the visionary founder, Mohammed orchestrates the strategic direction of Qatar's leading youth climate initiative." },
-            { id: "mohammadfiras", name: "Mohammed Firas", role: "Co-Founder & Media", image: "assets/firas.jpg.jpeg", bio: "Mohammed Firas leads the digital narrative, ensuring the message of sustainability resonates with youth." },
-            { id: "mohamedmishal", name: "Mohammed Mishal", role: "Co-Founder & Ideas", image: "assets/mishal.jpg.jpeg", bio: "The creative force behind our curriculum, transforming complex data into engaging learning experiences." },
-            { id: "ahmed", name: "Ahmed", role: "Co-Founder & Innovation", image: "assets/ahmed.jpg.jpeg", bio: "Ahmed spearheads the integration of technology to gamify the learning experience." }
+            { id: "mohammed", name: "Mohammed Elfatih", role: "Founder & CEO", image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop", bio: "As the visionary founder, Mohammed orchestrates the strategic direction of Qatar's leading youth climate initiative." },
+            { id: "mohammadfiras", name: "Mohammed Firas", role: "Co-Founder & Media", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop", bio: "Mohammed Firas leads the digital narrative, ensuring the message of sustainability resonates with youth." },
+            { id: "mohamedmishal", name: "Mohammed Mishal", role: "Co-Founder & Ideas", image: "https://images.unsplash.com/photo-1519345182560-3f2917c472ef?w=400&h=400&fit=crop", bio: "The creative force behind our curriculum, transforming complex data into engaging learning experiences." },
+            { id: "ahmed", name: "Ahmed", role: "Co-Founder & Innovation", image: "https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?w=400&h=400&fit=crop", bio: "Ahmed spearheads the integration of technology to gamify the learning experience." }
           ],
           members: [
             { name: "Mariam", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop" }, 
             { name: "Amna", image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop" },
-            { name: "Fatima", image: "assets/fatima.jpeg" },
+            { name: "Fatima", image: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?w=400&h=400&fit=crop" }, 
             { name: "Henin", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop" }, 
             { name: "Alyafi", image: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?w=400&h=400&fit=crop" },
             { name: "Faisal", image: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?w=400&h=400&fit=crop" },
@@ -275,26 +294,30 @@
 
             return (
                 <div className="py-12 px-4 max-w-4xl mx-auto">
-                    <div className="bg-gradient-to-br from-emerald-900 via-slate-900 to-emerald-950 rounded-3xl p-8 text-white relative overflow-hidden">
+                    <div className="bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl rounded-[2rem] p-8 border border-white/60 dark:border-slate-700/50 shadow-2xl relative overflow-hidden group transition-all duration-500 ease-apple">
+                        {/* Cool glowing orb background */}
+                        <div className="absolute -top-24 -right-24 w-64 h-64 bg-emerald-400/20 rounded-full blur-3xl group-hover:bg-emerald-400/30 transition-colors duration-700 pointer-events-none"></div>
+                        <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-teal-400/20 rounded-full blur-3xl group-hover:bg-teal-400/30 transition-colors duration-700 pointer-events-none"></div>
+                        
                         <div className="relative z-10">
-                            <h2 className="text-2xl font-bold flex items-center gap-2 mb-4">
-                                <Icon path={Icons.Sparkles} className="text-emerald-400" /> Eco-Innovation Lab
+                            <h2 className="text-2xl font-bold flex items-center gap-2 mb-4 text-slate-800 dark:text-white">
+                                <Icon path={Icons.Sparkles} className="text-emerald-500" /> Eco-Innovation Lab
                             </h2>
-                            <p className="mb-6 text-emerald-100/80">Get a random student project idea aligned with QNV 2030.</p>
+                            <p className="mb-6 text-slate-600 dark:text-slate-300">Get a random student project idea aligned with QNV 2030.</p>
                             <div className="flex gap-3 mb-6">
-                                <button onClick={generateIdea} disabled={loading} className="px-6 py-3 bg-emerald-600 rounded-xl font-bold hover:bg-emerald-500 disabled:opacity-50 w-full md:w-auto">
+                                <button onClick={generateIdea} disabled={loading} className="px-6 py-3 bg-slate-900 dark:bg-emerald-600 text-white rounded-full font-bold hover:bg-slate-800 dark:hover:bg-emerald-500 disabled:opacity-50 w-full md:w-auto shadow-lg hover:shadow-xl transition-all duration-300 ease-apple active:scale-95">
                                     {loading ? "Generating..." : "✨ Get New Project Idea"}
                                 </button>
                             </div>
                             
                             {idea && (
-                                <div className="bg-white/10 p-6 rounded-xl border border-white/10 animate-in fade-in slide-in-from-bottom-2">
-                                    <h3 className="text-xl font-bold text-emerald-300 mb-2">{idea.title}</h3>
-                                    <p className="italic text-slate-300 mb-4">{idea.objective}</p>
+                                <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-md p-6 rounded-2xl border border-white/50 dark:border-slate-600/50 animate-in fade-in slide-in-from-bottom-2 duration-500 ease-apple shadow-sm">
+                                    <h3 className="text-xl font-black text-emerald-700 dark:text-emerald-400 mb-2">{idea.title}</h3>
+                                    <p className="italic text-slate-700 dark:text-slate-300 mb-4">{idea.objective}</p>
                                     <ul className="space-y-2 mb-4">
-                                        {idea.steps?.map((s, i) => <li key={i} className="text-sm flex gap-2"><span className="text-emerald-400">{i+1}.</span> {s}</li>)}
+                                        {idea.steps?.map((s, i) => <li key={i} className="text-sm flex gap-3 text-slate-800 dark:text-slate-200"><span className="text-emerald-500 font-black">{i+1}.</span> {s}</li>)}
                                     </ul>
-                                    <div className="text-xs bg-emerald-900/50 p-3 rounded border border-emerald-500/30">
+                                    <div className="text-xs bg-emerald-100/50 dark:bg-emerald-900/30 p-3 rounded-xl border border-emerald-200 dark:border-emerald-800/50 text-emerald-800 dark:text-emerald-200 font-medium">
                                         <strong>QNV 2030:</strong> {idea.visionAlignment}
                                     </div>
                                 </div>
@@ -323,29 +346,31 @@
 
              return (
                 <div className="max-w-4xl mx-auto px-4 py-8">
-                    <div className="bg-white dark:bg-slate-800 rounded-3xl p-8 border border-slate-200 dark:border-slate-700 shadow-lg">
-                        <div className="flex justify-between items-center mb-6">
-                            <h2 className="text-2xl font-bold flex items-center gap-2">
-                                <Icon path={Icons.Brain} className="text-emerald-500" /> Sustainability Quiz
-                            </h2>
-                            <button onClick={getNextQuestion} className="text-sm text-slate-500 flex gap-1 items-center hover:text-emerald-500">
-                                <Icon path={Icons.Refresh} size={16} /> Skip
-                            </button>
-                        </div>
+                    <div className="bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl rounded-[2rem] p-8 border border-white/60 dark:border-slate-700/50 shadow-2xl relative overflow-hidden group transition-all duration-500 ease-apple">
+                        <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-blue-400/5 dark:bg-blue-400/10 rounded-full blur-3xl pointer-events-none transition-all duration-700 group-hover:scale-110"></div>
+                        <div className="relative z-10">
+                            <div className="flex justify-between items-center mb-6">
+                                <h2 className="text-2xl font-bold flex items-center gap-2">
+                                    <Icon path={Icons.Brain} className="text-emerald-500" /> Sustainability Quiz
+                                </h2>
+                                <button onClick={getNextQuestion} className="text-sm text-slate-500 flex gap-1 items-center hover:text-emerald-500 transition-colors active:scale-95 duration-300 ease-apple">
+                                    <Icon path={Icons.Refresh} size={16} /> Skip
+                                </button>
+                            </div>
                         
                         {q && (
                             <div>
                                 <h3 className="text-xl font-bold mb-6">{q.question}</h3>
-                                <div className="grid gap-3 mb-4">
+                                <div className="grid gap-3 mb-4 relative z-10">
                                     {q.options.map((opt, i) => (
                                         <button 
                                             key={i} 
                                             disabled={showRes}
                                             onClick={() => setShowRes(true)}
-                                            className={`p-4 rounded-xl border-2 text-left transition-colors ${
+                                            className={`p-4 rounded-xl border-2 text-left transition-all duration-300 ease-apple active:scale-[0.98] ${
                                                 showRes 
-                                                ? (i === q.correctIndex ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/20' : 'border-slate-200 opacity-50')
-                                                : 'border-slate-200 hover:border-emerald-500'
+                                                ? (i === q.correctIndex ? 'border-emerald-500 bg-emerald-50 dark:bg-emerald-900/30 text-emerald-900 dark:text-emerald-100 shadow-[0_0_15px_rgba(16,185,129,0.3)]' : 'border-slate-200 dark:border-slate-700 opacity-40')
+                                                : 'border-slate-200 dark:border-slate-700 hover:border-emerald-500 hover:shadow-lg bg-white/50 dark:bg-slate-800/50 backdrop-blur-sm hover:-translate-y-1'
                                             }`}
                                         >
                                             {opt}
@@ -353,20 +378,34 @@
                                     ))}
                                 </div>
                                 {showRes && (
-                                    <div className="bg-emerald-50 dark:bg-emerald-900/20 p-4 rounded-xl text-sm animate-in fade-in">
+                                    <div className="bg-emerald-50/80 dark:bg-emerald-900/40 backdrop-blur-md p-5 rounded-2xl border border-emerald-200 dark:border-emerald-800 text-sm animate-in fade-in slide-in-from-bottom-2 duration-500 ease-apple mt-4">
                                         <strong>Explanation:</strong> {q.explanation}
                                         <br/>
-                                        <button onClick={getNextQuestion} className="mt-2 text-emerald-600 font-bold flex items-center gap-1">
+                                        <button onClick={getNextQuestion} className="mt-4 text-white bg-emerald-600 px-5 py-2.5 rounded-full font-bold flex items-center gap-2 hover:bg-emerald-500 transition-all duration-300 ease-apple active:scale-95 shadow-md">
                                             Next Question <Icon path={Icons.ArrowRight} size={14} />
                                         </button>
                                     </div>
                                 )}
                             </div>
                         )}
+                        </div>
                     </div>
                 </div>
              );
         };
+
+        const Marquee = () => (
+            <div className="relative flex overflow-x-hidden bg-slate-900 dark:bg-emerald-950 text-white py-4 border-y border-slate-800 dark:border-emerald-500/30">
+                <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-slate-900 dark:from-emerald-950 to-transparent z-10"></div>
+                <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-slate-900 dark:from-emerald-950 to-transparent z-10"></div>
+                
+                <div className="animate-marquee whitespace-nowrap flex items-center w-max">
+                    {Array(15).fill("🌿 EMPOWERING YOUTH • 🌍 QATAR NATIONAL VISION 2030 • ♻️ SUSTAINABILITY • 💡 ECO-INNOVATION • ").map((text, i) => (
+                        <span key={i} className="mx-4 text-sm md:text-base font-black tracking-[0.2em] uppercase text-emerald-400/90">{text}</span>
+                    ))}
+                </div>
+            </div>
+        );
 
         const App = () => {
             const [lang, setLang] = useState('en');
@@ -383,370 +422,370 @@
                 else document.documentElement.classList.remove('dark');
             };
 
+            const navItems = ['home', 'about', 'accomplishments', 'contact'];
+
             return (
-                <div className="min-h-screen">
+                <div className="min-h-screen font-sans">
                     {/* NAV */}
-                    <nav className="fixed w-full z-50 bg-white/80 dark:bg-slate-900/80 backdrop-blur-md border-b border-slate-200 dark:border-slate-800">
-                        <div className="max-w-7xl mx-auto px-4 h-16 flex items-center justify-between">
-                            <div className="flex items-center gap-2 cursor-pointer" onClick={() => setPage('home')}>
-                                <div className="bg-emerald-600 text-white p-1 rounded-full"><Icon path={Icons.Globe} size={20} /></div>
-                                <span className="font-bold text-xl">EcoAwareness.qa</span>
+                    <nav className="fixed w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-white/20 dark:border-slate-800 shadow-sm transition-colors duration-500 ease-apple">
+                        <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
+                            <div className="flex items-center gap-3 cursor-pointer group active:scale-95 transition-transform duration-300 ease-apple" onClick={() => setPage('home')}>
+                                <div className="bg-gradient-to-br from-emerald-400 to-emerald-600 text-white p-2 rounded-xl shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 ease-apple"><Icon path={Icons.Globe} size={24} /></div>
+                                <span className="font-black text-xl md:text-2xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400">EcoAwareness.qa</span>
                             </div>
-                            <div className="hidden md:flex items-center gap-6">
-                                <button onClick={() => setPage('home')} className={`text-sm font-medium ${page==='home'?'text-emerald-600':'text-slate-600 dark:text-slate-300'}`}>{t.nav.home}</button>
-                                <button onClick={() => setPage('about')} className={`text-sm font-medium ${page==='about'?'text-emerald-600':'text-slate-600 dark:text-slate-300'}`}>{t.nav.about}</button>
-                                <button onClick={() => setPage('accomplishments')} className={`text-sm font-medium ${page==='accomplishments'?'text-emerald-600':'text-slate-600 dark:text-slate-300'}`}>{t.nav.accomplishments}</button>
-                                <button onClick={() => setPage('contact')} className={`text-sm font-medium ${page==='contact'?'text-emerald-600':'text-slate-600 dark:text-slate-300'}`}>{t.nav.contact}</button>
-                                <div className="border-l pl-4 border-slate-300 flex gap-2">
-                                    <button onClick={() => setLang(l => l==='en'?'ar':'en')} className="font-bold text-xs p-2 rounded bg-slate-100 dark:bg-slate-800">{lang.toUpperCase()}</button>
-                                    <button onClick={toggleTheme} className="p-2 rounded hover:bg-slate-100 dark:hover:bg-slate-800">
-                                        <Icon path={theme==='light' ? Icons.Moon : Icons.Sun} size={18} />
+                            <div className="hidden md:flex items-center gap-2 bg-slate-100/50 dark:bg-slate-800/50 p-1.5 rounded-full border border-slate-200/50 dark:border-slate-700/50 backdrop-blur-md shadow-inner">
+                                {navItems.map((item) => (
+                                    <button 
+                                        key={item}
+                                        onClick={() => setPage(item)} 
+                                        className={`relative px-5 py-2 rounded-full text-sm font-bold transition-all duration-500 ease-apple active:scale-95
+                                            ${page === item ? 'text-emerald-700 dark:text-emerald-300 shadow-sm bg-white dark:bg-slate-700' : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-700/50'}
+                                        `}
+                                    >
+                                        {t.nav[item]}
                                     </button>
-                                </div>
+                                ))}
+                            </div>
+                            <div className="hidden md:flex items-center gap-2 border-l pl-4 border-slate-200 dark:border-slate-700">
+                                <button onClick={() => setLang(l => l==='en'?'ar':'en')} className="font-bold text-xs px-3 py-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 active:scale-95 transition-all duration-300 ease-apple shadow-sm">{lang.toUpperCase()}</button>
+                                <button onClick={toggleTheme} className="p-2 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 active:scale-95 transition-all duration-300 ease-apple shadow-sm">
+                                    <Icon path={theme==='light' ? Icons.Moon : Icons.Sun} size={18} />
+                                </button>
                             </div>
                         </div>
                     </nav>
 
-                    <main className="pt-16">
-                        {page === 'home' && (
-                            <div className="animate-in fade-in">
-                                {/* NEW CENTERED HERO */}
-                                <section className="relative min-h-[85vh] flex flex-col items-center justify-center px-4 text-center overflow-hidden">
-                                    {/* Abstract background blobs */}
-                                    <div className="absolute inset-0 -z-10 pointer-events-none">
-                                         <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-emerald-500/5 rounded-full blur-3xl animate-float"></div>
-                                    </div>
-
-                                    <div className="max-w-5xl mx-auto flex flex-col items-center">
-                                        <span className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 text-xs font-bold tracking-widest text-emerald-700 bg-emerald-100 dark:bg-emerald-900/40 dark:text-emerald-300 rounded-full uppercase">
-                                            <Icon path={Icons.Globe} size={14} /> Qatar Based • Youth Led
-                                        </span>
-                                        
-                                        <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight tracking-tight text-slate-900 dark:text-white">
-                                            Empowering the Youth for a <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 to-teal-500">Sustainable Future</span>
-                                        </h1>
-
-                                        <div className="flex items-center justify-center gap-4 mb-12 w-full">
-                                            <div className="h-[1px] w-8 md:w-16 bg-slate-300 dark:bg-slate-700"></div>
-                                            <p className="text-lg md:text-2xl text-slate-500 dark:text-slate-400 font-medium">
-                                                {t.hero.subhead}
-                                            </p>
-                                            <div className="h-[1px] w-8 md:w-16 bg-slate-300 dark:bg-slate-700"></div>
+                    <main className="pt-20">
+                        {/* We use a key on the wrapper to trigger the Apple-style animation on every page change */}
+                        <div key={page} className="animate-in fade-in zoom-in-[0.98] slide-in-from-bottom-2 duration-700 ease-apple">
+                            
+                            {page === 'home' && (
+                                <div>
+                                    {/* NEW CENTERED HERO */}
+                                    <section className="relative min-h-[80vh] flex flex-col items-center justify-center px-4 text-center overflow-hidden">
+                                        {/* Abstract background blobs */}
+                                        <div className="absolute inset-0 -z-10 pointer-events-none">
+                                            <div className="absolute top-1/4 left-1/2 -translate-x-1/2 w-[800px] h-[800px] bg-emerald-500/10 rounded-full blur-3xl animate-float"></div>
+                                            <div className="absolute bottom-0 right-0 w-[500px] h-[500px] bg-blue-500/5 rounded-full blur-3xl animate-float" style={{animationDelay: '2s'}}></div>
                                         </div>
 
-                                        <button 
-                                            onClick={() => setPage('accomplishments')} 
-                                            className="group px-10 py-5 bg-emerald-600 text-white rounded-full font-bold text-lg md:text-xl hover:bg-emerald-700 hover:scale-105 transition-all shadow-xl shadow-emerald-500/20 hover:shadow-emerald-500/40 flex items-center gap-3"
-                                        >
-                                            {t.nav.accomplishments} 
-                                            <Icon path={Icons.ArrowRight} size={24} className="group-hover:translate-x-1 transition-transform" />
-                                        </button>
-                                    </div>
-                                </section>
-                                
-                                <ProjectIdeaGenerator />
-                                <QuizSection />
+                                        <div className="max-w-5xl mx-auto flex flex-col items-center relative z-10">
+                                            <span className="inline-flex items-center gap-2 px-4 py-1.5 mb-8 text-xs font-bold tracking-widest text-emerald-700 bg-emerald-100/80 dark:bg-emerald-900/40 dark:text-emerald-300 rounded-full uppercase backdrop-blur-sm border border-emerald-200 dark:border-emerald-800/50 shadow-sm hover:scale-105 transition-transform duration-500 ease-apple cursor-default">
+                                                <Icon path={Icons.Globe} size={14} /> Qatar Based • Youth Led
+                                            </span>
+                                            
+                                            <h1 className="text-5xl md:text-7xl lg:text-8xl font-black mb-6 leading-tight tracking-tight text-slate-900 dark:text-white">
+                                                Empowering the Youth for a <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-600 via-teal-400 to-emerald-600 bg-[length:200%_auto] animate-gradient-x">Sustainable Future</span>
+                                            </h1>
 
-                                {/* TEAM */}
-                                <section className="py-20 bg-slate-50 dark:bg-slate-800/50">
-                                    <div className="max-w-7xl mx-auto px-4">
-                                        <h2 className="text-3xl font-bold text-center mb-12">{t.team.title}</h2>
-                                        <div className="grid md:grid-cols-4 gap-6">
-                                            {DATA.leadership.map(m => (
-                                                <div key={m.id} className="bg-white dark:bg-slate-900 rounded-xl overflow-hidden border border-slate-200 dark:border-slate-800 hover:border-emerald-500 transition-colors">
-                                                    <img src={m.image} alt={m.name} className="w-full aspect-square object-cover" />
-                                                    <div className="p-4">
-                                                        <h3 className="font-bold">{m.name}</h3>
-                                                        <p className="text-emerald-600 text-sm mb-2">{m.role}</p>
-                                                        <button onClick={() => setSelectedBio(m)} className="text-xs font-bold flex items-center gap-1 text-slate-500 hover:text-emerald-600">
-                                                            {t.team.view_bio} <Icon path={Icons.ArrowRight} size={12} />
-                                                        </button>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        )}
-
-                        {page === 'about' && (
-                            <div className="animate-in fade-in">
-                                {/* Header / Intro */}
-                                <div className="max-w-4xl mx-auto px-4 py-16 text-center">
-                                  <h1 className="text-4xl md:text-5xl font-black mb-6 text-emerald-600">{t.about.title}</h1>
-                                  <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed font-light">
-                                    {t.about.intro}
-                                  </p>
-                                </div>
-
-                                {/* Story Section */}
-                                <section className="bg-white dark:bg-slate-800 py-16 border-y border-slate-100 dark:border-slate-700">
-                                    <div className="max-w-4xl mx-auto px-4">
-                                        <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
-                                            <div className="w-10 h-1 bg-emerald-500"></div> {t.about.story_title}
-                                        </h2>
-                                        <div className="prose dark:prose-invert max-w-none">
-                                            <p className="text-lg mb-6 leading-loose">{t.about.story_text1}</p>
-                                            <p className="text-lg leading-loose">{t.about.story_text2}</p>
-                                        </div>
-                                    </div>
-                                </section>
-
-                                {/* First Steps / Video */}
-                                <section className="py-20 max-w-4xl mx-auto px-4">
-                                    <h2 className="text-3xl font-bold mb-8">{t.about.steps_title}</h2>
-                                    <p className="text-lg mb-12 text-slate-600 dark:text-slate-300">{t.about.steps_text}</p>
-                                    
-                                    {/* Video Placeholder */}
-                                    <video
-<div className="aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl shadow-emerald-900/20">
-                                        <video 
-                                            className="w-full h-full object-cover" 
-                                            controls 
-                                            // Optional: Add a thumbnail image by adding: poster="thumbnail.jpg"
-                                        >
-                                            {/* IMPORTANT: Rename your video file to 'eco_video.mp4' and put it in the same folder */}
-                                            <source src="./eco_video.mp4" type="video/mp4" />
-                                            Your browser does not support the video tag.
-                                        </video>
-                                    </div>
-                                </section>
-
-
-                                        {/* Abstract video thumbnail bg */}
-                                        <div className="absolute inset-0 bg-gradient-to-br from-emerald-900 to-slate-900">
-                                            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?w=1200&fit=crop')] opacity-40 bg-cover bg-center"></div>
-                                        </div>
-                                        <div className="absolute inset-0 bg-black/30 group-hover:bg-black/10 transition-colors"></div>
-                                        
-                                        <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center shadow-lg group-hover:scale-110 transition-transform border border-white/30 z-10">
-                                            <div className="w-0 h-0 border-t-[12px] border-t-transparent border-l-[20px] border-l-white border-b-[12px] border-b-transparent ml-1"></div>
-                                        </div>
-                                        <span className="absolute bottom-6 left-6 text-white font-bold text-lg tracking-wide bg-black/50 px-4 py-2 rounded-lg backdrop-blur-sm">Education City Campaign</span>
-                                    </div>
-                                </section>
-
-                                {/* More Work */}
-                                <section className="py-20 bg-emerald-900 text-white relative overflow-hidden">
-                                     <div className="absolute inset-0 opacity-10 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-emerald-400 to-transparent"></div>
-                                     <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
-                                        <h2 className="text-3xl font-bold mb-6">{t.about.more_work_title}</h2>
-                                         <p className="text-xl mb-10 text-emerald-100/90 font-light">{t.about.more_work_text}</p>
-                                         <a href="https://www.instagram.com/ecoawareness.qa/" target="_blank" className="inline-flex items-center gap-3 px-8 py-4 bg-white text-emerald-900 rounded-full font-bold hover:bg-emerald-50 hover:scale-105 transition-all shadow-lg">
-                                            <Icon path={Icons.Instagram} /> {t.about.instagram_btn}
-                                         </a>
-                                     </div>
-                                </section>
-
-                                {/* Team */}
-                                <section className="py-24 bg-slate-50 dark:bg-slate-900">
-                                    <div className="max-w-7xl mx-auto px-4">
-                                        <h2 className="text-3xl font-bold mb-12 text-center flex items-center justify-center gap-3">
-                                            <Icon path={Icons.Users} className="text-emerald-500" /> {t.about.team_title}
-                                        </h2>
-                                        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
-                                            {DATA.members.map((member, i) => (
-                                                <div key={i} className="group bg-white dark:bg-slate-800 rounded-2xl overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1 transition-all duration-300 border border-slate-100 dark:border-slate-700">
-                                                    <div className="aspect-square overflow-hidden relative">
-                                                        <img 
-                                                            src={member.image} 
-                                                            alt={member.name} 
-                                                            className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-500" 
-                                                        />
-                                                        <div className="absolute inset-0 bg-emerald-500/0 group-hover:bg-emerald-500/10 transition-colors"></div>
-                                                    </div>
-                                                    <div className="p-4 text-center">
-                                                        <h3 className="font-bold text-slate-800 dark:text-white truncate">{member.name}</h3>
-                                                        <div className="w-8 h-1 bg-emerald-500 mx-auto mt-2 rounded-full opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                                                    </div>
-                                                </div>
-                                            ))}
-                                        </div>
-                                    </div>
-                                </section>
-                            </div>
-                        )}
-
-                        {page === 'accomplishments' && (
-                            <div className="animate-in fade-in">
-                                {/* 1. Hero: Our Impact & Accomplishments */}
-                                <div className="bg-slate-50 dark:bg-slate-900 py-16 border-b border-slate-100 dark:border-slate-800">
-                                    <div className="max-w-4xl mx-auto px-4 text-center">
-                                        <span className="inline-block px-3 py-1 mb-4 text-xs font-bold text-emerald-600 bg-emerald-100 rounded-full tracking-wider uppercase">Results Driven</span>
-                                        <h1 className="text-4xl md:text-5xl font-black mb-4">{t.acc.hero_title}</h1>
-                                        <p className="text-lg md:text-xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed">
-                                            {t.acc.hero_sub}
-                                        </p>
-                                    </div>
-                                </div>
-
-                                <div className="max-w-5xl mx-auto px-4 py-16 space-y-20">
-                                    
-                                    {/* 2. National Reach & Youth Impact */}
-                                    <section className="grid md:grid-cols-2 gap-12 items-center">
-                                        <div>
-                                            <div className="w-12 h-12 bg-blue-100 dark:bg-blue-900/30 rounded-xl flex items-center justify-center text-blue-600 mb-6">
-                                                <Icon path={Icons.Globe} size={28} />
+                                            <div className="flex items-center justify-center gap-4 mb-12 w-full">
+                                                <div className="h-[1px] w-8 md:w-16 bg-slate-300 dark:bg-slate-700"></div>
+                                                <p className="text-lg md:text-2xl text-slate-600 dark:text-slate-400 font-medium">
+                                                    {t.hero.subhead}
+                                                </p>
+                                                <div className="h-[1px] w-8 md:w-16 bg-slate-300 dark:bg-slate-700"></div>
                                             </div>
-                                            <h2 className="text-3xl font-bold mb-4">{t.acc.reach_title}</h2>
-                                            <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-                                                {t.acc.reach_desc}
-                                            </p>
+
+                                            <button 
+                                                onClick={() => setPage('accomplishments')} 
+                                                className="group px-10 py-5 bg-slate-900 dark:bg-emerald-600 text-white rounded-full font-bold text-lg md:text-xl transition-all duration-500 ease-apple active:scale-95 shadow-[0_0_40px_-10px_rgba(16,185,129,0.4)] hover:shadow-[0_0_60px_-15px_rgba(16,185,129,0.7)] flex items-center gap-3 border border-emerald-500/20 relative overflow-hidden"
+                                            >
+                                                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-apple"></div>
+                                                <span className="relative z-10 flex items-center gap-3">
+                                                    {t.nav.accomplishments} 
+                                                    <Icon path={Icons.ArrowRight} size={24} className="group-hover:translate-x-1 transition-transform duration-500 ease-apple" />
+                                                </span>
+                                            </button>
                                         </div>
-                                        <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl shadow-sm border border-slate-100 dark:border-slate-700">
-                                            <div className="grid grid-cols-2 gap-6 text-center">
-                                                <div>
-                                                    <div className="text-4xl font-black text-emerald-500 mb-1">5+</div>
-                                                    <div className="text-sm text-slate-500 font-medium">Partner Schools</div>
-                                                </div>
-                                                <div>
-                                                    <div className="text-4xl font-black text-emerald-500 mb-1">500+</div>
-                                                    <div className="text-sm text-slate-500 font-medium">Students Engaged</div>
-                                                </div>
-                                                <div>
-                                                    <div className="text-4xl font-black text-emerald-500 mb-1">10+</div>
-                                                    <div className="text-sm text-slate-500 font-medium">Workshops Held</div>
-                                                </div>
-                                                <div>
-                                                    <div className="text-4xl font-black text-emerald-500 mb-1">3</div>
-                                                    <div className="text-sm text-slate-500 font-medium">National Events</div>
-                                                </div>
+                                    </section>
+                                    
+                                    <Marquee />
+                                    <div className="py-6"></div>
+                                    
+                                    <ProjectIdeaGenerator />
+                                    <QuizSection />
+
+                                    {/* TEAM */}
+                                    <section className="py-20 bg-slate-50 dark:bg-slate-800/50">
+                                        <div className="max-w-7xl mx-auto px-4">
+                                            <h2 className="text-4xl font-black text-center mb-16">{t.team.title}</h2>
+                                            <div className="grid md:grid-cols-4 gap-8">
+                                                {DATA.leadership.map(m => (
+                                                    <div 
+                                                        key={m.id} 
+                                                        onClick={() => setSelectedBio(m)} 
+                                                        className="cursor-pointer active:scale-95 bg-white/80 dark:bg-slate-900/80 backdrop-blur-xl rounded-[2rem] overflow-hidden border border-slate-200 dark:border-slate-700/50 hover:border-emerald-500/50 hover:shadow-2xl hover:shadow-emerald-500/10 transition-all duration-500 ease-apple group relative"
+                                                    >
+                                                        <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none"></div>
+                                                        <div className="overflow-hidden">
+                                                            <img src={m.image} alt={m.name} className="w-full aspect-square object-cover transition-transform duration-700 ease-apple group-hover:scale-105" />
+                                                        </div>
+                                                        <div className="p-6 relative z-20 bg-white dark:bg-slate-900 transition-colors duration-500 ease-apple">
+                                                            <h3 className="font-bold text-xl">{m.name}</h3>
+                                                            <p className="text-emerald-600 font-medium text-sm mb-4">{m.role}</p>
+                                                            <div className="text-xs font-bold flex items-center gap-2 text-slate-500 group-hover:text-emerald-600 transition-colors duration-300">
+                                                                {t.team.view_bio} <Icon path={Icons.ArrowRight} size={14} className="group-hover:translate-x-1 transition-transform duration-500 ease-apple" />
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            )}
+
+                            {page === 'about' && (
+                                <div>
+                                    {/* Header / Intro */}
+                                    <div className="max-w-4xl mx-auto px-4 py-16 text-center">
+                                    <h1 className="text-4xl md:text-5xl font-black mb-6 text-emerald-600">{t.about.title}</h1>
+                                    <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-300 leading-relaxed font-light">
+                                        {t.about.intro}
+                                    </p>
+                                    </div>
+
+                                    {/* Story Section */}
+                                    <section className="bg-white dark:bg-slate-800 py-16 border-y border-slate-100 dark:border-slate-700">
+                                        <div className="max-w-4xl mx-auto px-4">
+                                            <h2 className="text-3xl font-bold mb-8 flex items-center gap-3">
+                                                <div className="w-10 h-1 bg-emerald-500 rounded-full"></div> {t.about.story_title}
+                                            </h2>
+                                            <div className="prose dark:prose-invert max-w-none">
+                                                <p className="text-lg mb-6 leading-loose">{t.about.story_text1}</p>
+                                                <p className="text-lg leading-loose">{t.about.story_text2}</p>
                                             </div>
                                         </div>
                                     </section>
 
-                                    {/* 3. Paperless Week Initiative */}
-                                    <section className="bg-emerald-50 dark:bg-emerald-900/10 rounded-3xl p-8 md:p-12 border border-emerald-100 dark:border-emerald-800/50">
-                                        <div className="flex flex-col md:flex-row gap-8 items-start">
-                                            <div className="flex-grow">
-                                                <h3 className="text-2xl font-bold mb-4 flex items-center gap-3">
-                                                    <Icon path={Icons.Leaf} className="text-emerald-600" />
-                                                    {t.acc.paperless_title}
-                                                </h3>
-                                                <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-lg">
-                                                    {t.acc.paperless_desc}
+                                    {/* First Steps / Video */}
+                                    <section className="py-20 max-w-4xl mx-auto px-4">
+                                        <h2 className="text-3xl font-bold mb-8">{t.about.steps_title}</h2>
+                                        <p className="text-lg mb-12 text-slate-600 dark:text-slate-300">{t.about.steps_text}</p>
+                                        
+                                        {/* Video Placeholder - REPLACED WITH VIDEO TAG FOR GITHUB */}
+                                        <div className="aspect-video bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-emerald-900/20 border border-slate-200 dark:border-slate-800 transition-all hover:shadow-emerald-900/40 duration-500 ease-apple group">
+                                            <video 
+                                                className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-700 ease-apple" 
+                                                controls 
+                                            >
+                                                <source src="./eco_video.mp4" type="video/mp4" />
+                                                Your browser does not support the video tag.
+                                            </video>
+                                        </div>
+                                    </section>
+
+                                    {/* More Work */}
+                                    <section className="py-24 bg-emerald-900 text-white relative overflow-hidden rounded-[3rem] mx-4 md:mx-auto max-w-6xl mb-12 shadow-2xl">
+                                        <div className="absolute inset-0 opacity-20 bg-[radial-gradient(circle_at_center,_var(--tw-gradient-stops))] from-emerald-400 to-transparent"></div>
+                                        <div className="max-w-4xl mx-auto px-4 text-center relative z-10">
+                                            <h2 className="text-4xl font-black mb-6">{t.about.more_work_title}</h2>
+                                            <p className="text-xl mb-10 text-emerald-100/90 font-light">{t.about.more_work_text}</p>
+                                            <a href="https://www.instagram.com/ecoawareness.qa/" target="_blank" className="inline-flex items-center gap-3 px-8 py-4 bg-white text-emerald-900 rounded-full font-bold hover:bg-emerald-50 active:scale-95 transition-all duration-300 ease-apple shadow-xl hover:shadow-white/20">
+                                                <Icon path={Icons.Instagram} /> {t.about.instagram_btn}
+                                            </a>
+                                        </div>
+                                    </section>
+
+                                    {/* Team */}
+                                    <section className="py-24 bg-slate-50 dark:bg-slate-900">
+                                        <div className="max-w-7xl mx-auto px-4">
+                                            <h2 className="text-3xl font-black mb-16 text-center flex items-center justify-center gap-3">
+                                                <Icon path={Icons.Users} className="text-emerald-500" /> {t.about.team_title}
+                                            </h2>
+                                            <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-6">
+                                                {DATA.members.map((member, i) => (
+                                                    <div key={i} className="group bg-white dark:bg-slate-800 rounded-3xl overflow-hidden shadow-sm hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 ease-apple border border-slate-100 dark:border-slate-700 cursor-default">
+                                                        <div className="aspect-square overflow-hidden relative">
+                                                            <img 
+                                                                src={member.image} 
+                                                                alt={member.name} 
+                                                                className="w-full h-full object-cover group-hover:scale-110 transition-transform duration-700 ease-apple" 
+                                                            />
+                                                            <div className="absolute inset-0 bg-emerald-500/0 group-hover:bg-emerald-500/10 transition-colors duration-500"></div>
+                                                        </div>
+                                                        <div className="p-5 text-center bg-white dark:bg-slate-800 relative z-10">
+                                                            <h3 className="font-bold text-slate-800 dark:text-white truncate text-lg">{member.name}</h3>
+                                                            <div className="w-8 h-1 bg-emerald-500 mx-auto mt-3 rounded-full opacity-0 group-hover:opacity-100 transition-all duration-500 ease-apple scale-x-0 group-hover:scale-x-100"></div>
+                                                        </div>
+                                                    </div>
+                                                ))}
+                                            </div>
+                                        </div>
+                                    </section>
+                                </div>
+                            )}
+
+                            {page === 'accomplishments' && (
+                                <div>
+                                    {/* 1. Hero: Our Impact & Accomplishments */}
+                                    <div className="bg-slate-50 dark:bg-slate-900 py-20 border-b border-slate-100 dark:border-slate-800">
+                                        <div className="max-w-4xl mx-auto px-4 text-center">
+                                            <span className="inline-block px-4 py-1.5 mb-6 text-xs font-black text-emerald-600 bg-emerald-100 rounded-full tracking-wider uppercase shadow-sm">Results Driven</span>
+                                            <h1 className="text-5xl md:text-6xl font-black mb-6 tracking-tight">{t.acc.hero_title}</h1>
+                                            <p className="text-xl md:text-2xl text-slate-600 dark:text-slate-400 max-w-2xl mx-auto leading-relaxed font-light">
+                                                {t.acc.hero_sub}
+                                            </p>
+                                        </div>
+                                    </div>
+
+                                    <div className="max-w-5xl mx-auto px-4 py-20 space-y-24">
+                                        
+                                        {/* 2. National Reach & Youth Impact */}
+                                        <section className="grid md:grid-cols-2 gap-16 items-center">
+                                            <div className="group">
+                                                <div className="w-14 h-14 bg-blue-100 dark:bg-blue-900/30 rounded-2xl flex items-center justify-center text-blue-600 mb-8 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 ease-apple shadow-sm">
+                                                    <Icon path={Icons.Globe} size={32} />
+                                                </div>
+                                                <h2 className="text-4xl font-black mb-6">{t.acc.reach_title}</h2>
+                                                <p className="text-xl text-slate-600 dark:text-slate-300 leading-relaxed font-light">
+                                                    {t.acc.reach_desc}
                                                 </p>
                                             </div>
-                                            <div className="md:w-1/3 bg-white dark:bg-slate-800 p-6 rounded-2xl shadow-sm border border-emerald-100 dark:border-emerald-800 w-full">
-                                                <h4 className="font-bold mb-2 text-sm text-slate-400 uppercase tracking-wider">Impact</h4>
-                                                <ul className="space-y-2">
-                                                    <li className="flex items-start gap-2 text-sm"><span className="text-emerald-500 font-bold">✓</span> Reduced paper waste by 40%</li>
-                                                    <li className="flex items-start gap-2 text-sm"><span className="text-emerald-500 font-bold">✓</span> Adopted by 3 major schools</li>
-                                                    <li className="flex items-start gap-2 text-sm"><span className="text-emerald-500 font-bold">✓</span> Teacher & Student participation</li>
-                                                </ul>
+                                            <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl p-10 rounded-[2.5rem] shadow-xl border border-white dark:border-slate-700 hover:-translate-y-2 transition-transform duration-500 ease-apple">
+                                                <div className="grid grid-cols-2 gap-8 text-center">
+                                                    <div>
+                                                        <div className="text-5xl font-black text-emerald-500 mb-2 drop-shadow-sm">5+</div>
+                                                        <div className="text-sm text-slate-500 font-bold uppercase tracking-wider">Partner Schools</div>
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-5xl font-black text-emerald-500 mb-2 drop-shadow-sm">500+</div>
+                                                        <div className="text-sm text-slate-500 font-bold uppercase tracking-wider">Students</div>
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-5xl font-black text-emerald-500 mb-2 drop-shadow-sm">10+</div>
+                                                        <div className="text-sm text-slate-500 font-bold uppercase tracking-wider">Workshops</div>
+                                                    </div>
+                                                    <div>
+                                                        <div className="text-5xl font-black text-emerald-500 mb-2 drop-shadow-sm">3</div>
+                                                        <div className="text-sm text-slate-500 font-bold uppercase tracking-wider">National Events</div>
+                                                    </div>
+                                                </div>
                                             </div>
-                                        </div>
-                                    </section>
+                                        </section>
 
-                                    {/* 4. Sustainable Crafting & Circular Economy */}
-                                    <section className="grid md:grid-cols-2 gap-12 items-center">
-                                         <div className="order-2 md:order-1 relative h-64 md:h-80 rounded-3xl overflow-hidden shadow-lg group">
-                                            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&fit=crop')] bg-cover bg-center transition-transform duration-700 group-hover:scale-105"></div>
-                                            <div className="absolute inset-0 bg-black/20"></div>
-                                         </div>
-                                         <div className="order-1 md:order-2">
-                                            <div className="w-12 h-12 bg-orange-100 dark:bg-orange-900/30 rounded-xl flex items-center justify-center text-orange-600 mb-6">
-                                                <Icon path={Icons.Recycle} size={28} />
+                                        {/* 3. Paperless Week Initiative */}
+                                        <section className="bg-gradient-to-br from-emerald-50 to-teal-50 dark:from-emerald-900/20 dark:to-teal-900/20 rounded-[3rem] p-10 md:p-16 border border-emerald-100/50 dark:border-emerald-800/30 shadow-lg hover:shadow-xl transition-shadow duration-500">
+                                            <div className="flex flex-col md:flex-row gap-12 items-center">
+                                                <div className="flex-grow">
+                                                    <h3 className="text-3xl font-black mb-6 flex items-center gap-4">
+                                                        <div className="p-3 bg-white dark:bg-slate-800 rounded-2xl shadow-sm"><Icon path={Icons.Leaf} className="text-emerald-600" size={32} /></div>
+                                                        {t.acc.paperless_title}
+                                                    </h3>
+                                                    <p className="text-slate-700 dark:text-slate-300 leading-relaxed text-xl font-light">
+                                                        {t.acc.paperless_desc}
+                                                    </p>
+                                                </div>
+                                                <div className="md:w-1/3 bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-8 rounded-[2rem] shadow-xl border border-white dark:border-slate-700 w-full hover:scale-105 transition-transform duration-500 ease-apple">
+                                                    <h4 className="font-black mb-6 text-sm text-slate-400 uppercase tracking-widest border-b border-slate-100 dark:border-slate-700 pb-2">Impact</h4>
+                                                    <ul className="space-y-4">
+                                                        <li className="flex items-center gap-3 text-base font-medium"><span className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center text-emerald-600 text-xs font-bold">✓</span> Reduced waste 40%</li>
+                                                        <li className="flex items-center gap-3 text-base font-medium"><span className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center text-emerald-600 text-xs font-bold">✓</span> 3 major schools</li>
+                                                        <li className="flex items-center gap-3 text-base font-medium"><span className="flex-shrink-0 w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900 flex items-center justify-center text-emerald-600 text-xs font-bold">✓</span> Full participation</li>
+                                                    </ul>
+                                                </div>
                                             </div>
-                                            <h2 className="text-3xl font-bold mb-4">{t.acc.crafting_title}</h2>
-                                            <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-                                                {t.acc.crafting_desc}
-                                            </p>
-                                        </div>
-                                    </section>
+                                        </section>
 
-                                    {/* 5. Education City Campaigns */}
-                                    <section>
-                                        <div className="border-l-4 border-emerald-500 pl-6 md:pl-10 py-2">
-                                            <h2 className="text-3xl font-bold mb-4 flex items-center gap-3">
-                                                 {t.acc.ec_title}
-                                            </h2>
-                                            <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed max-w-3xl">
-                                                {t.acc.ec_desc}
-                                            </p>
-                                        </div>
-                                    </section>
-
-                                    {/* 6. Institutional Recognition */}
-                                    <section className="grid md:grid-cols-3 gap-6">
-                                        <div className="md:col-span-1 bg-slate-900 text-white p-8 rounded-3xl flex flex-col justify-between">
-                                            <Icon path={Icons.Award} size={48} className="text-yellow-400 mb-4" />
-                                            <div>
-                                                <h3 className="text-xl font-bold mb-2">{t.acc.recog_title}</h3>
-                                                <div className="h-1 w-12 bg-yellow-400 rounded-full"></div>
+                                        {/* 4. Sustainable Crafting & Circular Economy */}
+                                        <section className="grid md:grid-cols-2 gap-16 items-center">
+                                            <div className="order-2 md:order-1 relative h-72 md:h-96 rounded-[3rem] overflow-hidden shadow-2xl group">
+                                                <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544716278-ca5e3f4abd8c?w=800&fit=crop')] bg-cover bg-center transition-transform duration-1000 ease-apple group-hover:scale-110"></div>
+                                                <div className="absolute inset-0 bg-black/10 group-hover:bg-black/0 transition-colors duration-500"></div>
                                             </div>
-                                        </div>
-                                        <div className="md:col-span-2 bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-100 dark:border-slate-700 flex items-center">
-                                            <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed">
-                                                {t.acc.recog_desc}
-                                            </p>
-                                        </div>
-                                    </section>
-
-                                    {/* 7. Alignment with QNV 2030 */}
-                                    <section className="bg-gradient-to-r from-emerald-900 to-slate-900 text-white rounded-3xl p-8 md:p-16 text-center relative overflow-hidden">
-                                        <div className="absolute top-0 right-0 w-64 h-64 bg-emerald-500/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
-                                        <div className="relative z-10">
-                                            <div className="inline-block p-3 bg-white/10 rounded-full mb-6 backdrop-blur-sm">
-                                                <Icon path={Icons.Globe} className="text-emerald-300" size={32} />
+                                            <div className="order-1 md:order-2 group">
+                                                <div className="w-14 h-14 bg-orange-100 dark:bg-orange-900/30 rounded-2xl flex items-center justify-center text-orange-600 mb-8 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500 ease-apple shadow-sm">
+                                                    <Icon path={Icons.Recycle} size={32} />
+                                                </div>
+                                                <h2 className="text-4xl font-black mb-6">{t.acc.crafting_title}</h2>
+                                                <p className="text-xl text-slate-600 dark:text-slate-300 leading-relaxed font-light">
+                                                    {t.acc.crafting_desc}
+                                                </p>
                                             </div>
-                                            <h2 className="text-3xl md:text-4xl font-black mb-6">{t.acc.qnv_title}</h2>
-                                            <p className="text-xl text-emerald-100/90 max-w-2xl mx-auto leading-relaxed font-light">
-                                                {t.acc.qnv_desc}
+                                        </section>
+
+                                        {/* 6. Institutional Recognition */}
+                                        <section className="grid md:grid-cols-3 gap-8 pt-8">
+                                            <div className="md:col-span-1 bg-slate-900 text-white p-10 rounded-[2.5rem] flex flex-col justify-between shadow-2xl hover:-translate-y-2 transition-transform duration-500 ease-apple">
+                                                <Icon path={Icons.Award} size={56} className="text-yellow-400 mb-6 drop-shadow-md" />
+                                                <div>
+                                                    <h3 className="text-2xl font-black mb-4 leading-tight">{t.acc.recog_title}</h3>
+                                                    <div className="h-1.5 w-16 bg-yellow-400 rounded-full"></div>
+                                                </div>
+                                            </div>
+                                            <div className="md:col-span-2 bg-white dark:bg-slate-800 p-10 rounded-[2.5rem] border border-slate-100 dark:border-slate-700 flex items-center shadow-lg hover:shadow-xl transition-shadow duration-500">
+                                                <p className="text-xl text-slate-600 dark:text-slate-300 leading-relaxed font-light">
+                                                    {t.acc.recog_desc}
+                                                </p>
+                                            </div>
+                                        </section>
+
+                                        {/* 7. Alignment with QNV 2030 */}
+                                        <section className="bg-gradient-to-br from-emerald-900 via-teal-900 to-slate-900 text-white rounded-[3rem] p-12 md:p-20 text-center relative overflow-hidden shadow-2xl">
+                                            <div className="absolute top-0 right-0 w-96 h-96 bg-emerald-500/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 animate-float"></div>
+                                            <div className="absolute bottom-0 left-0 w-96 h-96 bg-teal-500/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2 animate-float" style={{animationDelay: '3s'}}></div>
+                                            <div className="relative z-10">
+                                                <div className="inline-block p-4 bg-white/10 rounded-2xl mb-8 backdrop-blur-md shadow-lg border border-white/10">
+                                                    <Icon path={Icons.Globe} className="text-emerald-300" size={40} />
+                                                </div>
+                                                <h2 className="text-4xl md:text-5xl font-black mb-8">{t.acc.qnv_title}</h2>
+                                                <p className="text-xl md:text-2xl text-emerald-50/90 max-w-3xl mx-auto leading-relaxed font-light">
+                                                    {t.acc.qnv_desc}
+                                                </p>
+                                            </div>
+                                        </section>
+
+                                        {/* 8. Looking Ahead */}
+                                        <section className="text-center py-16">
+                                            <h2 className="text-sm font-black mb-6 text-slate-400 uppercase tracking-[0.3em]">{t.acc.future_title}</h2>
+                                            <p className="text-2xl md:text-3xl font-medium max-w-4xl mx-auto leading-relaxed bg-clip-text text-transparent bg-gradient-to-r from-slate-800 to-slate-500 dark:from-white dark:to-slate-400">
+                                                "{t.acc.future_desc}"
                                             </p>
-                                        </div>
-                                    </section>
+                                        </section>
 
-                                    {/* 8. Looking Ahead */}
-                                    <section className="text-center py-8">
-                                        <h2 className="text-2xl font-bold mb-4 text-slate-400 uppercase tracking-widest">{t.acc.future_title}</h2>
-                                        <p className="text-xl md:text-2xl font-medium max-w-3xl mx-auto leading-relaxed">
-                                            "{t.acc.future_desc}"
-                                        </p>
-                                    </section>
-
-                                </div>
-                            </div>
-                        )}
-
-                        {page === 'contact' && (
-                            <div className="max-w-4xl mx-auto px-4 py-20 text-center animate-in fade-in">
-                                <h1 className="text-4xl font-bold mb-4">{t.contact.title}</h1>
-                                <p className="text-slate-600 dark:text-slate-400 mb-12">{t.contact.subtitle}</p>
-                                <div className="grid md:grid-cols-2 gap-8">
-                                    <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col items-center hover:scale-105 transition-transform">
-                                        <div className="w-16 h-16 bg-emerald-100 rounded-full flex items-center justify-center text-emerald-600 mb-6"><Icon path={Icons.Mail} size={32} /></div>
-                                        <h3 className="text-xl font-bold mb-4">Email</h3>
-                                        <a href="mailto:ecoawarenessme@gmail.com" className="px-6 py-3 bg-emerald-600 text-white rounded-xl font-bold flex items-center gap-2">
-                                            <Icon path={Icons.Send} size={18} /> Email Us
-                                        </a>
                                     </div>
-                                    <div className="bg-white dark:bg-slate-800 p-8 rounded-3xl border border-slate-200 dark:border-slate-700 shadow-xl flex flex-col items-center hover:scale-105 transition-transform">
-                                        <div className="w-16 h-16 bg-pink-100 rounded-full flex items-center justify-center text-pink-600 mb-6"><Icon path={Icons.Instagram} size={32} /></div>
-                                        <h3 className="text-xl font-bold mb-4">Instagram</h3>
-                                        <a href="https://www.instagram.com/ecoawareness.qa/" className="px-6 py-3 bg-gradient-to-r from-purple-500 to-pink-500 text-white rounded-xl font-bold flex items-center gap-2">
-                                            <Icon path={Icons.Instagram} size={18} /> Follow Us
-                                        </a>
+                                </div>
+                            )}
+
+                            {page === 'contact' && (
+                                <div className="max-w-4xl mx-auto px-4 py-24 text-center">
+                                    <h1 className="text-5xl font-black mb-6">{t.contact.title}</h1>
+                                    <p className="text-xl text-slate-600 dark:text-slate-400 mb-16 max-w-2xl mx-auto leading-relaxed font-light">{t.contact.subtitle}</p>
+                                    <div className="grid md:grid-cols-2 gap-8">
+                                        <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl p-10 rounded-[3rem] border border-white dark:border-slate-700 shadow-2xl flex flex-col items-center hover:scale-105 active:scale-95 transition-all duration-500 ease-apple group">
+                                            <div className="w-20 h-20 bg-emerald-100 dark:bg-emerald-900/40 rounded-[2rem] flex items-center justify-center text-emerald-600 mb-8 group-hover:-translate-y-2 group-hover:shadow-lg transition-all duration-500 ease-apple border border-emerald-200 dark:border-emerald-800/50"><Icon path={Icons.Mail} size={40} /></div>
+                                            <h3 className="text-2xl font-black mb-6">Email</h3>
+                                            <a href="mailto:ecoawarenessme@gmail.com" className="px-8 py-4 bg-emerald-600 text-white rounded-full font-bold flex items-center gap-3 shadow-lg hover:shadow-emerald-600/30 transition-shadow">
+                                                <Icon path={Icons.Send} size={20} /> Email Us
+                                            </a>
+                                        </div>
+                                        <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-xl p-10 rounded-[3rem] border border-white dark:border-slate-700 shadow-2xl flex flex-col items-center hover:scale-105 active:scale-95 transition-all duration-500 ease-apple group">
+                                            <div className="w-20 h-20 bg-pink-100 dark:bg-pink-900/40 rounded-[2rem] flex items-center justify-center text-pink-600 mb-8 group-hover:-translate-y-2 group-hover:shadow-lg transition-all duration-500 ease-apple border border-pink-200 dark:border-pink-800/50"><Icon path={Icons.Instagram} size={40} /></div>
+                                            <h3 className="text-2xl font-black mb-6">Instagram</h3>
+                                            <a href="https://www.instagram.com/ecoawareness.qa/" className="px-8 py-4 bg-gradient-to-r from-purple-500 via-pink-500 to-orange-500 text-white rounded-full font-bold flex items-center gap-3 shadow-lg hover:shadow-pink-500/30 transition-shadow">
+                                                <Icon path={Icons.Instagram} size={20} /> Follow Us
+                                            </a>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        )}
+                            )}
+                        </div>
                     </main>
 
-                    {/* BIO MODAL */}
+                    {/* APPLE-STYLE BIO MODAL */}
                     {selectedBio && (
-                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-sm" onClick={() => setSelectedBio(null)}>
-                            <div className="bg-white dark:bg-slate-900 max-w-lg w-full rounded-2xl p-8 relative shadow-2xl animate-in zoom-in-95" onClick={e => e.stopPropagation()}>
-                                <button onClick={() => setSelectedBio(null)} className="absolute top-4 right-4 p-2 bg-slate-100 dark:bg-slate-800 rounded-full"><Icon path={Icons.X} size={20} /></button>
-                                <div className="flex items-center gap-4 mb-6">
-                                    <img src={selectedBio.image} className="w-20 h-20 rounded-full object-cover border-2 border-emerald-500" />
-                                    <div>
-                                        <h3 className="text-2xl font-bold">{selectedBio.name}</h3>
-                                        <p className="text-emerald-600 font-medium">{selectedBio.role}</p>
+                        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-slate-900/30 dark:bg-slate-900/60 backdrop-blur-xl animate-in fade-in duration-500 ease-apple" onClick={() => setSelectedBio(null)}>
+                            <div className="bg-white/90 dark:bg-slate-800/90 backdrop-blur-2xl max-w-lg w-full rounded-[3rem] p-10 relative shadow-2xl animate-in zoom-in-[0.90] slide-in-from-bottom-8 duration-500 ease-apple border border-white/40 dark:border-slate-700/50" onClick={e => e.stopPropagation()}>
+                                <button onClick={() => setSelectedBio(null)} className="absolute top-6 right-6 p-3 bg-slate-100 dark:bg-slate-700 rounded-full hover:bg-slate-200 dark:hover:bg-slate-600 active:scale-90 transition-all duration-300 ease-apple"><Icon path={Icons.X} size={20} /></button>
+                                <div className="flex flex-col md:flex-row items-center md:items-start gap-6 mb-8 text-center md:text-left">
+                                    <img src={selectedBio.image} className="w-28 h-28 rounded-[2rem] object-cover shadow-lg border-4 border-white dark:border-slate-700" />
+                                    <div className="mt-2 md:mt-4">
+                                        <h3 className="text-3xl font-black">{selectedBio.name}</h3>
+                                        <p className="text-emerald-600 font-bold text-lg mt-1">{selectedBio.role}</p>
                                     </div>
                                 </div>
-                                <p className="text-slate-600 dark:text-slate-300 leading-relaxed">{selectedBio.bio}</p>
+                                <div className="w-12 h-1.5 bg-emerald-500 rounded-full mb-6 mx-auto md:mx-0"></div>
+                                <p className="text-slate-600 dark:text-slate-300 leading-relaxed text-lg font-light">{selectedBio.bio}</p>
                             </div>
                         </div>
                     )}
