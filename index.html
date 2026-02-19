@@ -3,8 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoAwareness.qa - Empowering Qatar's Youth</title>
     
+    <!-- ======================================================== -->
+    <!-- 🌍 BROWSER TAB TITLE AND LOGO (FAVICON)                 -->
+    <!-- ======================================================== -->
+    
+    <title>EcoAwareness.qa - #1 Platform for Sustainability</title>
+    
+    <!-- This line adds the small logo to the browser tab -->
+    <!-- Right now, it's a leaf emoji. To use your own logo: -->
+    <!-- 1. Upload your logo to GitHub (e.g., 'logo.png') -->
+    <!-- 2. Replace the 'href' below with href="./logo.png" -->
+    <link rel="icon"href="Untitled.png"</text></svg>">
+    
+    <!-- ======================================================== -->
+
     <!-- Tailwind CSS -->
     <script src="https://cdn.tailwindcss.com"></script>
     
@@ -412,6 +425,7 @@
             const [page, setPage] = useState('home');
             const [theme, setTheme] = useState('light');
             const [selectedBio, setSelectedBio] = useState(null);
+            const [animatingOut, setAnimatingOut] = useState(false);
             
             const t = TRANSLATIONS[lang];
 
@@ -422,14 +436,29 @@
                 else document.documentElement.classList.remove('dark');
             };
 
+            const changePage = (newPage) => {
+                if (newPage === page || animatingOut) return;
+                
+                // 1. Start exit animation
+                setAnimatingOut(true);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                
+                // 2. Wait for exit transition, then switch page
+                setTimeout(() => {
+                    setPage(newPage);
+                    // 3. Tiny delay before animating back in to ensure browser registers the state change
+                    setTimeout(() => setAnimatingOut(false), 50);
+                }, 300);
+            };
+
             const navItems = ['home', 'about', 'accomplishments', 'contact'];
 
             return (
-                <div className="min-h-screen font-sans">
+                <div className="min-h-screen font-sans overflow-x-hidden">
                     {/* NAV */}
                     <nav className="fixed w-full z-50 bg-white/70 dark:bg-slate-900/70 backdrop-blur-xl border-b border-white/20 dark:border-slate-800 shadow-sm transition-colors duration-500 ease-apple">
                         <div className="max-w-7xl mx-auto px-4 h-20 flex items-center justify-between">
-                            <div className="flex items-center gap-3 cursor-pointer group active:scale-95 transition-transform duration-300 ease-apple" onClick={() => setPage('home')}>
+                            <div className="flex items-center gap-3 cursor-pointer group active:scale-95 transition-transform duration-300 ease-apple" onClick={() => changePage('home')}>
                                 <div className="bg-gradient-to-br from-emerald-400 to-emerald-600 text-white p-2 rounded-xl shadow-lg group-hover:scale-110 group-hover:rotate-6 transition-all duration-300 ease-apple"><Icon path={Icons.Globe} size={24} /></div>
                                 <span className="font-black text-xl md:text-2xl tracking-tight bg-clip-text text-transparent bg-gradient-to-r from-slate-900 to-slate-600 dark:from-white dark:to-slate-400">EcoAwareness.qa</span>
                             </div>
@@ -437,7 +466,7 @@
                                 {navItems.map((item) => (
                                     <button 
                                         key={item}
-                                        onClick={() => setPage(item)} 
+                                        onClick={() => changePage(item)} 
                                         className={`relative px-5 py-2 rounded-full text-sm font-bold transition-all duration-500 ease-apple active:scale-95
                                             ${page === item ? 'text-emerald-700 dark:text-emerald-300 shadow-sm bg-white dark:bg-slate-700' : 'text-slate-500 hover:text-slate-800 dark:text-slate-400 dark:hover:text-white hover:bg-white/50 dark:hover:bg-slate-700/50'}
                                         `}
@@ -456,8 +485,8 @@
                     </nav>
 
                     <main className="pt-20">
-                        {/* We use a key on the wrapper to trigger the Apple-style animation on every page change */}
-                        <div key={page} className="animate-in fade-in zoom-in-[0.98] slide-in-from-bottom-2 duration-700 ease-apple">
+                        {/* Smooth Page Transition Wrapper */}
+                        <div className={`transition-all transform-gpu duration-500 ease-apple ${animatingOut ? 'opacity-0 scale-[0.97] translate-y-8 blur-[8px]' : 'opacity-100 scale-100 translate-y-0 blur-0'}`}>
                             
                             {page === 'home' && (
                                 <div>
@@ -480,17 +509,13 @@
 
                                             <div className="flex items-center justify-center gap-4 mb-12 w-full">
                                                 <div className="h-[1px] w-8 md:w-16 bg-slate-300 dark:bg-slate-700"></div>
-                                                <p className="text-lg md:text-2xl text-slate-600 dark:text-slate-400 font-medium">
-                                                    {t.hero.subhead}
-                                                </p>
-                                                <div className="h-[1px] w-8 md:w-16 bg-slate-300 dark:bg-slate-700"></div>
-                                            </div>
+                                        </div>
 
-                                            <button 
-                                                onClick={() => setPage('accomplishments')} 
-                                                className="group px-10 py-5 bg-slate-900 dark:bg-emerald-600 text-white rounded-full font-bold text-lg md:text-xl transition-all duration-500 ease-apple active:scale-95 shadow-[0_0_40px_-10px_rgba(16,185,129,0.4)] hover:shadow-[0_0_60px_-15px_rgba(16,185,129,0.7)] flex items-center gap-3 border border-emerald-500/20 relative overflow-hidden"
-                                            >
-                                                <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-apple"></div>
+                                        <button 
+                                            onClick={() => changePage('accomplishments')} 
+                                            className="group px-10 py-5 bg-slate-900 dark:bg-emerald-600 text-white rounded-full font-bold text-lg md:text-xl transition-all duration-500 ease-apple active:scale-95 shadow-[0_0_40px_-10px_rgba(16,185,129,0.4)] hover:shadow-[0_0_60px_-15px_rgba(16,185,129,0.7)] flex items-center gap-3 border border-emerald-500/20 relative overflow-hidden"
+                                        >
+                                            <div className="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-500 ease-apple"></div>
                                                 <span className="relative z-10 flex items-center gap-3">
                                                     {t.nav.accomplishments} 
                                                     <Icon path={Icons.ArrowRight} size={24} className="group-hover:translate-x-1 transition-transform duration-500 ease-apple" />
@@ -563,13 +588,22 @@
                                         <h2 className="text-3xl font-bold mb-8">{t.about.steps_title}</h2>
                                         <p className="text-lg mb-12 text-slate-600 dark:text-slate-300">{t.about.steps_text}</p>
                                         
-                                        {/* Video Placeholder - REPLACED WITH VIDEO TAG FOR GITHUB */}
                                         <div className="aspect-video bg-slate-900 rounded-[2.5rem] overflow-hidden shadow-2xl shadow-emerald-900/20 border border-slate-200 dark:border-slate-800 transition-all hover:shadow-emerald-900/40 duration-500 ease-apple group">
                                             <video 
                                                 className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-700 ease-apple" 
                                                 controls 
                                             >
+                                                {/* ======================================================== */}
+                                                {/* 🎬 EDIT YOUR VIDEO HERE 🎬                                 */}
+                                                {/* ======================================================== */}
+                                                {/* 1. Upload your video to your GitHub repository folder.   */}
+                                                {/* 2. Change the 'src' below to your video's exact filename.*/}
+                                                {/* Example: If your video is named 'our_campaign.mp4',      */}
+                                                {/* change src="./eco_video.mp4" to src="./our_campaign.mp4"  */}
+                                                
                                                 <source src="./eco_video.mp4" type="video/mp4" />
+                                                
+                                                {/* ======================================================== */}
                                                 Your browser does not support the video tag.
                                             </video>
                                         </div>
