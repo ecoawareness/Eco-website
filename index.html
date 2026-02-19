@@ -500,13 +500,18 @@
                                     
                                     {/* Video Placeholder */}
                                     <video
-  className="w-full rounded-3xl shadow-2xl"
-  controls
-  preload="metadata"
->
-  <source src="assets/eco_video.mp4" type="video/mp4" />
-  Your browser does not support the video tag.
-</video>
+<div className="aspect-video bg-slate-900 rounded-3xl overflow-hidden shadow-2xl shadow-emerald-900/20">
+                                        <video 
+                                            className="w-full h-full object-cover" 
+                                            controls 
+                                            // Optional: Add a thumbnail image by adding: poster="thumbnail.jpg"
+                                        >
+                                            {/* IMPORTANT: Rename your video file to 'eco_video.mp4' and put it in the same folder */}
+                                            <source src="./eco_video.mp4" type="video/mp4" />
+                                            Your browser does not support the video tag.
+                                        </video>
+                                    </div>
+                                </section>
 
 
                                         {/* Abstract video thumbnail bg */}
