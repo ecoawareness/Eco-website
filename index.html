@@ -502,15 +502,20 @@
                           </div>
 
                           {/* ======================================================== */}
-                          {/* 📸 HOME PAGE IMAGE FROM ASSETS 📸                          */}
+                          {/* 🎬 HOME PAGE VIDEO 🎬                                      */}
                           {/* ======================================================== */}
-                          <div className="mt-16 w-full max-w-5xl mx-auto rounded-[3rem] overflow-hidden shadow-2xl border-[4px] border-white/20 dark:border-slate-800/50 relative group hover:shadow-[0_0_60px_-15px_rgba(16,185,129,0.5)] transition-all duration-500 ease-apple">
+                          <div className="mt-16 w-full max-w-5xl mx-auto rounded-[3rem] overflow-hidden shadow-2xl border-[4px] border-white/20 dark:border-slate-800/50 relative group hover:shadow-[0_0_60px_-15px_rgba(16,185,129,0.5)] transition-all duration-500 ease-apple bg-slate-900">
                               <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none"></div>
-                              <img 
-                                  src="./assets/your_home_image.jpg" 
-                                  alt="EcoAwareness Initiative" 
-                                  className="w-full h-[300px] sm:h-[400px] md:h-[550px] object-cover group-hover:scale-105 transition-transform duration-700 ease-apple bg-white/10"
-                              />
+                              <video 
+                                  src="./Main.mp4" 
+                                  autoPlay 
+                                  loop 
+                                  muted 
+                                  playsInline
+                                  className="w-full h-[300px] sm:h-[400px] md:h-[550px] object-cover group-hover:scale-105 transition-transform duration-700 ease-apple"
+                              >
+                                  Your browser does not support the video tag.
+                              </video>
                           </div>
                           {/* ======================================================== */}
 
@@ -570,11 +575,11 @@
                         <p className="text-xl mb-12 text-slate-600 dark:text-slate-400 font-light">{t.about.steps_text}</p>
                         
                         {/* ======================================================== */}
-                        {/* 🎬 EDIT YOUR VIDEO HERE 🎬                                 */}
+                        {/* 🎬 ABOUT US PAGE VIDEO 🎬                                  */}
                         {/* ======================================================== */}
                         <div className="aspect-video bg-slate-900 rounded-[3rem] overflow-hidden shadow-2xl shadow-emerald-900/20 border border-slate-200 dark:border-slate-800 transition-all hover:shadow-emerald-900/40 duration-500 ease-apple group mb-24">
                             <video className="w-full h-full object-cover group-hover:scale-[1.01] transition-transform duration-700 ease-apple" controls>
-                                <source src="./eco_video.mp4" type="video/mp4" />
+                                <source src="./assets/eco_video.mp4" type="video/mp4" />
                                 Your browser does not support the video tag.
                             </video>
                         </div>
