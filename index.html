@@ -185,39 +185,77 @@
           }
         };
 
+        // --- HARDCODED CONTENT (OFFLINE MODE) ---
+        const STATIC_IDEAS = [
+            {
+                title: "Desert Green Roofs",
+                objective: "Research native plants suitable for green roofing in arid climates to reduce building heat.",
+                steps: ["Identify heat-resistant local flora (e.g. desert succulents).", "Build small scale roof modules for testing.", "Measure temperature differences between green and standard roofs."],
+                visionAlignment: "Environmental Development - Preservation of local biodiversity."
+            },
+            {
+                title: "School Cafeteria Composting",
+                objective: "Implement a student-led composting program to reduce food waste in schools.",
+                steps: ["Audit daily food waste in the cafeteria.", "Set up compost bins with clear signage.", "Use compost for school gardens."],
+                visionAlignment: "Environmental Development - Waste reduction and recycling."
+            },
+            {
+                title: "Smart Water Monitors",
+                objective: "Track and reduce water usage in school restrooms using student-built sensors.",
+                steps: ["Audit current water flow rates.", "Install simple flow restrictors.", "Run an awareness campaign based on usage data."],
+                visionAlignment: "Environmental Development - Sustainable management of water resources."
+            },
+            {
+                title: "Mangrove Guardians",
+                objective: "Organize regular cleanup and monitoring trips to Al Thakira mangroves.",
+                steps: ["Partner with local environmental groups.", "Document wildlife sightings.", "Remove plastic debris."],
+                visionAlignment: "Environmental Development - Protection of natural habitats."
+            }
+        ];
+
+        const STATIC_QUESTIONS = [
+            {
+                question: "Which pillar of the Qatar National Vision 2030 focuses on preserving the environment?",
+                options: ["Human Development", "Social Development", "Environmental Development", "Economic Development"],
+                correctIndex: 2,
+                explanation: "The Environmental Development pillar aims to manage the environment to ensure there is harmony between economic growth, social development, and environmental protection."
+            },
+            {
+                question: "What is the primary ecological benefit of the Mangroves found in Al Thakira?",
+                options: ["They look nice", "Carbon Sequestration", "Sand production", "Increasing humidity"],
+                correctIndex: 1,
+                explanation: "Mangroves are highly effective at capturing and storing carbon dioxide from the atmosphere, known as 'Blue Carbon'."
+            },
+            {
+                question: "Which of these is a major source of renewable energy being developed in Qatar?",
+                options: ["Coal", "Solar Energy", "Wind Energy", "Geothermal"],
+                correctIndex: 1,
+                explanation: "Qatar is investing heavily in Solar Energy, exemplified by the Al Kharsaah Solar Power Plant."
+            },
+            {
+                question: "What is the primary focus of the 'Paperless Week' initiative in schools?",
+                options: ["Saving money on printers", "Eliminating paper waste to protect forests", "Forcing students to buy laptops", "Making administration easier"],
+                correctIndex: 1,
+                explanation: "The Paperless Week encourages a digital-first approach to completely eliminate unnecessary paper waste, directly aligning with global forestry protection efforts."
+            }
+        ];
+
         // --- COMPONENTS ---
         const AIIdeaGenerator = () => {
           const [prompt, setPrompt] = useState('');
           const [idea, setIdea] = useState(null);
           const [loading, setLoading] = useState(false);
-          const [error, setError] = useState('');
 
-          const generateIdea = async () => {
+          const generateIdea = () => {
             if (!prompt.trim()) return;
-            setLoading(true); setError(''); setIdea(null);
-            const apiKey = ""; // API key logic here
-
-            try {
-              const response = await fetch(
-                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`,
-                {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    contents: [{ parts: [{ text: `Act as a sustainability expert for a youth organization in Qatar. Generate a creative, actionable "Mini-Project" idea based on this topic: "${prompt}". Formatted as JSON with keys: "title", "objective", "steps" (an array of 3 short strings), and "visionAlignment" (how it aligns with QNV 2030). Keep it short.` }] }],
-                    generationConfig: { responseMimeType: "application/json" }
-                  })
-                }
-              );
-              if (!response.ok) throw new Error("API Error");
-              const data = await response.json();
-              const content = JSON.parse(data.candidates?.[0]?.content?.parts?.[0]?.text || "{}");
-              setIdea(content);
-            } catch (err) {
-              setError("Unable to generate ideas right now. Please try again.");
-            } finally {
-              setLoading(false);
-            }
+            setLoading(true); setIdea(null);
+            
+            // Simulating a quick "AI thinking" delay for the cool animation
+            setTimeout(() => {
+                const randomIdea = STATIC_IDEAS[Math.floor(Math.random() * STATIC_IDEAS.length)];
+                setIdea(randomIdea);
+                setLoading(false);
+            }, 600);
           };
 
           return (
@@ -251,8 +289,6 @@
                     </button>
                   </div>
 
-                  {error && <div className="p-4 bg-red-100 dark:bg-red-900/20 text-red-600 dark:text-red-300 rounded-xl text-sm mb-6">{error}</div>}
-
                   {idea && (
                     <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-8 rounded-3xl border border-white/50 dark:border-slate-600/50 animate-in fade-in slide-in-from-bottom-4 duration-500 ease-apple shadow-sm">
                       <h3 className="text-2xl font-black text-emerald-700 dark:text-emerald-400 mb-3">{idea.title}</h3>
@@ -284,30 +320,20 @@
 
           useEffect(() => { fetchQuestion(); }, []);
 
-          const fetchQuestion = async () => {
+          const fetchQuestion = () => {
             setLoading(true); setQuizData(null); setSelectedIdx(null); setShowResult(false);
-            const apiKey = ""; // API Key
-            try {
-              const response = await fetch(
-                `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.5-flash-preview-09-2025:generateContent?key=${apiKey}`,
-                {
-                  method: "POST",
-                  headers: { "Content-Type": "application/json" },
-                  body: JSON.stringify({
-                    contents: [{ parts: [{ text: `Generate a multiple-choice question about environmental sustainability or Qatar's local ecology. Format as JSON: { "question": "string", "options": ["string", "string", "string", "string"], "correctIndex": number (0-3), "explanation": "short string" }.` }] }],
-                    generationConfig: { responseMimeType: "application/json" }
-                  })
-                }
-              );
-              if (!response.ok) throw new Error("API Error");
-              const data = await response.json();
-              const content = JSON.parse(data.candidates?.[0]?.content?.parts?.[0]?.text || "{}");
-              setQuizData(content);
-            } catch (e) {
-              console.error(e);
-            } finally {
-              setLoading(false);
-            }
+            
+            // Simulating a loading delay
+            setTimeout(() => {
+                let nextQ;
+                // Try to get a question that is different from the current one
+                do {
+                    nextQ = STATIC_QUESTIONS[Math.floor(Math.random() * STATIC_QUESTIONS.length)];
+                } while (STATIC_QUESTIONS.length > 1 && quizData && nextQ.question === quizData.question);
+                
+                setQuizData(nextQ);
+                setLoading(false);
+            }, 400);
           };
 
           const handleSelect = (idx) => {
@@ -334,7 +360,7 @@
                   {loading ? (
                      <div className="h-64 flex flex-col items-center justify-center text-slate-400">
                         <Icon path={Icons.Loader2} className="animate-spin mb-4 text-emerald-500" size={40} />
-                        <p className="font-medium">Generating question...</p>
+                        <p className="font-medium">Loading question...</p>
                      </div>
                   ) : quizData ? (
                      <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 ease-apple">
