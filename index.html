@@ -121,7 +121,8 @@
             VolumeX: <><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"/><line x1="23" y1="9" x2="17" y2="15"/><line x1="17" y1="9" x2="23" y2="15"/></>,
             Briefcase: <><rect width="20" height="14" x="2" y="7" rx="2" ry="2"/><path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16"/></>,
             Target: <><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="6"/><circle cx="12" cy="12" r="2"/></>,
-            Eye: <><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></>
+            Eye: <><path d="M2 12s3-7 10-7 10 7 10 7-3 7-10 7-10-7-10-7Z"/><circle cx="12" cy="12" r="3"/></>,
+            Play: <><polygon points="5 3 19 12 5 21 5 3"/></>
         };
 
         // --- DATA ---
@@ -288,6 +289,45 @@
         ];
 
         // --- COMPONENTS ---
+        const AnimatedCounter = ({ target, label }) => {
+            const [count, setCount] = useState(0);
+            const ref = React.useRef(null);
+            
+            useEffect(() => {
+                const observer = new IntersectionObserver((entries) => {
+                    if (entries[0].isIntersecting) {
+                        let start = null;
+                        const duration = 2000; // 2 seconds animation
+                        const step = (timestamp) => {
+                            if (!start) start = timestamp;
+                            const progress = Math.min((timestamp - start) / duration, 1);
+                            // Easing out function for a premium, smooth stop
+                            const easeOutQuart = 1 - Math.pow(1 - progress, 4);
+                            setCount(Math.floor(easeOutQuart * target));
+                            if (progress < 1) {
+                                window.requestAnimationFrame(step);
+                            }
+                        };
+                        window.requestAnimationFrame(step);
+                        observer.disconnect();
+                    }
+                }, { threshold: 0.5 });
+                
+                if (ref.current) observer.observe(ref.current);
+                return () => observer.disconnect();
+            }, [target]);
+
+            return (
+                <div ref={ref} className="text-center p-6 flex flex-col items-center justify-center">
+                    <h3 className="text-5xl md:text-6xl font-black text-white mb-2 tracking-tighter drop-shadow-lg">
+                        {count.toLocaleString()}
+                        <span className="text-emerald-400">+</span>
+                    </h3>
+                    <p className="text-emerald-100 font-bold tracking-widest uppercase text-xs md:text-sm">{label}</p>
+                </div>
+            );
+        };
+
         const AIIdeaGenerator = () => {
           const [prompt, setPrompt] = useState('');
           const [idea, setIdea] = useState(null);
@@ -479,6 +519,15 @@
           const [showPledgeModal, setShowPledgeModal] = useState(false);
           const [hasPledged, setHasPledged] = useState(false);
           const [popAnimation, setPopAnimation] = useState(false);
+          
+          // Scroll Tracker for Parallax FX
+          const [scrollY, setScrollY] = useState(0);
+
+          useEffect(() => {
+              const handleScroll = () => setScrollY(window.scrollY);
+              window.addEventListener('scroll', handleScroll, { passive: true });
+              return () => window.removeEventListener('scroll', handleScroll);
+          }, []);
 
           useEffect(() => {
               if (showPledgeModal) {
@@ -847,34 +896,178 @@
                   )}
 
                   {currentPage === 'accomplishments' && (
-                    <div className="pt-32 pb-24 px-4 max-w-5xl mx-auto">
-                      <div className="text-center mb-20">
-                          <span className="inline-block px-5 py-2 mb-6 text-sm font-black text-emerald-600 bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 rounded-full tracking-wider uppercase shadow-sm">Results Driven</span>
-                          <h1 className="text-5xl md:text-7xl font-black mb-8 tracking-tight">Our Impact</h1>
-                          <p className="text-2xl text-slate-600 dark:text-slate-400 max-w-3xl mx-auto leading-relaxed font-light">
-                              Driving measurable environmental change through youth leadership and innovation across Qatar.
-                          </p>
-                      </div>
+                    <div className="w-full bg-slate-50 dark:bg-slate-900 pb-0">
+                        
+                        {/* 1. HERO SECTION: Champions Reveal (Parallax & Zoom) */}
+                        <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black">
+                            <div 
+                                className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544531696-282370099b8f?w=1600&fit=crop')] bg-fixed bg-cover bg-center transition-transform duration-75 ease-out"
+                                style={{ transform: `scale(${1 + scrollY * 0.0003})` }}
+                            ></div>
+                            <div 
+                                className="absolute inset-0 bg-black transition-opacity duration-75 ease-out"
+                                style={{ opacity: Math.max(0, 0.8 - scrollY * 0.0015) }}
+                            ></div>
+                            <div className="relative z-10 text-center px-4" style={{ transform: `translateY(${scrollY * 0.3}px)` }}>
+                                <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-black text-white tracking-tighter drop-shadow-2xl mb-4">Action Over Words.</h1>
+                                <p className="text-xl md:text-3xl text-emerald-400 font-bold tracking-widest uppercase drop-shadow-md">Our Impact Track Record</p>
+                            </div>
+                        </section>
 
-                      <div className="grid md:grid-cols-2 gap-16 items-center mb-24">
-                          <div className="group">
-                              <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/30 rounded-[2rem] flex items-center justify-center text-blue-600 mb-8 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 ease-apple shadow-sm">
-                                  <Icon path={Icons.Globe} size={32} />
-                              </div>
-                              <h2 className="text-4xl font-black mb-6">National Reach</h2>
-                              <p className="text-xl text-slate-600 dark:text-slate-300 leading-relaxed font-light">
-                                  EcoAwareness has grown from a classroom idea into a movement reaching students across Qatar. We are building a generation of eco-conscious leaders.
-                              </p>
-                          </div>
-                          <div className="bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl p-10 rounded-[3rem] shadow-2xl border border-white dark:border-slate-700 hover:-translate-y-2 transition-transform duration-500 ease-apple">
-                              <div className="grid grid-cols-2 gap-8 text-center">
-                                  <div><div className="text-5xl font-black text-emerald-500 mb-2">5+</div><div className="text-sm text-slate-500 font-bold uppercase">Schools</div></div>
-                                  <div><div className="text-5xl font-black text-emerald-500 mb-2">500+</div><div className="text-sm text-slate-500 font-bold uppercase">Students</div></div>
-                                  <div><div className="text-5xl font-black text-emerald-500 mb-2">10+</div><div className="text-sm text-slate-500 font-bold uppercase">Workshops</div></div>
-                                  <div><div className="text-5xl font-black text-emerald-500 mb-2">3</div><div className="text-sm text-slate-500 font-bold uppercase">Events</div></div>
-                              </div>
-                          </div>
-                      </div>
+                        {/* 2. THE IMPACT BY THE NUMBERS (Intersection Observer) */}
+                        <section className="relative -mt-10 z-20 max-w-6xl mx-auto px-4">
+                            <div className="bg-slate-900 dark:bg-slate-950 backdrop-blur-2xl rounded-[3rem] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-slate-700/50">
+                                <div className="grid grid-cols-2 md:grid-cols-4 gap-6 divide-x-0 md:divide-x divide-y md:divide-y-0 divide-slate-700/50">
+                                    <AnimatedCounter target={15000} label="Total Views" />
+                                    <AnimatedCounter target={50} label="Events Hosted" />
+                                    <AnimatedCounter target={120} label="Workshops Conducted" />
+                                    <AnimatedCounter target={1400} label="Active Advocates" />
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* 3. THE "TROPHY ROOM" (Bento Box Grid) */}
+                        <section className="py-24 px-4 max-w-7xl mx-auto">
+                            <div className="text-center mb-16">
+                                <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white">The Trophy Room</h2>
+                                <p className="text-lg text-slate-600 dark:text-slate-400 mt-4 font-light">Recognized locally and internationally for our sustainable innovation.</p>
+                            </div>
+                            
+                            <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px] md:auto-rows-[300px]">
+                                {/* Card 1: Large (Spans 2 columns & 2 rows) */}
+                                <div className="md:col-span-2 md:row-span-2 bg-gradient-to-br from-emerald-500 to-teal-700 rounded-[3rem] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden group hover:scale-[1.01] transition-transform duration-500 ease-apple flex flex-col justify-end">
+                                    <div className="absolute top-0 right-0 w-96 h-96 bg-white/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-white/30 transition-colors"></div>
+                                    <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-[2rem] flex items-center justify-center text-white mb-auto border border-white/30">
+                                        <Icon path={Icons.Award} size={40} />
+                                    </div>
+                                    <h3 className="text-4xl md:text-6xl font-black tracking-tight mb-4 drop-shadow-md relative z-10">1st Place Champions</h3>
+                                    <p className="text-lg md:text-xl text-emerald-50 font-medium max-w-lg relative z-10">Kahramaa Tarsheed competition for sustainable innovation and groundbreaking environmental initiatives.</p>
+                                </div>
+                                
+                                {/* Card 2: Medium */}
+                                <div className="md:col-span-1 md:row-span-1 bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl rounded-[3rem] p-10 border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-apple flex flex-col justify-center relative overflow-hidden group">
+                                    <div className="absolute top-0 right-0 w-32 h-32 bg-blue-400/10 rounded-full blur-2xl group-hover:bg-blue-400/20 transition-colors"></div>
+                                    <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-3">National Runners-Up</h3>
+                                    <p className="text-slate-600 dark:text-slate-400 font-light">Secured 2nd place overall in the prestigious Destination Imagination competition.</p>
+                                </div>
+
+                                {/* Card 3: Medium */}
+                                <div className="md:col-span-1 md:row-span-1 bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl rounded-[3rem] p-10 border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-apple flex flex-col justify-center relative overflow-hidden group">
+                                    <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-400/10 rounded-full blur-2xl group-hover:bg-purple-400/20 transition-colors"></div>
+                                    <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-3">Doc of the Future</h3>
+                                    <p className="text-slate-600 dark:text-slate-400 font-light">Recognized as distinguished finalists at Weill Cornell Medicine-Qatar.</p>
+                                </div>
+
+                                {/* Card 4: Sleek (Spans 3 cols on mobile, 3 on desktop bottom) */}
+                                <div className="md:col-span-3 bg-slate-900 dark:bg-slate-950 rounded-[3rem] p-10 md:p-12 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-8 hover:bg-slate-800 transition-colors duration-500 ease-apple group">
+                                    <div>
+                                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/20 text-emerald-400 font-bold text-xs rounded-full uppercase tracking-widest mb-4">Technology</div>
+                                        <h3 className="text-3xl md:text-4xl font-black mb-2">Tech Innovators</h3>
+                                        <p className="text-slate-400 font-light max-w-xl">Awarded prestigious medals in AI and App Development, bridging the gap between digital solutions and ecology.</p>
+                                    </div>
+                                    <div className="w-24 h-24 bg-slate-800 rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-emerald-600 transition-all duration-500 ease-apple">
+                                        <Icon path={Icons.BrainCircuit} size={40} className="text-emerald-400 group-hover:text-white transition-colors" />
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* 4. ADVOCACY IN ACTION (Staggered Timeline) */}
+                        <section className="py-24 bg-white dark:bg-slate-900/40 border-t border-slate-100 dark:border-slate-800/50">
+                            <div className="max-w-5xl mx-auto px-4">
+                                <div className="text-center mb-20">
+                                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white">Advocacy in Action</h2>
+                                    <p className="text-lg text-slate-600 dark:text-slate-400 mt-4 font-light">Taking our message from the classroom to the global stage.</p>
+                                </div>
+
+                                <div className="relative">
+                                    {/* Vertical Center Line */}
+                                    <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-emerald-100 dark:bg-emerald-900/50 md:-translate-x-1/2 rounded-full"></div>
+
+                                    {/* Timeline Item 1 */}
+                                    <div className="relative flex items-center justify-end md:justify-start mb-16 group">
+                                        <div className="absolute left-4 md:left-1/2 w-6 h-6 bg-emerald-500 rounded-full border-4 border-white dark:border-slate-900 md:-translate-x-1/2 group-hover:scale-150 transition-transform duration-500 z-10 shadow-md"></div>
+                                        <div className="w-[calc(100%-3rem)] md:w-[45%] bg-slate-50 dark:bg-slate-800 p-8 rounded-[2rem] shadow-md border border-slate-100 dark:border-slate-700 ml-auto md:ml-0 md:mr-auto hover:-translate-y-2 transition-transform duration-500 ease-apple">
+                                            <span className="text-emerald-600 font-black text-sm uppercase tracking-widest mb-2 block">Public Speaking</span>
+                                            <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-3">Q-CON Panelists</h3>
+                                            <p className="text-slate-600 dark:text-slate-300 font-light">Taking the main stage to fiercely advocate for sustainability and youth-driven environmental policies.</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Timeline Item 2 */}
+                                    <div className="relative flex items-center justify-end mb-16 group">
+                                        <div className="absolute left-4 md:left-1/2 w-6 h-6 bg-teal-500 rounded-full border-4 border-white dark:border-slate-900 md:-translate-x-1/2 group-hover:scale-150 transition-transform duration-500 z-10 shadow-md"></div>
+                                        <div className="w-[calc(100%-3rem)] md:w-[45%] bg-slate-50 dark:bg-slate-800 p-8 rounded-[2rem] shadow-md border border-slate-100 dark:border-slate-700 ml-auto hover:-translate-y-2 transition-transform duration-500 ease-apple">
+                                            <span className="text-teal-600 font-black text-sm uppercase tracking-widest mb-2 block">International Presence</span>
+                                            <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-3">Global Robotics</h3>
+                                            <p className="text-slate-600 dark:text-slate-300 font-light">Representing Qatar at WRO Turkey, showcasing the integration of robotics with environmental problem solving.</p>
+                                        </div>
+                                    </div>
+
+                                    {/* Timeline Item 3 */}
+                                    <div className="relative flex items-center justify-end md:justify-start group">
+                                        <div className="absolute left-4 md:left-1/2 w-6 h-6 bg-emerald-500 rounded-full border-4 border-white dark:border-slate-900 md:-translate-x-1/2 group-hover:scale-150 transition-transform duration-500 z-10 shadow-md"></div>
+                                        <div className="w-[calc(100%-3rem)] md:w-[45%] bg-slate-50 dark:bg-slate-800 p-8 rounded-[2rem] shadow-md border border-slate-100 dark:border-slate-700 ml-auto md:ml-0 md:mr-auto hover:-translate-y-2 transition-transform duration-500 ease-apple">
+                                            <span className="text-emerald-600 font-black text-sm uppercase tracking-widest mb-2 block">Communication</span>
+                                            <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-3">Master Communicators</h3>
+                                            <p className="text-slate-600 dark:text-slate-300 font-light">Reaching the semi-finals of the Qatar Debate championship, proving our ability to articulate powerful climate narratives.</p>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* 5. THE VIDEO VAULT (Horizontal Scroll Slider) */}
+                        <section className="py-24 px-4 overflow-hidden">
+                            <div className="max-w-7xl mx-auto mb-12 flex justify-between items-end px-4">
+                                <div>
+                                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white">The Video Vault</h2>
+                                    <p className="text-lg text-slate-600 dark:text-slate-400 mt-2 font-light">Swipe to view our campaigns and events.</p>
+                                </div>
+                            </div>
+                            
+                            {/* Scroll Container */}
+                            <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-12 px-4 md:px-[calc((100vw-80rem)/2)] [&::-webkit-scrollbar]:hidden">
+                                {[
+                                    { title: "Empower 2025 Highlights", img: "https://images.unsplash.com/photo-1544531696-282370099b8f?w=600&fit=crop" },
+                                    { title: "Mangrove Cleanup VLOG", img: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&fit=crop" },
+                                    { title: "Tech Innovation Pitch", img: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&fit=crop" },
+                                    { title: "Badminton 2026 Trailer", img: "https://images.unsplash.com/photo-1511497584788-876760111969?w=600&fit=crop" },
+                                    { title: "Youth Debate Finals", img: "https://images.unsplash.com/photo-1526676037777-05a232554f77?w=600&fit=crop" }
+                                ].map((video, idx) => (
+                                    <div key={idx} className="min-w-[85vw] md:min-w-[400px] aspect-video bg-slate-800 rounded-[2rem] snap-center relative group cursor-pointer overflow-hidden shadow-lg border border-slate-200 dark:border-slate-700">
+                                        <img src={video.img} alt={video.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-apple" />
+                                        <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity duration-300">
+                                            <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/40 group-hover:scale-110 group-hover:bg-emerald-500 transition-all duration-300 ease-apple mb-auto mt-auto">
+                                                <Icon path={Icons.Play} size={32} className="ml-1" />
+                                            </div>
+                                            <div className="w-full p-6 text-left mt-auto">
+                                                <h4 className="text-white font-black text-xl translate-y-2 group-hover:translate-y-0 transition-transform duration-300">{video.title}</h4>
+                                            </div>
+                                        </div>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
+                        {/* 6. "IN THE NEWS" (Infinite Marquee Banner) */}
+                        <section className="bg-emerald-600 dark:bg-emerald-800 text-white py-6 overflow-hidden relative">
+                            <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-emerald-600 dark:from-emerald-800 to-transparent z-10"></div>
+                            <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-emerald-600 dark:from-emerald-800 to-transparent z-10"></div>
+                            <div className="animate-marquee whitespace-nowrap flex items-center w-max">
+                                {Array(8).fill("").map((_, i) => (
+                                    <div key={i} className="flex items-center mx-8 gap-8 opacity-80">
+                                        <span className="text-xl md:text-2xl font-black tracking-widest uppercase">Doha News</span>
+                                        <span className="w-2 h-2 bg-white rounded-full"></span>
+                                        <span className="text-xl md:text-2xl font-black tracking-widest uppercase">Al Jazeera Youth</span>
+                                        <span className="w-2 h-2 bg-white rounded-full"></span>
+                                        <span className="text-xl md:text-2xl font-black tracking-widest uppercase">Qatar Tribune</span>
+                                        <span className="w-2 h-2 bg-white rounded-full"></span>
+                                    </div>
+                                ))}
+                            </div>
+                        </section>
+
                     </div>
                   )}
 
