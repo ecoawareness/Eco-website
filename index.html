@@ -274,7 +274,6 @@
         ];
 
         const ABOUT_TEAM = [
-            { name: "Mohamed Elfatih", role: "Founder", image: "./assets/elfatihh.jpg", bio: "Driven by a passion for technology and advocacy. Mohamed's background bridges innovation—representing Qatar at WRO Turkey and winning medals in AI and App Development—and powerful communication, having reached the semi-finals of the Qatar Debate championship." },
             { name: "Mariam", role: "Community Lead", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop", bio: "Spearheading our local community initiatives and fostering partnerships with educational institutions." },
             { name: "Henin", role: "Sustainability Advocate", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop", bio: "Passionate about driving actionable climate awareness campaigns for high school students." },
             { name: "Fatima", role: "Content Director", image: "./assets/fatima.jpeg", bio: "Crafting compelling narratives and educational materials to inspire the next generation." },
@@ -634,7 +633,7 @@
                     <div className="w-full">
                         {/* 1. HERO VIDEO BANNER */}
                         <section className="relative h-[70vh] md:h-[80vh] flex items-center justify-center overflow-hidden">
-                            <div className="absolute inset-0 bg-black/50 z-10 pointer-events-none"></div>
+                            <div className="absolute inset-0 bg-black/60 z-10 pointer-events-none"></div>
                             <video 
                                 src="./assets/eco_video.mp4" 
                                 autoPlay 
@@ -700,18 +699,18 @@
                             </div>
                         </section>
 
-                        {/* 4. MEET THE TEAM */}
+                        {/* 4. MEET THE TEAM (FLAT GRID) */}
                         <section className="py-24 bg-slate-50 dark:bg-slate-900 border-t border-slate-200 dark:border-slate-800">
                             <div className="max-w-7xl mx-auto px-4">
                                 <div className="text-center mb-20">
-                                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">Meet the Core Team</h2>
+                                    <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">The Core Team</h2>
                                     <p className="text-xl text-slate-600 dark:text-slate-400 font-light max-w-2xl mx-auto">
                                         The passionate youth driving the EcoAwareness initiative forward.
                                     </p>
                                 </div>
                                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
                                     {ABOUT_TEAM.map((member, idx) => (
-                                        <div key={idx} className={`bg-white dark:bg-slate-800 p-8 rounded-[3rem] shadow-xl border border-slate-100 dark:border-slate-700 text-center hover:scale-[1.02] transition-transform duration-500 ease-apple ${idx === 0 ? 'lg:col-span-3 sm:col-span-2 md:w-2/3 mx-auto' : ''}`}>
+                                        <div key={idx} className="bg-white dark:bg-slate-800 p-8 rounded-[3rem] shadow-xl border border-slate-100 dark:border-slate-700 text-center hover:scale-[1.02] transition-transform duration-500 ease-apple">
                                             <div className="relative inline-block mb-6">
                                                 <img 
                                                     src={member.image} 
@@ -730,7 +729,38 @@
                             </div>
                         </section>
 
-                        {/* 5. GET INVOLVED CTA BANNER */}
+                        {/* 5. INTERACTIVE SECTION: THE YOUTH MANIFESTO */}
+                        <section className="relative py-32 bg-slate-900 overflow-hidden">
+                            {/* Abstract Ambient Background */}
+                            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1511497584788-876760111969?w=1600&fit=crop')] bg-cover bg-center opacity-30"></div>
+                            <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-900/80 to-slate-900"></div>
+                            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/20 rounded-full blur-[100px] pointer-events-none"></div>
+
+                            <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
+                                <div className="bg-white/10 backdrop-blur-2xl border border-white/20 p-10 md:p-16 rounded-[3rem] shadow-2xl hover:bg-white/[0.15] transition-colors duration-500 ease-apple">
+                                    <h2 className="text-4xl md:text-5xl font-black text-white mb-6 drop-shadow-lg">The Eco Manifesto</h2>
+                                    <p className="text-xl md:text-2xl text-emerald-50/90 font-light leading-relaxed max-w-2xl mx-auto mb-12">
+                                        We believe in a future where innovation and environmental action go hand-in-hand.
+                                    </p>
+                                    
+                                    <div className="relative inline-block group">
+                                        <div className="absolute inset-0 bg-emerald-500 rounded-full blur-xl opacity-50 group-hover:opacity-100 animate-pulse transition-opacity duration-500"></div>
+                                        <button className="relative px-12 py-5 bg-emerald-500 text-white rounded-full font-black text-xl hover:bg-emerald-400 active:scale-95 transition-all duration-300 ease-apple flex items-center justify-center gap-3 shadow-xl">
+                                            Take the Pledge <Icon path={Icons.Leaf} size={24} />
+                                        </button>
+                                    </div>
+
+                                    <div className="mt-12 flex items-center justify-center gap-4">
+                                        <div className="inline-flex items-center gap-3 px-6 py-3 bg-black/40 backdrop-blur-md rounded-full border border-white/10 text-emerald-100 font-medium">
+                                            <div className="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(52,211,153,0.8)]"></div>
+                                            <span>Join <span className="font-black text-white tracking-widest bg-emerald-900/50 px-3 py-1 rounded-lg border border-emerald-500/30 ml-1 mr-1">[ 1,402 ]</span> advocates who have already pledged.</span>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </section>
+
+                        {/* 6. GET INVOLVED CTA BANNER */}
                         <section className="bg-gradient-to-br from-emerald-600 via-teal-600 to-blue-700 py-24 text-center px-4 relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
                             <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
