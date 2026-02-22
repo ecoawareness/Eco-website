@@ -77,7 +77,7 @@
     <div id="root"></div>
 
     <script type="text/babel">
-        const { useState, useEffect } = React;
+        const { useState, useEffect, useRef } = React;
 
         // --- INTERNAL ICON SYSTEM ---
         const Icon = ({ path, size = 24, className = "" }) => (
@@ -132,19 +132,6 @@
             { id: "mohammadfiras", name: "Mohammed Firas", role: "Co-Founder & Media", image: "./assets/firas.jpg.jpeg", bio: "Mohammed Firas leads the digital narrative, ensuring the message of sustainability resonates with youth." },
             { id: "mohamedmishal", name: "Mohammed Mishal", role: "Co-Founder & Ideas", image: "./assets/mishal.jpg.jpeg", bio: "The creative force behind our curriculum, transforming complex data into engaging learning experiences." },
             { id: "ahmed", name: "Ahmed", role: "Co-Founder & Innovation", image: "./assets/ahmed.jpg.jpeg", bio: "Ahmed spearheads the integration of technology to gamify the learning experience." }
-          ],
-          members: [
-            { name: "Mariam", image: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?w=400&h=400&fit=crop" }, 
-            { name: "Amna", image: "https://images.unsplash.com/photo-1517841905240-472988babdf9?w=400&h=400&fit=crop" },
-            { name: "Fatima", image: "./assets/fatima.jpeg" }, 
-            { name: "Henin", image: "https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=400&h=400&fit=crop" }, 
-            { name: "Alyafi", image: "./assets/alyafi.jpeg" },
-            { name: "Muhamed Abdullah", image: "./assets/muhamed abdullah.jpeg" },
-          ],
-          achievements: [
-            { id: 1, type: "Workshops", title: "Empower 2025 Workshop", date: "2025", image: "https://images.unsplash.com/photo-1544531696-282370099b8f?w=600&fit=crop", desc: "Led an interactive sustainability workshop for youth delegates." },
-            { id: 2, type: "Media", title: "Featured in Doha News", date: "Dec 2023", image: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&fit=crop", desc: "Our initiative was highlighted as a leading youth movement." },
-            { id: 3, type: "AI", title: "EcoBot AI", date: "Coming Soon", image: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&fit=crop", desc: "Our AI recycling assistant is currently in development." }
           ]
         };
 
@@ -156,20 +143,6 @@
               subhead: "A youth-led initiative increasing climate awareness for high school & university students in Qatar." 
             },
             team: { title: "Founders & Leadership", view_bio: "Read Bio", join_us: "Join Us" },
-            about: {
-              title: "Who We Are",
-              intro: "EcoAwareness.qa is a youth-led environmental initiative based in Qatar. We are dedicated to raising climate awareness and fostering a culture of sustainability.",
-              story_title: "Our Story",
-              story_text1: "The idea for EcoAwareness began in Grade 10, born from a simple desire to make real environmental change in our community. We saw the need for a platform that spoke directly to the youth, by the youth.",
-              story_text2: "In Grade 11, we took decisive action, turning our concepts into concrete projects. We believe that true leadership starts with taking initiative and responsibility for our shared future.",
-              steps_title: "Our First Steps",
-              steps_text: "Our journey started in Education City, where we began creating and distributing educational climate-awareness videos. These early campaigns laid the foundation for our ongoing mission.",
-              more_work_title: "More of Our Work",
-              more_work_text: "To see more of our awareness videos, campaigns, and daily updates, visit our Instagram page.",
-              instagram_btn: "Visit Instagram",
-              team_title: "Meet the Team"
-            },
-            impact: { title: "Our Impact", filter_all: "All", future_title: "The Roadmap", milestone: "Next Milestone: Develop AI solution for sustainable education." },
             opportunities: {
               title: "The Purpose of This Platform",
               subtitle: "We built this website to be the central hub for youth sustainability in Qatar. Whether you're an institution looking to collaborate, or a student seeking to make a difference, you are in the right place.",
@@ -185,20 +158,6 @@
             nav: { home: "الرئيسية", about: "من نحن", accomplishments: "الإنجازات", opportunities: "الفرص", contact: "تواصل معنا" },
             hero: { headline: "تمكين الشباب لمستقبل مستدام", subhead: "مبادرة شبابية لزيادة الوعي المناخي لطلاب المدارس الثانوية والجامعات في قطر." },
             team: { title: "المؤسسون والقيادة", view_bio: "اقرأ المزيد", join_us: "انضم إلينا" },
-            about: {
-              title: "من نحن",
-              intro: "EcoAwareness.qa هي مبادرة بيئية يقودها الشباب ومقرها قطر.",
-              story_title: "قصتنا",
-              story_text1: "بدأت فكرة EcoAwareness في الصف العاشر، ولدت من رغبة بسيطة في إحداث تغيير بيئي حقيقي.",
-              story_text2: "في الصف الحادي عشر، اتخذنا إجراءات حاسمة، وحولنا مفاهيمنا إلى مشاريع ملموسة.",
-              steps_title: "خطواتنا الأولى",
-              steps_text: "بدأت رحلتنا في المدينة التعليمية، حيث بدأنا في إنشاء وتوزيع مقاطع فيديو تعليمية.",
-              more_work_title: "المزيد من أعمالنا",
-              more_work_text: "لمشاهدة المزيد من أعمالنا، تفضل بزيارة صفحتنا على Instagram.",
-              instagram_btn: "زيارة Instagram",
-              team_title: "تعرف على الفريق"
-            },
-            impact: { title: "تأثيرنا", filter_all: "الكل", future_title: "خارطة الطريق", milestone: "الهدف القادم: تطوير حل ذكاء اصطناعي للتعليم المستدام." },
             opportunities: {
               title: "الهدف من هذه المنصة",
               subtitle: "بنينا هذا الموقع ليكون المركز الأساسي لاستدامة الشباب في قطر. سواء كنت مؤسسة تبحث عن التعاون، أو طالبًا يسعى لإحداث فرق، فأنت في المكان المناسب.",
@@ -218,7 +177,7 @@
             { title: "Green Tech Hackathon", org: "EcoAwareness.qa", type: "Event", date: "Planning" }
         ];
 
-        // --- HARDCODED CONTENT (OFFLINE MODE) ---
+        // --- HARDCODED CONTENT FOR AI SECTIONS ---
         const STATIC_IDEAS = [
             {
                 title: "Desert Green Roofs",
@@ -231,18 +190,6 @@
                 objective: "Implement a student-led composting program to reduce food waste in schools.",
                 steps: ["Audit daily food waste in the cafeteria.", "Set up compost bins with clear signage.", "Use compost for school gardens."],
                 visionAlignment: "Environmental Development - Waste reduction and recycling."
-            },
-            {
-                title: "Smart Water Monitors",
-                objective: "Track and reduce water usage in school restrooms using student-built sensors.",
-                steps: ["Audit current water flow rates.", "Install simple flow restrictors.", "Run an awareness campaign based on usage data."],
-                visionAlignment: "Environmental Development - Sustainable management of water resources."
-            },
-            {
-                title: "Mangrove Guardians",
-                objective: "Organize regular cleanup and monitoring trips to Al Thakira mangroves.",
-                steps: ["Partner with local environmental groups.", "Document wildlife sightings.", "Remove plastic debris."],
-                visionAlignment: "Environmental Development - Protection of natural habitats."
             }
         ];
 
@@ -258,25 +205,13 @@
                 options: ["They look nice", "Carbon Sequestration", "Sand production", "Increasing humidity"],
                 correctIndex: 1,
                 explanation: "Mangroves are highly effective at capturing and storing carbon dioxide from the atmosphere, known as 'Blue Carbon'."
-            },
-            {
-                question: "Which of these is a major source of renewable energy being developed in Qatar?",
-                options: ["Coal", "Solar Energy", "Wind Energy", "Geothermal"],
-                correctIndex: 1,
-                explanation: "Qatar is investing heavily in Solar Energy, exemplified by the Al Kharsaah Solar Power Plant."
-            },
-            {
-                question: "What is the primary focus of the 'Paperless Week' initiative in schools?",
-                options: ["Saving money on printers", "Eliminating paper waste to protect forests", "Forcing students to buy laptops", "Making administration easier"],
-                correctIndex: 1,
-                explanation: "The Paperless Week encourages a digital-first approach to completely eliminate unnecessary paper waste, directly aligning with global forestry protection efforts."
             }
         ];
 
         const ABOUT_IMPACT = [
             { title: "Kahramaa Tarsheed Champions", text: "Secured 1st place in the national Tarsheed competition for sustainable innovation." },
-            { title: "Q-CON Sustainability Panel", text: "Taking the stage to advocate for youth-driven environmental policies." },
-            { title: "Community Action", text: "Hosting engaging community events like the upcoming Badminton 2026 tournament to unite advocates." }
+            { title: "Q-CON & Public Debate", text: "Advocating for youth-driven environmental policies at Q-CON, powered by strong communication skills that reached the Qatar Debate semi-finals." },
+            { title: "Active Engagement", text: "Hosting engaging community events like the upcoming Badminton 2026 tournament to unite advocates." }
         ];
 
         const ABOUT_TEAM = [
@@ -289,24 +224,21 @@
         ];
 
         // --- COMPONENTS ---
-        const AnimatedCounter = ({ target, label }) => {
+        const AnimatedCounter = ({ target, label, suffix = "" }) => {
             const [count, setCount] = useState(0);
-            const ref = React.useRef(null);
+            const ref = useRef(null);
             
             useEffect(() => {
                 const observer = new IntersectionObserver((entries) => {
                     if (entries[0].isIntersecting) {
                         let start = null;
-                        const duration = 2000; // 2 seconds animation
+                        const duration = 2000;
                         const step = (timestamp) => {
                             if (!start) start = timestamp;
                             const progress = Math.min((timestamp - start) / duration, 1);
-                            // Easing out function for a premium, smooth stop
                             const easeOutQuart = 1 - Math.pow(1 - progress, 4);
                             setCount(Math.floor(easeOutQuart * target));
-                            if (progress < 1) {
-                                window.requestAnimationFrame(step);
-                            }
+                            if (progress < 1) window.requestAnimationFrame(step);
                         };
                         window.requestAnimationFrame(step);
                         observer.disconnect();
@@ -321,7 +253,7 @@
                 <div ref={ref} className="text-center p-6 flex flex-col items-center justify-center">
                     <h3 className="text-5xl md:text-6xl font-black text-white mb-2 tracking-tighter drop-shadow-lg">
                         {count.toLocaleString()}
-                        <span className="text-emerald-400">+</span>
+                        <span className="text-emerald-400">{suffix}</span>
                     </h3>
                     <p className="text-emerald-100 font-bold tracking-widest uppercase text-xs md:text-sm">{label}</p>
                 </div>
@@ -336,8 +268,6 @@
           const generateIdea = () => {
             if (!prompt.trim()) return;
             setLoading(true); setIdea(null);
-            
-            // Simulating a quick "AI thinking" delay for the cool animation
             setTimeout(() => {
                 const randomIdea = STATIC_IDEAS[Math.floor(Math.random() * STATIC_IDEAS.length)];
                 setIdea(randomIdea);
@@ -350,32 +280,18 @@
               <div className="bg-white/40 dark:bg-slate-900/40 backdrop-blur-xl rounded-[2.5rem] p-8 md:p-12 border border-white/60 dark:border-slate-700/50 shadow-2xl relative overflow-hidden group transition-all duration-500 ease-apple">
                 <div className="absolute -top-24 -right-24 w-64 h-64 bg-emerald-400/20 rounded-full blur-3xl group-hover:bg-emerald-400/30 transition-colors duration-700 pointer-events-none"></div>
                 <div className="absolute -bottom-24 -left-24 w-64 h-64 bg-teal-400/20 rounded-full blur-3xl group-hover:bg-teal-400/30 transition-colors duration-700 pointer-events-none"></div>
-                
                 <div className="relative z-10">
                   <h2 className="text-2xl md:text-3xl font-bold flex items-center gap-3 mb-4 text-slate-800 dark:text-white">
                     <div className="p-2 bg-emerald-100 dark:bg-emerald-900/40 rounded-xl"><Icon path={Icons.Sparkles} className="text-emerald-500" size={24} /></div>
                     Eco-Innovation Lab
                   </h2>
                   <p className="mb-8 text-slate-600 dark:text-slate-300">Enter a topic (e.g., "Plastic", "Water") to get a random student project idea aligned with QNV 2030.</p>
-                  
                   <div className="flex flex-col sm:flex-row gap-4 mb-8">
-                    <input 
-                      type="text" 
-                      value={prompt}
-                      onChange={(e) => setPrompt(e.target.value)}
-                      placeholder="Enter a topic..."
-                      className="flex-grow px-6 py-4 rounded-2xl bg-white/60 dark:bg-slate-800/60 border border-white/50 dark:border-slate-600/50 focus:border-emerald-500 outline-none transition-all placeholder:text-slate-400 dark:text-white backdrop-blur-md shadow-inner text-lg"
-                      onKeyDown={(e) => e.key === 'Enter' && generateIdea()}
-                    />
-                    <button 
-                      onClick={generateIdea}
-                      disabled={loading || !prompt.trim()}
-                      className="px-8 py-4 bg-slate-900 dark:bg-emerald-600 text-white disabled:opacity-50 rounded-2xl font-bold transition-all duration-500 ease-apple active:scale-95 shadow-lg hover:shadow-xl flex items-center justify-center gap-2"
-                    >
+                    <input type="text" value={prompt} onChange={(e) => setPrompt(e.target.value)} placeholder="Enter a topic..." className="flex-grow px-6 py-4 rounded-2xl bg-white/60 dark:bg-slate-800/60 border border-white/50 dark:border-slate-600/50 focus:border-emerald-500 outline-none transition-all placeholder:text-slate-400 dark:text-white backdrop-blur-md shadow-inner text-lg" onKeyDown={(e) => e.key === 'Enter' && generateIdea()} />
+                    <button onClick={generateIdea} disabled={loading || !prompt.trim()} className="px-8 py-4 bg-slate-900 dark:bg-emerald-600 text-white disabled:opacity-50 rounded-2xl font-bold transition-all duration-500 ease-apple active:scale-95 shadow-lg hover:shadow-xl flex items-center justify-center gap-2">
                       {loading ? <Icon path={Icons.Loader2} className="animate-spin" size={20} /> : <><Icon path={Icons.Bot} size={20} /> Generate</>}
                     </button>
                   </div>
-
                   {idea && (
                     <div className="bg-white/80 dark:bg-slate-800/80 backdrop-blur-md p-8 rounded-3xl border border-white/50 dark:border-slate-600/50 animate-in fade-in slide-in-from-bottom-4 duration-500 ease-apple shadow-sm">
                       <h3 className="text-2xl font-black text-emerald-700 dark:text-emerald-400 mb-3">{idea.title}</h3>
@@ -383,8 +299,7 @@
                       <ul className="space-y-3 mb-6">
                         {idea.steps?.map((step, idx) => (
                           <li key={idx} className="text-base flex items-start gap-3 text-slate-800 dark:text-slate-200">
-                            <span className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">{idx + 1}</span> 
-                            {step}
+                            <span className="w-6 h-6 rounded-full bg-emerald-100 dark:bg-emerald-900/50 text-emerald-600 dark:text-emerald-400 flex items-center justify-center text-xs font-bold flex-shrink-0 mt-0.5">{idx + 1}</span> {step}
                           </li>
                         ))}
                       </ul>
@@ -409,15 +324,9 @@
 
           const fetchQuestion = () => {
             setLoading(true); setQuizData(null); setSelectedIdx(null); setShowResult(false);
-            
-            // Simulating a loading delay
             setTimeout(() => {
                 let nextQ;
-                // Try to get a question that is different from the current one
-                do {
-                    nextQ = STATIC_QUESTIONS[Math.floor(Math.random() * STATIC_QUESTIONS.length)];
-                } while (STATIC_QUESTIONS.length > 1 && quizData && nextQ.question === quizData.question);
-                
+                do { nextQ = STATIC_QUESTIONS[Math.floor(Math.random() * STATIC_QUESTIONS.length)]; } while (STATIC_QUESTIONS.length > 1 && quizData && nextQ.question === quizData.question);
                 setQuizData(nextQ);
                 setLoading(false);
             }, 400);
@@ -443,7 +352,6 @@
                       <Icon path={Icons.RefreshCw} size={16} className={loading ? "animate-spin" : ""} /> Skip
                     </button>
                   </div>
-
                   {loading ? (
                      <div className="h-64 flex flex-col items-center justify-center text-slate-400">
                         <Icon path={Icons.Loader2} className="animate-spin mb-4 text-emerald-500" size={40} />
@@ -451,9 +359,7 @@
                      </div>
                   ) : quizData ? (
                      <div className="animate-in fade-in slide-in-from-bottom-4 duration-500 ease-apple">
-                        <h3 className="text-xl md:text-2xl font-black mb-8 leading-relaxed text-slate-800 dark:text-white">
-                          {quizData.question}
-                        </h3>
+                        <h3 className="text-xl md:text-2xl font-black mb-8 leading-relaxed text-slate-800 dark:text-white">{quizData.question}</h3>
                         <div className="grid gap-4 mb-6 relative z-10">
                           {quizData.options?.map((opt, idx) => {
                             let btnClass = "p-5 rounded-2xl border-2 text-left font-semibold text-lg transition-all duration-300 ease-apple active:scale-[0.98] ";
@@ -479,9 +385,7 @@
                             <h4 className="font-black text-emerald-800 dark:text-emerald-200 mb-2 flex items-center gap-2">
                               <Icon path={Icons.Lightbulb} size={20} /> Explanation
                             </h4>
-                            <p className="text-emerald-900/80 dark:text-emerald-100/90 leading-relaxed mb-6">
-                              {quizData.explanation}
-                            </p>
+                            <p className="text-emerald-900/80 dark:text-emerald-100/90 leading-relaxed mb-6">{quizData.explanation}</p>
                             <button onClick={fetchQuestion} className="px-8 py-3 bg-emerald-600 text-white rounded-full font-bold flex items-center gap-2 hover:bg-emerald-500 transition-all duration-300 ease-apple active:scale-95 shadow-md">
                               Next Question <Icon path={Icons.ArrowRight} size={18} />
                             </button>
@@ -514,13 +418,10 @@
           const [animatingOut, setAnimatingOut] = useState(false);
           const [selectedBio, setSelectedBio] = useState(null);
 
-          // Pledge System State
           const [pledgeCount, setPledgeCount] = useState(1402);
           const [showPledgeModal, setShowPledgeModal] = useState(false);
           const [hasPledged, setHasPledged] = useState(false);
           const [popAnimation, setPopAnimation] = useState(false);
-          
-          // Scroll Tracker for Parallax FX
           const [scrollY, setScrollY] = useState(0);
 
           useEffect(() => {
@@ -530,12 +431,8 @@
           }, []);
 
           useEffect(() => {
-              if (showPledgeModal) {
-                  document.body.style.overflow = 'hidden';
-              } else {
-                  document.body.style.overflow = 'auto';
-              }
-              return () => { document.body.style.overflow = 'auto'; };
+              if (showPledgeModal) document.body.style.overflow = 'hidden';
+              else document.body.style.overflow = 'auto';
           }, [showPledgeModal]);
 
           const handlePledge = () => {
@@ -556,10 +453,7 @@
 
           const changePage = (newPage) => {
             if (newPage === currentPage || animatingOut) return;
-            
-            // Force close the modal if they navigate away while it's open
             setShowPledgeModal(false); 
-            
             setAnimatingOut(true);
             window.scrollTo({ top: 0, behavior: 'smooth' });
             setTimeout(() => {
@@ -579,14 +473,9 @@
                 <nav className="w-full max-w-6xl transition-all duration-500 ease-apple backdrop-blur-xl border rounded-full shadow-lg pointer-events-auto bg-white/70 dark:bg-slate-900/70 border-white/40 dark:border-slate-700/50">
                   <div className="px-4 h-20 flex items-center justify-between">
                     <div className="flex items-center cursor-pointer group active:scale-95 transition-transform duration-300 ease-apple" onClick={() => changePage('home')}>
-                        <img 
-                            src="./assets/IMG.PNG" 
-                            alt="EcoAwareness.qa Logo" 
-                            className="h-10 md:h-12 w-auto group-hover:scale-105 transition-transform duration-500 ease-apple drop-shadow-sm" 
-                        />
+                        <img src="./assets/IMG.PNG" alt="EcoAwareness.qa Logo" className="h-10 md:h-12 w-auto group-hover:scale-105 transition-transform duration-500 ease-apple" />
                     </div>
                     
-                    {/* Segmented Controls */}
                     <div className="hidden md:flex items-center gap-1 bg-slate-100/50 dark:bg-slate-800/50 p-1.5 rounded-full border border-slate-200/50 dark:border-slate-700/50 backdrop-blur-md shadow-inner">
                         {navItems.map((item) => (
                             <button 
@@ -601,7 +490,6 @@
                         ))}
                     </div>
 
-                    {/* Actions */}
                     <div className="flex items-center gap-2 border-l pl-4 border-slate-200 dark:border-slate-700">
                         <button onClick={() => setLang(lang === 'en' ? 'ar' : 'en')} className="font-bold text-xs px-3 py-2.5 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 active:scale-95 transition-all duration-300 ease-apple shadow-sm">{lang === 'en' ? 'AR' : 'EN'}</button>
                         <button onClick={toggleTheme} className="p-2.5 rounded-full bg-slate-100 dark:bg-slate-800 hover:bg-slate-200 dark:hover:bg-slate-700 active:scale-95 transition-all duration-300 ease-apple shadow-sm">
@@ -613,77 +501,30 @@
               </div>
 
               <main className="pt-0 min-h-screen">
-                {/* APPLE PAGE TRANSITION WRAPPER */}
                 <div className={`transition-all transform-gpu duration-500 ease-apple ${animatingOut ? 'opacity-0 scale-[0.97] translate-y-8 blur-[8px]' : 'opacity-100 scale-100 translate-y-0 blur-0'}`}>
                   
                   {currentPage === 'home' && (
                     <div>
-                      {/* CONNECTED ED INSPIRED HERO */}
                       <section className="relative overflow-hidden bg-gradient-to-br from-emerald-400 via-emerald-600 to-teal-800 dark:from-emerald-700 dark:via-emerald-900 dark:to-slate-950 pt-40 pb-44 md:pt-48 md:pb-56">
-                        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-slate-50 dark:bg-slate-900 rounded-full blur-[80px] pointer-events-none transition-colors duration-500"></div>
-                        <div className="absolute -bottom-24 left-[20%] w-[30rem] h-64 bg-slate-50 dark:bg-slate-900 rounded-full blur-[80px] pointer-events-none transition-colors duration-500"></div>
-                        <div className="absolute -bottom-32 right-[20%] w-[40rem] h-80 bg-slate-50 dark:bg-slate-900 rounded-[100%] blur-[80px] pointer-events-none transition-colors duration-500"></div>
-                        
+                        <div className="absolute -bottom-24 -left-24 w-96 h-96 bg-slate-50 dark:bg-slate-900 rounded-full blur-[80px] pointer-events-none"></div>
                         <div className="max-w-7xl mx-auto px-4 relative z-10 flex flex-col items-center text-center">
-                          <div className="inline-flex items-center gap-2 px-5 py-2.5 mb-8 text-xs md:text-sm font-bold tracking-wide text-white bg-white/20 backdrop-blur-md rounded-full border border-white/30 shadow-sm cursor-default hover:bg-white/30 transition-colors duration-500 ease-apple">
-                            <Icon path={Icons.Sparkles} size={16} className="text-white opacity-90" />
-                            #1 Platform for Sustainability • Starting in Qatar & MENA
-                          </div>
-                          
                           <h1 className="text-5xl md:text-7xl lg:text-[6rem] font-black tracking-tight mb-8 leading-[1.05] text-white drop-shadow-md max-w-5xl">
                             The #1 Platform <span className="italic font-serif opacity-90 text-emerald-100">for</span> Sustainability in MENA
                           </h1>
-                          
-                          <div className="flex items-center gap-3 mb-12 bg-white/10 backdrop-blur-md px-5 py-2.5 rounded-full border border-white/20 shadow-lg hover:scale-105 transition-transform duration-500 ease-apple cursor-pointer group">
-                              <span className="text-white text-sm font-medium">Backed by</span>
-                              <div className="flex items-center gap-3 bg-white/20 px-3 py-1.5 rounded-full border border-white/10 group-hover:bg-white/30 transition-colors">
-                                  <img src={DATA.leadership[0].image} className="w-7 h-7 rounded-full object-cover shadow-sm" alt="Founder" />
-                                  <span className="text-white text-sm font-bold">Mr. Mohammed Elfatih</span>
-                              </div>
-                          </div>
-
                           <div className="flex flex-col sm:flex-row gap-5 justify-center w-full sm:w-auto">
-                            <button 
-                              onClick={() => changePage('accomplishments')}
-                              className="px-10 py-4 bg-white text-emerald-700 hover:bg-slate-50 rounded-full font-bold text-lg transition-all shadow-[0_0_40px_-10px_rgba(255,255,255,0.4)] flex items-center justify-center gap-3 active:scale-95 duration-500 ease-apple group"
-                            >
-                              See Our Work <Icon path={Icons.ArrowRight} size={20} className="group-hover:translate-x-1 transition-transform" />
-                            </button>
-                            <button 
-                              onClick={() => changePage('about')}
-                              className="px-10 py-4 bg-transparent text-white border-[2px] border-white/40 hover:bg-white/10 backdrop-blur-sm rounded-full font-bold text-lg transition-all active:scale-95 duration-500 ease-apple"
-                            >
-                              About Us
-                            </button>
+                            <button onClick={() => changePage('accomplishments')} className="px-10 py-4 bg-white text-emerald-700 hover:bg-slate-50 rounded-full font-bold text-lg transition-all shadow-xl flex items-center justify-center gap-3 group active:scale-95"><Icon path={Icons.ArrowRight} size={20} /> See Our Work</button>
+                            <button onClick={() => changePage('about')} className="px-10 py-4 bg-transparent text-white border-[2px] border-white/40 hover:bg-white/10 rounded-full font-bold text-lg active:scale-95">About Us</button>
                           </div>
-
-                          {/* ======================================================== */}
-                          {/* 🎬 HOME PAGE VIDEO (TIKTOK / REEL SIZE) 🎬                 */}
-                          {/* ======================================================== */}
-                          <div className="mt-16 w-full max-w-sm md:max-w-md mx-auto aspect-[9/16] rounded-[2rem] md:rounded-[3rem] overflow-hidden shadow-2xl border-[4px] border-white/20 dark:border-slate-800/50 relative group hover:shadow-[0_0_60px_-15px_rgba(16,185,129,0.5)] transition-all duration-500 ease-apple bg-black">
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-500 z-10 pointer-events-none"></div>
-                              <video 
-                                  src="./assets/Homepage.mp4" 
-                                  autoPlay 
-                                  loop 
-                                  muted
-                                  playsInline
-                                  className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-apple"
-                              >
-                                  Your browser does not support the video tag.
-                              </video>
+                          <div className="mt-16 w-full max-w-sm md:max-w-md mx-auto aspect-[9/16] rounded-[2rem] overflow-hidden shadow-2xl border-[4px] border-white/20 relative bg-black">
+                              <video src="./assets/Homepage.mp4" autoPlay loop muted playsInline className="w-full h-full object-cover"></video>
                           </div>
-                          {/* ======================================================== */}
-
                         </div>
                       </section>
-                      
                       <Marquee />
-                      
                       <AIIdeaGenerator />
                       <AIQuizSection />
 
-                      {/* TEAM SECTION (APPLE STYLE) */}
+                      {/* TEAM SECTION */}
                       <section className="py-24 bg-slate-50 dark:bg-slate-800/50">
                           <div className="max-w-7xl mx-auto px-4">
                               <h2 className="text-4xl font-black text-center mb-16">{t.team.title}</h2>
@@ -717,23 +558,10 @@
                         {/* 1. HERO VIDEO BANNER */}
                         <section className="relative h-[70vh] md:h-[80vh] flex items-center justify-center overflow-hidden">
                             <div className="absolute inset-0 bg-black/60 z-10 pointer-events-none"></div>
-                            <video 
-                                src="./assets/eco_video.mp4" 
-                                autoPlay 
-                                loop 
-                                muted 
-                                playsInline
-                                className="absolute inset-0 w-full h-full object-cover z-0"
-                            >
-                                Your browser does not support the video tag.
-                            </video>
+                            <video src="./assets/eco_video.mp4" autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0"></video>
                             <div className="relative z-20 text-center px-4 max-w-4xl mx-auto mt-16">
-                                <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight drop-shadow-lg">
-                                    Youth-Led.<br className="md:hidden" /> Future-Focused.
-                                </h1>
-                                <p className="text-xl md:text-2xl text-emerald-50 font-light drop-shadow-md">
-                                    Driving sustainability and awareness across Qatar.
-                                </p>
+                                <h1 className="text-5xl md:text-7xl font-black text-white mb-6 tracking-tight drop-shadow-lg">Youth-Led.<br className="md:hidden" /> Future-Focused.</h1>
+                                <p className="text-xl md:text-2xl text-emerald-50 font-light drop-shadow-md">Driving sustainability and awareness across Qatar.</p>
                             </div>
                         </section>
 
@@ -741,22 +569,14 @@
                         <section className="py-24 bg-slate-50 dark:bg-slate-900 border-y border-slate-200 dark:border-slate-800">
                             <div className="max-w-7xl mx-auto px-4 grid md:grid-cols-2 gap-12">
                                 <div className="bg-white dark:bg-slate-800 p-12 rounded-[3rem] shadow-xl border border-slate-100 dark:border-slate-700 hover:-translate-y-2 transition-transform duration-500 ease-apple group">
-                                    <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/40 rounded-2xl flex items-center justify-center text-emerald-600 mb-8 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 ease-apple">
-                                        <Icon path={Icons.Target} size={32} />
-                                    </div>
+                                    <div className="w-16 h-16 bg-emerald-100 dark:bg-emerald-900/40 rounded-2xl flex items-center justify-center text-emerald-600 mb-8 group-hover:scale-110 group-hover:rotate-6 transition-all duration-500 ease-apple"><Icon path={Icons.Target} size={32} /></div>
                                     <h2 className="text-3xl font-black mb-6 text-slate-900 dark:text-white">Our Mission</h2>
-                                    <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-light">
-                                        To actively educate, empower, and equip students across Qatar with the knowledge and tools needed to drive grassroots environmental action. We strive to make sustainability accessible, actionable, and engaging for every young person.
-                                    </p>
+                                    <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-light">To actively educate, empower, and equip students across Qatar with the knowledge and tools needed to drive grassroots environmental action.</p>
                                 </div>
                                 <div className="bg-white dark:bg-slate-800 p-12 rounded-[3rem] shadow-xl border border-slate-100 dark:border-slate-700 hover:-translate-y-2 transition-transform duration-500 ease-apple group">
-                                    <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/40 rounded-2xl flex items-center justify-center text-blue-600 mb-8 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500 ease-apple">
-                                        <Icon path={Icons.Eye} size={32} />
-                                    </div>
+                                    <div className="w-16 h-16 bg-blue-100 dark:bg-blue-900/40 rounded-2xl flex items-center justify-center text-blue-600 mb-8 group-hover:scale-110 group-hover:-rotate-6 transition-all duration-500 ease-apple"><Icon path={Icons.Eye} size={32} /></div>
                                     <h2 className="text-3xl font-black mb-6 text-slate-900 dark:text-white">Our Vision</h2>
-                                    <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-light">
-                                        To build a long-term, sustainable future for Qatar and the MENA region, fully aligned with the Qatar National Vision 2030, where the youth are the primary catalysts for ecological preservation and innovation.
-                                    </p>
+                                    <p className="text-lg text-slate-600 dark:text-slate-300 leading-relaxed font-light">To build a long-term, sustainable future for Qatar and the MENA region, fully aligned with the Qatar National Vision 2030.</p>
                                 </div>
                             </div>
                         </section>
@@ -773,9 +593,7 @@
                                         <div key={idx} className="bg-slate-50 dark:bg-slate-800 p-10 rounded-[2.5rem] shadow-lg border border-slate-200/50 dark:border-slate-700/50 hover:-translate-y-3 hover:shadow-2xl hover:border-emerald-500/30 transition-all duration-500 ease-apple flex flex-col justify-center">
                                             <div className="w-12 h-1.5 bg-emerald-500 rounded-full mb-8"></div>
                                             <h3 className="text-2xl font-black mb-4 text-slate-900 dark:text-white leading-tight">{item.title}</h3>
-                                            <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-light">
-                                                {item.text}
-                                            </p>
+                                            <p className="text-slate-600 dark:text-slate-300 leading-relaxed font-light">{item.text}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -787,25 +605,17 @@
                             <div className="max-w-7xl mx-auto px-4">
                                 <div className="text-center mb-20">
                                     <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white mb-6">The Core Team</h2>
-                                    <p className="text-xl text-slate-600 dark:text-slate-400 font-light max-w-2xl mx-auto">
-                                        The passionate youth driving the EcoAwareness initiative forward.
-                                    </p>
+                                    <p className="text-xl text-slate-600 dark:text-slate-400 font-light max-w-2xl mx-auto">The passionate youth driving the EcoAwareness initiative forward.</p>
                                 </div>
                                 <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-10">
                                     {ABOUT_TEAM.map((member, idx) => (
                                         <div key={idx} className="bg-white dark:bg-slate-800 p-8 rounded-[3rem] shadow-xl border border-slate-100 dark:border-slate-700 text-center hover:scale-[1.02] transition-transform duration-500 ease-apple">
                                             <div className="relative inline-block mb-6">
-                                                <img 
-                                                    src={member.image} 
-                                                    alt={member.name} 
-                                                    className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-emerald-100 dark:border-emerald-900/50 shadow-md"
-                                                />
+                                                <img src={member.image} alt={member.name} className="w-32 h-32 md:w-40 md:h-40 rounded-full object-cover border-4 border-emerald-100 dark:border-emerald-900/50 shadow-md" />
                                             </div>
                                             <h3 className="text-2xl font-black text-slate-900 dark:text-white">{member.name}</h3>
                                             <p className="text-emerald-600 dark:text-emerald-400 font-bold text-sm uppercase tracking-wide mt-2 mb-6">{member.role}</p>
-                                            <p className="text-slate-600 dark:text-slate-300 font-light leading-relaxed">
-                                                {member.bio}
-                                            </p>
+                                            <p className="text-slate-600 dark:text-slate-300 font-light leading-relaxed">{member.bio}</p>
                                         </div>
                                     ))}
                                 </div>
@@ -814,7 +624,6 @@
 
                         {/* 5. INTERACTIVE SECTION: THE YOUTH MANIFESTO */}
                         <section className="relative py-32 bg-slate-900 overflow-hidden">
-                            {/* Abstract Ambient Background */}
                             <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1511497584788-876760111969?w=1600&fit=crop')] bg-cover bg-center opacity-30"></div>
                             <div className="absolute inset-0 bg-gradient-to-b from-slate-900 via-slate-900/80 to-slate-900"></div>
                             <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-emerald-500/20 rounded-full blur-[100px] pointer-events-none"></div>
@@ -822,17 +631,11 @@
                             <div className="relative z-10 max-w-4xl mx-auto px-4 text-center">
                                 <div className="bg-white/10 backdrop-blur-2xl border border-white/20 p-10 md:p-16 rounded-[3rem] shadow-2xl hover:bg-white/[0.15] transition-colors duration-500 ease-apple">
                                     <h2 className="text-4xl md:text-5xl font-black text-white mb-6 drop-shadow-lg">The Eco Manifesto</h2>
-                                    <p className="text-xl md:text-2xl text-emerald-50/90 font-light leading-relaxed max-w-2xl mx-auto mb-12">
-                                        We believe in a future where innovation and environmental action go hand-in-hand.
-                                    </p>
+                                    <p className="text-xl md:text-2xl text-emerald-50/90 font-light leading-relaxed max-w-2xl mx-auto mb-12">We believe in a future where innovation and environmental action go hand-in-hand.</p>
                                     
                                     <div className="relative inline-block group">
                                         <div className="absolute inset-0 bg-emerald-500 rounded-full blur-xl opacity-50 group-hover:opacity-100 animate-pulse transition-opacity duration-500"></div>
-                                        <button 
-                                            id="pledgeBtn"
-                                            onClick={handlePledge}
-                                            className="relative px-12 py-5 bg-emerald-500 text-white rounded-full font-black text-xl hover:bg-emerald-400 active:scale-95 transition-all duration-300 ease-apple flex items-center justify-center gap-3 shadow-xl"
-                                        >
+                                        <button onClick={handlePledge} className="relative px-12 py-5 bg-emerald-500 text-white rounded-full font-black text-xl hover:bg-emerald-400 active:scale-95 transition-all duration-300 ease-apple flex items-center justify-center gap-3 shadow-xl">
                                             {hasPledged ? "Pledge Accepted!" : "Take the Pledge"} <Icon path={Icons.Leaf} size={24} />
                                         </button>
                                     </div>
@@ -840,55 +643,22 @@
                                     <div className="mt-12 flex items-center justify-center gap-4">
                                         <div className="inline-flex items-center gap-3 px-6 py-3 bg-black/40 backdrop-blur-md rounded-full border border-white/10 text-emerald-100 font-medium">
                                             <div className="w-2.5 h-2.5 bg-emerald-400 rounded-full animate-pulse shadow-[0_0_10px_rgba(52,211,153,0.8)]"></div>
-                                            <p>Join <span id="pledgeCount" className={`font-black text-white tracking-widest bg-emerald-900/50 px-3 py-1 rounded-lg border border-emerald-500/30 ml-1 mr-1 inline-block transition-colors ${popAnimation ? 'animate-pop' : ''}`}>{pledgeCount.toLocaleString()}</span> advocates who have already pledged.</p>
+                                            <p>Join <span className={`font-black text-white tracking-widest bg-emerald-900/50 px-3 py-1 rounded-lg border border-emerald-500/30 ml-1 mr-1 inline-block transition-colors ${popAnimation ? 'animate-pop' : ''}`}>{pledgeCount.toLocaleString()}</span> advocates who have already pledged.</p>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </section>
 
-                        {/* 6. THE HIDDEN PLEDGE MODAL */}
-                        <div className={`fixed top-0 left-0 w-[100vw] h-[100vh] z-[9999] flex justify-center items-center p-4 bg-black/60 backdrop-blur-[8px] transition-opacity duration-300 ease-in-out ${showPledgeModal ? 'opacity-100 pointer-events-auto' : 'opacity-0 pointer-events-none'}`}>
-                            <div className={`bg-white/90 dark:bg-slate-800/90 backdrop-blur-2xl p-10 md:p-12 rounded-[3rem] shadow-2xl max-w-md w-full text-center border border-white/20 dark:border-slate-700/50 transition-transform duration-300 ease-in-out ${showPledgeModal ? 'scale-100' : 'scale-[0.95]'}`}>
-                                <div className="w-20 h-20 bg-emerald-100 dark:bg-emerald-900/40 text-emerald-500 rounded-[2rem] flex items-center justify-center mx-auto mb-8 shadow-inner">
-                                    <Icon path={Icons.CheckCircle2} size={40} />
-                                </div>
-                                <h3 className="text-3xl font-black mb-4 text-slate-900 dark:text-white">Pledge Accepted!</h3>
-                                <p className="text-lg text-slate-600 dark:text-slate-300 mb-10 leading-relaxed font-light">
-                                    Thank you for joining the movement for a sustainable future. Together, we can make a difference.
-                                </p>
-                                <button 
-                                    id="closeModal"
-                                    onClick={() => setShowPledgeModal(false)} 
-                                    className="w-full py-4 bg-slate-900 dark:bg-emerald-600 text-white font-bold text-lg rounded-full hover:bg-slate-800 dark:hover:bg-emerald-500 active:scale-95 transition-all duration-300 ease-apple shadow-lg"
-                                >
-                                    Close
-                                </button>
-                            </div>
-                        </div>
-
                         {/* 7. GET INVOLVED CTA BANNER */}
                         <section className="bg-gradient-to-br from-emerald-600 via-teal-600 to-blue-700 py-24 text-center px-4 relative overflow-hidden">
                             <div className="absolute top-0 right-0 w-96 h-96 bg-white/10 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2"></div>
                             <div className="absolute bottom-0 left-0 w-96 h-96 bg-emerald-400/20 rounded-full blur-3xl translate-y-1/2 -translate-x-1/2"></div>
-                            
                             <div className="relative z-10 max-w-4xl mx-auto">
-                                <h2 className="text-5xl md:text-6xl font-black text-white mb-10 tracking-tight drop-shadow-md">
-                                    Ready to make an impact?
-                                </h2>
+                                <h2 className="text-5xl md:text-6xl font-black text-white mb-10 tracking-tight drop-shadow-md">Ready to make an impact?</h2>
                                 <div className="flex flex-col sm:flex-row gap-5 justify-center">
-                                    <button 
-                                        onClick={() => changePage('contact')}
-                                        className="px-10 py-4 bg-white text-emerald-800 rounded-full font-bold text-lg hover:bg-slate-50 active:scale-95 transition-all duration-300 ease-apple shadow-xl flex items-center justify-center gap-2"
-                                    >
-                                        Join Our Team <Icon path={Icons.ArrowRight} size={20} />
-                                    </button>
-                                    <button 
-                                        onClick={() => changePage('contact')}
-                                        className="px-10 py-4 bg-transparent text-white border-[2px] border-white/50 hover:bg-white/10 backdrop-blur-sm rounded-full font-bold text-lg transition-all active:scale-95 duration-300 ease-apple"
-                                    >
-                                        Contact Us
-                                    </button>
+                                    <button onClick={() => changePage('contact')} className="px-10 py-4 bg-white text-emerald-800 rounded-full font-bold text-lg hover:bg-slate-50 active:scale-95 transition-all duration-300 ease-apple shadow-xl flex items-center justify-center gap-2">Join Our Team <Icon path={Icons.ArrowRight} size={20} /></button>
+                                    <button onClick={() => changePage('contact')} className="px-10 py-4 bg-transparent text-white border-[2px] border-white/50 hover:bg-white/10 backdrop-blur-sm rounded-full font-bold text-lg transition-all active:scale-95 duration-300 ease-apple">Contact Us</button>
                                 </div>
                             </div>
                         </section>
@@ -897,31 +667,24 @@
 
                   {currentPage === 'accomplishments' && (
                     <div className="w-full bg-slate-50 dark:bg-slate-900 pb-0">
-                        
-                        {/* 1. HERO SECTION: Champions Reveal (Parallax & Zoom) */}
+                        {/* 1. HERO SECTION: Parallax & Zoom */}
                         <section className="relative h-screen w-full flex items-center justify-center overflow-hidden bg-black">
-                            <div 
-                                className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544531696-282370099b8f?w=1600&fit=crop')] bg-fixed bg-cover bg-center transition-transform duration-75 ease-out"
-                                style={{ transform: `scale(${1 + scrollY * 0.0003})` }}
-                            ></div>
-                            <div 
-                                className="absolute inset-0 bg-black transition-opacity duration-75 ease-out"
-                                style={{ opacity: Math.max(0, 0.8 - scrollY * 0.0015) }}
-                            ></div>
+                            <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1544531696-282370099b8f?w=1600&fit=crop')] bg-fixed bg-cover bg-center transition-transform duration-75 ease-out" style={{ transform: `scale(${1 + scrollY * 0.0003})` }}></div>
+                            <div className="absolute inset-0 bg-black transition-opacity duration-75 ease-out" style={{ opacity: Math.max(0, 0.8 - scrollY * 0.0015) }}></div>
                             <div className="relative z-10 text-center px-4" style={{ transform: `translateY(${scrollY * 0.3}px)` }}>
                                 <h1 className="text-6xl md:text-8xl lg:text-[8rem] font-black text-white tracking-tighter drop-shadow-2xl mb-4">Action Over Words.</h1>
-                                <p className="text-xl md:text-3xl text-emerald-400 font-bold tracking-widest uppercase drop-shadow-md">Our Impact Track Record</p>
+                                <p className="text-xl md:text-3xl text-emerald-400 font-bold tracking-widest drop-shadow-md">From a local school project to a national movement.</p>
                             </div>
                         </section>
 
                         {/* 2. THE IMPACT BY THE NUMBERS (Intersection Observer) */}
-                        <section className="relative -mt-10 z-20 max-w-6xl mx-auto px-4">
+                        <section className="relative -mt-10 z-20 max-w-7xl mx-auto px-4">
                             <div className="bg-slate-900 dark:bg-slate-950 backdrop-blur-2xl rounded-[3rem] p-8 md:p-12 shadow-[0_20px_50px_rgba(0,0,0,0.3)] border border-slate-700/50">
                                 <div className="grid grid-cols-2 md:grid-cols-4 gap-6 divide-x-0 md:divide-x divide-y md:divide-y-0 divide-slate-700/50">
-                                    <AnimatedCounter target={15000} label="Total Views" />
-                                    <AnimatedCounter target={50} label="Events Hosted" />
-                                    <AnimatedCounter target={120} label="Workshops Conducted" />
-                                    <AnimatedCounter target={1400} label="Active Advocates" />
+                                    <AnimatedCounter target={10000} suffix="+" label="Students Reached" />
+                                    <AnimatedCounter target={15} label="Major Campaigns" />
+                                    <AnimatedCounter target={8} label="National Recognitions" />
+                                    <AnimatedCounter target={98} suffix="%" label="SDG Awareness (Qatar)" />
                                 </div>
                             </div>
                         </section>
@@ -934,36 +697,34 @@
                             </div>
                             
                             <div className="grid grid-cols-1 md:grid-cols-3 gap-6 auto-rows-[250px] md:auto-rows-[300px]">
-                                {/* Card 1: Large (Spans 2 columns & 2 rows) */}
+                                {/* Card 1: Large */}
                                 <div className="md:col-span-2 md:row-span-2 bg-gradient-to-br from-emerald-500 to-teal-700 rounded-[3rem] p-10 md:p-14 text-white shadow-2xl relative overflow-hidden group hover:scale-[1.01] transition-transform duration-500 ease-apple flex flex-col justify-end">
                                     <div className="absolute top-0 right-0 w-96 h-96 bg-white/20 rounded-full blur-3xl -translate-y-1/2 translate-x-1/2 group-hover:bg-white/30 transition-colors"></div>
-                                    <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-[2rem] flex items-center justify-center text-white mb-auto border border-white/30">
-                                        <Icon path={Icons.Award} size={40} />
-                                    </div>
-                                    <h3 className="text-4xl md:text-6xl font-black tracking-tight mb-4 drop-shadow-md relative z-10">1st Place Champions</h3>
-                                    <p className="text-lg md:text-xl text-emerald-50 font-medium max-w-lg relative z-10">Kahramaa Tarsheed competition for sustainable innovation and groundbreaking environmental initiatives.</p>
+                                    <div className="w-20 h-20 bg-white/20 backdrop-blur-md rounded-[2rem] flex items-center justify-center text-white mb-auto border border-white/30"><Icon path={Icons.Award} size={40} /></div>
+                                    <h3 className="text-4xl md:text-5xl lg:text-6xl font-black tracking-tight mb-4 drop-shadow-md relative z-10">National Policy & Innovation</h3>
+                                    <p className="text-lg md:text-xl text-emerald-50 font-medium max-w-lg relative z-10">Empower 2025 Summit Speakers, Earthna Summit 2025 Panelists, and Georgetown University Panelists.</p>
                                 </div>
                                 
                                 {/* Card 2: Medium */}
                                 <div className="md:col-span-1 md:row-span-1 bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl rounded-[3rem] p-10 border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-apple flex flex-col justify-center relative overflow-hidden group">
                                     <div className="absolute top-0 right-0 w-32 h-32 bg-blue-400/10 rounded-full blur-2xl group-hover:bg-blue-400/20 transition-colors"></div>
-                                    <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-3">National Runners-Up</h3>
-                                    <p className="text-slate-600 dark:text-slate-400 font-light">Secured 2nd place overall in the prestigious Destination Imagination competition.</p>
+                                    <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-3">1st Place Champions</h3>
+                                    <p className="text-slate-600 dark:text-slate-400 font-light">Kahramaa Tarsheed competition for sustainable innovation.</p>
                                 </div>
 
                                 {/* Card 3: Medium */}
                                 <div className="md:col-span-1 md:row-span-1 bg-white/60 dark:bg-slate-800/60 backdrop-blur-xl rounded-[3rem] p-10 border border-slate-200 dark:border-slate-700 shadow-lg hover:shadow-xl hover:-translate-y-2 transition-all duration-500 ease-apple flex flex-col justify-center relative overflow-hidden group">
                                     <div className="absolute bottom-0 left-0 w-32 h-32 bg-purple-400/10 rounded-full blur-2xl group-hover:bg-purple-400/20 transition-colors"></div>
-                                    <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-3">Doc of the Future</h3>
-                                    <p className="text-slate-600 dark:text-slate-400 font-light">Recognized as distinguished finalists at Weill Cornell Medicine-Qatar.</p>
+                                    <h3 className="text-2xl md:text-3xl font-black text-slate-900 dark:text-white mb-3">National Runners-Up</h3>
+                                    <p className="text-slate-600 dark:text-slate-400 font-light">Secured 2nd place in the Destination Imagination competition.</p>
                                 </div>
 
-                                {/* Card 4: Sleek (Spans 3 cols on mobile, 3 on desktop bottom) */}
+                                {/* Card 4: Sleek */}
                                 <div className="md:col-span-3 bg-slate-900 dark:bg-slate-950 rounded-[3rem] p-10 md:p-12 text-white shadow-xl flex flex-col md:flex-row items-center justify-between gap-8 hover:bg-slate-800 transition-colors duration-500 ease-apple group">
                                     <div>
-                                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/20 text-emerald-400 font-bold text-xs rounded-full uppercase tracking-widest mb-4">Technology</div>
-                                        <h3 className="text-3xl md:text-4xl font-black mb-2">Tech Innovators</h3>
-                                        <p className="text-slate-400 font-light max-w-xl">Awarded prestigious medals in AI and App Development, bridging the gap between digital solutions and ecology.</p>
+                                        <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/20 text-emerald-400 font-bold text-xs rounded-full uppercase tracking-widest mb-4">Interdisciplinary</div>
+                                        <h3 className="text-3xl md:text-4xl font-black mb-2">Tech & Medical Innovators</h3>
+                                        <p className="text-slate-400 font-light max-w-2xl">Finals of the 'Doc of the Future' at Weill Cornell Medicine & Medals awarded in AI and App Development.</p>
                                     </div>
                                     <div className="w-24 h-24 bg-slate-800 rounded-full flex items-center justify-center flex-shrink-0 group-hover:scale-110 group-hover:bg-emerald-600 transition-all duration-500 ease-apple">
                                         <Icon path={Icons.BrainCircuit} size={40} className="text-emerald-400 group-hover:text-white transition-colors" />
@@ -981,36 +742,41 @@
                                 </div>
 
                                 <div className="relative">
-                                    {/* Vertical Center Line */}
                                     <div className="absolute left-4 md:left-1/2 top-0 bottom-0 w-1 bg-emerald-100 dark:bg-emerald-900/50 md:-translate-x-1/2 rounded-full"></div>
 
-                                    {/* Timeline Item 1 */}
                                     <div className="relative flex items-center justify-end md:justify-start mb-16 group">
                                         <div className="absolute left-4 md:left-1/2 w-6 h-6 bg-emerald-500 rounded-full border-4 border-white dark:border-slate-900 md:-translate-x-1/2 group-hover:scale-150 transition-transform duration-500 z-10 shadow-md"></div>
                                         <div className="w-[calc(100%-3rem)] md:w-[45%] bg-slate-50 dark:bg-slate-800 p-8 rounded-[2rem] shadow-md border border-slate-100 dark:border-slate-700 ml-auto md:ml-0 md:mr-auto hover:-translate-y-2 transition-transform duration-500 ease-apple">
-                                            <span className="text-emerald-600 font-black text-sm uppercase tracking-widest mb-2 block">Public Speaking</span>
-                                            <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-3">Q-CON Panelists</h3>
-                                            <p className="text-slate-600 dark:text-slate-300 font-light">Taking the main stage to fiercely advocate for sustainability and youth-driven environmental policies.</p>
+                                            <span className="text-emerald-600 font-black text-sm uppercase tracking-widest mb-2 block">Collaboration</span>
+                                            <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-3">Institutional Synergy</h3>
+                                            <p className="text-slate-600 dark:text-slate-300 font-light">Partnering with Earthna, Qatar Foundation, and Carob Conscious to amplify our sustainable impact.</p>
                                         </div>
                                     </div>
 
-                                    {/* Timeline Item 2 */}
                                     <div className="relative flex items-center justify-end mb-16 group">
                                         <div className="absolute left-4 md:left-1/2 w-6 h-6 bg-teal-500 rounded-full border-4 border-white dark:border-slate-900 md:-translate-x-1/2 group-hover:scale-150 transition-transform duration-500 z-10 shadow-md"></div>
                                         <div className="w-[calc(100%-3rem)] md:w-[45%] bg-slate-50 dark:bg-slate-800 p-8 rounded-[2rem] shadow-md border border-slate-100 dark:border-slate-700 ml-auto hover:-translate-y-2 transition-transform duration-500 ease-apple">
-                                            <span className="text-teal-600 font-black text-sm uppercase tracking-widest mb-2 block">International Presence</span>
-                                            <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-3">Global Robotics</h3>
-                                            <p className="text-slate-600 dark:text-slate-300 font-light">Representing Qatar at WRO Turkey, showcasing the integration of robotics with environmental problem solving.</p>
+                                            <span className="text-teal-600 font-black text-sm uppercase tracking-widest mb-2 block">Community Event</span>
+                                            <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-3">Grassroots Action</h3>
+                                            <p className="text-slate-600 dark:text-slate-300 font-light">Hosting interactive workshops at Al Khor Sports Stadium and partnering with DEAP Qatar for extensive beach cleanups.</p>
                                         </div>
                                     </div>
 
-                                    {/* Timeline Item 3 */}
-                                    <div className="relative flex items-center justify-end md:justify-start group">
-                                        <div className="absolute left-4 md:left-1/2 w-6 h-6 bg-emerald-500 rounded-full border-4 border-white dark:border-slate-900 md:-translate-x-1/2 group-hover:scale-150 transition-transform duration-500 z-10 shadow-md"></div>
+                                    <div className="relative flex items-center justify-end md:justify-start mb-16 group">
+                                        <div className="absolute left-4 md:left-1/2 w-6 h-6 bg-purple-500 rounded-full border-4 border-white dark:border-slate-900 md:-translate-x-1/2 group-hover:scale-150 transition-transform duration-500 z-10 shadow-md"></div>
                                         <div className="w-[calc(100%-3rem)] md:w-[45%] bg-slate-50 dark:bg-slate-800 p-8 rounded-[2rem] shadow-md border border-slate-100 dark:border-slate-700 ml-auto md:ml-0 md:mr-auto hover:-translate-y-2 transition-transform duration-500 ease-apple">
-                                            <span className="text-emerald-600 font-black text-sm uppercase tracking-widest mb-2 block">Communication</span>
-                                            <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-3">Master Communicators</h3>
-                                            <p className="text-slate-600 dark:text-slate-300 font-light">Reaching the semi-finals of the Qatar Debate championship, proving our ability to articulate powerful climate narratives.</p>
+                                            <span className="text-purple-600 font-black text-sm uppercase tracking-widest mb-2 block">Global Representation</span>
+                                            <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-3">Global Robotics & Debate</h3>
+                                            <p className="text-slate-600 dark:text-slate-300 font-light">Representing Qatar at WRO Turkey and reaching the semi-finals of the Qatar Debate championship.</p>
+                                        </div>
+                                    </div>
+
+                                    <div className="relative flex items-center justify-end group">
+                                        <div className="absolute left-4 md:left-1/2 w-6 h-6 bg-emerald-500 rounded-full border-4 border-white dark:border-slate-900 md:-translate-x-1/2 group-hover:scale-150 transition-transform duration-500 z-10 shadow-md"></div>
+                                        <div className="w-[calc(100%-3rem)] md:w-[45%] bg-slate-50 dark:bg-slate-800 p-8 rounded-[2rem] shadow-md border border-slate-100 dark:border-slate-700 ml-auto hover:-translate-y-2 transition-transform duration-500 ease-apple">
+                                            <span className="text-emerald-600 font-black text-sm uppercase tracking-widest mb-2 block">National Campaign</span>
+                                            <h3 className="text-2xl font-black text-slate-900 dark:text-white mb-3">Digital Decarbonization</h3>
+                                            <p className="text-slate-600 dark:text-slate-300 font-light">Leading the national "Paperless Week" initiative across schools to drastically reduce paper waste and save forests.</p>
                                         </div>
                                     </div>
                                 </div>
@@ -1022,20 +788,19 @@
                             <div className="max-w-7xl mx-auto mb-12 flex justify-between items-end px-4">
                                 <div>
                                     <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white">The Video Vault</h2>
-                                    <p className="text-lg text-slate-600 dark:text-slate-400 mt-2 font-light">Swipe to view our campaigns and events.</p>
+                                    <p className="text-lg text-slate-600 dark:text-slate-400 mt-2 font-light">Swipe to view our campaigns and interviews.</p>
                                 </div>
                             </div>
                             
-                            {/* Scroll Container */}
                             <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-12 px-4 md:px-[calc((100vw-80rem)/2)] [&::-webkit-scrollbar]:hidden">
                                 {[
-                                    { title: "Empower 2025 Highlights", img: "https://images.unsplash.com/photo-1544531696-282370099b8f?w=600&fit=crop" },
-                                    { title: "Mangrove Cleanup VLOG", img: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&fit=crop" },
-                                    { title: "Tech Innovation Pitch", img: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&fit=crop" },
-                                    { title: "Badminton 2026 Trailer", img: "https://images.unsplash.com/photo-1511497584788-876760111969?w=600&fit=crop" },
-                                    { title: "Youth Debate Finals", img: "https://images.unsplash.com/photo-1526676037777-05a232554f77?w=600&fit=crop" }
+                                    { title: "Al Jazeera Interview", img: "https://images.unsplash.com/photo-1544531696-282370099b8f?w=600&fit=crop" },
+                                    { title: "Al Zubara UNESCO Site Education", img: "https://images.unsplash.com/photo-1504711434969-e33886168f5c?w=600&fit=crop" },
+                                    { title: "Summer Camp with Friends of the Environment", img: "https://images.unsplash.com/photo-1485827404703-89b55fcc595e?w=600&fit=crop" },
+                                    { title: "Paperless Week Launch", img: "https://images.unsplash.com/photo-1511497584788-876760111969?w=600&fit=crop" },
+                                    { title: "Badminton 2026 Trailer", img: "https://images.unsplash.com/photo-1526676037777-05a232554f77?w=600&fit=crop" }
                                 ].map((video, idx) => (
-                                    <div key={idx} className="min-w-[85vw] md:min-w-[400px] aspect-video bg-slate-800 rounded-[2rem] snap-center relative group cursor-pointer overflow-hidden shadow-lg border border-slate-200 dark:border-slate-700">
+                                    <div key={idx} className="min-w-[85vw] md:min-w-[400px] aspect-video bg-slate-800 rounded-[2.5rem] snap-center relative group cursor-pointer overflow-hidden shadow-lg border border-slate-200 dark:border-slate-700">
                                         <img src={video.img} alt={video.title} className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-700 ease-apple" />
                                         <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent flex flex-col items-center justify-center opacity-80 group-hover:opacity-100 transition-opacity duration-300">
                                             <div className="w-16 h-16 bg-white/20 backdrop-blur-md rounded-full flex items-center justify-center text-white border border-white/40 group-hover:scale-110 group-hover:bg-emerald-500 transition-all duration-300 ease-apple mb-auto mt-auto">
@@ -1056,24 +821,24 @@
                             <div className="pointer-events-none absolute inset-y-0 right-0 w-1/4 bg-gradient-to-l from-emerald-600 dark:from-emerald-800 to-transparent z-10"></div>
                             <div className="animate-marquee whitespace-nowrap flex items-center w-max">
                                 {Array(8).fill("").map((_, i) => (
-                                    <div key={i} className="flex items-center mx-8 gap-8 opacity-80">
-                                        <span className="text-xl md:text-2xl font-black tracking-widest uppercase">Doha News</span>
+                                    <div key={i} className="flex items-center mx-8 gap-8 opacity-90">
+                                        <span className="text-xl md:text-2xl font-black tracking-widest uppercase">Qatar Foundation</span>
                                         <span className="w-2 h-2 bg-white rounded-full"></span>
-                                        <span className="text-xl md:text-2xl font-black tracking-widest uppercase">Al Jazeera Youth</span>
+                                        <span className="text-xl md:text-2xl font-black tracking-widest uppercase">Earthna</span>
                                         <span className="w-2 h-2 bg-white rounded-full"></span>
-                                        <span className="text-xl md:text-2xl font-black tracking-widest uppercase">Qatar Tribune</span>
+                                        <span className="text-xl md:text-2xl font-black tracking-widest uppercase">Empower 2025</span>
+                                        <span className="w-2 h-2 bg-white rounded-full"></span>
+                                        <span className="text-xl md:text-2xl font-black tracking-widest uppercase">Al Jazeera</span>
                                         <span className="w-2 h-2 bg-white rounded-full"></span>
                                     </div>
                                 ))}
                             </div>
                         </section>
-
                     </div>
                   )}
 
                   {currentPage === 'opportunities' && (
                     <div className="pt-32 pb-24 px-4 max-w-5xl mx-auto">
-                        {/* The Reason / Mission */}
                         <div className="text-center mb-24">
                             <span className="inline-block px-5 py-2 mb-6 text-sm font-black text-emerald-600 bg-emerald-100 dark:bg-emerald-900/30 dark:text-emerald-400 rounded-full tracking-wider uppercase shadow-sm">Why We Exist</span>
                             <h1 className="text-5xl md:text-7xl font-black mb-8 tracking-tight">{t.opportunities.title}</h1>
