@@ -416,6 +416,48 @@
           );
         };
 
+        const VoicesOfTheMovement = () => {
+          const videos = [
+            { src: "./assets/mr q.mp4", title: "Mr Q - I Love Qatar" },
+            { src: "./assets/amjadnour.mp4", title: "Amjad Nour - Sustainability Talk" },
+            { src: "./assets/famous no3.mp4", title: "Influencer Spotlight" },
+            { src: "./assets/Homepage.mp4", title: "Platform Overview" }
+          ];
+
+          return (
+            <section className="py-24 overflow-hidden bg-slate-50 dark:bg-slate-900/40 border-t border-slate-200 dark:border-slate-800/50">
+              <div className="max-w-7xl mx-auto px-4 mb-12">
+                <h2 className="text-4xl md:text-5xl font-black text-slate-900 dark:text-white">Voices of the Movement</h2>
+                <p className="text-lg text-slate-600 dark:text-slate-400 mt-2 font-light">Hear from the leaders and creators driving change.</p>
+              </div>
+              
+              <div className="flex overflow-x-auto snap-x snap-mandatory gap-6 pb-12 px-4 md:px-[calc((100vw-80rem)/2)] [&::-webkit-scrollbar]:hidden">
+                {videos.map((vid, idx) => (
+                  <div key={idx} className="min-w-[280px] w-[280px] h-[500px] snap-center relative overflow-hidden rounded-[20px] bg-white/5 backdrop-blur-[12px] border border-white/20 dark:border-slate-700/50 group transition-all duration-300 hover:scale-[1.03] hover:border-emerald-500/50 shadow-xl cursor-pointer">
+                    
+                    {/* Video Background (Muted, Autoplay, Loop) */}
+                    <video src={vid.src} autoPlay loop muted playsInline className="absolute inset-0 w-full h-full object-cover z-0"></video>
+                    
+                    {/* Dark Gradient Overlay for Text Readability */}
+                    <div className="absolute bottom-0 inset-x-0 h-2/3 bg-gradient-to-t from-black/90 via-black/40 to-transparent z-10 pointer-events-none"></div>
+                    
+                    {/* Glowing Play Button Icon (Center) */}
+                    <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-20 text-white/80 group-hover:text-emerald-400 group-hover:scale-110 transition-all duration-300 drop-shadow-[0_0_15px_rgba(255,255,255,0.4)] pointer-events-none">
+                      <Icon path={Icons.Play} size={64} className="ml-2" />
+                    </div>
+                    
+                    {/* Bottom Text */}
+                    <div className="absolute bottom-6 left-6 right-6 z-20 text-left pointer-events-none">
+                      <h4 className="text-white font-bold text-lg leading-tight group-hover:text-emerald-300 transition-colors duration-300">{vid.title}</h4>
+                    </div>
+                    
+                  </div>
+                ))}
+              </div>
+            </section>
+          );
+        };
+
         const Marquee = () => (
           <div className="relative flex overflow-x-hidden bg-slate-900 dark:bg-emerald-950 text-white py-4 border-y border-slate-800 dark:border-emerald-500/30">
             <div className="pointer-events-none absolute inset-y-0 left-0 w-1/4 bg-gradient-to-r from-slate-900 dark:from-emerald-950 to-transparent z-10"></div>
@@ -559,6 +601,7 @@
                         </div>
                       </section>
                       <Marquee />
+                      <VoicesOfTheMovement />
                       <AIIdeaGenerator />
                       <AIQuizSection />
 
