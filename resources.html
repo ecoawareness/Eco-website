@@ -1,1 +1,294 @@
+<html lang="en" class="scroll-smooth"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Knowledge &amp; Resources</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-slate-50 text-slate-800 antialiased selection:bg-[#16a34a]/20 selection:text-[#16a34a]">
 
+    <!-- Navigation Bar -->
+    <nav class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-slate-200/80">
+        <div class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <div class="flex items-center gap-2 cursor-pointer group">
+                <div class="w-8 h-8 rounded-lg bg-[#16a34a] flex items-center justify-center transition-transform group-hover:scale-105">
+                    <i data-lucide="leaf" class="text-white w-5 h-5" stroke-width="1.5"></i>
+                </div>
+                <span class="font-medium text-slate-900 text-lg tracking-tight">EcoHub</span>
+            </div>
+            <div class="hidden md:flex items-center gap-8">
+                <a href="index.html" class="text-base text-slate-500 hover:text-slate-900 transition-colors">Home</a>
+                <a href="opportunities.html" class="text-base text-slate-500 hover:text-slate-900 transition-colors">Opportunities</a>
+                <a href="network.html" class="text-base text-slate-500 hover:text-slate-900 transition-colors">Network</a>
+                <a href="resources.html" class="text-base font-medium text-slate-900 transition-colors">Resources</a>
+            </div>
+            <div class="md:hidden">
+                <i data-lucide="menu" class="w-6 h-6 text-slate-600" stroke-width="1.5"></i>
+            </div>
+        </div>
+    </nav>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="pt-32 pb-20 px-6 max-w-4xl mx-auto text-center">
+            <h1 class="text-5xl md:text-6xl font-semibold text-slate-900 tracking-tight leading-tight">
+                Knowledge &amp; <br class="md:hidden">Resources
+            </h1>
+            <p class="mt-6 text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed">
+                Toolkits, masterclasses, and local insights to drive your sustainable impact forward.
+            </p>
+        </section>
+
+        <!-- Section 1: Playbook Carousel -->
+        <section class="py-12 relative">
+            <div class="px-6 mb-8 max-w-7xl mx-auto flex items-center justify-between">
+                <h2 class="text-2xl font-semibold text-slate-900 tracking-tight">Featured Playbooks</h2>
+                <div class="hidden md:flex gap-2">
+                    <button class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-900 hover:border-slate-300 transition-colors" aria-label="Previous">
+                        <i data-lucide="chevron-left" class="w-5 h-5" stroke-width="1.5"></i>
+                    </button>
+                    <button class="w-10 h-10 rounded-full border border-slate-200 flex items-center justify-center text-slate-400 hover:text-slate-900 hover:border-slate-300 transition-colors" aria-label="Next">
+                        <i data-lucide="chevron-right" class="w-5 h-5" stroke-width="1.5"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Carousel Container -->
+            <div class="flex overflow-x-auto snap-x snap-mandatory gap-6 px-6 pb-12 w-full [&amp;::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+                <!-- Spacer for initial alignment -->
+                <div class="w-0 shrink-0 sm:w-[calc((100vw-80rem)/2)] block"></div>
+
+                <!-- Card 1 -->
+                <div class="snap-center shrink-0 w-[85vw] sm:w-[360px] aspect-[4/5] rounded-[2rem] bg-gradient-to-br from-emerald-100 to-teal-200 p-8 flex flex-col justify-between relative overflow-hidden group cursor-pointer transition-transform hover:-translate-y-2 duration-300 shadow-[0_20px_40px_-15px_rgba(16,185,129,0.2)]">
+                    <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div>
+                        <span class="inline-flex items-center rounded-full bg-white/60 backdrop-blur-sm px-3 py-1 text-sm font-medium text-emerald-800 ring-1 ring-inset ring-emerald-600/20">Guide</span>
+                        <h3 class="mt-6 text-3xl font-semibold text-slate-900 tracking-tight leading-tight">The Paperless<br>Week Guide</h3>
+                    </div>
+                    <div class="relative w-full h-32 mt-8">
+                        <!-- Abstract Graphic -->
+                        <div class="absolute right-0 bottom-0 w-32 h-32 bg-white rounded-2xl shadow-lg transform rotate-6 group-hover:rotate-12 transition-transform duration-500 flex items-center justify-center border border-white/50">
+                            <i data-lucide="file-text" class="w-12 h-12 text-emerald-500 opacity-80" stroke-width="1.5"></i>
+                        </div>
+                        <div class="absolute right-8 bottom-4 w-32 h-32 bg-emerald-50 rounded-2xl shadow-md transform -rotate-3 group-hover:-rotate-6 transition-transform duration-500 border border-emerald-100/50"></div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="snap-center shrink-0 w-[85vw] sm:w-[360px] aspect-[4/5] rounded-[2rem] bg-gradient-to-br from-amber-100 to-orange-200 p-8 flex flex-col justify-between relative overflow-hidden group cursor-pointer transition-transform hover:-translate-y-2 duration-300 shadow-[0_20px_40px_-15px_rgba(245,158,11,0.2)]">
+                    <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div>
+                        <span class="inline-flex items-center rounded-full bg-white/60 backdrop-blur-sm px-3 py-1 text-sm font-medium text-amber-900 ring-1 ring-inset ring-amber-600/20">Toolkit</span>
+                        <h3 class="mt-6 text-3xl font-semibold text-slate-900 tracking-tight leading-tight">Eco-Club<br>Starter Kit</h3>
+                    </div>
+                    <div class="relative w-full h-32 mt-8">
+                         <div class="absolute right-4 bottom-2 w-28 h-28 bg-white rounded-full shadow-lg group-hover:scale-110 transition-transform duration-500 flex items-center justify-center border border-white/50">
+                            <i data-lucide="users" class="w-12 h-12 text-amber-500 opacity-80" stroke-width="1.5"></i>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="snap-center shrink-0 w-[85vw] sm:w-[360px] aspect-[4/5] rounded-[2rem] bg-gradient-to-br from-violet-100 to-fuchsia-200 p-8 flex flex-col justify-between relative overflow-hidden group cursor-pointer transition-transform hover:-translate-y-2 duration-300 shadow-[0_20px_40px_-15px_rgba(139,92,246,0.2)]">
+                    <div class="absolute inset-0 bg-white/20 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
+                    <div>
+                        <span class="inline-flex items-center rounded-full bg-white/60 backdrop-blur-sm px-3 py-1 text-sm font-medium text-violet-900 ring-1 ring-inset ring-violet-600/20">Resource</span>
+                        <h3 class="mt-6 text-3xl font-semibold text-slate-900 tracking-tight leading-tight">Qatar Recycling<br>Drop-off Map</h3>
+                    </div>
+                     <div class="relative w-full h-32 mt-8">
+                        <div class="absolute right-0 bottom-0 w-full h-24 bg-white/40 backdrop-blur-md rounded-xl border border-white/60 shadow-sm flex items-center px-4 gap-3 transform group-hover:-translate-y-2 transition-transform duration-500">
+                             <div class="w-10 h-10 rounded-full bg-white flex items-center justify-center shadow-sm shrink-0">
+                                 <i data-lucide="map-pin" class="w-5 h-5 text-violet-500" stroke-width="1.5"></i>
+                             </div>
+                             <div class="h-10 w-full bg-white/50 rounded-lg"></div>
+                        </div>
+                    </div>
+                </div>
+                
+                <!-- Spacer for final alignment -->
+                <div class="w-4 shrink-0 sm:w-[calc((100vw-80rem)/2)] block"></div>
+            </div>
+        </section>
+
+        <!-- Section 2: Masterclass Shelf -->
+        <section class="py-24 bg-white border-y border-slate-200/60 overflow-hidden relative">
+            <div class="max-w-6xl mx-auto px-6 text-center">
+                <h2 class="text-3xl md:text-4xl font-semibold text-slate-900 tracking-tight">Exclusive Interviews &amp; Masterclasses</h2>
+                <p class="mt-4 text-lg text-slate-500">Insights from industry leaders and local pioneers.</p>
+
+                <!-- Shelf Structure -->
+                <div class="relative mt-20 max-w-4xl mx-auto pb-12">
+                    
+                    <!-- Items Sitting on Shelf -->
+                    <div class="flex justify-center gap-4 sm:gap-8 md:gap-12 relative z-10 translate-y-3 px-4">
+                        
+                        <!-- Item 1 -->
+                        <div class="w-32 h-32 sm:w-48 sm:h-48 md:w-56 md:h-56 bg-slate-50 rounded-xl shadow-[0_15px_30px_-5px_rgba(0,0,0,0.1),0_0_0_1px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center relative overflow-hidden group cursor-pointer transition-all duration-500 ease-out hover:-translate-y-6 hover:shadow-[0_30px_50px_-10px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] origin-bottom">
+                            <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_right,rgba(248,250,252,1),rgba(241,245,249,1))]"></div>
+                            <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-white/40 to-transparent opacity-50"></div>
+                            <div class="relative z-10 flex flex-col items-center p-4">
+                                <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
+                                    <i data-lucide="play" class="w-5 h-5 text-[#16a34a] ml-1" stroke-width="1.5"></i>
+                                </div>
+                                <span class="font-medium text-slate-800 text-sm md:text-base text-center leading-tight">Premium Video<br>Interview</span>
+                            </div>
+                            <!-- subtle shine effect -->
+                            <div class="absolute top-0 -left-[100%] w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 group-hover:left-[200%] transition-all duration-1000 ease-in-out"></div>
+                        </div>
+
+                        <!-- Item 2 (Center, slightly elevated) -->
+                        <div class="w-36 h-36 sm:w-52 sm:h-52 md:w-64 md:h-64 bg-white rounded-xl shadow-[0_20px_40px_-5px_rgba(0,0,0,0.12),0_0_0_1px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center relative overflow-hidden group cursor-pointer transition-all duration-500 ease-out hover:-translate-y-6 hover:shadow-[0_40px_60px_-10px_rgba(0,0,0,0.2),0_0_0_1px_rgba(0,0,0,0.05)] origin-bottom -translate-y-2">
+                             <div class="absolute inset-0 bg-[radial-gradient(circle_at_top_left,rgba(255,255,255,1),rgba(248,250,252,1))]"></div>
+                             <div class="absolute top-0 left-0 w-full h-full bg-gradient-to-b from-slate-50/50 to-transparent"></div>
+                            <div class="relative z-10 flex flex-col items-center p-4">
+                                <div class="w-14 h-14 rounded-full bg-[#16a34a] shadow-lg shadow-green-500/20 flex items-center justify-center mb-4 group-hover:scale-110 transition-all duration-300">
+                                    <i data-lucide="play" class="w-6 h-6 text-white ml-1" stroke-width="1.5"></i>
+                                </div>
+                                <span class="font-semibold text-slate-900 text-base md:text-lg text-center leading-tight">Featured<br>Masterclass</span>
+                            </div>
+                            <div class="absolute top-0 -left-[100%] w-1/2 h-full bg-gradient-to-r from-transparent via-white/60 to-transparent skew-x-12 group-hover:left-[200%] transition-all duration-1000 ease-in-out"></div>
+                        </div>
+
+                        <!-- Item 3 -->
+                        <div class="w-32 h-32 sm:w-48 sm:h-48 md:w-56 md:h-56 bg-slate-50 rounded-xl shadow-[0_15px_30px_-5px_rgba(0,0,0,0.1),0_0_0_1px_rgba(0,0,0,0.05)] flex flex-col items-center justify-center relative overflow-hidden group cursor-pointer transition-all duration-500 ease-out hover:-translate-y-6 hover:shadow-[0_30px_50px_-10px_rgba(0,0,0,0.15),0_0_0_1px_rgba(0,0,0,0.05)] origin-bottom">
+                            <div class="absolute inset-0 bg-[radial-gradient(circle_at_bottom_right,rgba(248,250,252,1),rgba(241,245,249,1))]"></div>
+                            <div class="relative z-10 flex flex-col items-center p-4">
+                                <div class="w-12 h-12 rounded-full bg-white shadow-sm flex items-center justify-center mb-4 group-hover:scale-110 group-hover:shadow-md transition-all duration-300">
+                                    <i data-lucide="play" class="w-5 h-5 text-[#16a34a] ml-1" stroke-width="1.5"></i>
+                                </div>
+                                <span class="font-medium text-slate-800 text-sm md:text-base text-center leading-tight">Community Leader<br>Spotlight</span>
+                            </div>
+                             <div class="absolute top-0 -left-[100%] w-1/2 h-full bg-gradient-to-r from-transparent via-white/40 to-transparent skew-x-12 group-hover:left-[200%] transition-all duration-1000 ease-in-out"></div>
+                        </div>
+
+                    </div>
+
+                    <!-- Physical Shelf Base -->
+                    <div class="relative z-0 w-[95%] mx-auto">
+                        <!-- Top flat surface -->
+                        <div class="h-4 w-full bg-slate-100 rounded-t border-t border-x border-slate-200 shadow-[inset_0_1px_0_rgba(255,255,255,0.8)] relative z-10"></div>
+                        <!-- Front face & shadow -->
+                        <div class="h-6 w-full bg-slate-200 rounded-b-xl shadow-[0_40px_50px_-15px_rgba(0,0,0,0.15)] relative z-0 before:absolute before:inset-0 before:bg-gradient-to-b before:from-slate-200 before:to-slate-300 before:rounded-b-xl"></div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Section 3: Deep-Dive Knowledge Grid -->
+        <section class="py-24 px-6 max-w-7xl mx-auto">
+            <div class="mb-12">
+                <h2 class="text-3xl font-semibold text-slate-900 tracking-tight">Ecosystem Insights</h2>
+                <p class="mt-3 text-lg text-slate-500">Essential knowledge for local operators.</p>
+            </div>
+
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
+                <!-- Large Bento Box -->
+                <div class="md:col-span-2 bg-white rounded-[2rem] p-8 md:p-10 border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow duration-300 relative overflow-hidden group">
+                    <div class="absolute top-0 right-0 w-64 h-64 bg-[#16a34a]/5 rounded-full blur-3xl -mr-20 -mt-20 transition-transform group-hover:scale-110 duration-700"></div>
+                    
+                    <div class="relative z-10">
+                        <div class="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center mb-6">
+                            <i data-lucide="book-open" class="w-6 h-6 text-slate-700" stroke-width="1.5"></i>
+                        </div>
+                        <h3 class="text-2xl md:text-3xl font-semibold text-slate-900 tracking-tight mb-4">Qatar National Vision 2030</h3>
+                        <p class="text-lg text-slate-600 mb-8 max-w-xl">Understanding the Environmental Development pillar is crucial for aligning your initiatives with national goals. Key focus areas include:</p>
+                        
+                        <ul class="space-y-4">
+                            <li class="flex items-start gap-4">
+                                <div class="mt-1 shrink-0">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-[#16a34a]" stroke-width="1.5"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-lg font-medium text-slate-900">Preserving local biodiversity</span>
+                                    <span class="block text-base text-slate-500 mt-0.5">Protecting natural habitats and endangered species within the peninsula.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <div class="mt-1 shrink-0">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-[#16a34a]" stroke-width="1.5"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-lg font-medium text-slate-900">Water conservation &amp; management</span>
+                                    <span class="block text-base text-slate-500 mt-0.5">Implementing efficient technologies to reduce groundwater depletion.</span>
+                                </div>
+                            </li>
+                            <li class="flex items-start gap-4">
+                                <div class="mt-1 shrink-0">
+                                    <i data-lucide="check-circle-2" class="w-5 h-5 text-[#16a34a]" stroke-width="1.5"></i>
+                                </div>
+                                <div>
+                                    <span class="block text-lg font-medium text-slate-900">Transitioning to renewable energy</span>
+                                    <span class="block text-base text-slate-500 mt-0.5">Increasing reliance on solar power and reducing carbon footprint.</span>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Medium Bento Box -->
+                <div class="md:col-span-1 bg-white rounded-[2rem] p-8 md:p-10 border border-slate-200/60 shadow-sm hover:shadow-md transition-shadow duration-300 flex flex-col h-full">
+                    <div class="flex items-center justify-between mb-8">
+                        <div class="w-12 h-12 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center">
+                            <i data-lucide="calendar" class="w-6 h-6 text-slate-700" stroke-width="1.5"></i>
+                        </div>
+                        <span class="text-sm font-medium text-[#16a34a] bg-[#16a34a]/10 px-3 py-1 rounded-full">Updated Today</span>
+                    </div>
+                    
+                    <h3 class="text-2xl font-semibold text-slate-900 tracking-tight mb-6">Active Competitions</h3>
+                    
+                    <div class="space-y-6 flex-1">
+                        <a href="#" class="block group">
+                            <span class="text-sm text-slate-400 font-medium mb-1 block">Oct 15 - Oct 17</span>
+                            <span class="text-lg font-medium text-slate-800 group-hover:text-[#16a34a] transition-colors line-clamp-2">Green Innovation Hackathon 2024</span>
+                        </a>
+                        <div class="h-px w-full bg-slate-100"></div>
+                        <a href="#" class="block group">
+                            <span class="text-sm text-slate-400 font-medium mb-1 block">Nov 02</span>
+                            <span class="text-lg font-medium text-slate-800 group-hover:text-[#16a34a] transition-colors line-clamp-2">National Eco-Debate Town Hall</span>
+                        </a>
+                        <div class="h-px w-full bg-slate-100"></div>
+                        <a href="#" class="block group">
+                            <span class="text-sm text-slate-400 font-medium mb-1 block">Rolling Deadline</span>
+                            <span class="text-lg font-medium text-slate-800 group-hover:text-[#16a34a] transition-colors line-clamp-2">University Sustainability Challenge Grants</span>
+                        </a>
+                    </div>
+
+                    <a href="#" class="mt-8 inline-flex items-center text-base font-medium text-slate-900 hover:text-[#16a34a] transition-colors group">
+                        View all events
+                        <i data-lucide="arrow-right" class="w-4 h-4 ml-1 transform group-hover:translate-x-1 transition-transform" stroke-width="1.5"></i>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200 py-12 mt-12">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded bg-slate-200 flex items-center justify-center">
+                    <i data-lucide="leaf" class="text-slate-500 w-3.5 h-3.5" stroke-width="1.5"></i>
+                </div>
+                <span class="font-medium text-slate-600">EcoHub</span>
+            </div>
+            <div class="flex gap-6 text-base text-slate-500">
+                <a href="#" class="hover:text-slate-900 transition-colors">Privacy</a>
+                <a href="#" class="hover:text-slate-900 transition-colors">Terms</a>
+                <a href="#" class="hover:text-slate-900 transition-colors">Contact</a>
+            </div>
+            <p class="text-base text-slate-400">© 2024 EcoHub. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <!-- Initialize Icons -->
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <script>
+        lucide.createIcons();
+    </script>
+
+</body></html>
