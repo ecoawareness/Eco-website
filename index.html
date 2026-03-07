@@ -392,6 +392,61 @@
             });
         });
     </script>
+<!-- Page Transition Overlay -->
+<div id="page-transition" class="fixed inset-0 z-[9999] bg-white flex items-center justify-center pointer-events-none transition-opacity duration-300 ease-in-out opacity-100">
+    <div class="w-16 h-16 rounded-2xl bg-[#16a34a] flex items-center justify-center shadow-lg animate-pulse transform hover:scale-105 transition-transform">
+        <iconify-icon icon="solar:leaf-linear" class="text-white text-4xl"></iconify-icon>
+    </div>
+</div>
 
+<script>
+    document.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.getElementById('page-transition');
+        
+        // 1. On Page Load: Smoothly fade the overlay out
+        requestAnimationFrame(() => {
+            overlay.classList.remove('opacity-100');
+            overlay.classList.add('opacity-0');
+        });
+
+        // 2. On Link Click: Intercept navigation
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const targetUrl = this.getAttribute('href');
+                const targetAttr = this.getAttribute('target');
+
+                // Ignore empty links, anchor links, external links, or target="_blank"
+                if (!targetUrl || 
+                    targetUrl.startsWith('#') || 
+                    targetUrl.startsWith('mailto:') || 
+                    targetUrl.startsWith('tel:') || 
+                    targetAttr === '_blank' ||
+                    (this.hostname !== window.location.hostname && this.hostname !== '')) {
+                    return;
+                }
+
+                // Stop the instant jump
+                e.preventDefault();
+                
+                // Fade the white overlay and logo in
+                overlay.classList.remove('opacity-0');
+                overlay.classList.add('opacity-100');
+
+                // Wait exactly 400ms, and then trigger the page load
+                setTimeout(() => {
+                    window.location.href = targetUrl;
+                }, 400);
+            });
+        });
+
+        // Safari/iOS back button fix (BFCache)
+        window.addEventListener('pageshow', (event) => {
+            if (event.persisted) {
+                overlay.classList.remove('opacity-100');
+                overlay.classList.add('opacity-0');
+            }
+        });
+    });
+</script>
 </body>
 </html>
