@@ -1,0 +1,408 @@
+<html lang="en"><head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About Us | EcoAwareness</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+    <style>
+        body { font-family: 'Inter', sans-serif; }
+    </style>
+</head>
+<body class="bg-white text-slate-800 antialiased selection:bg-[#16a34a]/10 selection:text-[#16a34a] scroll-smooth">
+
+    <!-- Navigation Bar -->
+    <header class="fixed top-0 inset-x-0 z-50 bg-white/70 backdrop-blur-xl border-b border-slate-200/40">
+        <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
+            <!-- Logo -->
+            <a href="index.html" class="flex items-center gap-2.5 cursor-pointer group">
+                <div class="w-8 h-8 rounded-lg bg-slate-900 flex items-center justify-center shadow-sm transition-transform group-hover:scale-105">
+                    <span class="text-white text-sm font-medium tracking-tighter">EA</span>
+                </div>
+                <span class="font-normal text-slate-900 text-lg tracking-tight">EcoAwareness</span>
+            </a>
+            
+            <!-- Desktop Links -->
+            <div class="hidden md:flex items-center gap-8">
+                <a href="opportunities.html" class="text-sm font-normal text-slate-500 hover:text-slate-900 transition-colors">Opportunities</a>
+                <a href="network.html" class="text-sm font-normal text-slate-500 hover:text-slate-900 transition-colors">Network</a>
+                
+                <!-- Resources Dropdown -->
+                <div class="relative group h-16 flex items-center">
+                    <button class="flex items-center gap-1.5 text-sm font-normal text-slate-500 hover:text-slate-900 transition-colors focus:outline-none">
+                        Resources
+                        <iconify-icon icon="solar:alt-arrow-down-linear" class="text-slate-400 transition-transform duration-200 group-hover:-rotate-180" style="stroke-width: 1.5;"></iconify-icon>
+                    </button>
+                    
+                    <!-- Dropdown Menu -->
+                    <div class="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 z-50">
+                        <div class="w-64 bg-white rounded-2xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] border border-slate-200/50 p-1.5 flex flex-col gap-1">
+                            <a href="#" class="px-4 py-3 text-sm font-normal text-slate-600 hover:text-slate-900 hover:bg-slate-50/80 rounded-xl transition-colors flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-slate-100/50 flex items-center justify-center text-slate-500">
+                                    <iconify-icon icon="solar:book-2-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                                </div>
+                                Featured Playbooks
+                            </a>
+                            <a href="#" class="px-4 py-3 text-sm font-normal text-slate-600 hover:text-slate-900 hover:bg-slate-50/80 rounded-xl transition-colors flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-slate-100/50 flex items-center justify-center text-slate-500">
+                                    <iconify-icon icon="solar:microphone-3-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                                </div>
+                                Exclusive Interviews
+                            </a>
+                            <a href="#" class="px-4 py-3 text-sm font-normal text-slate-600 hover:text-slate-900 hover:bg-slate-50/80 rounded-xl transition-colors flex items-center gap-3">
+                                <div class="w-8 h-8 rounded-lg bg-slate-100/50 flex items-center justify-center text-slate-500">
+                                    <iconify-icon icon="solar:map-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                                </div>
+                                Vision 2030 Guides
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <a href="about.html" class="text-sm font-normal text-slate-900 transition-colors">About Us</a>
+            </div>
+            
+            <!-- Right Actions -->
+            <div class="flex items-center gap-4">
+                <button class="hidden md:inline-flex items-center justify-center px-4 py-2 rounded-full bg-slate-900 text-white text-sm font-normal hover:bg-slate-800 hover:shadow-sm transition-all focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:ring-offset-2">
+                    Join Network
+                </button>
+                <button class="md:hidden p-2 text-slate-600 hover:text-slate-900">
+                    <iconify-icon icon="solar:hamburger-menu-linear" width="24" height="24" style="stroke-width: 1.5;"></iconify-icon>
+                </button>
+            </div>
+        </nav>
+    </header>
+
+    <main>
+        <!-- Cinematic Hero Section -->
+        <section class="relative h-screen w-full flex flex-col items-center justify-center overflow-hidden">
+            <!-- Background Image & Overlay -->
+            <div class="absolute inset-0 z-0">
+                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=2874&amp;q=80" alt="Cinematic Nature Background" class="w-full h-full object-cover object-center">
+                <div class="absolute inset-0 bg-gradient-to-b from-black/40 via-black/60 to-black/90 backdrop-blur-[1px]"></div>
+            </div>
+
+            <!-- Hero Typography -->
+            <div class="relative z-10 px-6 max-w-4xl mx-auto text-center mt-16">
+                <h1 class="text-5xl md:text-7xl font-medium text-white tracking-tight leading-tight">
+                    The single platform to iterate, evaluate, and scale community sustainability.
+                </h1>
+            </div>
+
+            <!-- Glassmorphism Logo Strip -->
+            <div class="absolute bottom-0 inset-x-0 z-20 bg-white/5 backdrop-blur-xl border-t border-white/10">
+                <div class="max-w-7xl mx-auto px-6 py-5">
+                    <div class="flex flex-col md:flex-row items-center justify-between gap-6">
+                        <span class="text-xs font-normal text-white/50 tracking-widest uppercase">Represented At</span>
+                        <div class="flex flex-wrap items-center justify-center gap-x-10 gap-y-4 text-sm font-normal text-white/70">
+                            <span class="hover:text-white transition-colors cursor-default tracking-tight">SuperIntelligence Doha Debates</span>
+                            <span class="hidden md:block w-1 h-1 rounded-full bg-white/20"></span>
+                            <span class="hover:text-white transition-colors cursor-default tracking-tight">Doha Ambassador Program</span>
+                            <span class="hidden md:block w-1 h-1 rounded-full bg-white/20"></span>
+                            <span class="hover:text-white transition-colors cursor-default tracking-tight">International Eco-Summit Turkey</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Bento Box Section (Vision & Leadership) -->
+        <section class="py-32 px-6 bg-slate-50/50 relative">
+            <div class="max-w-7xl mx-auto">
+                <div class="grid grid-cols-1 lg:grid-cols-3 gap-6">
+                    
+                    <!-- Large Left Box (The Founder) -->
+                    <div class="lg:col-span-2 bg-white rounded-[2rem] p-8 md:p-12 border border-slate-200/40 shadow-[0_8px_30px_rgb(0,0,0,0.02)] relative overflow-hidden group hover:border-slate-200/80 transition-colors">
+                        <div class="relative z-10 lg:w-2/3">
+                            <div class="inline-flex items-center gap-2 px-3 py-1.5 rounded-full bg-slate-50 border border-slate-100 text-slate-500 text-xs font-normal mb-8 tracking-tight">
+                                <iconify-icon icon="solar:user-linear" width="14" height="14" style="stroke-width: 1.5;"></iconify-icon> Founder Profile
+                            </div>
+                            <h2 class="text-3xl md:text-4xl font-medium text-slate-900 tracking-tight mb-2">Mohamed Elfatih</h2>
+                            <p class="text-base font-normal text-[#16a34a] mb-8 tracking-tight">Senior at Hassan Bin Thabet Secondary School | Founder</p>
+                            
+                            <div class="space-y-6 text-base text-slate-500 leading-relaxed font-light">
+                                <p>
+                                    Having represented Qatar internationally in environmental competitions in Turkey, Mohamed recognized the immense potential of youth engagement. As an active member of the Doha Ambassador Program and a selected participant for the SuperIntelligence Doha Debates Town Hall, he advocates for localized, actionable change.
+                                </p>
+                            </div>
+                        </div>
+
+                        <!-- Overlapping Decorative Image -->
+                        <div class="absolute -bottom-16 -right-16 w-80 h-80 md:w-[28rem] md:h-[28rem] rounded-full border-[12px] border-white/50 overflow-hidden shadow-2xl rotate-[-4deg] group-hover:rotate-0 group-hover:scale-[1.02] transition-all duration-700 ease-out z-0 opacity-30 lg:opacity-100">
+                            <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=800&amp;q=80" alt="Founder Portrait" class="w-full h-full object-cover filter grayscale-[20%]">
+                        </div>
+                    </div>
+
+                    <!-- Right Column -->
+                    <div class="flex flex-col gap-6 lg:col-span-1">
+                        
+                        <!-- Top Right Box (Tech & AI) -->
+                        <div class="bg-white rounded-[2rem] p-8 border border-slate-200/40 shadow-[0_8px_30px_rgb(0,0,0,0.02)] flex-1 flex flex-col justify-center group hover:border-slate-200/80 transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
+                                <iconify-icon icon="solar:chip-linear" width="20" height="20" class="text-slate-700" style="stroke-width: 1.5;"></iconify-icon>
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-medium text-slate-900 tracking-tight mb-2">Driven by AI &amp; Medicine</h3>
+                            <p class="text-sm text-slate-500 leading-relaxed font-light">
+                                Our future vision leverages artificial intelligence to make community environmental action smarter, inherently scalable, and accessible to every student.
+                            </p>
+                        </div>
+
+                        <!-- Bottom Right Box (Community) -->
+                        <div class="bg-white rounded-[2rem] p-8 border border-slate-200/40 shadow-[0_8px_30px_rgb(0,0,0,0.02)] flex-1 flex flex-col justify-center group hover:border-slate-200/80 transition-colors">
+                            <div class="w-10 h-10 rounded-xl bg-slate-50 border border-slate-100 flex items-center justify-center mb-6 group-hover:scale-105 transition-transform duration-300">
+                                <iconify-icon icon="solar:global-linear" width="20" height="20" class="text-slate-700" style="stroke-width: 1.5;"></iconify-icon>
+                            </div>
+                            <h3 class="text-xl md:text-2xl font-medium text-slate-900 tracking-tight mb-2">Unifying Qatar</h3>
+                            <p class="text-sm text-slate-500 leading-relaxed font-light">
+                                We are bridging the gap between high school eco-clubs and massive NGOs, creating a cohesive network where every green initiative can be amplified.
+                            </p>
+                        </div>
+
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Core Team Section -->
+        <section class="bg-white py-24">
+            <div class="max-w-7xl mx-auto px-6 text-center">
+                <h2 class="text-4xl font-medium text-slate-900 tracking-tight">The Core Team</h2>
+                <p class="text-lg text-slate-500 mt-4 mb-16">Meet the 7 passionate leaders driving Qatar's sustainable future.</p>
+            </div>
+
+            <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-6 gap-y-16 max-w-7xl mx-auto px-6">
+                <!-- Card 1 -->
+                <div class="bg-slate-50 rounded-[2rem] border border-slate-200/60 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 relative mt-10">
+                    <img src="https://images.unsplash.com/photo-1534528741775-53994a69daeb?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=256&amp;q=80" alt="Team Member Name" class="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full border-4 border-white shadow-md object-cover">
+                    <div class="pt-14 pb-8 px-6 text-center">
+                        <h3 class="text-xl font-medium text-slate-900 mb-1 tracking-tight">Team Member Name</h3>
+                        <p class="text-xs font-semibold text-[#16a34a] tracking-wider uppercase mb-4">Leadership Role</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors">
+                                <iconify-icon icon="solar:user-rounded-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                            </a>
+                            <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors">
+                                <iconify-icon icon="solar:letter-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2 -->
+                <div class="bg-slate-50 rounded-[2rem] border border-slate-200/60 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 relative mt-10">
+                    <img src="https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=256&amp;q=80" alt="Team Member Name" class="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full border-4 border-white shadow-md object-cover">
+                    <div class="pt-14 pb-8 px-6 text-center">
+                        <h3 class="text-xl font-medium text-slate-900 mb-1 tracking-tight">Team Member Name</h3>
+                        <p class="text-xs font-semibold text-[#16a34a] tracking-wider uppercase mb-4">Leadership Role</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors">
+                                <iconify-icon icon="solar:user-rounded-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                            </a>
+                            <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors">
+                                <iconify-icon icon="solar:letter-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3 -->
+                <div class="bg-slate-50 rounded-[2rem] border border-slate-200/60 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 relative mt-10">
+                    <img src="https://images.unsplash.com/photo-1494790108377-be9c29b29330?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=256&amp;q=80" alt="Team Member Name" class="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full border-4 border-white shadow-md object-cover">
+                    <div class="pt-14 pb-8 px-6 text-center">
+                        <h3 class="text-xl font-medium text-slate-900 mb-1 tracking-tight">Team Member Name</h3>
+                        <p class="text-xs font-semibold text-[#16a34a] tracking-wider uppercase mb-4">Leadership Role</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors">
+                                <iconify-icon icon="solar:user-rounded-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                            </a>
+                            <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors">
+                                <iconify-icon icon="solar:letter-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 -->
+                <div class="bg-slate-50 rounded-[2rem] border border-slate-200/60 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 relative mt-10">
+                    <img src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=256&amp;q=80" alt="Team Member Name" class="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full border-4 border-white shadow-md object-cover">
+                    <div class="pt-14 pb-8 px-6 text-center">
+                        <h3 class="text-xl font-medium text-slate-900 mb-1 tracking-tight">Team Member Name</h3>
+                        <p class="text-xs font-semibold text-[#16a34a] tracking-wider uppercase mb-4">Leadership Role</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors">
+                                <iconify-icon icon="solar:user-rounded-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                            </a>
+                            <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors">
+                                <iconify-icon icon="solar:letter-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 -->
+                <div class="bg-slate-50 rounded-[2rem] border border-slate-200/60 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 relative mt-10">
+                    <img src="https://images.unsplash.com/photo-1438761681033-6461ffad8d80?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=256&amp;q=80" alt="Team Member Name" class="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full border-4 border-white shadow-md object-cover">
+                    <div class="pt-14 pb-8 px-6 text-center">
+                        <h3 class="text-xl font-medium text-slate-900 mb-1 tracking-tight">Team Member Name</h3>
+                        <p class="text-xs font-semibold text-[#16a34a] tracking-wider uppercase mb-4">Leadership Role</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors">
+                                <iconify-icon icon="solar:user-rounded-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                            </a>
+                            <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors">
+                                <iconify-icon icon="solar:letter-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 -->
+                <div class="bg-slate-50 rounded-[2rem] border border-slate-200/60 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 relative mt-10">
+                    <img src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=256&amp;q=80" alt="Team Member Name" class="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full border-4 border-white shadow-md object-cover">
+                    <div class="pt-14 pb-8 px-6 text-center">
+                        <h3 class="text-xl font-medium text-slate-900 mb-1 tracking-tight">Team Member Name</h3>
+                        <p class="text-xs font-semibold text-[#16a34a] tracking-wider uppercase mb-4">Leadership Role</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors">
+                                <iconify-icon icon="solar:user-rounded-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                            </a>
+                            <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors">
+                                <iconify-icon icon="solar:letter-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 7 -->
+                <div class="bg-slate-50 rounded-[2rem] border border-slate-200/60 hover:shadow-xl hover:-translate-y-2 transition-all duration-300 relative mt-10 lg:col-start-2">
+                    <img src="https://images.unsplash.com/photo-1517841905240-472988babdf9?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=256&amp;q=80" alt="Team Member Name" class="absolute -top-12 left-1/2 -translate-x-1/2 w-24 h-24 rounded-full border-4 border-white shadow-md object-cover">
+                    <div class="pt-14 pb-8 px-6 text-center">
+                        <h3 class="text-xl font-medium text-slate-900 mb-1 tracking-tight">Team Member Name</h3>
+                        <p class="text-xs font-semibold text-[#16a34a] tracking-wider uppercase mb-4">Leadership Role</p>
+                        <div class="flex items-center justify-center gap-3">
+                            <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors">
+                                <iconify-icon icon="solar:user-rounded-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                            </a>
+                            <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors">
+                                <iconify-icon icon="solar:letter-linear" width="16" height="16" style="stroke-width: 1.5;"></iconify-icon>
+                            </a>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- Masonry Impact Gallery -->
+        <section class="py-32 px-6 bg-white border-t border-slate-100/50">
+            <div class="max-w-7xl mx-auto">
+                <div class="text-center mb-16">
+                    <h2 class="text-3xl md:text-4xl font-medium text-slate-900 tracking-tight mb-4">Initiatives for absolutely anything</h2>
+                    <p class="text-base text-slate-500 font-light max-w-2xl mx-auto">Discover community projects, join local cleanups, or design an environmental workshop for your own neighborhood.</p>
+                </div>
+
+                <!-- CSS Columns Masonry Grid -->
+                <div class="columns-1 sm:columns-2 md:columns-3 lg:columns-4 gap-6 space-y-6">
+                    
+                    <!-- Card 1: Portrait -->
+                    <div class="break-inside-avoid rounded-3xl overflow-hidden bg-white border border-slate-200/50 group cursor-pointer hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300">
+                        <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/917d6f93-fb36-439a-8c48-884b67b35381_1600w.jpg" alt="Beach Cleanup" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="p-5">
+                            <h4 class="text-lg font-medium text-slate-900 tracking-tight mb-0.5">Coastal Restoration</h4>
+                            <p class="text-sm text-slate-500 font-light">Al Wakra Beach</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 2: Square -->
+                    <div class="break-inside-avoid rounded-3xl overflow-hidden bg-slate-50 border border-slate-200/50 group cursor-pointer hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300">
+                        <div class="aspect-square bg-[#16a34a]/5 flex items-center justify-center p-8 relative overflow-hidden">
+                            <div class="absolute inset-0 bg-gradient-to-br from-[#16a34a]/10 to-transparent"></div>
+                            <h3 class="text-2xl font-medium text-slate-800 tracking-tight relative z-10 text-center leading-tight">Zero Waste<br>Summit</h3>
+                        </div>
+                        <div class="p-5">
+                            <h4 class="text-lg font-medium text-slate-900 tracking-tight mb-0.5">Annual Conference</h4>
+                            <p class="text-sm text-slate-500 font-light">Education City</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 3: Landscape -->
+                    <div class="break-inside-avoid rounded-3xl overflow-hidden bg-white border border-slate-200/50 group cursor-pointer hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300">
+                        <img src="https://images.unsplash.com/photo-1531482615713-2afd69097998?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=800&amp;h=500&amp;q=80" alt="Tech Hackathon" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="p-5">
+                            <h4 class="text-lg font-medium text-slate-900 tracking-tight mb-0.5">GreenTech Hackathon</h4>
+                            <p class="text-sm text-slate-500 font-light">AI &amp; Sustainability</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 4: Document Style -->
+                    <div class="break-inside-avoid rounded-3xl overflow-hidden bg-white border border-slate-200/50 p-6 group cursor-pointer hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300 flex flex-col gap-4">
+                        <div class="w-8 h-8 rounded-lg bg-slate-50 border border-slate-100 flex items-center justify-center mb-1">
+                            <iconify-icon icon="solar:document-text-linear" width="16" height="16" class="text-slate-600" style="stroke-width: 1.5;"></iconify-icon>
+                        </div>
+                        <h4 class="text-xl font-medium text-slate-900 tracking-tight">Project Deliverables</h4>
+                        <div class="space-y-2.5 mt-2">
+                            <div class="h-1.5 bg-slate-100 rounded-full w-3/4"></div>
+                            <div class="h-1.5 bg-slate-100 rounded-full w-full"></div>
+                            <div class="h-1.5 bg-slate-100 rounded-full w-5/6"></div>
+                        </div>
+                    </div>
+
+                     <!-- Card 5: Square Dark -->
+                     <div class="break-inside-avoid rounded-3xl overflow-hidden bg-slate-900 border border-slate-800 group cursor-pointer hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.15)] transition-all duration-300">
+                        <img src="https://images.unsplash.com/photo-1550009158-9ebf69173e03?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=600&amp;h=600&amp;q=80" alt="Solar Tech" class="w-full h-auto object-cover opacity-70 group-hover:scale-105 group-hover:opacity-90 transition-all duration-700">
+                        <div class="p-5 bg-slate-900">
+                            <h4 class="text-lg font-medium text-white tracking-tight mb-0.5">Renewable Energy</h4>
+                            <p class="text-sm text-slate-400 font-light">School Installations</p>
+                        </div>
+                    </div>
+
+                    <!-- Card 6: Portrait Tall -->
+                    <div class="break-inside-avoid rounded-3xl overflow-hidden bg-white border border-slate-200/50 group cursor-pointer hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300">
+                        <img src="https://images.unsplash.com/photo-1523301343968-6a6ebf63c672?ixlib=rb-4.0.3&amp;auto=format&amp;fit=crop&amp;w=600&amp;h=900&amp;q=80" alt="Recycling Drive" class="w-full h-auto object-cover group-hover:scale-105 transition-transform duration-700">
+                        <div class="p-5">
+                            <h4 class="text-lg font-medium text-slate-900 tracking-tight mb-0.5">City-wide Recycling</h4>
+                            <p class="text-sm text-slate-500 font-light">Monthly Drives</p>
+                        </div>
+                    </div>
+
+                     <!-- Card 7: Chart Style -->
+                     <div class="break-inside-avoid rounded-3xl overflow-hidden bg-slate-50 border border-slate-200/50 p-6 group cursor-pointer hover:-translate-y-1 hover:shadow-[0_20px_40px_-15px_rgba(0,0,0,0.05)] transition-all duration-300">
+                        <h4 class="text-lg font-medium text-slate-900 tracking-tight mb-6 text-center">Impact Metrics 2024</h4>
+                        <div class="relative w-24 h-24 mx-auto rounded-full border-[10px] border-slate-100 border-t-slate-800 border-r-slate-800 rotate-45 group-hover:rotate-[225deg] transition-transform duration-1000 ease-in-out"></div>
+                    </div>
+
+                </div>
+
+                <!-- Bottom Button -->
+                <div class="mt-16 flex justify-center">
+                    <button class="px-6 py-2.5 rounded-full border border-slate-200/80 bg-white shadow-sm text-slate-700 font-normal text-sm hover:bg-slate-50 hover:text-slate-900 hover:border-slate-300 transition-all focus:outline-none focus:ring-2 focus:ring-slate-200">
+                        Browse all initiatives
+                    </button>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="bg-white border-t border-slate-200/50 py-10">
+        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+            <div class="flex items-center gap-2">
+                <div class="w-6 h-6 rounded bg-slate-100 flex items-center justify-center">
+                    <span class="text-slate-600 text-xs font-medium tracking-tighter">EA</span>
+                </div>
+                <span class="font-normal text-slate-600 text-sm tracking-tight">EcoAwareness</span>
+            </div>
+            <div class="flex gap-6 text-sm font-normal text-slate-500">
+                <a href="#" class="hover:text-slate-900 transition-colors">Privacy</a>
+                <a href="#" class="hover:text-slate-900 transition-colors">Terms</a>
+                <a href="#" class="hover:text-slate-900 transition-colors">Contact</a>
+            </div>
+            <p class="text-sm text-slate-400 font-light">© 2024 EcoAwareness. All rights reserved.</p>
+        </div>
+    </footer>
+
+
+</body></html>
