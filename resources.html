@@ -395,8 +395,8 @@
         requestAnimationFrame(raf);
     </script>
 <!-- Page Transition Overlay -->
-<div id="page-transition" class="fixed inset-0 z-[9999] bg-white flex items-center justify-center pointer-events-none transition-opacity duration-300 ease-in-out opacity-100">
-    <div class="w-16 h-16 rounded-2xl bg-[#16a34a] flex items-center justify-center shadow-lg animate-pulse transform hover:scale-105 transition-transform">
+<div id="page-transition" style="position: fixed; inset: 0; z-index: 9999; background-color: white; display: flex; align-items: center; justify-content: center; opacity: 1; transition: all 400ms ease-out; pointer-events: none;">
+    <div id="transition-logo" style="width: 4rem; height: 4rem; border-radius: 1rem; background-color: #16a34a; display: flex; align-items: center; justify-content: center; box-shadow: 0 10px 15px -3px rgba(0, 0, 0, 0.1); transform: scale(1); transition: transform 500ms;">
         <iconify-icon icon="solar:leaf-linear" class="text-white text-4xl"></iconify-icon>
     </div>
 </div>
@@ -404,11 +404,11 @@
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const overlay = document.getElementById('page-transition');
+        const logo = document.getElementById('transition-logo');
         
         // 1. On Page Load: Smoothly fade the overlay out
         requestAnimationFrame(() => {
-            overlay.classList.remove('opacity-100');
-            overlay.classList.add('opacity-0');
+            overlay.style.opacity = '0';
         });
 
         // 2. On Link Click: Intercept navigation
@@ -430,9 +430,9 @@
                 // Stop the instant jump
                 e.preventDefault();
                 
-                // Fade the white overlay and logo in
-                overlay.classList.remove('opacity-0');
-                overlay.classList.add('opacity-100');
+                // Fade the white overlay and scale the logo
+                overlay.style.opacity = '1';
+                logo.style.transform = 'scale(1.1)';
 
                 // Wait exactly 400ms, and then trigger the page load
                 setTimeout(() => {
@@ -444,8 +444,8 @@
         // Safari/iOS back button fix (BFCache)
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
-                overlay.classList.remove('opacity-100');
-                overlay.classList.add('opacity-0');
+                overlay.style.opacity = '0';
+                logo.style.transform = 'scale(1)';
             }
         });
     });
