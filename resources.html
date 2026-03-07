@@ -1,71 +1,140 @@
-<html lang="en" class="scroll-smooth"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Knowledge &amp; Resources</title>
+    <title>The Hub - Resources Directory</title>
     <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://unpkg.com/lucide@latest"></script>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+    
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        ::-webkit-scrollbar {
+            width: 8px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background: #cbd5e1;
+            border-radius: 4px;
+        }
+        ::-webkit-scrollbar-thumb:hover {
+            background: #94a3b8;
+        }
     </style>
 </head>
-<body class="bg-slate-50 text-slate-800 antialiased selection:bg-[#16a34a]/20 selection:text-[#16a34a]">
+<body class="antialiased text-slate-900 bg-white font-['Inter'] selection:bg-[#16a34a]/20 selection:text-[#16a34a] flex flex-col min-h-screen">
 
-    <!-- Navigation Bar / Header -->
-    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-lg border-b border-slate-200/80">
-        <nav class="max-w-7xl mx-auto px-6 h-16 flex items-center justify-between">
-            <div class="flex items-center gap-2 cursor-pointer group">
-                <div class="w-8 h-8 rounded-lg bg-[#16a34a] flex items-center justify-center transition-transform group-hover:scale-105">
-                    <i data-lucide="leaf" class="text-white w-5 h-5" stroke-width="1.5"></i>
-                </div>
-                <span class="font-medium text-slate-900 text-lg tracking-tight">EcoHub</span>
+    <!-- Navigation Bar -->
+    <header class="sticky top-0 z-50 bg-white/80 backdrop-blur-md border-b border-gray-200">
+        <div class="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
+            <a href="index.html" class="flex items-center gap-2 group">
+                <iconify-icon icon="solar:leaf-linear" class="text-[#16a34a] text-2xl group-hover:scale-110 transition-transform duration-300"></iconify-icon>
+                <span class="text-xl font-medium tracking-tight text-slate-900 uppercase">The Hub</span>
+            </a>
+
+            <nav class="hidden md:flex items-center gap-8">
+                <a href="opportunities.html" class="text-sm font-light text-slate-500 hover:text-[#16a34a] transition-colors">Opportunities</a>
+                <a href="network.html" class="text-sm font-light text-slate-500 hover:text-[#16a34a] transition-colors">Directory</a>
+                <a href="resources.html" class="text-sm font-medium text-slate-900 transition-colors">Resources</a>
+                <a href="about.html" class="text-sm font-light text-slate-500 hover:text-[#16a34a] transition-colors">About Us</a>
+            </nav>
+
+            <div class="flex items-center gap-4">
+                <a href="#" class="hidden lg:block text-sm font-light text-slate-500 hover:text-slate-900 transition-colors">Sign In</a>
+                <a href="opportunities.html" class="bg-[#16a34a] text-white px-5 py-2.5 rounded-lg text-sm font-normal shadow-sm hover:bg-[#15803d] hover:shadow transition-all">
+                    Post an Opportunity
+                </a>
             </div>
-            
-            <div class="hidden md:flex items-center gap-8">
-                <a href="index.html" class="text-base text-slate-500 hover:text-slate-900 transition-colors">Home</a>
-                <a href="opportunities.html" class="text-base text-slate-500 hover:text-slate-900 transition-colors">Opportunities</a>
-                <a href="network.html" class="text-base text-slate-500 hover:text-slate-900 transition-colors">Network</a>
-                
-                <!-- Resources Dropdown -->
-                <div class="relative group h-16 flex items-center">
-                    <button class="flex items-center gap-1.5 text-base font-medium text-slate-900 transition-colors focus:outline-none">
-                        Resources
-                        <iconify-icon icon="solar:alt-arrow-down-linear" stroke-width="1.5" class="text-slate-500 transition-transform duration-200 group-hover:-rotate-180"></iconify-icon>
-                    </button>
-                    
-                    <!-- Dropdown Menu -->
-                    <div class="absolute left-0 top-full pt-1 opacity-0 invisible group-hover:visible group-hover:opacity-100 transition-all duration-200 z-50">
-                        <div class="w-56 bg-white rounded-xl shadow-lg ring-1 ring-slate-200/50 p-2 flex flex-col gap-1">
-                            <a href="resources.html#playbooks" class="px-3 py-2 text-sm text-slate-600 hover:text-[#16a34a] hover:bg-[#16a34a]/5 rounded-lg transition-colors">Featured Playbooks</a>
-                            <a href="resources.html#masterclasses" class="px-3 py-2 text-sm text-slate-600 hover:text-[#16a34a] hover:bg-[#16a34a]/5 rounded-lg transition-colors">Exclusive Interviews</a>
-                            <a href="resources.html#qnv2030" class="px-3 py-2 text-sm text-slate-600 hover:text-[#16a34a] hover:bg-[#16a34a]/5 rounded-lg transition-colors">Vision 2030</a>
-                            <a href="resources.html#competitions" class="px-3 py-2 text-sm text-slate-600 hover:text-[#16a34a] hover:bg-[#16a34a]/5 rounded-lg transition-colors">Active Competitions</a>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="md:hidden">
-                <i data-lucide="menu" class="w-6 h-6 text-slate-600" stroke-width="1.5"></i>
-            </div>
-        </nav>
+        </div>
     </header>
 
-    <main>
-        <!-- Hero Section -->
-        <section class="pt-32 pb-20 px-6 max-w-4xl mx-auto text-center">
-            <h1 class="text-5xl md:text-6xl font-semibold text-slate-900 tracking-tight leading-tight">
-                Knowledge &amp; <br class="md:hidden">Resources
-            </h1>
-            <p class="mt-6 text-lg md:text-xl text-slate-500 max-w-2xl mx-auto leading-relaxed">
-                Toolkits, masterclasses, and local insights to drive your sustainable impact forward.
-            </p>
+    <!-- Main Content -->
+    <main class="flex-grow">
+        
+        <!-- New Toolkit Directory Section (Replaces Old Hero) -->
+        <section class="py-32 overflow-hidden bg-gradient-to-b from-slate-50 to-[#f4f7f4] relative flex flex-col items-center border-b border-slate-200/50">
+            
+            <div class="text-center max-w-4xl mx-auto px-6 relative z-10 flex flex-col items-center">
+                <div class="inline-flex items-center px-4 py-1.5 rounded-full bg-slate-200/50 text-slate-600 text-xs font-medium tracking-widest uppercase mb-6 shadow-sm border border-slate-200/50">
+                    Toolkit Directory
+                </div>
+
+                <h2 class="text-5xl md:text-7xl font-medium text-slate-900 tracking-tight leading-tight mb-6">
+                    Actionable <span class="bg-gradient-to-r from-[#16a34a] to-teal-500 text-transparent bg-clip-text">toolkits</span><br>ready for <span class="bg-gradient-to-r from-[#16a34a] to-teal-500 text-transparent bg-clip-text">your</span> impact.
+                </h2>
+                
+                <p class="text-lg text-slate-500 font-light max-w-2xl mx-auto mb-10 leading-relaxed">
+                    Everything you need to organize, fund, and scale environmental initiatives in your local community.
+                </p>
+                
+                <button class="inline-flex items-center justify-center bg-slate-900 text-white rounded-full px-6 py-2 text-base font-normal hover:bg-slate-800 hover:shadow-lg hover:-translate-y-0.5 transition-all focus:outline-none focus:ring-2 focus:ring-slate-900/10 focus:ring-offset-2 gap-2">
+                    Browse Directory
+                    <i data-lucide="arrow-right" class="w-4 h-4" stroke-width="1.5"></i>
+                </button>
+            </div>
+
+            <div class="absolute top-[60%] left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[#16a34a]/20 blur-[100px] w-96 h-96 rounded-full z-0 pointer-events-none"></div>
+
+            <div class="w-full relative z-10">
+                <div class="flex flex-row gap-4 md:gap-6 justify-center mt-16 max-w-[90vw] mx-auto overflow-x-auto pb-12 pt-6 snap-x snap-mandatory [scrollbar-width:none] [&::-webkit-scrollbar]:hidden">
+                    
+                    <div class="flex flex-col items-center shrink-0 snap-center group">
+                        <div class="rounded-full border border-slate-200 bg-white/80 backdrop-blur-sm px-4 py-1.5 text-xs font-semibold tracking-widest text-slate-600 uppercase mb-4 mx-auto w-max shadow-sm transition-colors group-hover:border-slate-300">
+                            CLEANUPS
+                        </div>
+                        <div class="w-48 md:w-56 aspect-[3/4] rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-500 cursor-pointer border border-slate-200/50 bg-white relative">
+                            <img src="https://images.unsplash.com/photo-1595278069441-2cf29f8005a4?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Beach Cleanup" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center shrink-0 snap-center group relative mt-4 md:mt-8">
+                        <div class="rounded-full border border-slate-200 bg-white/80 backdrop-blur-sm px-4 py-1.5 text-xs font-semibold tracking-widest text-slate-600 uppercase mb-4 mx-auto w-max shadow-sm transition-colors group-hover:border-slate-300">
+                            SCHOOLS
+                        </div>
+                        <div class="w-48 md:w-56 aspect-[3/4] rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-500 cursor-pointer border border-slate-200/50 bg-white relative">
+                            <img src="https://images.unsplash.com/photo-1577896851231-70ef18881754?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="School Planting" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center shrink-0 snap-center group relative z-10 md:scale-105 mt-8 md:mt-16">
+                        <div class="rounded-full border border-slate-200 bg-white/80 backdrop-blur-sm px-4 py-1.5 text-xs font-semibold tracking-widest text-slate-600 uppercase mb-4 mx-auto w-max shadow-sm transition-colors group-hover:border-slate-300">
+                            RECYCLING
+                        </div>
+                        <div class="w-48 md:w-56 aspect-[3/4] rounded-2xl overflow-hidden shadow-lg hover:shadow-2xl hover:-translate-y-2 transition-all duration-500 cursor-pointer border border-slate-200/50 bg-white relative ring-4 ring-white/50">
+                            <img src="https://images.unsplash.com/photo-1532996122724-e3c354a0b15b?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Recycling Facility" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center shrink-0 snap-center group relative mt-4 md:mt-8">
+                        <div class="rounded-full border border-slate-200 bg-white/80 backdrop-blur-sm px-4 py-1.5 text-xs font-semibold tracking-widest text-slate-600 uppercase mb-4 mx-auto w-max shadow-sm transition-colors group-hover:border-slate-300">
+                            INNOVATION
+                        </div>
+                        <div class="w-48 md:w-56 aspect-[3/4] rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-500 cursor-pointer border border-slate-200/50 bg-white relative">
+                            <img src="https://images.unsplash.com/photo-1497435334941-8c899ee9e8e9?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Innovation Solar" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                    <div class="flex flex-col items-center shrink-0 snap-center group">
+                        <div class="rounded-full border border-slate-200 bg-white/80 backdrop-blur-sm px-4 py-1.5 text-xs font-semibold tracking-widest text-slate-600 uppercase mb-4 mx-auto w-max shadow-sm transition-colors group-hover:border-slate-300">
+                            FARMING
+                        </div>
+                        <div class="w-48 md:w-56 aspect-[3/4] rounded-2xl overflow-hidden shadow-md hover:shadow-xl hover:-translate-y-2 transition-all duration-500 cursor-pointer border border-slate-200/50 bg-white relative">
+                            <img src="https://images.unsplash.com/photo-1500937386664-56d1dfef3854?ixlib=rb-4.0.3&auto=format&fit=crop&w=600&q=80" alt="Farming Local" class="w-full h-full object-cover">
+                        </div>
+                    </div>
+
+                </div>
+            </div>
         </section>
 
         <!-- Section 1: Playbook Carousel -->
-        <section id="playbooks" class="py-12 relative">
+        <section id="playbooks" class="py-12 relative bg-slate-50">
             <div class="px-6 mb-8 max-w-7xl mx-auto flex items-center justify-between">
                 <h2 class="text-2xl font-semibold text-slate-900 tracking-tight">Featured Playbooks</h2>
                 <div class="hidden md:flex gap-2">
@@ -79,7 +148,7 @@
             </div>
 
             <!-- Carousel Container -->
-            <div class="flex overflow-x-auto snap-x snap-mandatory gap-6 px-6 pb-12 w-full [&amp;::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
+            <div class="flex overflow-x-auto snap-x snap-mandatory gap-6 px-6 pb-12 w-full [&::-webkit-scrollbar]:hidden [-ms-overflow-style:none] [scrollbar-width:none]">
                 <div class="w-0 shrink-0 sm:w-[calc((100vw-80rem)/2)] block"></div>
 
                 <!-- Card 1 -->
@@ -193,7 +262,7 @@
         </section>
 
         <!-- Section 3: Deep-Dive Knowledge Grid -->
-        <section class="py-24 px-6 max-w-7xl mx-auto">
+        <section class="py-24 px-6 max-w-7xl mx-auto bg-slate-50">
             <div class="mb-12">
                 <h2 class="text-3xl font-semibold text-slate-900 tracking-tight">Ecosystem Insights</h2>
                 <p class="mt-3 text-lg text-slate-500">Essential knowledge for local operators.</p>
@@ -278,30 +347,53 @@
                 </div>
             </div>
         </section>
+
     </main>
 
     <!-- Footer -->
-    <footer class="bg-white border-t border-slate-200 py-12 mt-12">
-        <div class="max-w-7xl mx-auto px-6 flex flex-col md:flex-row items-center justify-between gap-6">
+    <footer class="bg-white border-t border-gray-200 py-8 px-6 mt-auto">
+        <div class="max-w-7xl mx-auto flex flex-col md:flex-row items-center justify-between gap-4">
             <div class="flex items-center gap-2">
-                <div class="w-6 h-6 rounded bg-slate-200 flex items-center justify-center">
-                    <i data-lucide="leaf" class="text-slate-500 w-3.5 h-3.5" stroke-width="1.5"></i>
-                </div>
-                <span class="font-medium text-slate-600">EcoHub</span>
+                <iconify-icon icon="solar:leaf-linear" class="text-[#16a34a] text-xl"></iconify-icon>
+                <span class="text-sm font-medium tracking-tight text-slate-900 uppercase">The Hub</span>
             </div>
-            <div class="flex gap-6 text-base text-slate-500">
-                <a href="#" class="hover:text-slate-900 transition-colors">Privacy</a>
-                <a href="#" class="hover:text-slate-900 transition-colors">Terms</a>
+            
+            <p class="text-xs font-light text-slate-500 text-center">
+                © 2023 The Hub Sustainable Action. All rights reserved.
+            </p>
+            
+            <div class="flex items-center gap-6 text-xs font-light text-slate-500">
+                <a href="#" class="hover:text-slate-900 transition-colors">Privacy Policy</a>
+                <a href="#" class="hover:text-slate-900 transition-colors">Terms of Service</a>
                 <a href="#" class="hover:text-slate-900 transition-colors">Contact</a>
             </div>
-            <p class="text-base text-slate-400">© 2024 EcoHub. All rights reserved.</p>
         </div>
     </footer>
 
-    <!-- Initialize Icons -->
-    <script src="https://unpkg.com/lucide@latest"></script>
     <script>
+        // Initialize Lucide icons
         lucide.createIcons();
+
+        // Initialize Lenis smooth scroll
+        const lenis = new Lenis({
+          duration: 1.2,
+          easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
+          direction: 'vertical',
+          gestureDirection: 'vertical',
+          smooth: true,
+          mouseMultiplier: 1,
+          smoothTouch: false,
+          touchMultiplier: 2,
+          infinite: false,
+        });
+        
+        function raf(time) {
+          lenis.raf(time);
+          requestAnimationFrame(raf);
+        }
+        
+        requestAnimationFrame(raf);
     </script>
 
-</body></html>
+</body>
+</html>
