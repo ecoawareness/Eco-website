@@ -139,7 +139,7 @@
             </nav>
 
             <div class="flex items-center gap-6">
-                <button id="signInBtn" class="hidden md:block text-base font-light tracking-tight text-gray-800 hover:text-[#16a34a] transition-colors focus:outline-none">Sign In</button>
+                <a href="signup.html" class="hidden md:block text-base font-light tracking-tight text-gray-800 hover:text-[#16a34a] transition-colors">Sign In</a>
                 <a href="network.html" class="bg-[#16a34a] text-white px-5 py-2 rounded-md text-base font-light tracking-tight hover:bg-[#15803d] transition-colors shadow-sm">
                     Join Network
                 </a>
@@ -383,72 +383,6 @@
             </div>
         </div>
     </footer>
-
-    <!-- Supabase Login Modal -->
-    <div id="loginModal" class="fixed inset-0 z-[10000] bg-slate-900/40 backdrop-blur-sm opacity-0 pointer-events-none transition-opacity duration-300 flex items-center justify-center">
-        <div id="loginCard" class="max-w-sm w-full bg-white p-8 rounded-2xl shadow-2xl transform scale-95 transition-transform duration-300 relative mx-4">
-            <button id="closeModal" class="absolute top-4 right-4 text-slate-400 hover:text-slate-600 focus:outline-none cursor-pointer">
-                <iconify-icon icon="solar:close-circle-linear" class="text-2xl"></iconify-icon>
-            </button>
-            <h2 class="text-2xl font-bold text-slate-900 tracking-tight mb-1">Welcome back</h2>
-            <p class="text-sm text-slate-500 font-light mb-6">Sign in to your EcoAwareness account.</p>
-            
-            <button id="googleSignInBtn" class="w-full border border-slate-200 rounded-xl py-3 flex items-center justify-center gap-3 hover:bg-slate-50 transition-colors font-medium text-slate-700 shadow-sm focus:outline-none focus:ring-2 focus:ring-[#16a34a]/20 cursor-pointer">
-                <iconify-icon icon="logos:google-icon" class="text-xl"></iconify-icon>
-                Continue with Google
-            </button>
-        </div>
-    </div>
-
-    <script>
-        // 1. Initialize Supabase
-        const supabaseUrl = 'https://nqvhxjsryatqgfvtjbki.supabase.co';
-        // 👇 YOU MUST PASTE YOUR ANON KEY HERE FOR THE GOOGLE POPUP TO WORK 👇
-        const supabaseAnonKey = 'YOUR_ANON_KEY'; 
-        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
-
-        // 2. Button Open/Close Logic
-        const signInBtn = document.getElementById('signInBtn');
-        const loginModal = document.getElementById('loginModal');
-        const loginCard = document.getElementById('loginCard');
-        const closeModal = document.getElementById('closeModal');
-
-        function openModal(e) {
-            if(e) e.preventDefault();
-            loginModal.classList.remove('opacity-0', 'pointer-events-none');
-            loginModal.classList.add('opacity-100');
-            loginCard.classList.remove('scale-95');
-            loginCard.classList.add('scale-100');
-        }
-
-        function hideModal() {
-            loginModal.classList.remove('opacity-100');
-            loginModal.classList.add('opacity-0', 'pointer-events-none');
-            loginCard.classList.remove('scale-100');
-            loginCard.classList.add('scale-95');
-        }
-
-        if(signInBtn) signInBtn.addEventListener('click', openModal);
-        if(closeModal) closeModal.addEventListener('click', hideModal);
-        
-        loginModal.addEventListener('click', (e) => {
-            if (e.target === loginModal) hideModal();
-        });
-
-        // 3. Trigger Google
-        const googleBtn = document.getElementById('googleSignInBtn');
-        if (googleBtn) {
-            googleBtn.addEventListener('click', async () => {
-                const { error } = await supabaseClient.auth.signInWithOAuth({
-                    provider: 'google',
-                    options: {
-                        redirectTo: window.location.origin + '/index.html'
-                    }
-                });
-                if (error) alert("Something went wrong. Please try again.");
-            });
-        }
-    </script>
 
     <script>
         document.addEventListener('DOMContentLoaded', () => {
