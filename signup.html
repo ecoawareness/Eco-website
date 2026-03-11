@@ -1,14 +1,14 @@
-<html lang="en"><head>
+<!DOCTYPE html>
+<html lang="en">
+<head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Create Account</title>
     
-    <!-- Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&amp;display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
     
-    <!-- Scripts -->
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
@@ -24,10 +24,8 @@
 
     <div class="flex min-h-screen">
         
-        <!-- Left Column (Form) -->
         <div class="w-full lg:w-1/2 flex flex-col relative px-6 py-12 sm:px-12 lg:px-20 justify-center">
             
-            <!-- Back Link -->
             <div class="absolute top-8 left-6 sm:left-12 lg:left-20">
                 <a href="index.html" class="flex items-center gap-2 text-base text-gray-500 hover:text-gray-900 transition-colors duration-200">
                     <iconify-icon icon="solar:alt-arrow-left-linear" class="text-xl"></iconify-icon>
@@ -35,16 +33,13 @@
                 </a>
             </div>
 
-            <!-- Content Wrapper -->
             <div class="w-full max-w-[440px] mx-auto mt-12 lg:mt-0">
                 
-                <!-- Header -->
                 <div class="mb-10">
                     <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight text-gray-900 mb-3">Create Account</h1>
                     <p class="text-lg text-gray-500 font-light">Join hundreds of youth across Qatar driving sustainable action.</p>
                 </div>
 
-                <!-- Form -->
                 <form class="space-y-5" onsubmit="event.preventDefault();">
                     
                     <div class="flex flex-col sm:flex-row gap-5">
@@ -83,20 +78,17 @@
 
                 </form>
 
-                <!-- Divider -->
                 <div class="flex items-center my-8">
                     <div class="flex-grow border-t border-gray-100"></div>
                     <span class="px-4 text-sm text-gray-400">Or continue with</span>
                     <div class="flex-grow border-t border-gray-100"></div>
                 </div>
 
-                <!-- Google Button -->
-                <button id="googleSignInBtn" type="button" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium py-3.5 rounded-full transition-all duration-200 text-base shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-sm">
+                <button id="googleSignInBtn" type="button" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium py-3.5 rounded-full transition-all duration-200 text-base shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-sm cursor-pointer">
                     <iconify-icon icon="logos:google-icon" class="text-xl"></iconify-icon>
                     Continue with Google
                 </button>
 
-                <!-- Footer -->
                 <p class="text-center mt-10 text-base text-gray-500">
                     Already have an account? <a href="#" class="text-[#16a34a] font-medium hover:text-[#15803d] transition-colors">Sign In</a>
                 </p>
@@ -104,16 +96,12 @@
             </div>
         </div>
 
-        <!-- Right Column (Visual) -->
         <div class="hidden lg:flex lg:w-1/2 relative bg-gray-900 overflow-hidden">
             
-            <!-- Background Image -->
             <img src="https://hoirqrkdgbmvpwutwuwj.supabase.co/storage/v1/object/public/assets/assets/092abbbc-c704-4b9d-8744-0d53fad4ee2c_3840w.jpg" alt="Students collaborating" class="absolute inset-0 w-full h-full object-cover">
             
-            <!-- Gradient Overlay -->
             <div class="absolute inset-0 bg-gradient-to-t from-[#022c22]/90 via-[#022c22]/30 to-transparent"></div>
             
-            <!-- Text Content -->
             <div class="relative z-10 flex flex-col justify-end w-full p-16 pb-20">
                 <div class="max-w-xl">
                     <h2 class="text-4xl font-semibold tracking-tight text-white mb-4">Your Impact Starts Here</h2>
@@ -125,31 +113,112 @@
 
     </div>
 
-    <!-- Initialize Lucide Icons -->
+    <div id="page-transition" style="position: fixed; inset: 0; z-index: 9999; background-color: white; display: flex; align-items: center; justify-content: center; opacity: 1; transition: all 400ms ease-out; pointer-events: none;">
+        <div id="transition-logo" style="width: 5rem; height: 5rem; display: flex; align-items: center; justify-content: center; transform: scale(1); transition: transform 500ms;">
+            <img src="assets/IMG.PNG" alt="EcoAwareness Logo" style="width: 100%; height: 100%; object-fit: contain;">
+        </div>
+    </div>
+
     <script>
         lucide.createIcons();
     </script>
 
-    <!-- Supabase Auth Script -->
     <script>
-        const supabaseUrl = 'https://nqvhxjsryatqgfvtjbki.supabase.co';
-        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xdmh4anNyeWF0cWdmdnRqYmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDYxMDAsImV4cCI6MjA4ODYyMjEwMH0.HrnrIq5bK3FhxmHaLxWPIG0nD-CI-3ReHCoO5RL1c3M'; 
-        const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+        document.addEventListener('DOMContentLoaded', () => {
+            // Safety check to ensure the Supabase library has loaded
+            if (typeof window.supabase === 'undefined') {
+                console.error("Supabase library failed to load. Ensure the script tag is in the <head>.");
+                return;
+            }
 
-        const googleBtn = document.getElementById('googleSignInBtn');
-        if (googleBtn) {
-            googleBtn.addEventListener('click', async (e) => {
-                e.preventDefault();
-                const { error } = await supabase.auth.signInWithOAuth({
-                    provider: 'google',
-                    options: {
-                        redirectTo: window.location.origin + '/index.html'
+            const supabaseUrl = 'https://nqvhxjsryatqgfvtjbki.supabase.co';
+            const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xdmh4anNyeWF0cWdmdnRqYmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDYxMDAsImV4cCI6MjA4ODYyMjEwMH0.HrnrIq5bK3FhxmHaLxWPIG0nD-CI-3ReHCoO5RL1c3M'; 
+            const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+            const googleBtn = document.getElementById('googleSignInBtn');
+            
+            if (googleBtn) {
+                googleBtn.addEventListener('click', async (e) => {
+                    e.preventDefault();
+                    
+                    // 1. Provide Visual Feedback
+                    const originalContent = googleBtn.innerHTML;
+                    googleBtn.innerHTML = '<iconify-icon icon="logos:google-icon" class="text-xl"></iconify-icon> Connecting to Google...';
+                    googleBtn.style.opacity = '0.6';
+                    googleBtn.style.pointerEvents = 'none'; // Prevents double-clicking
+                    
+                    // 2. Debugging Log
+                    console.log("Attempting Google Login...");
+
+                    // 3. Execute Login
+                    const { error } = await supabaseClient.auth.signInWithOAuth({
+                        provider: 'google',
+                        options: {
+                            redirectTo: window.location.origin + '/index.html'
+                        }
+                    });
+                    
+                    // 4. Handle Errors (Restore button if it fails)
+                    if (error) {
+                        console.error("Login Error:", error.message);
+                        alert("Something went wrong. Please try again.");
+                        googleBtn.innerHTML = originalContent;
+                        googleBtn.style.opacity = '1';
+                        googleBtn.style.pointerEvents = 'auto';
                     }
                 });
-                if (error) alert("Something went wrong. Please try again.");
-            });
-        }
+            }
+        });
     </script>
 
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const overlay = document.getElementById('page-transition');
+            const logo = document.getElementById('transition-logo');
+            
+            // 1. On Page Load: Smoothly fade the overlay out
+            requestAnimationFrame(() => {
+                overlay.style.opacity = '0';
+            });
 
-</body></html>
+            // 2. On Link Click: Intercept navigation
+            document.querySelectorAll('a').forEach(link => {
+                link.addEventListener('click', function(e) {
+                    const targetUrl = this.getAttribute('href');
+                    const targetAttr = this.getAttribute('target');
+
+                    // Ignore empty links, anchor links, external links, or target="_blank"
+                    if (!targetUrl || 
+                        targetUrl.startsWith('#') || 
+                        targetUrl.startsWith('mailto:') || 
+                        targetUrl.startsWith('tel:') || 
+                        targetAttr === '_blank' ||
+                        (this.hostname !== window.location.hostname && this.hostname !== '')) {
+                        return;
+                    }
+
+                    // Stop the instant jump
+                    e.preventDefault();
+                    
+                    // Fade the white overlay and scale the logo
+                    overlay.style.opacity = '1';
+                    logo.style.transform = 'scale(1.1)';
+
+                    // Wait exactly 400ms, and then trigger the page load
+                    setTimeout(() => {
+                        window.location.href = targetUrl;
+                    }, 400);
+                });
+            });
+
+            // Safari/iOS back button fix (BFCache)
+            window.addEventListener('pageshow', (event) => {
+                if (event.persisted) {
+                    overlay.style.opacity = '0';
+                    logo.style.transform = 'scale(1)';
+                }
+            });
+        });
+    </script>
+</body>
+</html>
