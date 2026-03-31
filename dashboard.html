@@ -418,7 +418,7 @@
                 <div class="sb-user-role" data-en="Climate Activist" data-ar="ناشط مناخي">Climate Activist</div>
             </div>
         </div>
-        <button class="sb-signout-btn" id="logout-btn">
+        <button class="sb-signout-btn" id="logout-btn" onclick="doLogout()">
             <iconify-icon icon="solar:logout-linear"></iconify-icon>
             <span data-en="Sign Out" data-ar="تسجيل الخروج">Sign Out</span>
         </button>
@@ -593,7 +593,7 @@
                     <h3 data-en="Account Settings" data-ar="إعدادات الحساب">Account Settings</h3>
                     <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:letter-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Email Address" data-ar="البريد الإلكتروني">Email Address</div><div class="setting-sub" id="p-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e78a888f868a8a828383888993818895808293a7808a868e8bc984888a">[email&#160;protected]</a></div></div></div><span style="font-size:0.68rem;background:rgba(26,92,56,0.1);color:var(--green);border-radius:100px;padding:0.18rem 0.55rem" data-en="Verified" data-ar="موثق">Verified</span></div>
                     <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:bell-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Notifications" data-ar="الإشعارات">Notifications</div><div class="setting-sub" data-en="Email updates for new opportunities" data-ar="تحديثات بريدية للفرص الجديدة">Email updates for new opportunities</div></div></div><div style="width:34px;height:18px;background:var(--green);border-radius:100px;position:relative;cursor:pointer"><span style="position:absolute;right:2px;top:2px;width:14px;height:14px;background:white;border-radius:50%;display:block"></span></div></div>
-                    <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:logout-linear" style="color:rgba(196,98,45,0.7)"></iconify-icon><div class="setting-label" style="color:var(--rust)" data-en="Sign Out" data-ar="تسجيل الخروج">Sign Out</div></div><button id="p-logout" style="font-size:0.75rem;background:rgba(196,98,45,0.1);color:var(--rust);border:none;border-radius:100px;padding:0.32rem 0.8rem;cursor:pointer;font-family:'DM Sans',sans-serif" data-en="Sign Out" data-ar="خروج">Sign Out</button></div>
+                    <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:logout-linear" style="color:rgba(196,98,45,0.7)"></iconify-icon><div class="setting-label" style="color:var(--rust)" data-en="Sign Out" data-ar="تسجيل الخروج">Sign Out</div></div><button id="p-logout" onclick="doLogout()" style="font-size:0.75rem;background:rgba(196,98,45,0.1);color:var(--rust);border:none;border-radius:100px;padding:0.32rem 0.8rem;cursor:pointer;font-family:'DM Sans',sans-serif" data-en="Sign Out" data-ar="خروج">Sign Out</button></div>
                 </div>
             </div>
 
@@ -642,7 +642,13 @@ async function init() {
 }
 
 // LOGOUT
-async function doLogout() { await sb.auth.signOut(); window.location.href = 'index.html'; }
+async function doLogout() {
+    try { await sb.auth.signOut(); } catch(e) { console.log(e); }
+    // Clear any local storage just in case
+    localStorage.removeItem('sb-' + 'nqvhxjsryatqgfvtjbki' + '-auth-token');
+    // Redirect to home, signed out
+    window.location.replace('index.html');
+}
 document.getElementById('logout-btn').addEventListener('click', doLogout);
 document.getElementById('p-logout').addEventListener('click', doLogout);
 
@@ -720,4 +726,12 @@ function applyLang() {
         el.placeholder = isArabic ? el.getAttribute('data-placeholder-ar') : el.getAttribute('data-placeholder-en');
     });
     document.querySelectorAll('.cm').forEach((el,i) => { el.textContent = isArabic ? monthsAr[i] : months[i]; });
-    localStorage.setItem('hub_lang', isArabic ? 'ar' 
+    localStorage.setItem('hub_lang', isArabic ? 'ar' : 'en');
+}
+document.getElementById('lang-toggle').addEventListener('click', () => { isArabic = !isArabic; applyLang(); });
+if (localStorage.getItem('hub_lang') === 'ar') { isArabic = true; applyLang(); }
+
+init();
+</script>
+</body>
+</html>
