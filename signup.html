@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account</title>
+    <title>Create Account — The Hub</title>
     
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
@@ -15,15 +15,79 @@
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
     
     <style>
-        body {
-            font-family: 'Inter', sans-serif;
+        body { font-family: 'Inter', sans-serif; }
+
+        .input-field {
+            width: 100%;
+            padding: 0.875rem 1.25rem;
+            border-radius: 9999px;
+            border: 1px solid rgba(229,231,235,0.8);
+            background: white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
+            font-size: 1rem;
+            transition: all 0.2s;
+            outline: none;
+            color: #111827;
+        }
+        .input-field::placeholder { color: #9ca3af; }
+        .input-field:focus {
+            border-color: #16a34a;
+            box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
+        }
+        .input-field.error {
+            border-color: #ef4444;
+            box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
+        }
+
+        /* Toast */
+        #toast {
+            position: fixed;
+            bottom: 2rem;
+            left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            opacity: 0;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            z-index: 9000;
+            pointer-events: none;
+        }
+        #toast.show {
+            opacity: 1;
+            transform: translateX(-50%) translateY(0);
+        }
+
+        /* Button loading spinner */
+        .btn-spinner {
+            display: inline-block;
+            width: 18px;
+            height: 18px;
+            border: 2px solid rgba(255,255,255,0.4);
+            border-top-color: white;
+            border-radius: 50%;
+            animation: spin 0.7s linear infinite;
+            vertical-align: middle;
+            margin-right: 8px;
+        }
+        @keyframes spin { to { transform: rotate(360deg); } }
+
+        /* Password strength bar */
+        .strength-bar {
+            height: 3px;
+            border-radius: 99px;
+            transition: all 0.3s ease;
         }
     </style>
 </head>
 <body class="bg-white text-gray-900 antialiased selection:bg-[#16a34a]/20 selection:text-[#16a34a]">
 
+    <!-- Toast Notification -->
+    <div id="toast">
+        <div id="toast-inner" class="flex items-center gap-3 px-5 py-3.5 rounded-full shadow-lg text-sm font-medium">
+        </div>
+    </div>
+
     <div class="flex min-h-screen">
         
+        <!-- LEFT: Form Panel -->
         <div class="w-full lg:w-1/2 flex flex-col relative px-6 py-12 sm:px-12 lg:px-20 justify-center">
             
             <div class="absolute top-8 left-6 sm:left-12 lg:left-20">
@@ -40,43 +104,58 @@
                     <p class="text-lg text-gray-500 font-light">Join hundreds of youth across Qatar driving sustainable action.</p>
                 </div>
 
-                <form class="space-y-5" onsubmit="event.preventDefault();">
+                <!-- Form -->
+                <div class="space-y-5">
                     
                     <div class="flex flex-col sm:flex-row gap-5">
                         <div class="w-full">
                             <label class="block text-sm font-medium text-gray-700 mb-1.5 ml-1">First Name</label>
-                            <input type="text" placeholder="First name" class="w-full px-5 py-3.5 rounded-full border border-gray-200/80 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#16a34a]/20 focus:border-[#16a34a] transition-all duration-200 text-base placeholder:text-gray-400">
+                            <input id="firstName" type="text" placeholder="First name" class="input-field">
+                            <p id="firstName-error" class="hidden mt-1.5 ml-1 text-xs text-red-500"></p>
                         </div>
                         <div class="w-full">
                             <label class="block text-sm font-medium text-gray-700 mb-1.5 ml-1">Last Name</label>
-                            <input type="text" placeholder="Last name" class="w-full px-5 py-3.5 rounded-full border border-gray-200/80 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#16a34a]/20 focus:border-[#16a34a] transition-all duration-200 text-base placeholder:text-gray-400">
+                            <input id="lastName" type="text" placeholder="Last name" class="input-field">
+                            <p id="lastName-error" class="hidden mt-1.5 ml-1 text-xs text-red-500"></p>
                         </div>
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1.5 ml-1">Email Address</label>
-                        <input type="email" placeholder="Enter your email address" class="w-full px-5 py-3.5 rounded-full border border-gray-200/80 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#16a34a]/20 focus:border-[#16a34a] transition-all duration-200 text-base placeholder:text-gray-400">
+                        <input id="email" type="email" placeholder="Enter your email address" class="input-field">
+                        <p id="email-error" class="hidden mt-1.5 ml-1 text-xs text-red-500"></p>
                     </div>
 
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1.5 ml-1">Password</label>
                         <div class="relative flex items-center">
-                            <input type="password" placeholder="Create a password (min 6 characters)" class="w-full px-5 py-3.5 rounded-full border border-gray-200/80 bg-white shadow-sm focus:outline-none focus:ring-2 focus:ring-[#16a34a]/20 focus:border-[#16a34a] transition-all duration-200 text-base placeholder:text-gray-400 pr-12">
-                            <button type="button" class="absolute right-4 text-gray-400 hover:text-gray-600 transition-colors p-1" aria-label="Toggle password visibility">
+                            <input id="password" type="password" placeholder="Create a password (min 6 characters)" class="input-field pr-12">
+                            <button type="button" id="togglePassword" class="absolute right-4 text-gray-400 hover:text-gray-600 transition-colors p-1" aria-label="Toggle password visibility">
                                 <i data-lucide="eye" class="w-5 h-5" stroke-width="1.5"></i>
                             </button>
                         </div>
+                        <!-- Password strength indicator -->
+                        <div id="strength-bars" class="hidden mt-2.5 ml-1">
+                            <div class="flex gap-1.5 mb-1">
+                                <div class="strength-bar flex-1 bg-gray-200" id="bar1"></div>
+                                <div class="strength-bar flex-1 bg-gray-200" id="bar2"></div>
+                                <div class="strength-bar flex-1 bg-gray-200" id="bar3"></div>
+                                <div class="strength-bar flex-1 bg-gray-200" id="bar4"></div>
+                            </div>
+                            <p id="strength-text" class="text-xs text-gray-400"></p>
+                        </div>
+                        <p id="password-error" class="hidden mt-1.5 ml-1 text-xs text-red-500"></p>
                     </div>
 
                     <p class="text-sm text-gray-500 pt-1">
                         By creating an account, you agree to our <a href="#" class="text-[#16a34a] hover:text-[#15803d] transition-colors">Terms of Service</a> and <a href="#" class="text-[#16a34a] hover:text-[#15803d] transition-colors">Privacy Policy</a>.
                     </p>
 
-                    <button type="submit" class="w-full bg-[#16a34a] hover:bg-[#15803d] text-white font-medium py-3.5 rounded-full transition-all duration-200 text-base shadow-sm hover:shadow mt-2">
+                    <button id="signupBtn" type="button" class="w-full bg-[#16a34a] hover:bg-[#15803d] text-white font-medium py-3.5 rounded-full transition-all duration-200 text-base shadow-sm hover:shadow mt-2">
                         Create Account
                     </button>
 
-                </form>
+                </div>
 
                 <div class="flex items-center my-8">
                     <div class="flex-grow border-t border-gray-100"></div>
@@ -90,29 +169,27 @@
                 </button>
 
                 <p class="text-center mt-10 text-base text-gray-500">
-                    Already have an account? <a href="#" class="text-[#16a34a] font-medium hover:text-[#15803d] transition-colors">Sign In</a>
+                    Already have an account? <a href="signin.html" class="text-[#16a34a] font-medium hover:text-[#15803d] transition-colors">Sign In</a>
                 </p>
 
             </div>
         </div>
 
+        <!-- RIGHT: Image Panel -->
         <div class="hidden lg:flex lg:w-1/2 relative bg-gray-900 overflow-hidden">
-            
             <img src="assets/education city.jpg" alt="Collaborate for Change" class="absolute inset-0 w-full h-full object-cover">
-            
             <div class="absolute inset-0 bg-gradient-to-t from-[#022c22]/90 via-[#022c22]/30 to-transparent"></div>
-            
             <div class="relative z-10 flex flex-col justify-end w-full p-16 pb-20">
                 <div class="max-w-xl">
                     <h2 class="text-4xl font-semibold tracking-tight text-white mb-4">Your Impact Starts Here</h2>
                     <p class="text-lg text-white/80 leading-relaxed font-light">Join Qatar's leading network discovering opportunities that shape our sustainable future.</p>
                 </div>
             </div>
-
         </div>
 
     </div>
 
+    <!-- Page transition overlay -->
     <div id="page-transition" style="position: fixed; inset: 0; z-index: 9999; background-color: white; display: flex; align-items: center; justify-content: center; opacity: 1; transition: all 400ms ease-out; pointer-events: none;">
         <div id="transition-logo" style="width: 5rem; height: 5rem; display: flex; align-items: center; justify-content: center; transform: scale(1); transition: transform 500ms;">
             <img src="assets/IMG.PNG" alt="EcoAwareness Logo" style="width: 100%; height: 100%; object-fit: contain;">
@@ -124,99 +201,168 @@
     </script>
 
     <script>
-        document.addEventListener('DOMContentLoaded', () => {
-            // Safety check to ensure the Supabase library has loaded
-            if (typeof window.supabase === 'undefined') {
-                console.error("Supabase library failed to load. Ensure the script tag is in the <head>.");
+        // ─── Supabase Init ───────────────────────────────────────────
+        const supabaseUrl = 'https://nqvhxjsryatqgfvtjbki.supabase.co';
+        const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xdmh4anNyeWF0cWdmdnRqYmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDYxMDAsImV4cCI6MjA4ODYyMjEwMH0.HrnrIq5bK3FhxmHaLxWPIG0nD-CI-3ReHCoO5RL1c3M';
+        const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+        // ─── Toast ───────────────────────────────────────────────────
+        function showToast(message, type = 'success') {
+            const toast = document.getElementById('toast');
+            const inner = document.getElementById('toast-inner');
+            const isSuccess = type === 'success';
+            inner.className = `flex items-center gap-3 px-5 py-3.5 rounded-full shadow-lg text-sm font-medium ${isSuccess ? 'bg-[#022c22] text-white' : 'bg-red-50 text-red-700 border border-red-200'}`;
+            inner.innerHTML = `<iconify-icon icon="${isSuccess ? 'solar:check-circle-linear' : 'solar:danger-circle-linear'}" class="text-xl ${isSuccess ? 'text-[#4ade80]' : 'text-red-500'}"></iconify-icon>${message}`;
+            toast.classList.add('show');
+            setTimeout(() => toast.classList.remove('show'), 4000);
+        }
+
+        // ─── Field Validation ────────────────────────────────────────
+        function showError(fieldId, message) {
+            const field = document.getElementById(fieldId);
+            const error = document.getElementById(fieldId + '-error');
+            if (field) field.classList.add('error');
+            if (error) { error.textContent = message; error.classList.remove('hidden'); }
+        }
+        function clearError(fieldId) {
+            const field = document.getElementById(fieldId);
+            const error = document.getElementById(fieldId + '-error');
+            if (field) field.classList.remove('error');
+            if (error) error.classList.add('hidden');
+        }
+        function clearAllErrors() {
+            ['firstName', 'lastName', 'email', 'password'].forEach(clearError);
+        }
+
+        // ─── Password Strength ───────────────────────────────────────
+        const passwordInput = document.getElementById('password');
+        const strengthBars = document.getElementById('strength-bars');
+        const strengthText = document.getElementById('strength-text');
+
+        passwordInput.addEventListener('input', () => {
+            const val = passwordInput.value;
+            if (!val) { strengthBars.classList.add('hidden'); return; }
+            strengthBars.classList.remove('hidden');
+
+            let score = 0;
+            if (val.length >= 6) score++;
+            if (val.length >= 10) score++;
+            if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
+            if (/[0-9!@#$%^&*]/.test(val)) score++;
+
+            const colors = ['bg-red-400', 'bg-orange-400', 'bg-yellow-400', 'bg-[#16a34a]'];
+            const labels = ['Weak', 'Fair', 'Good', 'Strong'];
+            const textColors = ['text-red-500', 'text-orange-500', 'text-yellow-600', 'text-[#16a34a]'];
+
+            for (let i = 1; i <= 4; i++) {
+                const bar = document.getElementById('bar' + i);
+                bar.className = `strength-bar flex-1 ${i <= score ? colors[score - 1] : 'bg-gray-200'}`;
+            }
+            strengthText.className = `text-xs ${textColors[score - 1]}`;
+            strengthText.textContent = labels[score - 1];
+        });
+
+        // ─── Toggle Password Visibility ──────────────────────────────
+        document.getElementById('togglePassword').addEventListener('click', () => {
+            const isPassword = passwordInput.type === 'password';
+            passwordInput.type = isPassword ? 'text' : 'password';
+            document.getElementById('togglePassword').innerHTML = isPassword
+                ? '<i data-lucide="eye-off" class="w-5 h-5" stroke-width="1.5"></i>'
+                : '<i data-lucide="eye" class="w-5 h-5" stroke-width="1.5"></i>';
+            lucide.createIcons();
+        });
+
+        // ─── Sign Up ─────────────────────────────────────────────────
+        document.getElementById('signupBtn').addEventListener('click', async () => {
+            clearAllErrors();
+
+            const firstName = document.getElementById('firstName').value.trim();
+            const lastName = document.getElementById('lastName').value.trim();
+            const email = document.getElementById('email').value.trim();
+            const password = passwordInput.value;
+
+            let valid = true;
+            if (!firstName) { showError('firstName', 'First name is required'); valid = false; }
+            if (!lastName) { showError('lastName', 'Last name is required'); valid = false; }
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('email', 'Please enter a valid email address'); valid = false; }
+            if (!password || password.length < 6) { showError('password', 'Password must be at least 6 characters'); valid = false; }
+            if (!valid) return;
+
+            const btn = document.getElementById('signupBtn');
+            btn.innerHTML = '<span class="btn-spinner"></span> Creating account...';
+            btn.disabled = true;
+
+            const { data, error } = await supabaseClient.auth.signUp({
+                email,
+                password,
+                options: {
+                    data: { first_name: firstName, last_name: lastName, full_name: `${firstName} ${lastName}` }
+                }
+            });
+
+            btn.innerHTML = 'Create Account';
+            btn.disabled = false;
+
+            if (error) {
+                if (error.message.toLowerCase().includes('already')) {
+                    showError('email', 'An account with this email already exists');
+                    showToast('Email already in use. Try signing in.', 'error');
+                } else {
+                    showToast(error.message, 'error');
+                }
                 return;
             }
 
-            const supabaseUrl = 'https://nqvhxjsryatqgfvtjbki.supabase.co';
-            const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xdmh4anNyeWF0cWdmdnRqYmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDYxMDAsImV4cCI6MjA4ODYyMjEwMH0.HrnrIq5bK3FhxmHaLxWPIG0nD-CI-3ReHCoO5RL1c3M'; 
-            const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
-
-            const googleBtn = document.getElementById('googleSignInBtn');
-            
-            if (googleBtn) {
-                googleBtn.addEventListener('click', async (e) => {
-                    e.preventDefault();
-                    
-                    // 1. Provide Visual Feedback
-                    const originalContent = googleBtn.innerHTML;
-                    googleBtn.innerHTML = '<iconify-icon icon="logos:google-icon" class="text-xl"></iconify-icon> Connecting to Google...';
-                    googleBtn.style.opacity = '0.6';
-                    googleBtn.style.pointerEvents = 'none'; // Prevents double-clicking
-                    
-                    // 2. Debugging Log
-                    console.log("Attempting Google Login...");
-
-                    // 3. Execute Login
-                    const { error } = await supabaseClient.auth.signInWithOAuth({
-                        provider: 'google',
-                        options: {
-                            redirectTo: window.location.origin + '/index.html'
-                        }
-                    });
-                    
-                    // 4. Handle Errors (Restore button if it fails)
-                    if (error) {
-                        console.error("Login Error:", error.message);
-                        alert("Something went wrong. Please try again.");
-                        googleBtn.innerHTML = originalContent;
-                        googleBtn.style.opacity = '1';
-                        googleBtn.style.pointerEvents = 'auto';
-                    }
-                });
+            // Check if email confirmation is required
+            if (data.user && !data.session) {
+                showToast('Check your email to confirm your account! ✉️', 'success');
+                setTimeout(() => { window.location.href = 'signin.html'; }, 2500);
+            } else {
+                showToast('Account created! Welcome to The Hub 🌿', 'success');
+                setTimeout(() => { window.location.href = 'index.html'; }, 1500);
             }
         });
-    </script>
 
-    <script>
+        // ─── Google OAuth ────────────────────────────────────────────
+        document.getElementById('googleSignInBtn').addEventListener('click', async () => {
+            const btn = document.getElementById('googleSignInBtn');
+            btn.innerHTML = '<iconify-icon icon="logos:google-icon" class="text-xl"></iconify-icon> Connecting to Google...';
+            btn.style.opacity = '0.6';
+            btn.style.pointerEvents = 'none';
+
+            const { error } = await supabaseClient.auth.signInWithOAuth({
+                provider: 'google',
+                options: { redirectTo: window.location.origin + '/index.html' }
+            });
+
+            if (error) {
+                showToast(error.message, 'error');
+                btn.innerHTML = '<iconify-icon icon="logos:google-icon" class="text-xl"></iconify-icon> Continue with Google';
+                btn.style.opacity = '1';
+                btn.style.pointerEvents = 'auto';
+            }
+        });
+
+        // ─── Page Transition ─────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', () => {
             const overlay = document.getElementById('page-transition');
             const logo = document.getElementById('transition-logo');
-            
-            // 1. On Page Load: Smoothly fade the overlay out
-            requestAnimationFrame(() => {
-                overlay.style.opacity = '0';
-            });
+            requestAnimationFrame(() => { overlay.style.opacity = '0'; });
 
-            // 2. On Link Click: Intercept navigation
             document.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', function(e) {
                     const targetUrl = this.getAttribute('href');
                     const targetAttr = this.getAttribute('target');
-
-                    // Ignore empty links, anchor links, external links, or target="_blank"
-                    if (!targetUrl || 
-                        targetUrl.startsWith('#') || 
-                        targetUrl.startsWith('mailto:') || 
-                        targetUrl.startsWith('tel:') || 
-                        targetAttr === '_blank' ||
-                        (this.hostname !== window.location.hostname && this.hostname !== '')) {
-                        return;
-                    }
-
-                    // Stop the instant jump
+                    if (!targetUrl || targetUrl.startsWith('#') || targetUrl.startsWith('mailto:') || targetUrl.startsWith('tel:') || targetAttr === '_blank' || (this.hostname !== window.location.hostname && this.hostname !== '')) return;
                     e.preventDefault();
-                    
-                    // Fade the white overlay and scale the logo
                     overlay.style.opacity = '1';
                     logo.style.transform = 'scale(1.1)';
-
-                    // Wait exactly 400ms, and then trigger the page load
-                    setTimeout(() => {
-                        window.location.href = targetUrl;
-                    }, 400);
+                    setTimeout(() => { window.location.href = targetUrl; }, 400);
                 });
             });
 
-            // Safari/iOS back button fix (BFCache)
             window.addEventListener('pageshow', (event) => {
-                if (event.persisted) {
-                    overlay.style.opacity = '0';
-                    logo.style.transform = 'scale(1)';
-                }
+                if (event.persisted) { overlay.style.opacity = '0'; logo.style.transform = 'scale(1)'; }
             });
         });
     </script>
