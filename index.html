@@ -3,853 +3,717 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Hub — Qatar's Climate Action Network</title>
-
+    <title>The Hub — Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
     <style>
         :root {
-            --ink: #0a0a0a;
-            --paper: #f5f0e8;
-            --green: #1a5c38;
-            --green-light: #2d7a4f;
-            --lime: #a8e063;
-            --sand: #e8dfc8;
-            --rust: #c4622d;
+            --ink: #0a0a0a; --paper: #f5f0e8; --green: #1a5c38;
+            --green-light: #2d7a4f; --lime: #a8e063; --sand: #e8dfc8; --rust: #c4622d;
+            --sidebar-w: 256px;
         }
-
         * { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: auto; }
-
-        body {
-            background: var(--paper);
-            color: var(--ink);
-            font-family: 'DM Sans', sans-serif;
-            overflow-x: hidden;
-        }
-        body.ar {
-            font-family: 'Noto Naskh Arabic', serif;
-            direction: rtl;
-        }
-
-        /* Grain texture */
+        html, body { height: 100%; overflow: hidden; }
+        body { background: var(--paper); color: var(--ink); font-family: 'DM Sans', sans-serif; }
+        body.ar { font-family: 'Noto Naskh Arabic', serif; direction: rtl; }
         body::before {
-            content: '';
-            position: fixed; inset: 0;
+            content: ''; position: fixed; inset: 0; pointer-events: none; z-index: 9000;
             background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 1000; opacity: 0.4;
+            opacity: 0.3;
         }
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-thumb { background: var(--sand); border-radius: 4px; }
 
-        /* ── LANGUAGE TOGGLE ── */
+        /* LANG TOGGLE */
         #lang-toggle {
-            position: fixed;
-            bottom: 2rem; right: 2rem;
-            z-index: 950;
-            background: var(--ink); color: #fff;
-            border: none; border-radius: 100px;
-            padding: 0.65rem 1.3rem;
-            font-size: 0.82rem; font-weight: 500;
-            cursor: pointer;
-            display: flex; align-items: center; gap: 0.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-            transition: all 0.25s;
-            letter-spacing: 0.04em;
+            position: fixed; bottom: 1.5rem; right: 1.5rem; z-index: 8000;
+            background: var(--ink); color: #fff; border: none; border-radius: 100px;
+            padding: 0.5rem 1rem; font-size: 0.76rem; font-weight: 500;
+            cursor: pointer; display: flex; align-items: center; gap: 0.4rem;
+            box-shadow: 0 4px 16px rgba(0,0,0,0.2); transition: all 0.2s;
             font-family: 'DM Sans', sans-serif;
         }
-        #lang-toggle:hover {
-            background: var(--green);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(0,0,0,0.3);
-        }
-        body.ar #lang-toggle {
-            right: auto; left: 2rem;
-            font-family: 'Noto Naskh Arabic', serif;
-            letter-spacing: 0;
-        }
-        .lang-dot { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; flex-shrink: 0; }
+        #lang-toggle:hover { background: var(--green); transform: translateY(-2px); }
+        body.ar #lang-toggle { right: auto; left: 1.5rem; font-family: 'Noto Naskh Arabic', serif; }
+        .ldot { width: 5px; height: 5px; background: var(--lime); border-radius: 50%; }
 
-        /* ── NAV ── */
-        nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-            padding: 1.25rem 2.5rem;
-            display: flex; align-items: center; justify-content: space-between;
-            transition: background 0.4s, border-color 0.4s;
-        }
-        nav.scrolled {
-            background: rgba(245,240,232,0.93);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(0,0,0,0.07);
-        }
-        .nav-logo {
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.4rem; color: var(--ink); text-decoration: none;
-            display: flex; align-items: center; gap: 0.5rem;
-        }
-        body.ar .nav-logo { font-family: 'Noto Naskh Arabic', serif; }
-        .nav-logo-dot { width: 8px; height: 8px; background: var(--lime); border-radius: 50%; }
+        /* APP SHELL */
+        .app { display: flex; height: 100vh; }
 
-        .nav-links { display: flex; align-items: center; gap: 2rem; }
-        .nav-links a {
-            font-size: 0.875rem; font-weight: 400; color: var(--ink);
-            text-decoration: none; opacity: 0.6; transition: opacity 0.2s;
+        /* SIDEBAR */
+        .sidebar {
+            width: var(--sidebar-w); flex-shrink: 0; background: var(--green);
+            display: flex; flex-direction: column; height: 100vh; z-index: 100;
         }
-        .nav-links a:hover { opacity: 1; }
-        .nav-cta {
-            background: var(--green) !important; color: #fff !important;
-            opacity: 1 !important; padding: 0.6rem 1.4rem; border-radius: 100px;
-            transition: background 0.2s !important;
+        body.ar .sidebar { order: 2; }
+        .sb-logo {
+            padding: 1.5rem 1.5rem 1.25rem; display: flex; align-items: center; gap: 0.6rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08); cursor: pointer;
         }
-        .nav-cta:hover { background: var(--green-light) !important; }
-
-        /* ── HERO ── */
-        .hero {
-            min-height: 100vh;
-            display: grid; grid-template-rows: 1fr auto;
-            position: relative; overflow: hidden; background: var(--green);
+        .sb-logo-dot { width: 8px; height: 8px; background: var(--lime); border-radius: 50%; }
+        .sb-logo-text { font-family: 'Instrument Serif', serif; font-size: 1.25rem; color: #fff; }
+        body.ar .sb-logo-text { font-family: 'Noto Naskh Arabic', serif; }
+        .sb-nav { flex: 1; padding: 1.25rem 0.875rem; display: flex; flex-direction: column; gap: 0.18rem; overflow-y: auto; }
+        .sb-label {
+            font-size: 0.58rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase;
+            color: rgba(255,255,255,0.28); padding: 0.75rem 0.75rem 0.35rem; margin-top: 0.35rem;
         }
-        .hero-bg {
-            position: absolute; inset: 0;
-            background:
-                radial-gradient(ellipse 80% 60% at 60% 40%, rgba(168,224,99,0.15) 0%, transparent 60%),
-                radial-gradient(ellipse 40% 40% at 10% 80%, rgba(196,98,45,0.1) 0%, transparent 50%),
-                var(--green);
+        body.ar .sb-label { letter-spacing: 0; font-size: 0.72rem; }
+        .sb-item {
+            display: flex; align-items: center; gap: 0.7rem; padding: 0.62rem 0.75rem;
+            border-radius: 10px; color: rgba(255,255,255,0.55); cursor: pointer;
+            border: none; background: none; width: 100%; text-align: left;
+            font-size: 0.855rem; font-family: 'DM Sans', sans-serif; transition: all 0.15s;
         }
-        .hero-watermark {
-            position: absolute; top: 50%; right: -3%;
-            transform: translateY(-50%);
-            font-family: 'Noto Naskh Arabic', serif;
-            font-size: clamp(8rem,18vw,18rem);
-            color: rgba(255,255,255,0.035); line-height: 1;
-            pointer-events: none; user-select: none; white-space: nowrap;
-            transition: opacity 0.5s;
+        body.ar .sb-item { text-align: right; font-family: 'Noto Naskh Arabic', serif; }
+        .sb-item:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.9); }
+        .sb-item.active { background: rgba(168,224,99,0.14); color: #fff; }
+        .sb-item.active iconify-icon { color: var(--lime); }
+        .sb-item iconify-icon { font-size: 1.05rem; flex-shrink: 0; }
+        .sb-badge {
+            margin-left: auto; background: var(--lime); color: var(--ink);
+            border-radius: 100px; padding: 0.08rem 0.45rem; font-size: 0.62rem; font-weight: 600;
         }
-        body.ar .hero-watermark {
-            right: auto; left: -3%;
-            font-family: 'Instrument Serif', serif;
-            font-style: italic;
+        body.ar .sb-badge { margin-left: 0; margin-right: auto; }
+        .sb-user {
+            padding: 1rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.08);
+            display: flex; align-items: center; gap: 0.7rem;
         }
-
-        .hero-content {
-            display: flex; flex-direction: column; justify-content: center;
-            padding: clamp(7rem,10vw,10rem) clamp(1.5rem,6vw,6rem) 4rem;
-            position: relative; z-index: 2;
-            max-width: 1200px; margin: 0 auto; width: 100%;
-        }
-
-        .hero-eyebrow {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            background: rgba(168,224,99,0.12);
-            border: 1px solid rgba(168,224,99,0.28);
-            color: var(--lime); padding: 0.4rem 1rem; border-radius: 100px;
-            font-size: 0.72rem; font-weight: 500;
-            letter-spacing: 0.1em; text-transform: uppercase;
-            margin-bottom: 2rem; width: fit-content;
-        }
-        body.ar .hero-eyebrow { letter-spacing: 0; font-size: 0.85rem; }
-
-        .hero-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(3.5rem,8vw,7.5rem); line-height: 1.0;
-            color: #fff; margin-bottom: 2rem;
-        }
-        body.ar .hero-title {
-            font-family: 'Noto Naskh Arabic', serif;
-            font-size: clamp(2.8rem,6vw,6rem); line-height: 1.3;
-        }
-        .hero-title em { font-style: italic; color: var(--lime); }
-        body.ar .hero-title em { font-style: normal; }
-
-        .hero-subtitle {
-            font-size: clamp(1rem,1.5vw,1.2rem); color: rgba(255,255,255,0.7);
-            max-width: 520px; line-height: 1.75; margin-bottom: 3rem; font-weight: 300;
-        }
-        body.ar .hero-subtitle { font-size: clamp(1rem,1.4vw,1.15rem); }
-
-        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-        .btn-primary {
-            background: var(--lime); color: var(--ink);
-            padding: 0.9rem 2rem; border-radius: 100px;
-            font-weight: 500; font-size: 0.95rem; text-decoration: none;
-            transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem;
-        }
-        .btn-primary:hover { background: #bef078; transform: translateY(-1px); }
-
-        .btn-ghost {
-            background: transparent; color: rgba(255,255,255,0.8);
-            padding: 0.9rem 2rem; border-radius: 100px;
-            border: 1px solid rgba(255,255,255,0.25);
-            font-size: 0.95rem; text-decoration: none; transition: all 0.2s;
-        }
-        .btn-ghost:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
-
-        .hero-stats {
-            background: rgba(0,0,0,0.2);
-            border-top: 1px solid rgba(255,255,255,0.08);
-            padding: 1.75rem clamp(1.5rem,6vw,6rem);
-            display: flex; gap: 3rem;
-            position: relative; z-index: 2; flex-wrap: wrap;
-        }
-        .stat-item { display: flex; flex-direction: column; gap: 0.2rem; }
-        .stat-num {
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.9rem; color: var(--lime); line-height: 1;
-        }
-        .stat-label {
-            font-size: 0.68rem; color: rgba(255,255,255,0.4);
-            text-transform: uppercase; letter-spacing: 0.12em;
-        }
-        body.ar .stat-label { letter-spacing: 0; font-size: 0.8rem; }
-
-        /* ── PROBLEM ── */
-        .problem-outer { background: var(--paper); }
-        .problem-section {
-            padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem);
-            max-width: 1200px; margin: 0 auto;
-        }
-
-        .section-label {
-            display: inline-flex; align-items: center; gap: 0.6rem;
-            font-size: 0.7rem; font-weight: 500;
-            letter-spacing: 0.15em; text-transform: uppercase;
-            color: var(--rust); margin-bottom: 1.5rem;
-        }
-        body.ar .section-label { letter-spacing: 0; font-size: 0.85rem; flex-direction: row-reverse; }
-        .section-label::before { content: ''; width: 24px; height: 1px; background: currentColor; }
-        body.ar .section-label::before { display: none; }
-        body.ar .section-label::after { content: ''; width: 24px; height: 1px; background: currentColor; }
-
-        .problem-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(2.5rem,5vw,4.5rem); line-height: 1.1;
-            max-width: 700px; margin-bottom: 4rem;
-        }
-        body.ar .problem-title { font-family: 'Noto Naskh Arabic', serif; line-height: 1.35; }
-        .problem-title em { font-style: italic; color: var(--rust); }
-        body.ar .problem-title em { font-style: normal; }
-
-        .problem-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-            gap: 1.5px;
-            background: rgba(0,0,0,0.08);
-            border: 1.5px solid rgba(0,0,0,0.08);
-            border-radius: 16px; overflow: hidden;
-        }
-        .problem-card { background: var(--paper); padding: 2.5rem; transition: background 0.3s; }
-        .problem-card:hover { background: var(--sand); }
-        .problem-icon {
-            width: 44px; height: 44px; background: var(--sand);
-            border-radius: 10px; display: flex; align-items: center;
-            justify-content: center; margin-bottom: 1.5rem; font-size: 1.3rem;
-        }
-        .problem-card h3 {
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.35rem; margin-bottom: 0.75rem; line-height: 1.2;
-        }
-        body.ar .problem-card h3 { font-family: 'Noto Naskh Arabic', serif; line-height: 1.4; }
-        .problem-card p { font-size: 0.875rem; color: rgba(0,0,0,0.55); line-height: 1.75; font-weight: 300; }
-
-        /* ── SOLUTION ── */
-        .solution-section {
-            background: var(--ink);
-            padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem);
-        }
-        .solution-inner { max-width: 1200px; margin: 0 auto; }
-        .solution-section .section-label { color: var(--lime); }
-
-        .solution-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(2.5rem,5vw,4.5rem); color: #fff;
-            line-height: 1.1; max-width: 700px; margin-bottom: 4rem;
-        }
-        body.ar .solution-title { font-family: 'Noto Naskh Arabic', serif; line-height: 1.35; }
-        .solution-title em { font-style: italic; color: var(--lime); }
-        body.ar .solution-title em { font-style: normal; }
-
-        .solution-pillars {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-            gap: 1.5rem;
-        }
-        .pillar-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px; padding: 2.5rem;
-            transition: all 0.3s; position: relative; overflow: hidden;
-        }
-        .pillar-card:hover {
-            background: rgba(255,255,255,0.07);
-            border-color: rgba(168,224,99,0.2);
-            transform: translateY(-2px);
-        }
-        .pillar-number {
-            font-family: 'Instrument Serif', serif;
-            font-size: 4rem; color: rgba(255,255,255,0.05);
-            position: absolute; top: 1rem; right: 1.5rem; line-height: 1;
-        }
-        body.ar .pillar-number { right: auto; left: 1.5rem; }
-        .pillar-tag {
-            display: inline-block;
-            background: rgba(168,224,99,0.12); color: var(--lime);
-            border: 1px solid rgba(168,224,99,0.2);
-            padding: 0.3rem 0.8rem; border-radius: 100px;
-            font-size: 0.68rem; font-weight: 500;
-            letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.5rem;
-        }
-        body.ar .pillar-tag { letter-spacing: 0; font-size: 0.82rem; }
-        .pillar-card h3 {
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.6rem; color: #fff; margin-bottom: 0.75rem; line-height: 1.2;
-        }
-        body.ar .pillar-card h3 { font-family: 'Noto Naskh Arabic', serif; line-height: 1.4; }
-        .pillar-card p { font-size: 0.875rem; color: rgba(255,255,255,0.5); line-height: 1.75; font-weight: 300; }
-
-        /* ── PARTNERS ── */
-        .partners-section {
-            background: var(--sand);
-            padding: 4rem clamp(1.5rem,6vw,6rem);
-            border-top: 1px solid rgba(0,0,0,0.06);
-            border-bottom: 1px solid rgba(0,0,0,0.06);
-        }
-        .partners-inner { max-width: 1200px; margin: 0 auto; text-align: center; }
-        .partners-label {
-            font-size: 0.7rem; font-weight: 500;
-            letter-spacing: 0.15em; text-transform: uppercase;
-            color: rgba(0,0,0,0.35); margin-bottom: 2rem;
-        }
-        body.ar .partners-label { letter-spacing: 0; font-size: 0.82rem; }
-        .partners-row {
-            display: flex; flex-wrap: wrap;
-            justify-content: center; gap: 2rem 3.5rem; align-items: center;
-        }
-        .partner-name {
-            font-size: 0.82rem; font-weight: 500;
-            letter-spacing: 0.12em; text-transform: uppercase;
-            color: rgba(0,0,0,0.28); transition: color 0.2s; cursor: default;
-        }
-        .partner-name:hover { color: var(--green); }
-
-        /* ── GATED OPPORTUNITIES ── */
-        .opp-section { background: var(--paper); padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem); }
-        .opp-inner { max-width: 1200px; margin: 0 auto; }
-        .opp-header {
-            display: flex; align-items: flex-end; justify-content: space-between;
-            margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem;
-        }
-        .opp-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(2rem,4vw,3.5rem); line-height: 1.15;
-        }
-        body.ar .opp-title { font-family: 'Noto Naskh Arabic', serif; line-height: 1.4; }
-        .opp-title em { font-style: italic; color: var(--green); }
-        body.ar .opp-title em { font-style: normal; }
-
-        .opp-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-            gap: 1.25rem; position: relative;
-        }
-        .opp-card-preview {
-            background: white; border: 1px solid rgba(0,0,0,0.08);
-            border-radius: 14px; padding: 1.75rem;
-            filter: blur(3px); user-select: none; pointer-events: none; opacity: 0.55;
-        }
-        .opp-tag {
-            display: inline-block; padding: 0.25rem 0.75rem;
-            border-radius: 100px; font-size: 0.7rem; font-weight: 500; margin-bottom: 1rem;
-        }
-        .tag-green { background: #dcfce7; color: #166534; }
-        .tag-blue { background: #dbeafe; color: #1e40af; }
-        .tag-amber { background: #fef3c7; color: #92400e; }
-        .opp-card-preview h4 { font-size: 1.05rem; font-weight: 500; margin-bottom: 0.5rem; line-height: 1.3; }
-        .opp-card-preview p { font-size: 0.82rem; color: rgba(0,0,0,0.5); line-height: 1.6; margin-bottom: 1.25rem; }
-        .opp-meta {
-            font-size: 0.75rem; color: rgba(0,0,0,0.4);
-            display: flex; flex-direction: column; gap: 0.4rem;
-            padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.06);
-        }
-
-        .opp-gate {
-            position: absolute; inset: 0;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            text-align: center; padding: 2rem;
-            background: linear-gradient(to bottom, rgba(245,240,232,0) 0%, rgba(245,240,232,0.65) 25%, rgba(245,240,232,0.97) 50%);
-            border-radius: 14px;
-        }
-        .gate-icon {
-            width: 56px; height: 56px; background: var(--green);
-            border-radius: 50%; display: flex; align-items: center; justify-content: center;
-            margin-bottom: 1.25rem; color: var(--lime); font-size: 1.4rem;
-        }
-        .gate-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.8rem; margin-bottom: 0.6rem;
-        }
-        body.ar .gate-title { font-family: 'Noto Naskh Arabic', serif; font-size: 1.6rem; }
-        .gate-sub {
-            font-size: 0.875rem; color: rgba(0,0,0,0.5);
-            font-weight: 300; margin-bottom: 1.75rem;
-            max-width: 320px; line-height: 1.65;
-        }
-        .gate-btn {
-            background: var(--green); color: #fff;
-            padding: 0.85rem 2.2rem; border-radius: 100px;
-            font-weight: 500; font-size: 0.95rem; text-decoration: none;
-            transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem;
-        }
-        .gate-btn:hover { background: var(--green-light); transform: translateY(-1px); }
-        .gate-signin { margin-top: 1rem; font-size: 0.8rem; color: rgba(0,0,0,0.4); }
-        .gate-signin a { color: var(--green); font-weight: 500; text-decoration: none; }
-
-        /* ── CTA ── */
-        .cta-section {
-            background: var(--green);
-            padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem);
-            text-align: center; position: relative; overflow: hidden;
-        }
-        .cta-watermark {
-            font-family: 'Noto Naskh Arabic', serif;
-            font-size: clamp(4rem,15vw,14rem);
-            color: rgba(255,255,255,0.035);
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%,-50%);
-            white-space: nowrap; pointer-events: none;
-        }
-        .cta-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 2; }
-        .cta-inner h2 {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(2.5rem,5vw,4.5rem); color: #fff;
-            line-height: 1.1; margin-bottom: 1.5rem;
-        }
-        body.ar .cta-inner h2 { font-family: 'Noto Naskh Arabic', serif; line-height: 1.35; }
-        .cta-inner h2 em { font-style: italic; color: var(--lime); }
-        body.ar .cta-inner h2 em { font-style: normal; }
-        .cta-inner p { font-size: 1rem; color: rgba(255,255,255,0.6); font-weight: 300; margin-bottom: 3rem; line-height: 1.75; }
-        .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-
-        /* ── FOOTER ── */
-        footer { background: var(--ink); color: rgba(255,255,255,0.4); padding: 3rem clamp(1.5rem,6vw,6rem); }
-        .footer-inner {
-            max-width: 1200px; margin: 0 auto;
-            display: flex; justify-content: space-between;
-            align-items: center; flex-wrap: wrap; gap: 1.5rem;
-        }
-        .footer-logo {
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.2rem; color: rgba(255,255,255,0.7); text-decoration: none;
-        }
-        body.ar .footer-logo { font-family: 'Noto Naskh Arabic', serif; }
-        .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
-        .footer-links a { font-size: 0.8rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
-        .footer-links a:hover { color: rgba(255,255,255,0.7); }
-        .footer-copy {
-            width: 100%; text-align: center; font-size: 0.75rem;
-            border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem; margin-top: 1rem;
-        }
-
-        /* ── SCROLL REVEAL ── */
-        .reveal {
-            opacity: 0; transform: translateY(28px);
-            transition: opacity 0.75s cubic-bezier(0.25,1,0.5,1), transform 0.75s cubic-bezier(0.25,1,0.5,1);
-        }
-        .reveal.visible { opacity: 1; transform: none; }
-
-        /* Page transition */
-        #page-transition {
-            position: fixed; inset: 0; z-index: 9999;
-            background: var(--green);
+        .sb-avatar {
+            width: 34px; height: 34px; border-radius: 50%; flex-shrink: 0;
+            background: rgba(168,224,99,0.18); border: 1.5px solid rgba(168,224,99,0.4);
             display: flex; align-items: center; justify-content: center;
-            opacity: 0; transition: opacity 400ms ease; pointer-events: none;
+            font-family: 'Instrument Serif', serif; font-size: 0.95rem; color: var(--lime);
         }
-        #transition-logo { width: 4rem; height: 4rem; transition: transform 500ms; }
+        .sb-user-info { flex: 1; min-width: 0; }
+        .sb-user-name { font-size: 0.8rem; font-weight: 500; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .sb-user-role { font-size: 0.67rem; color: rgba(255,255,255,0.38); }
+        .sb-logout { color: rgba(255,255,255,0.28); cursor: pointer; border: none; background: none; padding: 0.2rem; transition: color 0.2s; }
+        .sb-logout:hover { color: rgba(255,255,255,0.7); }
 
-        @media (max-width: 768px) {
-            .nav-links { display: none; }
-            .hero-stats { gap: 1.5rem; }
-            body.ar #lang-toggle { left: 1rem; right: auto; }
+        /* MAIN */
+        .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
+        body.ar .main { order: 1; }
+
+        /* TOPBAR */
+        .topbar {
+            padding: 1rem 1.75rem; display: flex; align-items: center;
+            justify-content: space-between; flex-shrink: 0; flex-wrap: wrap; gap: 0.75rem;
+            background: rgba(245,240,232,0.85); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.06); position: sticky; top: 0; z-index: 50;
         }
+        .page-title { font-family: 'Instrument Serif', serif; font-size: 1.35rem; line-height: 1.2; }
+        body.ar .page-title { font-family: 'Noto Naskh Arabic', serif; }
+        .page-title em { font-style: italic; color: var(--green); }
+        body.ar .page-title em { font-style: normal; }
+        .tb-actions { display: flex; align-items: center; gap: 0.6rem; }
+        .tb-btn {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            background: white; border: 1px solid rgba(0,0,0,0.1); border-radius: 100px;
+            padding: 0.48rem 1rem; font-size: 0.775rem; color: rgba(0,0,0,0.6);
+            cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+        }
+        body.ar .tb-btn { font-family: 'Noto Naskh Arabic', serif; }
+        .tb-btn:hover { border-color: var(--green); color: var(--green); }
+        .tb-btn.primary { background: var(--green); color: #fff; border-color: var(--green); }
+        .tb-btn.primary:hover { background: var(--green-light); }
+
+        /* SCROLL AREA */
+        .scroll-area { flex: 1; overflow-y: auto; overflow-x: hidden; }
+
+        /* SECTIONS */
+        .sec { display: none; padding: 1.75rem; max-width: 1080px; }
+        .sec.active { display: block; animation: fadeUp 0.22s ease both; }
+        @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+
+        /* STAT CARDS */
+        .stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.875rem; margin-bottom: 1.5rem; }
+        .stat-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 13px;
+            padding: 1.1rem 1.25rem; position: relative; overflow: hidden; transition: all 0.2s;
+        }
+        .stat-card:hover { transform: translateY(-1px); box-shadow: 0 4px 18px rgba(0,0,0,0.06); }
+        .stat-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; border-radius:0 0 13px 13px; }
+        .stat-card.a::after { background: var(--green); }
+        .stat-card.b::after { background: var(--lime); }
+        .stat-card.c::after { background: var(--rust); }
+        .stat-card.d::after { background: #c8b89a; }
+        .stat-icon { width: 34px; height: 34px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; margin-bottom: 0.75rem; }
+        .stat-icon.g { background: rgba(26,92,56,0.1); color: var(--green); }
+        .stat-icon.l { background: rgba(168,224,99,0.2); color: #4a7c20; }
+        .stat-icon.r { background: rgba(196,98,45,0.1); color: var(--rust); }
+        .stat-icon.s { background: rgba(200,184,154,0.2); color: #7a6a50; }
+        .stat-num { font-family: 'Instrument Serif', serif; font-size: 1.8rem; line-height: 1; margin-bottom: 0.18rem; }
+        .stat-label { font-size: 0.7rem; color: rgba(0,0,0,0.42); }
+        .stat-trend { font-size: 0.66rem; color: var(--green); margin-top: 0.25rem; }
+
+        /* TWO COL */
+        .two-col { display: grid; grid-template-columns: 1fr 300px; gap: 1.1rem; margin-bottom: 1.1rem; }
+
+        /* SECTION HEADER */
+        .sh { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.9rem; }
+        .sh-title { font-family: 'Instrument Serif', serif; font-size: 1.15rem; }
+        body.ar .sh-title { font-family: 'Noto Naskh Arabic', serif; }
+        .sh-link { font-size: 0.73rem; color: var(--green); text-decoration: none; font-weight: 500; cursor: pointer; }
+
+        /* EVENTS */
+        .evt-list { display: flex; flex-direction: column; gap: 0.65rem; }
+        .evt-item {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 11px;
+            padding: 0.9rem 1.1rem; display: flex; align-items: center; gap: 0.9rem;
+            transition: all 0.18s; cursor: pointer;
+        }
+        .evt-item:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 3px 10px rgba(0,0,0,0.05); }
+        .evt-date { width: 42px; flex-shrink: 0; text-align: center; background: var(--sand); border-radius: 8px; padding: 0.35rem 0.2rem; }
+        .evt-mo { font-size: 0.52rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--rust); font-weight: 600; }
+        .evt-dy { font-family: 'Instrument Serif', serif; font-size: 1.3rem; color: var(--ink); line-height: 1; }
+        .evt-info { flex: 1; min-width: 0; }
+        .evt-title { font-size: 0.855rem; font-weight: 500; margin-bottom: 0.12rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .evt-meta { font-size: 0.7rem; color: rgba(0,0,0,0.4); }
+        .etag { display: inline-flex; align-items: center; padding: 0.12rem 0.5rem; border-radius: 100px; font-size: 0.6rem; font-weight: 500; flex-shrink: 0; }
+        .tc { background: #dcfce7; color: #166534; } .tw { background: #dbeafe; color: #1e40af; } .tv { background: #fef3c7; color: #92400e; }
+        .estatus { font-size: 0.62rem; padding: 0.12rem 0.5rem; border-radius: 100px; background: rgba(26,92,56,0.09); color: var(--green); font-weight: 500; flex-shrink: 0; }
+
+        /* CHART */
+        .chart-card { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 13px; padding: 1.1rem; }
+        .chart-bars { display: flex; align-items: flex-end; gap: 0.35rem; height: 90px; margin-top: 1rem; }
+        .cbw { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.28rem; }
+        .cb { width: 100%; border-radius: 3px 3px 0 0; background: var(--sand); min-height: 2px; transition: background 0.2s; }
+        .cb:hover, .cb.hi { background: var(--green); }
+        .cm { font-size: 0.52rem; color: rgba(0,0,0,0.32); }
+
+        /* FEED */
+        .feed-card { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 13px; overflow: hidden; }
+        .feed-item { padding: 0.875rem 1.1rem; border-bottom: 1px solid rgba(0,0,0,0.05); display: flex; gap: 0.75rem; transition: background 0.15s; }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-item:hover { background: rgba(0,0,0,0.013); }
+        .fav { width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Instrument Serif', serif; font-size: 0.8rem; }
+        .fbody { flex: 1; min-width: 0; }
+        .ftext { font-size: 0.78rem; line-height: 1.5; color: rgba(0,0,0,0.68); margin-bottom: 0.2rem; }
+        .ftext strong { color: var(--ink); font-weight: 500; }
+        .ftext .hi { color: var(--green); font-weight: 500; }
+        .ftime { font-size: 0.64rem; color: rgba(0,0,0,0.32); }
+
+        /* QUICK ACTIONS */
+        .qa-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 0.65rem; margin-bottom: 1.1rem; }
+        .qa {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 11px;
+            padding: 1rem; display: flex; align-items: center; gap: 0.75rem;
+            cursor: pointer; transition: all 0.18s;
+        }
+        .qa:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 3px 10px rgba(0,0,0,0.05); transform: translateY(-1px); }
+        .qa-icon { width: 36px; height: 36px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+        .qa-text h4 { font-size: 0.8rem; font-weight: 500; margin-bottom: 0.08rem; }
+        .qa-text p { font-size: 0.68rem; color: rgba(0,0,0,0.4); line-height: 1.3; }
+
+        /* LEADERBOARD */
+        .lb-card { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 13px; overflow: hidden; }
+        .lb-item { display: flex; align-items: center; gap: 0.75rem; padding: 0.65rem 1.1rem; border-bottom: 1px solid rgba(0,0,0,0.04); transition: background 0.15s; }
+        .lb-item:last-child { border-bottom: none; }
+        .lb-item:hover { background: rgba(0,0,0,0.013); }
+        .lb-item.you { background: rgba(168,224,99,0.07); }
+        .lb-rank { font-family: 'Instrument Serif', serif; font-size: 0.95rem; color: rgba(0,0,0,0.18); width: 20px; text-align: center; flex-shrink: 0; }
+        .lb-rank.top { color: var(--rust); }
+        .lb-av { width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-size: 0.68rem; font-weight: 500; }
+        .lb-name { flex: 1; font-size: 0.785rem; }
+        .lb-score { font-size: 0.72rem; color: var(--green); font-weight: 500; white-space: nowrap; }
+        .lb-you-tag { font-size: 0.56rem; background: var(--lime); color: var(--ink); border-radius: 100px; padding: 0.08rem 0.32rem; font-weight: 600; margin-left: 0.25rem; }
+
+        /* OPPORTUNITIES */
+        .search-wrap {
+            display: flex; align-items: center; background: white;
+            border: 1px solid rgba(0,0,0,0.1); border-radius: 11px; overflow: hidden;
+            box-shadow: 0 1px 4px rgba(0,0,0,0.05); margin-bottom: 0.875rem;
+            transition: border-color 0.2s, box-shadow 0.2s;
+        }
+        .search-wrap:focus-within { border-color: var(--green); box-shadow: 0 0 0 3px rgba(26,92,56,0.1); }
+        .s-icon { padding: 0 0.75rem 0 1rem; color: rgba(0,0,0,0.28); font-size: 1rem; flex-shrink: 0; }
+        .s-input { flex: 1; padding: 0.75rem 0.5rem; border: none; outline: none; font-family: 'DM Sans', sans-serif; font-size: 0.875rem; background: transparent; }
+        body.ar .s-input { font-family: 'Noto Naskh Arabic', serif; }
+        .s-input::placeholder { color: rgba(0,0,0,0.32); }
+
+        .pills { display: flex; gap: 0.5rem; flex-wrap: wrap; margin-bottom: 1.25rem; }
+        .pill {
+            display: inline-flex; align-items: center; background: white;
+            border: 1px solid rgba(0,0,0,0.1); border-radius: 100px; padding: 0.38rem 0.85rem;
+            font-size: 0.76rem; color: rgba(0,0,0,0.58); cursor: pointer; transition: all 0.15s;
+        }
+        .pill:hover { border-color: var(--green); color: var(--green); }
+        .pill.active { background: var(--green); color: #fff; border-color: var(--green); }
+
+        .opp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px,1fr)); gap: 1rem; }
+        .opp-card {
+            background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 13px;
+            padding: 1.4rem; display: flex; flex-direction: column; transition: all 0.2s; position: relative; overflow: hidden;
+        }
+        .opp-card:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 6px 22px rgba(0,0,0,0.07); transform: translateY(-2px); }
+        .oc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.875rem; }
+        .otag { display: inline-flex; align-items: center; gap: 0.28rem; padding: 0.22rem 0.65rem; border-radius: 100px; font-size: 0.65rem; font-weight: 500; }
+        .tcon { background: #dcfce7; color: #166534; } .twor { background: #dbeafe; color: #1e40af; }
+        .tvol { background: #fef3c7; color: #92400e; } .tedu { background: #f3e8ff; color: #6b21a8; }
+        .oc-date { font-size: 0.65rem; color: rgba(0,0,0,0.32); }
+        .oc-title { font-family: 'Instrument Serif', serif; font-size: 1.1rem; line-height: 1.22; margin-bottom: 0.28rem; transition: color 0.2s; }
+        body.ar .oc-title { font-family: 'Noto Naskh Arabic', serif; }
+        .opp-card:hover .oc-title { color: var(--green); }
+        .oc-org { display: flex; align-items: center; gap: 0.32rem; font-size: 0.75rem; color: rgba(0,0,0,0.42); margin-bottom: 0.875rem; }
+        .oc-meta { display: flex; flex-direction: column; gap: 0.35rem; margin-bottom: 1rem; flex: 1; }
+        .oc-meta-item { display: flex; align-items: center; gap: 0.45rem; font-size: 0.75rem; color: rgba(0,0,0,0.48); }
+        .oc-meta-item iconify-icon { font-size: 0.85rem; color: rgba(0,0,0,0.28); flex-shrink: 0; }
+        .prog-info { display: flex; justify-content: space-between; margin-bottom: 0.35rem; }
+        .prog-spots { font-size: 0.69rem; font-weight: 500; }
+        .prog-status { font-size: 0.65rem; color: rgba(0,0,0,0.38); }
+        .prog-bar { height: 3px; background: rgba(0,0,0,0.07); border-radius: 99px; overflow: hidden; margin-bottom: 1rem; }
+        .prog-fill { height: 100%; border-radius: 99px; }
+        .oc-btn {
+            width: 100%; padding: 0.6rem; border-radius: 8px; border: 1.5px solid rgba(0,0,0,0.1);
+            background: transparent; color: rgba(0,0,0,0.58); font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem; font-weight: 500; cursor: pointer; transition: all 0.18s;
+            display: flex; align-items: center; justify-content: center; gap: 0.38rem;
+        }
+        body.ar .oc-btn { font-family: 'Noto Naskh Arabic', serif; }
+        .oc-btn:hover { background: var(--green); color: #fff; border-color: var(--green); }
+        .urg { position: absolute; top: 0.875rem; right: 0.875rem; background: #fef2f2; color: #dc2626; border: 1px solid #fecaca; border-radius: 100px; padding: 0.12rem 0.45rem; font-size: 0.57rem; font-weight: 600; text-transform: uppercase; }
+        body.ar .urg { right: auto; left: 0.875rem; }
+
+        /* NETWORK */
+        .net-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.875rem; margin-bottom: 1.5rem; }
+        .nsc { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 11px; padding: 1rem 1.1rem; text-align: center; }
+        .nsc-num { font-family: 'Instrument Serif', serif; font-size: 1.5rem; color: var(--green); line-height: 1; margin-bottom: 0.18rem; }
+        .nsc-label { font-size: 0.65rem; color: rgba(0,0,0,0.42); text-transform: uppercase; letter-spacing: 0.06em; }
+        body.ar .nsc-label { letter-spacing: 0; }
+        .org-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1rem; }
+        .org-card { background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 13px; overflow: hidden; transition: all 0.2s; }
+        .org-card:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 6px 22px rgba(0,0,0,0.07); transform: translateY(-2px); }
+        .org-banner { height: 66px; position: relative; overflow: hidden; }
+        .org-pattern { position: absolute; inset: 0; opacity: 0.08; background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 16px 16px; }
+        .org-body { padding: 0 1.1rem 1.1rem; }
+        .org-av-wrap { margin-top: -22px; margin-bottom: 0.65rem; }
+        .org-av { width: 44px; height: 44px; border-radius: 9px; background: white; border: 2px solid var(--sand); display: flex; align-items: center; justify-content: center; font-family: 'Instrument Serif', serif; font-size: 0.95rem; box-shadow: 0 2px 6px rgba(0,0,0,0.1); position: relative; z-index: 1; }
+        .org-hr { display: flex; align-items: flex-start; justify-content: space-between; gap: 0.35rem; margin-bottom: 0.25rem; }
+        .org-name { font-family: 'Instrument Serif', serif; font-size: 1rem; line-height: 1.2; }
+        body.ar .org-name { font-family: 'Noto Naskh Arabic', serif; }
+        .org-ver { color: var(--green); font-size: 0.9rem; flex-shrink: 0; margin-top: 2px; }
+        .org-badge { display: inline-flex; background: var(--sand); color: rgba(0,0,0,0.48); border-radius: 100px; padding: 0.12rem 0.55rem; font-size: 0.62rem; font-weight: 500; margin-bottom: 0.5rem; }
+        .org-desc { font-size: 0.75rem; color: rgba(0,0,0,0.48); line-height: 1.58; margin-bottom: 0.875rem; }
+        .org-fr { display: flex; align-items: center; justify-content: space-between; padding-top: 0.75rem; border-top: 1px solid rgba(0,0,0,0.06); }
+        .org-stats { display: flex; gap: 0.75rem; }
+        .org-stat { display: flex; align-items: center; gap: 0.28rem; font-size: 0.67rem; color: rgba(0,0,0,0.38); }
+        .org-conn {
+            display: inline-flex; align-items: center; gap: 0.32rem;
+            background: transparent; border: 1.5px solid rgba(0,0,0,0.1); border-radius: 100px;
+            padding: 0.36rem 0.82rem; font-size: 0.72rem; font-weight: 500; color: rgba(0,0,0,0.58);
+            cursor: pointer; transition: all 0.18s; font-family: 'DM Sans', sans-serif;
+        }
+        body.ar .org-conn { font-family: 'Noto Naskh Arabic', serif; }
+        .org-conn:hover { background: var(--green); color: #fff; border-color: var(--green); }
+
+        /* RESOURCES */
+        .res-hero {
+            background: var(--green); border-radius: 14px; padding: 1.75rem;
+            margin-bottom: 1.5rem; position: relative; overflow: hidden;
+        }
+        .res-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(168,224,99,0.14) 0%, transparent 60%); }
+        .res-hero h2 { font-family: 'Instrument Serif', serif; font-size: clamp(1.4rem,2.5vw,2rem); color: #fff; line-height: 1.15; margin-bottom: 0.4rem; position: relative; z-index: 1; }
+        body.ar .res-hero h2 { font-family: 'Noto Naskh Arabic', serif; }
+        .res-hero h2 em { font-style: italic; color: var(--lime); }
+        body.ar .res-hero h2 em { font-style: normal; }
+        .res-hero p { font-size: 0.85rem; color: rgba(255,255,255,0.6); position: relative; z-index: 1; }
+        .res-cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .res-cat {
+            background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 13px;
+            padding: 1.25rem; transition: all 0.2s; cursor: pointer;
+        }
+        .res-cat:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 6px 22px rgba(0,0,0,0.07); transform: translateY(-2px); }
+        .res-cat-icon { width: 40px; height: 40px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: 0.875rem; }
+        .res-cat h3 { font-family: 'Instrument Serif', serif; font-size: 1.05rem; margin-bottom: 0.3rem; }
+        body.ar .res-cat h3 { font-family: 'Noto Naskh Arabic', serif; }
+        .res-cat p { font-size: 0.75rem; color: rgba(0,0,0,0.48); line-height: 1.52; margin-bottom: 0.75rem; }
+        .res-count { font-size: 0.7rem; color: var(--green); font-weight: 500; }
+        .res-list { display: flex; flex-direction: column; gap: 0.65rem; }
+        .res-item {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 11px;
+            padding: 0.875rem 1.1rem; display: flex; align-items: center; gap: 0.875rem;
+            transition: all 0.18s; cursor: pointer;
+        }
+        .res-item:hover { border-color: rgba(26,92,56,0.2); }
+        .ri-icon { width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+        .ri-body { flex: 1; min-width: 0; }
+        .ri-title { font-size: 0.845rem; font-weight: 500; margin-bottom: 0.18rem; }
+        .ri-meta { font-size: 0.7rem; color: rgba(0,0,0,0.38); }
+        .ri-action { font-size: 0.72rem; color: var(--green); font-weight: 500; flex-shrink: 0; display: flex; align-items: center; gap: 0.22rem; }
+
+        /* PROFILE */
+        .profile-card { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px; overflow: hidden; margin-bottom: 1.1rem; }
+        .p-banner { height: 90px; background: linear-gradient(135deg, var(--green), var(--green-light)); position: relative; }
+        .p-banner::before { content: ''; position: absolute; inset: 0; opacity: 0.08; background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 18px 18px; }
+        .p-body { padding: 0 1.4rem 1.4rem; }
+        .p-av-row { display: flex; align-items: flex-end; justify-content: space-between; margin-top: -28px; margin-bottom: 0.875rem; }
+        .p-av { width: 56px; height: 56px; border-radius: 50%; background: white; border: 3px solid var(--paper); display: flex; align-items: center; justify-content: center; font-family: 'Instrument Serif', serif; font-size: 1.4rem; color: var(--green); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .p-edit { display: inline-flex; align-items: center; gap: 0.32rem; background: white; border: 1px solid rgba(0,0,0,0.1); border-radius: 100px; padding: 0.42rem 0.9rem; font-size: 0.75rem; font-weight: 500; color: rgba(0,0,0,0.58); cursor: pointer; transition: all 0.18s; font-family: 'DM Sans', sans-serif; }
+        .p-edit:hover { border-color: var(--green); color: var(--green); }
+        .p-name { font-family: 'Instrument Serif', serif; font-size: 1.4rem; margin-bottom: 0.18rem; }
+        body.ar .p-name { font-family: 'Noto Naskh Arabic', serif; }
+        .p-role { font-size: 0.8rem; color: rgba(0,0,0,0.42); margin-bottom: 1rem; }
+        .p-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; padding-top: 1.1rem; border-top: 1px solid rgba(0,0,0,0.06); }
+        .p-stat { text-align: center; }
+        .p-stat-num { font-family: 'Instrument Serif', serif; font-size: 1.4rem; color: var(--green); }
+        .p-stat-label { font-size: 0.67rem; color: rgba(0,0,0,0.38); margin-top: 0.08rem; }
+        .settings-card { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px; padding: 1.25rem; }
+        .settings-card h3 { font-family: 'Instrument Serif', serif; font-size: 1.05rem; margin-bottom: 0.875rem; }
+        body.ar .settings-card h3 { font-family: 'Noto Naskh Arabic', serif; }
+        .setting-row { display: flex; align-items: center; justify-content: space-between; padding: 0.75rem 0.875rem; background: var(--paper); border-radius: 9px; margin-bottom: 0.55rem; }
+        .setting-row:last-child { margin-bottom: 0; }
+        .setting-left { display: flex; align-items: center; gap: 0.65rem; }
+        .setting-label { font-size: 0.8rem; font-weight: 500; }
+        .setting-sub { font-size: 0.7rem; color: rgba(0,0,0,0.4); }
+
+        @media (max-width: 1100px) { .two-col { grid-template-columns: 1fr; } .stat-grid { grid-template-columns: repeat(2,1fr); } .net-stats { grid-template-columns: repeat(2,1fr); } }
+        @media (max-width: 768px) { .qa-grid { grid-template-columns: 1fr; } .sb-item span { display: block; } }
     </style>
 </head>
 <body>
 
-<!-- Language Toggle -->
-<button id="lang-toggle" aria-label="Toggle language">
-    <span class="lang-dot"></span>
-    <span id="lang-label">عربي</span>
-</button>
+<button id="lang-toggle"><span class="ldot"></span><span id="lang-label">عربي</span></button>
 
-<!-- NAV -->
-<nav id="navbar">
-    <a href="index.html" class="nav-logo">
-        <span class="nav-logo-dot"></span>
-        <span data-en="The Hub" data-ar="المنصة">The Hub</span>
-    </a>
-    <div class="nav-links">
-        <a href="opportunities.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
-        <a href="network.html" data-en="Network" data-ar="الشبكة">Network</a>
-        <a href="resources.html" data-en="Resources" data-ar="الموارد">Resources</a>
-        <a href="about.html" data-en="About" data-ar="من نحن">About</a>
-        <a href="signin.html" data-en="Sign In" data-ar="تسجيل الدخول">Sign In</a>
-        <a href="signup.html" class="nav-cta" data-en="Join Free" data-ar="انضم مجانًا">Join Free</a>
-    </div>
-</nav>
-
-<!-- HERO -->
-<section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-watermark">بيئة</div>
-    <div class="hero-content">
-        <div class="hero-eyebrow reveal">
-            <span style="width:6px;height:6px;background:var(--lime);border-radius:50%;display:inline-block;flex-shrink:0"></span>
-            <span data-en="Qatar's Climate Action Network" data-ar="شبكة العمل المناخي في قطر">Qatar's Climate Action Network</span>
+<div class="app">
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
+        <div class="sb-logo" onclick="navigate('home')">
+            <span class="sb-logo-dot"></span>
+            <span class="sb-logo-text" data-en="The Hub" data-ar="المنصة">The Hub</span>
         </div>
-        <h1 class="hero-title reveal" style="transition-delay:0.1s">
-            <span data-en="Where Qatar's<br><em>climate generation</em><br>takes action." data-ar="حيث يتحرك<br><em>جيل المناخ في قطر</em><br>نحو الفعل.">Where Qatar's<br><em>climate generation</em><br>takes action.</span>
-        </h1>
-        <p class="hero-subtitle reveal" style="transition-delay:0.2s"
-           data-en="The Hub connects passionate youth with NGOs, eco-businesses, student clubs, and government bodies driving real environmental change across Qatar."
-           data-ar="تربط المنصة الشباب المتحمس بالمنظمات غير الحكومية والشركات البيئية والأندية الطلابية والجهات الحكومية التي تقود التغيير البيئي الحقيقي في قطر.">
-            The Hub connects passionate youth with NGOs, eco-businesses, student clubs, and government bodies driving real environmental change across Qatar.
-        </p>
-        <div class="hero-actions reveal" style="transition-delay:0.3s">
-            <a href="signup.html" class="btn-primary">
-                <span data-en="Join the Network" data-ar="انضم إلى الشبكة">Join the Network</span>
-                <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
-            </a>
-            <a href="#problem" class="btn-ghost">
-                <span data-en="See how it works" data-ar="اكتشف كيف تعمل">See how it works</span>
-            </a>
-        </div>
-    </div>
-    <div class="hero-stats">
-        <div class="stat-item"><span class="stat-num">50+</span><span class="stat-label" data-en="Active Initiatives" data-ar="مبادرة نشطة">Active Initiatives</span></div>
-        <div class="stat-item"><span class="stat-num">2,500</span><span class="stat-label" data-en="Network Members" data-ar="عضو في الشبكة">Network Members</span></div>
-        <div class="stat-item"><span class="stat-num">60+</span><span class="stat-label" data-en="Partner Orgs" data-ar="منظمة شريكة">Partner Orgs</span></div>
-        <div class="stat-item"><span class="stat-num">15k</span><span class="stat-label" data-en="Volunteer Hours" data-ar="ساعة تطوع">Volunteer Hours</span></div>
-    </div>
-</section>
+        <nav class="sb-nav">
+            <div class="sb-label" data-en="My Space" data-ar="مساحتي">My Space</div>
+            <button class="sb-item active" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:home-linear"></iconify-icon><span data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</span></button>
+            <button class="sb-item" data-sec="profile" onclick="navigate('profile')"><iconify-icon icon="solar:user-linear"></iconify-icon><span data-en="My Profile" data-ar="ملفي الشخصي">My Profile</span></button>
+            <button class="sb-item" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="My Events" data-ar="فعالياتي">My Events</span><span class="sb-badge">3</span></button>
+            <button class="sb-item" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:chart-linear"></iconify-icon><span data-en="My Impact" data-ar="أثري">My Impact</span></button>
 
-<!-- PROBLEM -->
-<section id="problem" class="problem-outer">
-    <div class="problem-section">
-        <div class="section-label reveal" data-en="The Problem" data-ar="المشكلة">The Problem</div>
-        <h2 class="problem-title reveal" style="transition-delay:0.1s">
-            <span data-en="Qatar's environmental scene is<br><em>fragmented.</em>" data-ar="المشهد البيئي في قطر<br><em>مُجزَّأ.</em>">Qatar's environmental scene is<br><em>fragmented.</em></span>
-        </h2>
-        <div class="problem-grid reveal" style="transition-delay:0.2s">
-            <div class="problem-card">
-                <div class="problem-icon">🔍</div>
-                <h3 data-en="Youth can't find where to act" data-ar="الشباب لا يجد مكانًا للعمل">Youth can't find where to act</h3>
-                <p data-en="Passionate students have no single place to discover volunteer drives, workshops, or environmental campaigns happening across Qatar."
-                   data-ar="لا يجد الطلاب المتحمسون مكانًا واحدًا لاكتشاف أعمال التطوع أو ورش العمل أو الحملات البيئية في قطر.">Passionate students have no single place to discover volunteer drives, workshops, or environmental campaigns happening across Qatar.</p>
+            <div class="sb-label" data-en="Explore" data-ar="استكشف">Explore</div>
+            <button class="sb-item" data-sec="opportunities" onclick="navigate('opportunities')"><iconify-icon icon="solar:compass-linear"></iconify-icon><span data-en="Opportunities" data-ar="الفرص">Opportunities</span><span class="sb-badge">24</span></button>
+            <button class="sb-item" data-sec="network" onclick="navigate('network')"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon><span data-en="Network" data-ar="الشبكة">Network</span></button>
+            <button class="sb-item" data-sec="resources" onclick="navigate('resources')"><iconify-icon icon="solar:book-linear"></iconify-icon><span data-en="Resources" data-ar="الموارد">Resources</span></button>
+
+            <div class="sb-label" data-en="Community" data-ar="المجتمع">Community</div>
+            <button class="sb-item" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:ranking-linear"></iconify-icon><span data-en="Leaderboard" data-ar="المتصدرون">Leaderboard</span></button>
+            <button class="sb-item" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:chat-round-line-linear"></iconify-icon><span data-en="Community Feed" data-ar="تغذية المجتمع">Community Feed</span></button>
+        </nav>
+        <div class="sb-user">
+            <div class="sb-avatar" id="sb-avatar">M</div>
+            <div class="sb-user-info">
+                <div class="sb-user-name" id="sb-name">Mohammed Elfatih</div>
+                <div class="sb-user-role" data-en="Climate Activist" data-ar="ناشط مناخي">Climate Activist</div>
             </div>
-            <div class="problem-card">
-                <div class="problem-icon">🏢</div>
-                <h3 data-en="Organizations work in silos" data-ar="المنظمات تعمل بمعزل عن بعضها">Organizations work in silos</h3>
-                <p data-en="NGOs, eco-businesses, and government bodies all work separately — no shared directory, no collaboration, no unified voice."
-                   data-ar="تعمل المنظمات غير الحكومية والشركات البيئية والجهات الحكومية بشكل منفصل، دون دليل مشترك أو تعاون أو صوت موحد.">NGOs, eco-businesses, and government bodies all work separately — no shared directory, no collaboration, no unified voice.</p>
-            </div>
-            <div class="problem-card">
-                <div class="problem-icon">📊</div>
-                <h3 data-en="Impact goes unmeasured" data-ar="الأثر يبقى غير مقاس">Impact goes unmeasured</h3>
-                <p data-en="Hundreds of hours of climate action happen with no way to track, celebrate, or prove the scale of Qatar's youth movement."
-                   data-ar="تُنجز مئات الساعات من العمل المناخي دون أي طريقة لتتبع أثر حركة الشباب في قطر أو إثبات حجمها.">Hundreds of hours of climate action happen with no way to track, celebrate, or prove the scale of Qatar's youth movement.</p>
+            <button class="sb-logout" id="logout-btn" title="Sign out"><iconify-icon icon="solar:logout-linear" style="font-size:1.1rem"></iconify-icon></button>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <div class="main">
+        <div class="topbar">
+            <h1 class="page-title" id="page-title"><em data-en="Good morning," data-ar="صباح الخير،">Good morning,</em> <span id="greeting-name">Mohammed</span> 🌿</h1>
+            <div class="tb-actions">
+                <button class="tb-btn" onclick="navigate('opportunities')"><iconify-icon icon="solar:compass-linear"></iconify-icon><span data-en="Opportunities" data-ar="الفرص">Opportunities</span></button>
+                <button class="tb-btn primary"><iconify-icon icon="solar:add-circle-linear"></iconify-icon><span data-en="Post Event" data-ar="انشر فعالية">Post Event</span></button>
             </div>
         </div>
-    </div>
-</section>
 
-<!-- SOLUTION -->
-<div class="solution-section">
-    <div class="solution-inner">
-        <div class="section-label reveal" data-en="The Solution" data-ar="الحل">The Solution</div>
-        <h2 class="solution-title reveal" style="transition-delay:0.1s">
-            <span data-en="One hub.<br><em>Every opportunity.</em>" data-ar="منصة واحدة.<br><em>كل الفرص.</em>">One hub.<br><em>Every opportunity.</em></span>
-        </h2>
-        <div class="solution-pillars">
-            <div class="pillar-card reveal" style="transition-delay:0.1s">
-                <span class="pillar-number">01</span>
-                <div class="pillar-tag" data-en="Ecosystem Directory" data-ar="دليل المنظومة">Ecosystem Directory</div>
-                <h3 data-en="The Network Page" data-ar="صفحة الشبكة">The Network Page</h3>
-                <p data-en="Qatar's environmental scene — NGOs, eco-businesses, student clubs, and government bodies — organized in one filterable directory. The ultimate contact book for collaboration."
-                   data-ar="المشهد البيئي في قطر — المنظمات غير الحكومية والشركات البيئية والأندية الطلابية والجهات الحكومية — منظمة في دليل واحد قابل للتصفية. دليل الاتصال المثالي للتعاون.">Qatar's environmental scene — NGOs, eco-businesses, student clubs, and government bodies — organized in one filterable directory. The ultimate contact book for collaboration.</p>
-            </div>
-            <div class="pillar-card reveal" style="transition-delay:0.2s">
-                <span class="pillar-number">02</span>
-                <div class="pillar-tag" data-en="Action Hub" data-ar="مركز العمل">Action Hub</div>
-                <h3 data-en="The Opportunities Page" data-ar="صفحة الفرص">The Opportunities Page</h3>
-                <p data-en="Organizations post mangrove drives, cleanups, and workshops. Youth sign up, volunteer, and track their impact over time. Passive interest becomes physical action."
-                   data-ar="تنشر المنظمات مبادرات زراعة المانغروف وحملات التنظيف وورش العمل. يسجل الشباب ويتطوع ويتتبع أثره. يتحول الاهتمام إلى عمل حقيقي.">Organizations post mangrove drives, cleanups, and workshops. Youth sign up, volunteer, and track their impact over time. Passive interest becomes physical action.</p>
-            </div>
-            <div class="pillar-card reveal" style="transition-delay:0.3s">
-                <span class="pillar-number">03</span>
-                <div class="pillar-tag" data-en="Community" data-ar="المجتمع">Community</div>
-                <h3 data-en="Youth Empowerment" data-ar="تمكين الشباب">Youth Empowerment</h3>
-                <p data-en="A real, measurable community of young Qataris organized and ready to drive the transition toward a post-carbon, sustainable future — proven by data."
-                   data-ar="مجتمع حقيقي وقابل للقياس من الشباب القطري، منظم ومستعد لقيادة التحول نحو مستقبل مستدام خالٍ من الكربون — مُثبَت بالبيانات.">A real, measurable community of young Qataris organized and ready to drive the transition toward a post-carbon, sustainable future — proven by data.</p>
-            </div>
-        </div>
-    </div>
-</div>
+        <div class="scroll-area">
 
-<!-- PARTNERS -->
-<div class="partners-section">
-    <div class="partners-inner">
-        <p class="partners-label reveal" data-en="Collaborating with environmental leaders" data-ar="بالتعاون مع رواد البيئة">Collaborating with environmental leaders</p>
-        <div class="partners-row reveal" style="transition-delay:0.1s">
-            <span class="partner-name">DEAP</span>
-            <span class="partner-name">AYCMQ</span>
-            <span class="partner-name">Enbat Holdings</span>
-            <span class="partner-name">MECC</span>
-            <span class="partner-name">EcoQatar</span>
-            <span class="partner-name">QNature</span>
-            <span class="partner-name">EarthYouth</span>
-        </div>
-    </div>
-</div>
+            <!-- ═══ HOME ═══ -->
+            <div class="sec active" id="sec-home">
+                <div class="stat-grid">
+                    <div class="stat-card a"><div class="stat-icon g"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon></div><div class="stat-num">47</div><div class="stat-label" data-en="Volunteer Hours" data-ar="ساعات التطوع">Volunteer Hours</div><div class="stat-trend">↑ <span data-en="12 this month" data-ar="١٢ هذا الشهر">12 this month</span></div></div>
+                    <div class="stat-card b"><div class="stat-icon l"><iconify-icon icon="solar:leaf-linear"></iconify-icon></div><div class="stat-num">8</div><div class="stat-label" data-en="Events Attended" data-ar="فعاليات حضرتها">Events Attended</div><div class="stat-trend">↑ <span data-en="3 this month" data-ar="٣ هذا الشهر">3 this month</span></div></div>
+                    <div class="stat-card c"><div class="stat-icon r"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></div><div class="stat-num">5</div><div class="stat-label" data-en="Orgs Connected" data-ar="منظمات متواصلت معها">Orgs Connected</div><div class="stat-trend">↑ <span data-en="2 new" data-ar="٢ جديدة">2 new</span></div></div>
+                    <div class="stat-card d"><div class="stat-icon s"><iconify-icon icon="solar:ranking-linear"></iconify-icon></div><div class="stat-num">#12</div><div class="stat-label" data-en="Community Rank" data-ar="ترتيبك في المجتمع">Community Rank</div><div class="stat-trend">↑ <span data-en="Up 4 places" data-ar="ارتفعت ٤ مراتب">Up 4 places</span></div></div>
+                </div>
 
-<!-- GATED OPPORTUNITIES -->
-<section class="opp-section">
-    <div class="opp-inner">
-        <div class="opp-header">
-            <div>
-                <div class="section-label reveal" data-en="Latest Opportunities" data-ar="أحدث الفرص">Latest Opportunities</div>
-                <h2 class="opp-title reveal" style="transition-delay:0.1s">
-                    <span data-en="Real action,<br><em>waiting for you.</em>" data-ar="عمل حقيقي،<br><em>ينتظرك.</em>">Real action,<br><em>waiting for you.</em></span>
-                </h2>
-            </div>
-        </div>
-        <div class="opp-grid reveal" style="transition-delay:0.2s">
-            <div class="opp-card-preview">
-                <span class="opp-tag tag-green" data-en="Conservation" data-ar="حفاظ على البيئة">Conservation</span>
-                <h4 data-en="Mangrove Restoration Drive" data-ar="حملة استعادة أشجار المانغروف">Mangrove Restoration Drive</h4>
-                <p data-en="Join hands to plant mangrove saplings, protecting coastal ecosystems and vital local biodiversity."
-                   data-ar="انضم إلى زراعة شتلات المانغروف لحماية النظم البيئية الساحلية والتنوع البيولوجي المحلي.">Join hands to plant mangrove saplings, protecting coastal ecosystems and vital local biodiversity.</p>
-                <div class="opp-meta"><span>📅 Oct 24 • 7:00 AM</span><span>📍 Al Thakira Mangroves</span></div>
-            </div>
-            <div class="opp-card-preview">
-                <span class="opp-tag tag-blue" data-en="Education" data-ar="تعليم">Education</span>
-                <h4 data-en="Circular Economy Workshop" data-ar="ورشة الاقتصاد الدائري">Circular Economy Workshop</h4>
-                <p data-en="Learn practical strategies to implement circular economy principles in daily life and business."
-                   data-ar="تعلّم استراتيجيات عملية لتطبيق مبادئ الاقتصاد الدائري في الحياة اليومية والأعمال.">Learn practical strategies to implement circular economy principles in daily life and business.</p>
-                <div class="opp-meta"><span>📅 Nov 02 • 4:00 PM</span><span>📍 Qatar National Library</span></div>
-            </div>
-            <div class="opp-card-preview">
-                <span class="opp-tag tag-amber" data-en="Volunteering" data-ar="تطوع">Volunteering</span>
-                <h4 data-en="Desert Cleanup Campaign" data-ar="حملة تنظيف الصحراء">Desert Cleanup Campaign</h4>
-                <p data-en="Help remove plastic waste from popular desert camping spots before the winter season."
-                   data-ar="ساعد في إزالة النفايات البلاستيكية من مخيمات الصحراء قبل موسم الشتاء.">Help remove plastic waste from popular desert camping spots before the winter season.</p>
-                <div class="opp-meta"><span>📅 Nov 15 • 6:00 AM</span><span>📍 Sealine Beach Area</span></div>
-            </div>
-            <!-- Gate overlay -->
-            <div class="opp-gate">
-                <div class="gate-icon"><iconify-icon icon="solar:lock-keyhole-linear"></iconify-icon></div>
-                <h3 class="gate-title" data-en="24 opportunities waiting" data-ar="٢٤ فرصة تنتظرك">24 opportunities waiting</h3>
-                <p class="gate-sub" data-en="Create a free account to unlock all opportunities and start tracking your impact."
-                   data-ar="أنشئ حسابًا مجانيًا للوصول إلى جميع الفرص وتتبع أثرك.">Create a free account to unlock all opportunities and start tracking your impact.</p>
-                <a href="signup.html" class="gate-btn">
-                    <span data-en="Join Free — 30 seconds" data-ar="انضم مجانًا — ٣٠ ثانية فقط">Join Free — 30 seconds</span>
-                    <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
-                </a>
-                <p class="gate-signin">
-                    <span data-en="Already a member? " data-ar="لديك حساب؟ ">Already a member? </span><a href="signin.html" data-en="Sign in →" data-ar="سجّل الدخول →">Sign in →</a>
-                </p>
-            </div>
-        </div>
-    </div>
-</section>
+                <div class="two-col">
+                    <div>
+                        <div class="sh"><h2 class="sh-title" data-en="Upcoming Events" data-ar="الفعاليات القادمة">Upcoming Events</h2><a class="sh-link" onclick="navigate('opportunities')" data-en="Browse all →" data-ar="عرض الكل →">Browse all →</a></div>
+                        <div class="evt-list">
+                            <div class="evt-item"><div class="evt-date"><div class="evt-mo">OCT</div><div class="evt-dy">24</div></div><div class="evt-info"><div class="evt-title" data-en="Mangrove Restoration Drive" data-ar="حملة استعادة المانغروف">Mangrove Restoration Drive</div><div class="evt-meta">📍 <span data-en="Al Thakira, Al Khor · 7:00 AM" data-ar="الثخيرة · ٧:٠٠ ص">Al Thakira, Al Khor · 7:00 AM</span></div></div><span class="etag tc" data-en="Conservation" data-ar="حفاظ">Conservation</span><span class="estatus" data-en="Registered" data-ar="مسجّل">Registered</span></div>
+                            <div class="evt-item"><div class="evt-date"><div class="evt-mo">NOV</div><div class="evt-dy">02</div></div><div class="evt-info"><div class="evt-title" data-en="Circular Economy Workshop" data-ar="ورشة الاقتصاد الدائري">Circular Economy Workshop</div><div class="evt-meta">💻 <span data-en="Remote (Zoom) · 4:00 PM" data-ar="عن بُعد · ٤:٠٠ م">Remote (Zoom) · 4:00 PM</span></div></div><span class="etag tw" data-en="Workshop" data-ar="ورشة">Workshop</span><span class="estatus" data-en="Registered" data-ar="مسجّل">Registered</span></div>
+                            <div class="evt-item"><div class="evt-date"><div class="evt-mo">NOV</div><div class="evt-dy">15</div></div><div class="evt-info"><div class="evt-title" data-en="Desert Cleanup Campaign" data-ar="حملة تنظيف الصحراء">Desert Cleanup Campaign</div><div class="evt-meta">📍 <span data-en="Sealine Beach · 6:00 AM" data-ar="شاطئ سيلاين · ٦:٠٠ ص">Sealine Beach · 6:00 AM</span></div></div><span class="etag tv" data-en="Volunteer" data-ar="تطوع">Volunteer</span><span class="estatus" data-en="Registered" data-ar="مسجّل">Registered</span></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="sh"><h2 class="sh-title" data-en="Hours This Year" data-ar="ساعاتك هذا العام">Hours This Year</h2></div>
+                        <div class="chart-card">
+                            <div style="display:flex;align-items:baseline;gap:0.4rem;margin-bottom:0.18rem"><span style="font-family:'Instrument Serif',serif;font-size:1.7rem">47</span><span style="font-size:0.72rem;color:rgba(0,0,0,0.38)" data-en="total hrs" data-ar="ساعة">total hrs</span></div>
+                            <div style="font-size:0.68rem;color:var(--green)" data-en="↑ 34% more than last year" data-ar="↑ ٣٤٪ أكثر من العام الماضي">↑ 34% more than last year</div>
+                            <div class="chart-bars" id="chart-bars"></div>
+                        </div>
+                    </div>
+                </div>
 
-<!-- CTA -->
-<section class="cta-section">
-    <div class="cta-watermark">اعمل من أجل المناخ</div>
-    <div class="cta-inner">
-        <h2 class="reveal">
-            <span data-en="Ready to<br><em>multiply your impact?</em>" data-ar="هل أنت مستعد<br><em>لمضاعفة تأثيرك؟</em>">Ready to<br><em>multiply your impact?</em></span>
-        </h2>
-        <p class="reveal" style="transition-delay:0.1s"
-           data-en="Join hundreds of young Qataris already connected to the organizations, resources, and grassroots opportunities driving real climate action."
-           data-ar="انضم إلى مئات الشباب القطري المتصل بالمنظمات والموارد والفرص الميدانية التي تدفع عجلة العمل المناخي الحقيقي.">
-            Join hundreds of young Qataris already connected to the organizations, resources, and grassroots opportunities driving real climate action.
-        </p>
-        <div class="cta-btns reveal" style="transition-delay:0.2s">
-            <a href="signup.html" class="btn-primary" data-en="Join the Network" data-ar="انضم إلى الشبكة">Join the Network</a>
-            <a href="network.html" class="btn-ghost" data-en="Explore the Directory" data-ar="استكشف الدليل">Explore the Directory</a>
-        </div>
-    </div>
-</section>
+                <div class="sh"><h2 class="sh-title" data-en="Quick Actions" data-ar="إجراءات سريعة">Quick Actions</h2></div>
+                <div class="qa-grid">
+                    <div class="qa" onclick="navigate('opportunities')"><div class="qa-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:compass-linear"></iconify-icon></div><div class="qa-text"><h4 data-en="Browse Opportunities" data-ar="تصفح الفرص">Browse Opportunities</h4><p data-en="24 new events waiting for you" data-ar="٢٤ فعالية جديدة تنتظرك">24 new events waiting for you</p></div></div>
+                    <div class="qa" onclick="navigate('network')"><div class="qa-icon" style="background:rgba(196,98,45,0.1);color:var(--rust)"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></div><div class="qa-text"><h4 data-en="Explore the Network" data-ar="استكشف الشبكة">Explore the Network</h4><p data-en="60+ orgs, clubs & government bodies" data-ar="٦٠+ منظمة ونادٍ وجهة حكومية">60+ orgs, clubs & government bodies</p></div></div>
+                    <div class="qa" onclick="navigate('resources')"><div class="qa-icon" style="background:rgba(168,224,99,0.2);color:#4a7c20"><iconify-icon icon="solar:book-linear"></iconify-icon></div><div class="qa-text"><h4 data-en="Learn & Grow" data-ar="تعلّم وانمُ">Learn & Grow</h4><p data-en="Playbooks, guides & interviews" data-ar="أدلة، كتيبات ومقابلات">Playbooks, guides & interviews</p></div></div>
+                    <div class="qa"><div class="qa-icon" style="background:rgba(0,0,0,0.05);color:rgba(0,0,0,0.45)"><iconify-icon icon="solar:share-linear"></iconify-icon></div><div class="qa-text"><h4 data-en="Invite a Friend" data-ar="ادعُ صديقاً">Invite a Friend</h4><p data-en="Grow the community together" data-ar="نمّوا المجتمع معاً">Grow the community together</p></div></div>
+                </div>
 
-<!-- FOOTER -->
-<footer>
-    <div class="footer-inner">
-        <a href="index.html" class="footer-logo" data-en="The Hub" data-ar="المنصة">The Hub</a>
-        <div class="footer-links">
-            <a href="about.html" data-en="About" data-ar="من نحن">About</a>
-            <a href="network.html" data-en="Directory" data-ar="الدليل">Directory</a>
-            <a href="opportunities.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
-            <a href="resources.html" data-en="Resources" data-ar="الموارد">Resources</a>
-            <a href="#" data-en="Privacy" data-ar="الخصوصية">Privacy</a>
-            <a href="#" data-en="Terms" data-ar="الشروط">Terms</a>
-        </div>
-        <p class="footer-copy" data-en="© 2024 The Hub — EcoAwareness Qatar. Built by youth, for the planet." data-ar="© 2024 المنصة — الوعي البيئي قطر. بُني من الشباب، من أجل الكوكب.">
-            © 2024 The Hub — EcoAwareness Qatar. Built by youth, for the planet.
-        </p>
-    </div>
-</footer>
+                <div class="two-col">
+                    <div>
+                        <div class="sh"><h2 class="sh-title" data-en="Community Feed" data-ar="تغذية المجتمع">Community Feed</h2></div>
+                        <div class="feed-card">
+                            <div class="feed-item"><div class="fav" style="background:#dcfce7;color:#166534">S</div><div class="fbody"><div class="ftext"><strong>Sarah Al-Mansoori</strong> <span data-en="signed up for" data-ar="سجّلت في">signed up for</span> <span class="hi">Mangrove Restoration Drive</span> 🌱</div><div class="ftime" data-en="2 minutes ago" data-ar="منذ دقيقتين">2 minutes ago</div></div></div>
+                            <div class="feed-item"><div class="fav" style="background:#dbeafe;color:#1e40af">Q</div><div class="fbody"><div class="ftext"><strong>Qatar Eco Society</strong> <span data-en="posted a new opportunity:" data-ar="نشر فرصة جديدة:">posted a new opportunity:</span> <span class="hi">Desert Reforestation Initiative</span></div><div class="ftime" data-en="15 minutes ago" data-ar="منذ ١٥ دقيقة">15 minutes ago</div></div></div>
+                            <div class="feed-item"><div class="fav" style="background:#fef3c7;color:#92400e">A</div><div class="fbody"><div class="ftext"><strong>Ahmed Al-Kuwari</strong> <span data-en="completed 10 volunteer hours" data-ar="أتم ١٠ ساعات تطوع">completed 10 volunteer hours</span> 🎉</div><div class="ftime" data-en="1 hour ago" data-ar="منذ ساعة">1 hour ago</div></div></div>
+                            <div class="feed-item"><div class="fav" style="background:#f3e8ff;color:#6b21a8">N</div><div class="fbody"><div class="ftext"><strong>Noora Hassan</strong> <span data-en="joined the network" data-ar="انضمت إلى الشبكة">joined the network</span> — <span class="hi" data-en="welcome!" data-ar="أهلاً بها!">welcome!</span></div><div class="ftime" data-en="3 hours ago" data-ar="منذ ٣ ساعات">3 hours ago</div></div></div>
+                            <div class="feed-item"><div class="fav" style="background:#dcfce7;color:#166534">G</div><div class="fbody"><div class="ftext"><strong>Green Future Inc.</strong> <span data-en="is now a verified partner" data-ar="أصبحت شريكاً موثقاً">is now a verified partner</span> ✅</div><div class="ftime" data-en="Yesterday" data-ar="أمس">Yesterday</div></div></div>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="sh"><h2 class="sh-title" data-en="Top Contributors" data-ar="أبرز المساهمين">Top Contributors</h2></div>
+                        <div class="lb-card">
+                            <div class="lb-item"><div class="lb-rank top">1</div><div class="lb-av" style="background:#dcfce7;color:#166534">F</div><div class="lb-name">Fatima Al-Dosari</div><div class="lb-score">124 hrs</div></div>
+                            <div class="lb-item"><div class="lb-rank top">2</div><div class="lb-av" style="background:#dbeafe;color:#1e40af">K</div><div class="lb-name">Khalid Al-Emadi</div><div class="lb-score">98 hrs</div></div>
+                            <div class="lb-item"><div class="lb-rank top">3</div><div class="lb-av" style="background:#fef3c7;color:#92400e">L</div><div class="lb-name">Lina Mahmoud</div><div class="lb-score">87 hrs</div></div>
+                            <div class="lb-item"><div class="lb-rank">4</div><div class="lb-av" style="background:#f3e8ff;color:#6b21a8">Y</div><div class="lb-name">Yousef Al-Sulaiti</div><div class="lb-score">72 hrs</div></div>
+                            <div class="lb-item"><div class="lb-rank">5</div><div class="lb-av" style="background:#e8dfc8;color:#7a6a50">R</div><div class="lb-name">Reem Al-Naimi</div><div class="lb-score">65 hrs</div></div>
+                            <div class="lb-item you"><div class="lb-rank">12</div><div class="lb-av" style="background:rgba(168,224,99,0.2);color:#1a5c38">M</div><div class="lb-name"><span data-en="You" data-ar="أنت">You</span><span class="lb-you-tag" data-en="YOU" data-ar="أنت">YOU</span></div><div class="lb-score">47 hrs</div></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
 
-<!-- Page transition -->
-<div id="page-transition">
-    <img id="transition-logo" src="assets/IMG.PNG" alt="EcoAwareness Logo" style="width:100%;height:100%;object-fit:contain;">
-</div>
+            <!-- ═══ OPPORTUNITIES ═══ -->
+            <div class="sec" id="sec-opportunities">
+                <div style="margin-bottom:1.25rem">
+                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Find your next " data-ar="اعثر على فرصتك ">Find your next </span><em style="font-style:italic;color:var(--green)" data-en="climate opportunity." data-ar="المناخية القادمة.">climate opportunity.</em></h2>
+                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="24 active opportunities across Qatar" data-ar="٢٤ فرصة نشطة في قطر">24 active opportunities across Qatar</p>
+                </div>
+                <div class="search-wrap"><span class="s-icon"><iconify-icon icon="solar:magnifer-linear"></iconify-icon></span><input class="s-input" placeholder="Search projects, organizations or keywords..." data-placeholder-en="Search projects, organizations or keywords..." data-placeholder-ar="ابحث عن مشاريع أو منظمات..."></div>
+                <div class="pills">
+                    <button class="pill active" onclick="setPill(this,'.pills')" data-en="All" data-ar="الكل">All</button>
+                    <button class="pill" onclick="setPill(this,'.pills')" data-en="Conservation" data-ar="الحفاظ على البيئة">Conservation</button>
+                    <button class="pill" onclick="setPill(this,'.pills')" data-en="Volunteering" data-ar="تطوع">Volunteering</button>
+                    <button class="pill" onclick="setPill(this,'.pills')" data-en="Workshops" data-ar="ورش العمل">Workshops</button>
+                    <button class="pill" onclick="setPill(this,'.pills')" data-en="Education" data-ar="تعليم">Education</button>
+                    <button class="pill" onclick="setPill(this,'.pills')" data-en="This Week" data-ar="هذا الأسبوع">This Week</button>
+                </div>
+                <div class="opp-grid">
+                    <div class="opp-card"><div class="oc-top"><span class="otag tcon"><iconify-icon icon="solar:leaf-linear"></iconify-icon><span data-en="Conservation" data-ar="الحفاظ">Conservation</span></span><span class="oc-date" data-en="2 days ago" data-ar="منذ يومين">2 days ago</span></div><h3 class="oc-title" data-en="Mangrove Restoration Drive" data-ar="حملة استعادة المانغروف">Mangrove Restoration Drive</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar Eco Society" data-ar="جمعية قطر البيئية">Qatar Eco Society</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Sat, Oct 24 · 7:00 AM" data-ar="السبت، ٢٤ أكتوبر · ٧:٠٠ ص">Sat, Oct 24 · 7:00 AM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Al Thakira Mangroves, Al Khor" data-ar="مانغروف الثخيرة، الخور">Al Thakira Mangroves, Al Khor</span></div></div><div class="prog-info"><span class="prog-spots" data-en="15 / 20 Spots" data-ar="١٥ / ٢٠ مقعداً">15 / 20 Spots</span><span class="prog-status" data-en="High Demand" data-ar="طلب عالٍ">High Demand</span></div><div class="prog-bar"><div class="prog-fill" style="width:75%;background:#1a5c38"></div></div><button class="oc-btn"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
+                    <div class="opp-card"><div class="oc-top"><span class="otag twor"><iconify-icon icon="solar:presentation-graph-linear"></iconify-icon><span data-en="Workshop" data-ar="ورشة">Workshop</span></span><span class="oc-date" data-en="5 days ago" data-ar="منذ ٥ أيام">5 days ago</span></div><h3 class="oc-title" data-en="Corporate Sustainability Basics" data-ar="أساسيات الاستدامة المؤسسية">Corporate Sustainability Basics</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Green Future Inc." data-ar="شركة المستقبل الأخضر">Green Future Inc.</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Wed, Nov 02 · 4:00 PM" data-ar="الأربعاء، ٢ نوفمبر · ٤:٠٠ م">Wed, Nov 02 · 4:00 PM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:monitor-linear"></iconify-icon><span data-en="Remote (Zoom)" data-ar="عن بُعد (زووم)">Remote (Zoom)</span></div></div><div class="prog-info"><span class="prog-spots" data-en="45 / 50 Spots" data-ar="٤٥ / ٥٠ مقعداً">45 / 50 Spots</span><span class="prog-status" data-en="Closing Soon" data-ar="ينتهي قريباً">Closing Soon</span></div><div class="prog-bar"><div class="prog-fill" style="width:90%;background:#3b82f6"></div></div><button class="oc-btn"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
+                    <div class="opp-card"><div class="oc-top"><span class="otag tvol"><iconify-icon icon="solar:hand-heart-linear"></iconify-icon><span data-en="Volunteering" data-ar="تطوع">Volunteering</span></span><span class="oc-date" data-en="1 week ago" data-ar="منذ أسبوع">1 week ago</span></div><h3 class="oc-title" data-en="Beach Cleanup & Microplastics Audit" data-ar="تنظيف الشاطئ وتدقيق البلاستيك">Beach Cleanup & Microplastics Audit</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Doha Youth Environment" data-ar="بيئة شباب الدوحة">Doha Youth Environment</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Fri, Nov 15 · 6:00 AM" data-ar="الجمعة، ١٥ نوفمبر · ٦:٠٠ ص">Fri, Nov 15 · 6:00 AM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Sealine Beach, Mesaieed" data-ar="شاطئ سيلاين، مسيعيد">Sealine Beach, Mesaieed</span></div></div><div class="prog-info"><span class="prog-spots" data-en="8 / 30 Spots" data-ar="٨ / ٣٠ مقعداً">8 / 30 Spots</span><span class="prog-status" data-en="Open" data-ar="مفتوح">Open</span></div><div class="prog-bar"><div class="prog-fill" style="width:26%;background:#f59e0b"></div></div><button class="oc-btn"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
+                    <div class="opp-card"><span class="urg" data-en="1 Spot Left!" data-ar="مقعد واحد!">1 Spot Left!</span><div class="oc-top"><span class="otag tedu"><iconify-icon icon="solar:graduation-cap-linear"></iconify-icon><span data-en="Education" data-ar="تعليم">Education</span></span><span class="oc-date" data-en="Today" data-ar="اليوم">Today</span></div><h3 class="oc-title" data-en="Solar Energy Campus Tour" data-ar="جولة الطاقة الشمسية">Solar Energy Campus Tour</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar University" data-ar="جامعة قطر">Qatar University</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Mon, Nov 20 · 10:00 AM" data-ar="الاثنين، ٢٠ نوفمبر · ١٠:٠٠ ص">Mon, Nov 20 · 10:00 AM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="QU Research Complex" data-ar="مجمع البحوث، جامعة قطر">QU Research Complex</span></div></div><div class="prog-info"><span class="prog-spots" style="color:#dc2626" data-en="19 / 20 Spots" data-ar="١٩ / ٢٠ مقعداً">19 / 20 Spots</span><span class="prog-status" data-en="Almost Full" data-ar="شبه ممتلئ">Almost Full</span></div><div class="prog-bar"><div class="prog-fill" style="width:95%;background:#ef4444"></div></div><button class="oc-btn"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
+                    <div class="opp-card"><div class="oc-top"><span class="otag tcon"><iconify-icon icon="solar:leaf-linear"></iconify-icon><span data-en="Conservation" data-ar="الحفاظ">Conservation</span></span><span class="oc-date" data-en="3 days ago" data-ar="منذ ٣ أيام">3 days ago</span></div><h3 class="oc-title" data-en="Desert Reforestation Initiative" data-ar="مبادرة إعادة تشجير الصحراء">Desert Reforestation Initiative</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="EcoQatar Foundation" data-ar="مؤسسة إيكو قطر">EcoQatar Foundation</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Sat, Dec 07 · 6:30 AM" data-ar="السبت، ٧ ديسمبر · ٦:٣٠ ص">Sat, Dec 07 · 6:30 AM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Al Shahaniya, Doha" data-ar="الشحانية، الدوحة">Al Shahaniya, Doha</span></div></div><div class="prog-info"><span class="prog-spots" data-en="22 / 50 Spots" data-ar="٢٢ / ٥٠ مقعداً">22 / 50 Spots</span><span class="prog-status" data-en="Open" data-ar="مفتوح">Open</span></div><div class="prog-bar"><div class="prog-fill" style="width:44%;background:#1a5c38"></div></div><button class="oc-btn"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
+                    <div class="opp-card"><div class="oc-top"><span class="otag twor"><iconify-icon icon="solar:presentation-graph-linear"></iconify-icon><span data-en="Workshop" data-ar="ورشة">Workshop</span></span><span class="oc-date" data-en="6 days ago" data-ar="منذ ٦ أيام">6 days ago</span></div><h3 class="oc-title" data-en="Circular Economy & Zero Waste Living" data-ar="الاقتصاد الدائري والحياة الخالية من النفايات">Circular Economy & Zero Waste Living</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar National Library" data-ar="المكتبة الوطنية قطر">Qatar National Library</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Thu, Nov 28 · 5:00 PM" data-ar="الخميس، ٢٨ نوفمبر · ٥:٠٠ م">Thu, Nov 28 · 5:00 PM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Qatar National Library, Education City" data-ar="المكتبة الوطنية، المدينة التعليمية">Qatar National Library, Education City</span></div></div><div class="prog-info"><span class="prog-spots" data-en="30 / 60 Spots" data-ar="٣٠ / ٦٠ مقعداً">30 / 60 Spots</span><span class="prog-status" data-en="Open" data-ar="مفتوح">Open</span></div><div class="prog-bar"><div class="prog-fill" style="width:50%;background:#3b82f6"></div></div><button class="oc-btn"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
+                </div>
+            </div>
+
+            <!-- ═══ NETWORK ═══ -->
+            <div class="sec" id="sec-network">
+                <div style="margin-bottom:1.25rem">
+                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Meet Qatar's " data-ar="تعرّف على الشبكة ">Meet Qatar's </span><em style="font-style:italic;color:var(--green)" data-en="green network." data-ar="الخضراء في قطر.">green network.</em></h2>
+                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="63 organizations, clubs & government bodies" data-ar="٦٣ منظمة ونادٍ وجهة حكومية">63 organizations, clubs & government bodies</p>
+                </div>
+                <div class="pills" id="net-pills">
+                    <button class="pill active" onclick="setPill(this,'#net-pills')" data-en="All" data-ar="الكل">All</button>
+                    <button class="pill" onclick="setPill(this,'#net-pills')" data-en="NGOs" data-ar="المنظمات غير الحكومية">NGOs</button>
+                    <button class="pill" onclick="setPill(this,'#net-pills')" data-en="Student Clubs" data-ar="الأندية الطلابية">Student Clubs</button>
+                    <button class="pill" onclick="setPill(this,'#net-pills')" data-en="Eco-Businesses" data-ar="الشركات البيئية">Eco-Businesses</button>
+                    <button class="pill" onclick="setPill(this,'#net-pills')" data-en="Government" data-ar="حكومية">Government</button>
+                </div>
+                <div class="net-stats">
+                    <div class="nsc"><div class="nsc-num">12</div><div class="nsc-label" data-en="NGOs" data-ar="منظمات">NGOs</div></div>
+                    <div class="nsc"><div class="nsc-num">28</div><div class="nsc-label" data-en="Eco-Businesses" data-ar="شركات بيئية">Eco-Businesses</div></div>
+                    <div class="nsc"><div class="nsc-num">15</div><div class="nsc-label" data-en="Student Clubs" data-ar="أندية طلابية">Student Clubs</div></div>
+                    <div class="nsc"><div class="nsc-num">8</div><div class="nsc-label" data-en="Government" data-ar="حكومية">Government</div></div>
+                </div>
+                <div class="org-grid">
+                    <div class="org-card"><div class="org-banner" style="background:linear-gradient(135deg,#1a5c38,#2d7a4f)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#1a5c38">QE</div></div><div class="org-hr"><div class="org-name" data-en="Qatar Eco Society" data-ar="جمعية قطر البيئية">Qatar Eco Society</div><iconify-icon icon="solar:check-circle-linear" class="org-ver"></iconify-icon></div><div class="org-badge" data-en="NGO" data-ar="منظمة غير حكومية">NGO</div><p class="org-desc" data-en="Preserving Qatar's coastal ecosystems through microplastic audits and community-driven cleanups." data-ar="حماية النظم البيئية الساحلية في قطر من خلال تدقيق البلاستيك وحملات التنظيف.">Preserving Qatar's coastal ecosystems through microplastic audits and community-driven cleanups.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="3 events" data-ar="٣ فعاليات">3 events</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>240+</span></div><button class="org-conn"><span data-en="Connect" data-ar="تواصل">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
+                    <div class="org-card"><div class="org-banner" style="background:linear-gradient(135deg,#1e3a5f,#2d5986)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#1e3a5f">QU</div></div><div class="org-hr"><div class="org-name" data-en="QU Green Innovators" data-ar="مبتكرو قطر الخضر">QU Green Innovators</div><iconify-icon icon="solar:check-circle-linear" class="org-ver"></iconify-icon></div><div class="org-badge" data-en="Student Club" data-ar="نادٍ طلابي">Student Club</div><p class="org-desc" data-en="Building renewable tech prototypes and advocating for sustainable campus policies at Qatar University." data-ar="بناء نماذج تقنية متجددة والدفاع عن سياسات مستدامة في جامعة قطر.">Building renewable tech prototypes and advocating for sustainable campus policies at Qatar University.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="1 event" data-ar="فعالية">1 event</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>85+</span></div><button class="org-conn"><span data-en="Connect" data-ar="تواصل">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
+                    <div class="org-card"><div class="org-banner" style="background:linear-gradient(135deg,#c4622d,#e07a45)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#c4622d">GF</div></div><div class="org-hr"><div class="org-name" data-en="Green Future Inc." data-ar="شركة المستقبل الأخضر">Green Future Inc.</div><iconify-icon icon="solar:check-circle-linear" class="org-ver"></iconify-icon></div><div class="org-badge" data-en="Eco-Business" data-ar="شركة بيئية">Eco-Business</div><p class="org-desc" data-en="Corporate sustainability training, ESG compliance workshops, and organizational restructuring for eco-efficiency." data-ar="تدريب على الاستدامة المؤسسية وورش امتثال بيئي وإعادة هيكلة.">Corporate sustainability training, ESG compliance workshops, and organizational restructuring for eco-efficiency.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="4 events" data-ar="٤ فعاليات">4 events</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>450+</span></div><button class="org-conn"><span data-en="Connect" data-ar="تواصل">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
+                    <div class="org-card"><div class="org-banner" style="background:linear-gradient(135deg,#166534,#1a7a3e)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#166534">DY</div></div><div class="org-hr"><div class="org-name" data-en="Doha Youth Environment" data-ar="بيئة شباب الدوحة">Doha Youth Environment</div></div><div class="org-badge" data-en="NGO" data-ar="منظمة غير حكومية">NGO</div><p class="org-desc" data-en="Organizing weekly beach cleanups, desert restoration, and tree planting campaigns across Qatar." data-ar="تنظيم حملات تنظيف الشواطئ الأسبوعية واستعادة الصحراء وزراعة الأشجار.">Organizing weekly beach cleanups, desert restoration, and tree planting campaigns across Qatar.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="2 events" data-ar="فعاليتان">2 events</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>180+</span></div><button class="org-conn"><span data-en="Connect" data-ar="تواصل">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
+                </div>
+            </div>
+
+            <!-- ═══ RESOURCES ═══ -->
+            <div class="sec" id="sec-resources">
+                <div class="res-hero">
+                    <h2><span data-en="Everything you need to " data-ar="كل ما تحتاجه ">Everything you need to </span><em data-en="drive climate action." data-ar="لقيادة العمل المناخي.">drive climate action.</em></h2>
+                    <p style="margin-top:0.4rem" data-en="Playbooks, guides, interviews and more — curated for Qatar's sustainability community." data-ar="كتيبات وأدلة ومقابلات وأكثر — مختارة لمجتمع الاستدامة في قطر.">Playbooks, guides, interviews and more — curated for Qatar's sustainability community.</p>
+                </div>
+                <div class="res-cats">
+                    <div class="res-cat"><div class="res-cat-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:book-2-linear"></iconify-icon></div><h3 data-en="Featured Playbooks" data-ar="الكتيبات المميزة">Featured Playbooks</h3><p data-en="Step-by-step guides for organizing cleanups, planting drives, and workshops." data-ar="أدلة لتنظيم حملات التنظيف ومبادرات الزراعة وورش العمل.">Step-by-step guides for organizing cleanups, planting drives, and workshops.</p><div class="res-count" data-en="8 playbooks available" data-ar="٨ كتيبات متاحة">8 playbooks available</div></div>
+                    <div class="res-cat"><div class="res-cat-icon" style="background:rgba(196,98,45,0.1);color:var(--rust)"><iconify-icon icon="solar:play-circle-linear"></iconify-icon></div><h3 data-en="Exclusive Interviews" data-ar="مقابلات حصرية">Exclusive Interviews</h3><p data-en="Insights from Qatar's top environmental leaders, scientists and youth advocates." data-ar="رؤى من كبار القادة البيئيين والعلماء والمدافعين عن الشباب في قطر.">Insights from Qatar's top environmental leaders, scientists and youth advocates.</p><div class="res-count" data-en="12 interviews available" data-ar="١٢ مقابلة متاحة">12 interviews available</div></div>
+                    <div class="res-cat"><div class="res-cat-icon" style="background:rgba(168,224,99,0.2);color:#4a7c20"><iconify-icon icon="solar:map-linear"></iconify-icon></div><h3 data-en="Vision 2030 Guides" data-ar="أدلة رؤية ٢٠٣٠">Vision 2030 Guides</h3><p data-en="Understand Qatar's National Vision 2030 environmental pillar and how your work contributes." data-ar="افهم الركيزة البيئية لرؤية قطر الوطنية ٢٠٣٠ وكيف يساهم عملك فيها.">Understand Qatar's National Vision 2030 environmental pillar and how your work contributes.</p><div class="res-count" data-en="5 guides available" data-ar="٥ أدلة متاحة">5 guides available</div></div>
+                    <div class="res-cat"><div class="res-cat-icon" style="background:rgba(0,0,0,0.05);color:rgba(0,0,0,0.45)"><iconify-icon icon="solar:calendar-linear"></iconify-icon></div><h3 data-en="Active Competitions" data-ar="المسابقات النشطة">Active Competitions</h3><p data-en="Grants, hackathons, and competitions open to youth across Qatar right now." data-ar="منح وهاكاثونات ومسابقات مفتوحة للشباب في قطر الآن.">Grants, hackathons, and competitions open to youth across Qatar right now.</p><div class="res-count" data-en="3 open now" data-ar="٣ مفتوحة الآن">3 open now</div></div>
+                </div>
+                <div class="sh"><h2 class="sh-title" data-en="Latest Resources" data-ar="أحدث الموارد">Latest Resources</h2></div>
+                <div class="res-list">
+                    <div class="res-item"><div class="ri-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:book-2-linear"></iconify-icon></div><div class="ri-body"><div class="ri-title" data-en="The Paperless Week Playbook" data-ar="كتيب الأسبوع الخالي من الورق">The Paperless Week Playbook</div><div class="ri-meta" data-en="Playbook · 12 min read" data-ar="كتيب · ١٢ دقيقة قراءة">Playbook · 12 min read</div></div><div class="ri-action"><span data-en="Download" data-ar="تحميل">Download</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></div></div>
+                    <div class="res-item"><div class="ri-icon" style="background:rgba(196,98,45,0.1);color:var(--rust)"><iconify-icon icon="solar:play-circle-linear"></iconify-icon></div><div class="ri-body"><div class="ri-title" data-en="Interview: Qatar's Mangrove Conservation Lead" data-ar="مقابلة: قائد الحفاظ على المانغروف في قطر">Interview: Qatar's Mangrove Conservation Lead</div><div class="ri-meta" data-en="Interview · 24 min watch" data-ar="مقابلة · ٢٤ دقيقة مشاهدة">Interview · 24 min watch</div></div><div class="ri-action"><span data-en="Watch" data-ar="مشاهدة">Watch</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></div></div>
+                    <div class="res-item"><div class="ri-icon" style="background:rgba(168,224,99,0.2);color:#4a7c20"><iconify-icon icon="solar:map-linear"></iconify-icon></div><div class="ri-body"><div class="ri-title" data-en="QNV 2030: Environmental Development Pillar Guide" data-ar="دليل ركيزة التنمية البيئية في رؤية قطر ٢٠٣٠">QNV 2030: Environmental Development Pillar Guide</div><div class="ri-meta" data-en="Guide · 8 min read" data-ar="دليل · ٨ دقائق قراءة">Guide · 8 min read</div></div><div class="ri-action"><span data-en="Read" data-ar="قراءة">Read</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></div></div>
+                    <div class="res-item"><div class="ri-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:book-2-linear"></iconify-icon></div><div class="ri-body"><div class="ri-title" data-en="Eco-Club Starter Kit" data-ar="كتيب بدء النادي البيئي">Eco-Club Starter Kit</div><div class="ri-meta" data-en="Toolkit · 18 min read" data-ar="أداة · ١٨ دقيقة قراءة">Toolkit · 18 min read</div></div><div class="ri-action"><span data-en="Download" data-ar="تحميل">Download</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></div></div>
+                    <div class="res-item"><div class="ri-icon" style="background:rgba(0,0,0,0.05);color:rgba(0,0,0,0.45)"><iconify-icon icon="solar:calendar-linear"></iconify-icon></div><div class="ri-body"><div class="ri-title" data-en="Green Innovation Hackathon 2024" data-ar="هاكاثون الابتكار الأخضر ٢٠٢٤">Green Innovation Hackathon 2024</div><div class="ri-meta" data-en="Competition · Deadline: Oct 15" data-ar="مسابقة · الموعد النهائي: ١٥ أكتوبر">Competition · Deadline: Oct 15</div></div><div class="ri-action"><span data-en="Apply" data-ar="تقديم">Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></div></div>
+                </div>
+            </div>
+
+            <!-- ═══ PROFILE ═══ -->
+            <div class="sec" id="sec-profile">
+                <div class="profile-card">
+                    <div class="p-banner"></div>
+                    <div class="p-body">
+                        <div class="p-av-row">
+                            <div class="p-av" id="p-avatar">M</div>
+                            <button class="p-edit"><iconify-icon icon="solar:pen-linear"></iconify-icon><span data-en="Edit Profile" data-ar="تعديل الملف">Edit Profile</span></button>
+                        </div>
+                        <div class="p-name" id="p-name">Mohammed Elfatih</div>
+                        <div class="p-role" data-en="Climate Activist · EcoAwareness QA Founder · Doha, Qatar" data-ar="ناشط مناخي · مؤسس EcoAwareness QA · الدوحة، قطر">Climate Activist · EcoAwareness QA Founder · Doha, Qatar</div>
+                        <div class="p-stats">
+                            <div class="p-stat"><div class="p-stat-num">47</div><div class="p-stat-label" data-en="Volunteer Hours" data-ar="ساعات تطوع">Volunteer Hours</div></div>
+                            <div class="p-stat"><div class="p-stat-num">8</div><div class="p-stat-label" data-en="Events Attended" data-ar="فعاليات حضرتها">Events Attended</div></div>
+                            <div class="p-stat"><div class="p-stat-num">#12</div><div class="p-stat-label" data-en="Community Rank" data-ar="ترتيبك">Community Rank</div></div>
+                        </div>
+                    </div>
+                </div>
+                <div class="settings-card">
+                    <h3 data-en="Account Settings" data-ar="إعدادات الحساب">Account Settings</h3>
+                    <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:letter-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Email Address" data-ar="البريد الإلكتروني">Email Address</div><div class="setting-sub" id="p-email">mohammeddontforget@gmail.com</div></div></div><span style="font-size:0.68rem;background:rgba(26,92,56,0.1);color:var(--green);border-radius:100px;padding:0.18rem 0.55rem" data-en="Verified" data-ar="موثق">Verified</span></div>
+                    <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:bell-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Notifications" data-ar="الإشعارات">Notifications</div><div class="setting-sub" data-en="Email updates for new opportunities" data-ar="تحديثات بريدية للفرص الجديدة">Email updates for new opportunities</div></div></div><div style="width:34px;height:18px;background:var(--green);border-radius:100px;position:relative;cursor:pointer"><span style="position:absolute;right:2px;top:2px;width:14px;height:14px;background:white;border-radius:50%;display:block"></span></div></div>
+                    <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:logout-linear" style="color:rgba(196,98,45,0.7)"></iconify-icon><div class="setting-label" style="color:var(--rust)" data-en="Sign Out" data-ar="تسجيل الخروج">Sign Out</div></div><button id="p-logout" style="font-size:0.75rem;background:rgba(196,98,45,0.1);color:var(--rust);border:none;border-radius:100px;padding:0.32rem 0.8rem;cursor:pointer;font-family:'DM Sans',sans-serif" data-en="Sign Out" data-ar="خروج">Sign Out</button></div>
+                </div>
+            </div>
+
+        </div><!-- /scroll-area -->
+    </div><!-- /main -->
+</div><!-- /app -->
 
 <script>
-// ── LENIS SMOOTH SCROLL ──────────────────────────────────
-let lenis = new Lenis({
-    duration: 1.3,
-    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true,
-    smoothTouch: false,
-});
-function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-requestAnimationFrame(raf);
+// SUPABASE
+const sb = window.supabase.createClient(
+    'https://nqvhxjsryatqgfvtjbki.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xdmh4anNyeWF0cWdmdnRqYmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDYxMDAsImV4cCI6MjA4ODYyMjEwMH0.HrnrIq5bK3FhxmHaLxWPIG0nD-CI-3ReHCoO5RL1c3M'
+);
 
-// ── NAV SCROLL ───────────────────────────────────────────
-window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
-});
-
-// ── SCROLL REVEAL ────────────────────────────────────────
-const revealObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
-
-// Hero reveals on page load
-document.querySelectorAll('.hero-content .reveal').forEach((el, i) => {
-    setTimeout(() => el.classList.add('visible'), i * 130 + 200);
-});
-
-// ── LANGUAGE TOGGLE ──────────────────────────────────────
-let isArabic = false;
-
-function applyLanguage() {
-    const body = document.body;
-    const html = document.documentElement;
-    const label = document.getElementById('lang-label');
-
-    if (isArabic) {
-        body.classList.add('ar');
-        html.setAttribute('lang', 'ar');
-        html.setAttribute('dir', 'rtl');
-        label.textContent = 'English';
-    } else {
-        body.classList.remove('ar');
-        html.setAttribute('lang', 'en');
-        html.setAttribute('dir', 'ltr');
-        label.textContent = 'عربي';
+// AUTH
+async function init() {
+    let { data: { session } } = await sb.auth.getSession();
+    if (!session) {
+        await new Promise(r => setTimeout(r, 1500));
+        const { data: { session: s2 } } = await sb.auth.getSession();
+        session = s2;
     }
+    if (!session) { window.location.href = 'signin.html'; return; }
 
-    // Swap all [data-en]/[data-ar] text
-    document.querySelectorAll('[data-en]').forEach(el => {
-        const val = isArabic ? el.getAttribute('data-ar') : el.getAttribute('data-en');
-        if (val !== null) el.innerHTML = val;
-    });
+    const meta = session.user.user_metadata || {};
+    const firstName = meta.first_name || meta.name || session.user.email.split('@')[0];
+    const fullName = meta.full_name || meta.name || firstName;
+    const initial = firstName.charAt(0).toUpperCase();
 
-    // Watermark swap
-    const wm = document.querySelector('.hero-watermark');
-    if (wm) wm.textContent = isArabic ? 'nature' : 'بيئة';
+    document.getElementById('sb-avatar').textContent = initial;
+    document.getElementById('sb-name').textContent = fullName;
+    document.getElementById('greeting-name').textContent = ' ' + firstName;
+    document.getElementById('p-avatar').textContent = initial;
+    document.getElementById('p-name').textContent = fullName;
+    document.getElementById('p-email').textContent = session.user.email;
 
-    localStorage.setItem('hub_lang', isArabic ? 'ar' : 'en');
+    // Smart greeting
+    const h = new Date().getHours();
+    const greetEl = document.querySelector('#page-title em');
+    if (greetEl) {
+        const en = h < 12 ? 'Good morning,' : h < 17 ? 'Good afternoon,' : 'Good evening,';
+        const ar = h < 12 ? 'صباح الخير،' : h < 17 ? 'مساء الخير،' : 'مساء النور،';
+        greetEl.setAttribute('data-en', en); greetEl.setAttribute('data-ar', ar);
+        greetEl.textContent = isArabic ? ar : en;
+    }
 }
 
-document.getElementById('lang-toggle').addEventListener('click', () => {
-    isArabic = !isArabic;
-    applyLanguage();
-});
+// LOGOUT
+async function doLogout() { await sb.auth.signOut(); window.location.href = 'index.html'; }
+document.getElementById('logout-btn').addEventListener('click', doLogout);
+document.getElementById('p-logout').addEventListener('click', doLogout);
 
-// Restore saved preference
-if (localStorage.getItem('hub_lang') === 'ar') { isArabic = true; applyLanguage(); }
+// NAVIGATE
+const titles = {
+    home: { en: '<em data-en="Good morning," data-ar="صباح الخير،">Good morning,</em> <span id="greeting-name"> Mohammed</span> 🌿' },
+    opportunities: { en: 'Find your next <em style="font-style:italic;color:var(--green)">opportunity.</em>', ar: 'اعثر على <em style="color:var(--green)">فرصتك القادمة.</em>' },
+    network: { en: 'The <em style="font-style:italic;color:var(--green)">green network.</em>', ar: 'الشبكة <em style="color:var(--green)">الخضراء.</em>' },
+    resources: { en: '<em style="font-style:italic;color:var(--green)">Resources</em> & Guides.', ar: '<em style="color:var(--green)">الموارد</em> والأدلة.' },
+    profile: { en: 'My <em style="font-style:italic;color:var(--green)">Profile.</em>', ar: '<em style="color:var(--green)">ملفي</em> الشخصي.' }
+};
 
-// ── AUTH CHECK — runs after isArabic is defined ──────────
-(async () => {
-    const _sb = window.supabase.createClient(
-        'https://nqvhxjsryatqgfvtjbki.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xdmh4anNyeWF0cWdmdnRqYmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDYxMDAsImV4cCI6MjA4ODYyMjEwMH0.HrnrIq5bK3FhxmHaLxWPIG0nD-CI-3ReHCoO5RL1c3M'
-    );
-    const { data: { session } } = await _sb.auth.getSession();
-    if (session) {
-        const meta = session.user.user_metadata || {};
-        const firstName = meta.first_name || meta.name || session.user.email.split('@')[0];
-
-        // Hide all regular nav links — logged-in users go to the dashboard for everything
-        const navLinks = document.querySelector('.nav-links');
-        if (navLinks) {
-            navLinks.innerHTML = `
-                <a href="dashboard.html" style="opacity:0.6;font-size:0.875rem;text-decoration:none;color:var(--ink);transition:opacity 0.2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6" data-en="Opportunities" data-ar="الفرص">${isArabic ? 'الفرص' : 'Opportunities'}</a>
-                <a href="dashboard.html" style="opacity:0.6;font-size:0.875rem;text-decoration:none;color:var(--ink);transition:opacity 0.2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6" data-en="Network" data-ar="الشبكة">${isArabic ? 'الشبكة' : 'Network'}</a>
-                <a href="dashboard.html" style="opacity:0.6;font-size:0.875rem;text-decoration:none;color:var(--ink);transition:opacity 0.2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6" data-en="Resources" data-ar="الموارد">${isArabic ? 'الموارد' : 'Resources'}</a>
-                <a href="dashboard.html" style="opacity:0.6;font-size:0.875rem;text-decoration:none;color:var(--ink);transition:opacity 0.2s" onmouseover="this.style.opacity=1" onmouseout="this.style.opacity=0.6" data-en="About" data-ar="من نحن">${isArabic ? 'من نحن' : 'About'}</a>
-                <a href="dashboard.html" style="background:var(--green);color:#fff;opacity:1;padding:0.6rem 1.4rem;border-radius:100px;font-size:0.875rem;text-decoration:none;display:inline-flex;align-items:center;gap:0.5rem;transition:background 0.2s" onmouseover="this.style.background='var(--green-light)'" onmouseout="this.style.background='var(--green)'">
-                    <iconify-icon icon="solar:home-smile-linear" style="font-size:1rem"></iconify-icon>
-                    ${firstName}
-                </a>
-            `;
-        }
-
-        // Also update CTA gate buttons to go to dashboard instead of signup
-        document.querySelectorAll('a[href="signup.html"]').forEach(btn => {
-            btn.href = 'dashboard.html';
-            if (btn.classList.contains('gate-btn')) {
-                btn.innerHTML = `<span data-en="Go to Dashboard" data-ar="انتقل إلى لوحة التحكم">${isArabic ? 'انتقل إلى لوحة التحكم' : 'Go to Dashboard'}</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon>`;
+function navigate(sec) {
+    document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('active'));
+    const el = document.getElementById('sec-' + sec);
+    if (el) el.classList.add('active');
+    document.querySelectorAll(`[data-sec="${sec}"]`).forEach(n => n.classList.add('active'));
+    // Update title
+    const t = titles[sec];
+    if (t) {
+        const titleEl = document.getElementById('page-title');
+        if (sec === 'home') {
+            titleEl.innerHTML = t.en;
+            const nameEl = document.getElementById('greeting-name');
+            if (nameEl) nameEl.textContent = ' ' + (document.getElementById('sb-name')?.textContent.split(' ')[0] || 'Mohammed');
+            // re-apply greeting
+            const h = new Date().getHours();
+            const greetEl = titleEl.querySelector('em');
+            if (greetEl) {
+                const en = h < 12 ? 'Good morning,' : h < 17 ? 'Good afternoon,' : 'Good evening,';
+                const ar = h < 12 ? 'صباح الخير،' : h < 17 ? 'مساء الخير،' : 'مساء النور،';
+                greetEl.setAttribute('data-en', en); greetEl.setAttribute('data-ar', ar);
+                greetEl.textContent = isArabic ? ar : en;
             }
-        });
-        document.querySelectorAll('a[href="signin.html"]').forEach(a => { a.href = 'dashboard.html'; });
+        } else {
+            titleEl.innerHTML = isArabic && t.ar ? t.ar : t.en;
+        }
     }
-})();
+    document.querySelector('.scroll-area').scrollTo({ top: 0, behavior: 'smooth' });
+}
 
-// ── ANCHOR SCROLL (Lenis) ────────────────────────────────
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        const id = this.getAttribute('href');
-        const target = document.querySelector(id);
-        if (target) { e.preventDefault(); lenis.scrollTo(target, { offset: -80, duration: 1.4 }); }
-    });
+// PILLS
+function setPill(el, scope) {
+    (scope ? document.querySelector(scope) || el.parentElement : el.parentElement)
+        .querySelectorAll('.pill').forEach(p => p.classList.remove('active'));
+    el.classList.add('active');
+}
+
+// CHART
+const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const monthsAr = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+const hrs = [2,0,4,6,3,5,8,7,4,8,0,0];
+const maxH = Math.max(...hrs);
+const curM = new Date().getMonth();
+const chartEl = document.getElementById('chart-bars');
+months.forEach((m, i) => {
+    const pct = maxH > 0 ? (hrs[i]/maxH)*100 : 0;
+    const w = document.createElement('div'); w.className = 'cbw';
+    w.innerHTML = `<div class="cb${i===curM?' hi':''}" style="height:${Math.max(pct,hrs[i]>0?8:2)}%" title="${hrs[i]} hrs"></div><span class="cm">${m}</span>`;
+    chartEl.appendChild(w);
 });
 
-// ── PAGE TRANSITION ──────────────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-    const overlay = document.getElementById('page-transition');
-    const logo = document.getElementById('transition-logo');
-    requestAnimationFrame(() => { overlay.style.opacity = '0'; });
-
-    document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            const url = this.getAttribute('href');
-            const tgt = this.getAttribute('target');
-            if (!url || url.startsWith('#') || url.startsWith('mailto:') || url.startsWith('tel:') || tgt === '_blank' || (this.hostname !== window.location.hostname && this.hostname !== '')) return;
-            e.preventDefault();
-            overlay.style.opacity = '1';
-            logo.style.transform = 'scale(1.1)';
-            setTimeout(() => { window.location.href = url; }, 400);
-        });
+// LANGUAGE
+let isArabic = false;
+function applyLang() {
+    const b = document.body, h = document.documentElement, l = document.getElementById('lang-label');
+    if (isArabic) { b.classList.add('ar'); h.setAttribute('lang','ar'); h.setAttribute('dir','rtl'); l.textContent = 'English'; }
+    else { b.classList.remove('ar'); h.setAttribute('lang','en'); h.setAttribute('dir','ltr'); l.textContent = 'عربي'; }
+    document.querySelectorAll('[data-en]').forEach(el => {
+        const v = isArabic ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+        if (v !== null) el.innerHTML = v;
     });
-
-    window.addEventListener('pageshow', e => {
-        if (e.persisted) { overlay.style.opacity = '0'; logo.style.transform = 'scale(1)'; }
+    document.querySelectorAll('[data-placeholder-en]').forEach(el => {
+        el.placeholder = isArabic ? el.getAttribute('data-placeholder-ar') : el.getAttribute('data-placeholder-en');
     });
-});
+    document.querySelectorAll('.cm').forEach((el,i) => { el.textContent = isArabic ? monthsAr[i] : months[i]; });
+    localStorage.setItem('hub_lang', isArabic ? 'ar' : 'en');
+}
+document.getElementById('lang-toggle').addEventListener('click', () => { isArabic = !isArabic; applyLang(); });
+if (localStorage.getItem('hub_lang') === 'ar') { isArabic = true; applyLang(); }
+
+init();
 </script>
 </body>
 </html>
