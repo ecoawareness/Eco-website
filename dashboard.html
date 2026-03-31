@@ -381,9 +381,18 @@
         }
         #transition-logo { width: 4rem; height: 4rem; transition: transform 500ms; }
 
-        /* Reveal */
-        .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s cubic-bezier(0.25,1,0.5,1), transform 0.5s cubic-bezier(0.25,1,0.5,1); }
-        .reveal.visible { opacity: 1; transform: none; }
+        /* Reveal - content always visible, animation is enhancement only */
+        .reveal {
+            opacity: 1;
+            transform: none;
+        }
+        @media (prefers-reduced-motion: no-preference) {
+            .reveal.animate-on-scroll {
+                opacity: 0; transform: translateY(16px);
+                transition: opacity 0.5s cubic-bezier(0.25,1,0.5,1), transform 0.5s cubic-bezier(0.25,1,0.5,1);
+            }
+            .reveal.animate-on-scroll.visible { opacity: 1; transform: none; }
+        }
 
         @media (max-width: 1100px) {
             .two-col { grid-template-columns: 1fr; }
@@ -805,6 +814,19 @@ async function initDashboard() {
     document.getElementById('sidebar-name').textContent = fullName;
     document.getElementById('sidebar-avatar').textContent = initial;
 
+    // Smart greeting based on time of day
+    const hour = new Date().getHours();
+    const greetingEl = document.querySelector('.topbar-greeting h1 em[data-en]');
+    if (greetingEl) {
+        let enGreeting, arGreeting;
+        if (hour < 12) { enGreeting = 'Good morning,'; arGreeting = 'صباح الخير،'; }
+        else if (hour < 17) { enGreeting = 'Good afternoon,'; arGreeting = 'مساء الخير،'; }
+        else { enGreeting = 'Good evening,'; arGreeting = 'مساء النور،'; }
+        greetingEl.setAttribute('data-en', enGreeting);
+        greetingEl.setAttribute('data-ar', arGreeting);
+        greetingEl.textContent = isArabic ? arGreeting : enGreeting;
+    }
+
     // Also fade out the page transition overlay in case it got stuck
     const overlay = document.getElementById('page-transition');
     if (overlay) overlay.style.opacity = '0';
@@ -822,13 +844,11 @@ function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
 requestAnimationFrame(raf);
 
 // ── SCROLL REVEAL ────────────────────────────────────────
-const obs = new IntersectionObserver(entries => {
-    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
-}, { threshold: 0.08 });
-document.querySelectorAll('.reveal').forEach((el, i) => {
-    obs.observe(el);
+// Content is always visible — animations are progressive enhancement
+document.querySelectorAll('.reveal').forEach(el => {
+    el.classList.add('animate-on-scroll');
+    el.classList.add('visible'); // show immediately
 });
-setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')), 100);
 
 // ── CHART ────────────────────────────────────────────────
 const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
