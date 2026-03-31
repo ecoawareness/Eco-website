@@ -11,6 +11,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
         :root {
@@ -709,6 +710,33 @@
 </div>
 
 <script>
+// ── AUTH CHECK — swap nav if already logged in ───────────
+(async () => {
+    const _sb = window.supabase.createClient(
+        'https://nqvhxjsryatqgfvtjbki.supabase.co',
+        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xdmh4anNyeWF0cWdmdnRqYmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDYxMDAsImV4cCI6MjA4ODYyMjEwMH0.HrnrIq5bK3FhxmHaLxWPIG0nD-CI-3ReHCoO5RL1c3M'
+    );
+    const { data: { session } } = await _sb.auth.getSession();
+    if (session) {
+        // User is logged in — replace "Sign In" with "Dashboard"
+        const signInLink = document.querySelector('a[href="signin.html"]');
+        if (signInLink) {
+            signInLink.href = 'dashboard.html';
+            signInLink.setAttribute('data-en', 'Dashboard');
+            signInLink.setAttribute('data-ar', 'لوحة التحكم');
+            signInLink.textContent = isArabic ? 'لوحة التحكم' : 'Dashboard';
+        }
+        // Replace "Join Free" with user's first name
+        const joinBtn = document.querySelector('a[href="signup.html"].nav-cta');
+        const meta = session.user.user_metadata || {};
+        const firstName = meta.first_name || session.user.email.split('@')[0];
+        if (joinBtn) {
+            joinBtn.href = 'dashboard.html';
+            joinBtn.innerHTML = `<iconify-icon icon="solar:user-circle-linear" style="font-size:1rem"></iconify-icon> ${firstName}`;
+        }
+    }
+})();
+
 // ── LENIS SMOOTH SCROLL ──────────────────────────────────
 let lenis = new Lenis({
     duration: 1.3,
