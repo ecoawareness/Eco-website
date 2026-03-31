@@ -777,24 +777,37 @@ const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
 
 // ── AUTH GUARD ───────────────────────────────────────────
 async function initDashboard() {
-    const { data: { session } } = await supabase.auth.getSession();
+    // First attempt — handles normal sessions
+    let { data: { session } } = await supabase.auth.getSession();
 
+    // If no session, wait for Supabase to process OAuth token from URL hash
     if (!session) {
-        // Not logged in — redirect to sign in
+        await new Promise(r => setTimeout(r, 1500));
+        const { data: { session: session2 } } = await supabase.auth.getSession();
+        session = session2;
+    }
+
+    // Still no session — redirect to sign in
+    if (!session) {
         window.location.href = 'signin.html';
         return;
     }
 
     const user = session.user;
     const meta = user.user_metadata || {};
-    const firstName = meta.first_name || user.email.split('@')[0];
-    const fullName = meta.full_name || firstName;
+    // Support Google OAuth (uses 'name') and email/password (uses 'first_name')
+    const firstName = meta.first_name || meta.name || user.email.split('@')[0];
+    const fullName = meta.full_name || meta.name || firstName;
     const initial = firstName.charAt(0).toUpperCase();
 
     // Update UI with real user data
     document.getElementById('greeting-name').textContent = firstName;
     document.getElementById('sidebar-name').textContent = fullName;
     document.getElementById('sidebar-avatar').textContent = initial;
+
+    // Also fade out the page transition overlay in case it got stuck
+    const overlay = document.getElementById('page-transition');
+    if (overlay) overlay.style.opacity = '0';
 }
 
 // ── LOGOUT ───────────────────────────────────────────────
