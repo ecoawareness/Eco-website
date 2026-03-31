@@ -377,7 +377,7 @@
         #page-transition {
             position: fixed; inset: 0; z-index: 9999;
             background: var(--green); display: flex; align-items: center; justify-content: center;
-            opacity: 1; transition: opacity 500ms ease; pointer-events: none;
+            opacity: 0; transition: opacity 400ms ease; pointer-events: none;
         }
         #transition-logo { width: 4rem; height: 4rem; transition: transform 500ms; }
 
@@ -873,18 +873,21 @@ document.addEventListener('DOMContentLoaded', () => {
     initDashboard();
     const overlay = document.getElementById('page-transition');
     const logo = document.getElementById('transition-logo');
-    requestAnimationFrame(() => { overlay.style.opacity = '0'; });
+    // Overlay starts hidden — only show when navigating away
     document.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', function(e) {
             const url = this.getAttribute('href');
             const tgt = this.getAttribute('target');
             if (!url || url.startsWith('#') || url.startsWith('mailto:') || url.startsWith('tel:') || tgt === '_blank' || (this.hostname !== window.location.hostname && this.hostname !== '')) return;
             e.preventDefault();
-            overlay.style.opacity = '1'; logo.style.transform = 'scale(1.1)';
+            overlay.style.opacity = '1';
+            logo.style.transform = 'scale(1.1)';
             setTimeout(() => { window.location.href = url; }, 400);
         });
     });
-    window.addEventListener('pageshow', e => { if (e.persisted) { overlay.style.opacity = '0'; logo.style.transform = 'scale(1)'; } });
+    window.addEventListener('pageshow', e => {
+        if (e.persisted) { overlay.style.opacity = '0'; logo.style.transform = 'scale(1)'; }
+    });
 });
 </script>
 </body>
