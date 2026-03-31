@@ -319,7 +319,7 @@
                 setTimeout(() => { window.location.href = 'signin.html'; }, 2500);
             } else {
                 showToast('Account created! Welcome to The Hub 🌿', 'success');
-                setTimeout(() => { window.location.href = 'index.html'; }, 1500);
+                setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500);
             }
         });
 
@@ -332,7 +332,7 @@
 
             const { error } = await supabaseClient.auth.signInWithOAuth({
                 provider: 'google',
-                options: { redirectTo: window.location.origin + '/index.html' }
+                options: { redirectTo: window.location.origin + '/dashboard.html' }
             });
 
             if (error) {
