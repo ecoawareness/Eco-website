@@ -1,1 +1,879 @@
 
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard — The Hub</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        :root {
+            --ink: #0a0a0a;
+            --paper: #f5f0e8;
+            --green: #1a5c38;
+            --green-light: #2d7a4f;
+            --lime: #a8e063;
+            --sand: #e8dfc8;
+            --rust: #c4622d;
+            --sidebar-w: 260px;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: auto; }
+
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+            min-height: 100vh;
+        }
+        body.ar { font-family: 'Noto Naskh Arabic', serif; direction: rtl; }
+
+        /* Grain */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 1000; opacity: 0.35;
+        }
+
+        ::-webkit-scrollbar { width: 4px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--sand); border-radius: 4px; }
+
+        /* ── LANG TOGGLE ── */
+        #lang-toggle {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 950;
+            background: var(--ink); color: #fff; border: none; border-radius: 100px;
+            padding: 0.6rem 1.2rem; font-size: 0.8rem; font-weight: 500;
+            cursor: pointer; display: flex; align-items: center; gap: 0.4rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.2); transition: all 0.25s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        #lang-toggle:hover { background: var(--green); transform: translateY(-2px); }
+        body.ar #lang-toggle { right: auto; left: 2rem; font-family: 'Noto Naskh Arabic', serif; }
+        .lang-dot { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; }
+
+        /* ── LAYOUT ── */
+        .app-shell { display: flex; min-height: 100vh; }
+
+        /* ── SIDEBAR ── */
+        .sidebar {
+            width: var(--sidebar-w);
+            flex-shrink: 0;
+            background: var(--green);
+            position: fixed; top: 0; left: 0; bottom: 0;
+            display: flex; flex-direction: column;
+            padding: 0;
+            z-index: 100;
+            transition: transform 0.3s ease;
+        }
+        body.ar .sidebar { left: auto; right: 0; }
+
+        .sidebar-logo {
+            padding: 1.75rem 1.75rem 1.5rem;
+            display: flex; align-items: center; gap: 0.6rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+            text-decoration: none;
+        }
+        .sidebar-logo-dot { width: 8px; height: 8px; background: var(--lime); border-radius: 50%; }
+        .sidebar-logo-text {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.3rem; color: #fff;
+        }
+        body.ar .sidebar-logo-text { font-family: 'Noto Naskh Arabic', serif; }
+
+        .sidebar-nav { flex: 1; padding: 1.5rem 1rem; display: flex; flex-direction: column; gap: 0.25rem; overflow-y: auto; }
+
+        .nav-section-label {
+            font-size: 0.62rem; font-weight: 500; letter-spacing: 0.12em;
+            text-transform: uppercase; color: rgba(255,255,255,0.3);
+            padding: 0.75rem 0.75rem 0.5rem; margin-top: 0.5rem;
+        }
+        body.ar .nav-section-label { letter-spacing: 0; font-size: 0.75rem; }
+
+        .nav-item {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.7rem 0.75rem; border-radius: 10px;
+            color: rgba(255,255,255,0.6); text-decoration: none;
+            font-size: 0.875rem; font-weight: 400;
+            transition: all 0.15s; cursor: pointer; border: none; background: none;
+            width: 100%; text-align: left;
+        }
+        body.ar .nav-item { text-align: right; }
+        .nav-item:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.9); }
+        .nav-item.active { background: rgba(168,224,99,0.15); color: #fff; }
+        .nav-item.active iconify-icon { color: var(--lime); }
+        .nav-item iconify-icon { font-size: 1.1rem; flex-shrink: 0; }
+        .nav-badge {
+            margin-left: auto; background: var(--lime); color: var(--ink);
+            border-radius: 100px; padding: 0.1rem 0.5rem;
+            font-size: 0.65rem; font-weight: 600;
+        }
+        body.ar .nav-badge { margin-left: 0; margin-right: auto; }
+
+        .sidebar-user {
+            padding: 1.25rem 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+            display: flex; align-items: center; gap: 0.75rem;
+        }
+        .user-avatar {
+            width: 36px; height: 36px; border-radius: 50%;
+            background: rgba(168,224,99,0.2);
+            border: 1.5px solid rgba(168,224,99,0.4);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Instrument Serif', serif; font-size: 1rem; color: var(--lime);
+            flex-shrink: 0;
+        }
+        .user-info { flex: 1; min-width: 0; }
+        .user-name { font-size: 0.825rem; font-weight: 500; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .user-role { font-size: 0.7rem; color: rgba(255,255,255,0.4); }
+        .user-logout { color: rgba(255,255,255,0.3); cursor: pointer; transition: color 0.2s; border: none; background: none; padding: 0.25rem; }
+        .user-logout:hover { color: rgba(255,255,255,0.7); }
+
+        /* ── MAIN CONTENT ── */
+        .main-content {
+            margin-left: var(--sidebar-w);
+            flex: 1; min-width: 0;
+            padding: 2.5rem 3rem;
+            max-width: 1100px;
+        }
+        body.ar .main-content { margin-left: 0; margin-right: var(--sidebar-w); }
+
+        /* ── TOP BAR ── */
+        .topbar {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 2.5rem; flex-wrap: wrap; gap: 1rem;
+        }
+        .topbar-greeting h1 {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(1.8rem, 3vw, 2.5rem); line-height: 1.15;
+            margin-bottom: 0.2rem;
+        }
+        body.ar .topbar-greeting h1 { font-family: 'Noto Naskh Arabic', serif; }
+        .topbar-greeting h1 em { font-style: italic; color: var(--green); }
+        body.ar .topbar-greeting h1 em { font-style: normal; }
+        .topbar-greeting p { font-size: 0.875rem; color: rgba(0,0,0,0.45); font-weight: 300; }
+
+        .topbar-actions { display: flex; align-items: center; gap: 0.75rem; }
+        .topbar-btn {
+            display: flex; align-items: center; gap: 0.5rem;
+            background: white; border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 100px; padding: 0.55rem 1.1rem;
+            font-size: 0.8rem; color: rgba(0,0,0,0.6); cursor: pointer;
+            transition: all 0.2s; font-family: 'DM Sans', sans-serif; text-decoration: none;
+        }
+        body.ar .topbar-btn { font-family: 'Noto Naskh Arabic', serif; }
+        .topbar-btn:hover { border-color: var(--green); color: var(--green); }
+        .topbar-btn.primary { background: var(--green); color: #fff; border-color: var(--green); }
+        .topbar-btn.primary:hover { background: var(--green-light); }
+
+        /* ── IMPACT STATS ── */
+        .impact-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 1rem; margin-bottom: 2rem;
+        }
+        .impact-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 14px; padding: 1.5rem;
+            position: relative; overflow: hidden;
+            transition: all 0.2s;
+        }
+        .impact-card:hover { border-color: rgba(26,92,56,0.15); box-shadow: 0 4px 20px rgba(0,0,0,0.06); transform: translateY(-1px); }
+        .impact-card::after {
+            content: '';
+            position: absolute; bottom: 0; left: 0; right: 0;
+            height: 3px; border-radius: 0 0 14px 14px;
+        }
+        .impact-card.green::after { background: var(--green); }
+        .impact-card.lime::after { background: var(--lime); }
+        .impact-card.rust::after { background: var(--rust); }
+        .impact-card.sand::after { background: #c8b89a; }
+
+        .impact-icon {
+            width: 38px; height: 38px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.1rem; margin-bottom: 1rem;
+        }
+        .impact-icon.green { background: rgba(26,92,56,0.1); color: var(--green); }
+        .impact-icon.lime { background: rgba(168,224,99,0.2); color: #4a7c20; }
+        .impact-icon.rust { background: rgba(196,98,45,0.1); color: var(--rust); }
+        .impact-icon.sand { background: rgba(200,184,154,0.2); color: #7a6a50; }
+
+        .impact-num {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2rem; line-height: 1; margin-bottom: 0.25rem; color: var(--ink);
+        }
+        .impact-label { font-size: 0.75rem; color: rgba(0,0,0,0.45); font-weight: 400; }
+        .impact-trend { font-size: 0.7rem; color: var(--green); margin-top: 0.35rem; }
+
+        /* ── SECTION HEADER ── */
+        .section-header {
+            display: flex; align-items: center; justify-content: space-between;
+            margin-bottom: 1.25rem;
+        }
+        .section-title {
+            font-family: 'Instrument Serif', serif; font-size: 1.3rem; line-height: 1.2;
+        }
+        body.ar .section-title { font-family: 'Noto Naskh Arabic', serif; }
+        .section-link {
+            font-size: 0.78rem; color: var(--green); text-decoration: none; font-weight: 500;
+            display: flex; align-items: center; gap: 0.3rem; transition: gap 0.2s;
+        }
+        .section-link:hover { gap: 0.5rem; }
+
+        /* ── TWO COL LAYOUT ── */
+        .two-col { display: grid; grid-template-columns: 1fr 340px; gap: 1.5rem; margin-bottom: 1.5rem; }
+
+        /* ── UPCOMING EVENTS ── */
+        .events-list { display: flex; flex-direction: column; gap: 0.875rem; }
+        .event-item {
+            background: white; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 12px; padding: 1.25rem 1.5rem;
+            display: flex; align-items: center; gap: 1.25rem;
+            transition: all 0.2s; cursor: pointer;
+        }
+        .event-item:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 4px 16px rgba(0,0,0,0.05); }
+        .event-date-box {
+            width: 48px; flex-shrink: 0; text-align: center;
+            background: var(--sand); border-radius: 10px; padding: 0.5rem 0.25rem;
+        }
+        .event-date-month { font-size: 0.6rem; text-transform: uppercase; letter-spacing: 0.08em; color: var(--rust); font-weight: 600; }
+        .event-date-day { font-family: 'Instrument Serif', serif; font-size: 1.5rem; color: var(--ink); line-height: 1; }
+        .event-info { flex: 1; min-width: 0; }
+        .event-title { font-size: 0.9rem; font-weight: 500; margin-bottom: 0.2rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .event-meta { font-size: 0.75rem; color: rgba(0,0,0,0.4); display: flex; align-items: center; gap: 0.75rem; flex-wrap: wrap; }
+        .event-tag {
+            display: inline-flex; align-items: center;
+            padding: 0.2rem 0.6rem; border-radius: 100px;
+            font-size: 0.65rem; font-weight: 500; flex-shrink: 0;
+        }
+        .tag-c { background: #dcfce7; color: #166534; }
+        .tag-w { background: #dbeafe; color: #1e40af; }
+        .tag-v { background: #fef3c7; color: #92400e; }
+        .tag-e { background: #f3e8ff; color: #6b21a8; }
+        .event-status { font-size: 0.7rem; padding: 0.2rem 0.6rem; border-radius: 100px; background: rgba(26,92,56,0.1); color: var(--green); font-weight: 500; flex-shrink: 0; }
+
+        /* ── IMPACT CHART ── */
+        .chart-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 14px; padding: 1.5rem;
+        }
+        .chart-bars {
+            display: flex; align-items: flex-end; gap: 0.5rem;
+            height: 120px; margin-top: 1.5rem;
+        }
+        .chart-bar-wrap { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 0.4rem; }
+        .chart-bar {
+            width: 100%; border-radius: 4px 4px 0 0;
+            background: var(--sand); transition: background 0.2s;
+            min-height: 4px; position: relative;
+        }
+        .chart-bar:hover { background: var(--green); }
+        .chart-bar.highlight { background: var(--green); }
+        .chart-month { font-size: 0.6rem; color: rgba(0,0,0,0.35); }
+
+        /* ── COMMUNITY FEED ── */
+        .feed-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 14px; overflow: hidden;
+        }
+        .feed-item {
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.05);
+            display: flex; gap: 1rem; transition: background 0.15s;
+        }
+        .feed-item:last-child { border-bottom: none; }
+        .feed-item:hover { background: rgba(0,0,0,0.015); }
+        .feed-avatar {
+            width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Instrument Serif', serif; font-size: 0.9rem; font-weight: 400;
+        }
+        .feed-body { flex: 1; min-width: 0; }
+        .feed-text { font-size: 0.825rem; line-height: 1.55; color: rgba(0,0,0,0.75); margin-bottom: 0.35rem; }
+        .feed-text strong { color: var(--ink); font-weight: 500; }
+        .feed-text .highlight { color: var(--green); font-weight: 500; }
+        .feed-time { font-size: 0.7rem; color: rgba(0,0,0,0.35); }
+        .feed-action { font-size: 0.75rem; color: rgba(0,0,0,0.35); cursor: pointer; transition: color 0.2s; margin-top: 0.35rem; display: inline-flex; align-items: center; gap: 0.25rem; }
+        .feed-action:hover { color: var(--green); }
+
+        /* ── QUICK ACTIONS ── */
+        .quick-actions {
+            display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.875rem;
+            margin-bottom: 1.5rem;
+        }
+        .quick-action {
+            background: white; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 12px; padding: 1.25rem;
+            display: flex; align-items: center; gap: 1rem;
+            cursor: pointer; transition: all 0.2s; text-decoration: none;
+        }
+        .quick-action:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 4px 16px rgba(0,0,0,0.05); transform: translateY(-1px); }
+        .qa-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.1rem; flex-shrink: 0;
+        }
+        .qa-text h4 { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.15rem; }
+        .qa-text p { font-size: 0.72rem; color: rgba(0,0,0,0.4); line-height: 1.4; }
+
+        /* ── LEADERBOARD ── */
+        .leaderboard-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 14px; overflow: hidden;
+        }
+        .leaderboard-header { padding: 1.25rem 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.05); }
+        .lb-item {
+            display: flex; align-items: center; gap: 1rem;
+            padding: 0.875rem 1.5rem; border-bottom: 1px solid rgba(0,0,0,0.04);
+            transition: background 0.15s;
+        }
+        .lb-item:last-child { border-bottom: none; }
+        .lb-item:hover { background: rgba(0,0,0,0.015); }
+        .lb-rank {
+            font-family: 'Instrument Serif', serif; font-size: 1.1rem;
+            color: rgba(0,0,0,0.2); width: 24px; text-align: center; flex-shrink: 0;
+        }
+        .lb-rank.top { color: var(--rust); }
+        .lb-avatar {
+            width: 32px; height: 32px; border-radius: 50%; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.75rem; font-weight: 500;
+        }
+        .lb-name { flex: 1; font-size: 0.825rem; font-weight: 400; }
+        .lb-score { font-size: 0.78rem; color: var(--green); font-weight: 500; white-space: nowrap; }
+        .lb-item.you { background: rgba(168,224,99,0.08); }
+        .lb-you-badge { font-size: 0.6rem; background: var(--lime); color: var(--ink); border-radius: 100px; padding: 0.1rem 0.4rem; font-weight: 600; }
+
+        /* ── ACTIVE ORGANIZATIONS ── */
+        .org-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .org-item {
+            background: white; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 12px; padding: 1rem 1.25rem;
+            display: flex; align-items: center; gap: 1rem;
+            transition: all 0.2s; cursor: pointer;
+        }
+        .org-item:hover { border-color: rgba(26,92,56,0.2); }
+        .org-logo {
+            width: 40px; height: 40px; border-radius: 10px; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.8rem; font-weight: 600; font-family: 'Instrument Serif', serif;
+        }
+        .org-info { flex: 1; min-width: 0; }
+        .org-name { font-size: 0.85rem; font-weight: 500; margin-bottom: 0.15rem; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .org-type { font-size: 0.7rem; color: rgba(0,0,0,0.4); }
+        .org-opp-count { font-size: 0.72rem; color: var(--green); font-weight: 500; flex-shrink: 0; white-space: nowrap; }
+
+        /* Page transition */
+        #page-transition {
+            position: fixed; inset: 0; z-index: 9999;
+            background: var(--green); display: flex; align-items: center; justify-content: center;
+            opacity: 1; transition: opacity 500ms ease; pointer-events: none;
+        }
+        #transition-logo { width: 4rem; height: 4rem; transition: transform 500ms; }
+
+        /* Reveal */
+        .reveal { opacity: 0; transform: translateY(16px); transition: opacity 0.5s cubic-bezier(0.25,1,0.5,1), transform 0.5s cubic-bezier(0.25,1,0.5,1); }
+        .reveal.visible { opacity: 1; transform: none; }
+
+        @media (max-width: 1100px) {
+            .two-col { grid-template-columns: 1fr; }
+            .impact-grid { grid-template-columns: repeat(2, 1fr); }
+        }
+        @media (max-width: 768px) {
+            .sidebar { transform: translateX(-100%); }
+            body.ar .sidebar { transform: translateX(100%); }
+            .main-content { margin-left: 0; padding: 1.5rem; }
+            body.ar .main-content { margin-right: 0; }
+            .impact-grid { grid-template-columns: repeat(2, 1fr); }
+            .quick-actions { grid-template-columns: 1fr; }
+            body.ar #lang-toggle { left: 1rem; right: auto; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Lang toggle -->
+<button id="lang-toggle" aria-label="Toggle language">
+    <span class="lang-dot"></span>
+    <span id="lang-label">عربي</span>
+</button>
+
+<div class="app-shell">
+
+    <!-- ── SIDEBAR ── -->
+    <aside class="sidebar">
+        <a href="index.html" class="sidebar-logo">
+            <span class="sidebar-logo-dot"></span>
+            <span class="sidebar-logo-text" data-en="The Hub" data-ar="المنصة">The Hub</span>
+        </a>
+
+        <nav class="sidebar-nav">
+            <div class="nav-section-label" data-en="My Space" data-ar="مساحتي">My Space</div>
+            <a href="dashboard.html" class="nav-item active">
+                <iconify-icon icon="solar:home-linear"></iconify-icon>
+                <span data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</span>
+            </a>
+            <a href="#" class="nav-item">
+                <iconify-icon icon="solar:user-linear"></iconify-icon>
+                <span data-en="My Profile" data-ar="ملفي الشخصي">My Profile</span>
+            </a>
+            <a href="#" class="nav-item">
+                <iconify-icon icon="solar:calendar-linear"></iconify-icon>
+                <span data-en="My Events" data-ar="فعالياتي">My Events</span>
+                <span class="nav-badge">3</span>
+            </a>
+            <a href="#" class="nav-item">
+                <iconify-icon icon="solar:chart-linear"></iconify-icon>
+                <span data-en="My Impact" data-ar="أثري">My Impact</span>
+            </a>
+
+            <div class="nav-section-label" data-en="Explore" data-ar="استكشف">Explore</div>
+            <a href="opportunities.html" class="nav-item">
+                <iconify-icon icon="solar:compass-linear"></iconify-icon>
+                <span data-en="Opportunities" data-ar="الفرص">Opportunities</span>
+                <span class="nav-badge">24</span>
+            </a>
+            <a href="network.html" class="nav-item">
+                <iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>
+                <span data-en="Network" data-ar="الشبكة">Network</span>
+            </a>
+            <a href="resources.html" class="nav-item">
+                <iconify-icon icon="solar:book-linear"></iconify-icon>
+                <span data-en="Resources" data-ar="الموارد">Resources</span>
+            </a>
+
+            <div class="nav-section-label" data-en="Community" data-ar="المجتمع">Community</div>
+            <a href="#" class="nav-item">
+                <iconify-icon icon="solar:ranking-linear"></iconify-icon>
+                <span data-en="Leaderboard" data-ar="لوحة المتصدرين">Leaderboard</span>
+            </a>
+            <a href="#" class="nav-item">
+                <iconify-icon icon="solar:chat-round-line-linear"></iconify-icon>
+                <span data-en="Community Feed" data-ar="تغذية المجتمع">Community Feed</span>
+            </a>
+        </nav>
+
+        <div class="sidebar-user">
+            <div class="user-avatar" id="sidebar-avatar">M</div>
+            <div class="user-info">
+                <div class="user-name" id="sidebar-name">Mohammed Elfatih</div>
+                <div class="user-role" data-en="Climate Activist" data-ar="ناشط مناخي">Climate Activist</div>
+            </div>
+            <button class="user-logout" title="Sign out" id="logout-btn">
+                <iconify-icon icon="solar:logout-linear" style="font-size:1.1rem"></iconify-icon>
+            </button>
+        </div>
+    </aside>
+
+    <!-- ── MAIN ── -->
+    <main class="main-content">
+
+        <!-- TOP BAR -->
+        <div class="topbar reveal">
+            <div class="topbar-greeting">
+                <h1><em data-en="Good morning," data-ar="صباح الخير،">Good morning,</em> <span id="greeting-name">Mohammed</span> 🌿</h1>
+                <p data-en="You have 3 upcoming events this week. Keep going!" data-ar="لديك ٣ فعاليات قادمة هذا الأسبوع. استمر!">You have 3 upcoming events this week. Keep going!</p>
+            </div>
+            <div class="topbar-actions">
+                <a href="opportunities.html" class="topbar-btn">
+                    <iconify-icon icon="solar:compass-linear"></iconify-icon>
+                    <span data-en="Find Opportunities" data-ar="اعثر على فرص">Find Opportunities</span>
+                </a>
+                <a href="#" class="topbar-btn primary">
+                    <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
+                    <span data-en="Post Event" data-ar="انشر فعالية">Post Event</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- IMPACT STATS -->
+        <div class="impact-grid reveal" style="transition-delay:0.05s">
+            <div class="impact-card green">
+                <div class="impact-icon green"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon></div>
+                <div class="impact-num">47</div>
+                <div class="impact-label" data-en="Volunteer Hours" data-ar="ساعات التطوع">Volunteer Hours</div>
+                <div class="impact-trend">↑ <span data-en="12 this month" data-ar="١٢ هذا الشهر">12 this month</span></div>
+            </div>
+            <div class="impact-card lime">
+                <div class="impact-icon lime"><iconify-icon icon="solar:leaf-linear"></iconify-icon></div>
+                <div class="impact-num">8</div>
+                <div class="impact-label" data-en="Events Attended" data-ar="فعاليات حضرتها">Events Attended</div>
+                <div class="impact-trend">↑ <span data-en="3 this month" data-ar="٣ هذا الشهر">3 this month</span></div>
+            </div>
+            <div class="impact-card rust">
+                <div class="impact-icon rust"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></div>
+                <div class="impact-num">5</div>
+                <div class="impact-label" data-en="Orgs Connected" data-ar="منظمات متواصلت معها">Orgs Connected</div>
+                <div class="impact-trend">↑ <span data-en="2 new" data-ar="٢ جديدة">2 new</span></div>
+            </div>
+            <div class="impact-card sand">
+                <div class="impact-icon sand"><iconify-icon icon="solar:ranking-linear"></iconify-icon></div>
+                <div class="impact-num">#12</div>
+                <div class="impact-label" data-en="Community Rank" data-ar="ترتيبك في المجتمع">Community Rank</div>
+                <div class="impact-trend">↑ <span data-en="Up 4 places" data-ar="ارتفعت ٤ مراتب">Up 4 places</span></div>
+            </div>
+        </div>
+
+        <!-- UPCOMING EVENTS + CHART -->
+        <div class="two-col">
+            <div>
+                <div class="section-header reveal" style="transition-delay:0.1s">
+                    <h2 class="section-title" data-en="Your Upcoming Events" data-ar="فعالياتك القادمة">Your Upcoming Events</h2>
+                    <a href="#" class="section-link" data-en="View all →" data-ar="عرض الكل →">View all →</a>
+                </div>
+                <div class="events-list reveal" style="transition-delay:0.15s">
+                    <div class="event-item">
+                        <div class="event-date-box">
+                            <div class="event-date-month">OCT</div>
+                            <div class="event-date-day">24</div>
+                        </div>
+                        <div class="event-info">
+                            <div class="event-title" data-en="Mangrove Restoration Drive" data-ar="حملة استعادة أشجار المانغروف">Mangrove Restoration Drive</div>
+                            <div class="event-meta">
+                                <span>📍 <span data-en="Al Thakira, Al Khor" data-ar="الثخيرة، الخور">Al Thakira, Al Khor</span></span>
+                                <span>7:00 AM</span>
+                            </div>
+                        </div>
+                        <span class="event-tag tag-c" data-en="Conservation" data-ar="حفاظ">Conservation</span>
+                        <span class="event-status" data-en="Registered" data-ar="مسجّل">Registered</span>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-date-box">
+                            <div class="event-date-month">NOV</div>
+                            <div class="event-date-day">02</div>
+                        </div>
+                        <div class="event-info">
+                            <div class="event-title" data-en="Circular Economy Workshop" data-ar="ورشة الاقتصاد الدائري">Circular Economy Workshop</div>
+                            <div class="event-meta">
+                                <span>💻 <span data-en="Remote (Zoom)" data-ar="عن بُعد (زووم)">Remote (Zoom)</span></span>
+                                <span>4:00 PM</span>
+                            </div>
+                        </div>
+                        <span class="event-tag tag-w" data-en="Workshop" data-ar="ورشة">Workshop</span>
+                        <span class="event-status" data-en="Registered" data-ar="مسجّل">Registered</span>
+                    </div>
+                    <div class="event-item">
+                        <div class="event-date-box">
+                            <div class="event-date-month">NOV</div>
+                            <div class="event-date-day">15</div>
+                        </div>
+                        <div class="event-info">
+                            <div class="event-title" data-en="Desert Cleanup Campaign" data-ar="حملة تنظيف الصحراء">Desert Cleanup Campaign</div>
+                            <div class="event-meta">
+                                <span>📍 <span data-en="Sealine Beach, Mesaieed" data-ar="شاطئ سيلاين، مسيعيد">Sealine Beach, Mesaieed</span></span>
+                                <span>6:00 AM</span>
+                            </div>
+                        </div>
+                        <span class="event-tag tag-v" data-en="Volunteer" data-ar="تطوع">Volunteer</span>
+                        <span class="event-status" data-en="Registered" data-ar="مسجّل">Registered</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Impact Chart -->
+            <div>
+                <div class="section-header reveal" style="transition-delay:0.1s">
+                    <h2 class="section-title" data-en="Hours This Year" data-ar="ساعاتك هذا العام">Hours This Year</h2>
+                </div>
+                <div class="chart-card reveal" style="transition-delay:0.15s">
+                    <div style="display:flex;align-items:baseline;gap:0.5rem;margin-bottom:0.25rem">
+                        <span style="font-family:'Instrument Serif',serif;font-size:2rem">47</span>
+                        <span style="font-size:0.8rem;color:rgba(0,0,0,0.4)" data-en="total hours" data-ar="ساعة إجمالاً">total hours</span>
+                    </div>
+                    <div style="font-size:0.75rem;color:var(--green)" data-en="↑ 34% more than last year" data-ar="↑ ٣٤٪ أكثر من العام الماضي">↑ 34% more than last year</div>
+                    <div class="chart-bars" id="chart-bars">
+                        <!-- Bars injected by JS -->
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- QUICK ACTIONS -->
+        <div class="section-header reveal" style="transition-delay:0.2s">
+            <h2 class="section-title" data-en="Quick Actions" data-ar="إجراءات سريعة">Quick Actions</h2>
+        </div>
+        <div class="quick-actions reveal" style="transition-delay:0.25s">
+            <a href="opportunities.html" class="quick-action">
+                <div class="qa-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:compass-linear"></iconify-icon></div>
+                <div class="qa-text">
+                    <h4 data-en="Browse Opportunities" data-ar="تصفح الفرص">Browse Opportunities</h4>
+                    <p data-en="24 new events waiting for you" data-ar="٢٤ فعالية جديدة تنتظرك">24 new events waiting for you</p>
+                </div>
+            </a>
+            <a href="network.html" class="quick-action">
+                <div class="qa-icon" style="background:rgba(196,98,45,0.1);color:var(--rust)"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></div>
+                <div class="qa-text">
+                    <h4 data-en="Explore the Network" data-ar="استكشف الشبكة">Explore the Network</h4>
+                    <p data-en="60+ orgs, clubs & government bodies" data-ar="٦٠+ منظمة ونادٍ وجهة حكومية">60+ orgs, clubs & government bodies</p>
+                </div>
+            </a>
+            <a href="resources.html" class="quick-action">
+                <div class="qa-icon" style="background:rgba(168,224,99,0.2);color:#4a7c20"><iconify-icon icon="solar:book-linear"></iconify-icon></div>
+                <div class="qa-text">
+                    <h4 data-en="Learn & Grow" data-ar="تعلّم وانمُ">Learn & Grow</h4>
+                    <p data-en="Playbooks, guides & interviews" data-ar="أدلة، كتيبات ومقابلات">Playbooks, guides & interviews</p>
+                </div>
+            </a>
+            <a href="#" class="quick-action">
+                <div class="qa-icon" style="background:rgba(0,0,0,0.05);color:rgba(0,0,0,0.5)"><iconify-icon icon="solar:share-linear"></iconify-icon></div>
+                <div class="qa-text">
+                    <h4 data-en="Invite a Friend" data-ar="ادعُ صديقاً">Invite a Friend</h4>
+                    <p data-en="Grow the community together" data-ar="نمّوا المجتمع معاً">Grow the community together</p>
+                </div>
+            </a>
+        </div>
+
+        <!-- COMMUNITY FEED + LEADERBOARD -->
+        <div class="two-col reveal" style="transition-delay:0.3s">
+            <div>
+                <div class="section-header" style="margin-bottom:1.25rem">
+                    <h2 class="section-title" data-en="Community Feed" data-ar="تغذية المجتمع">Community Feed</h2>
+                    <a href="#" class="section-link" data-en="View all →" data-ar="عرض الكل →">View all →</a>
+                </div>
+                <div class="feed-card">
+                    <div class="feed-item">
+                        <div class="feed-avatar" style="background:#dcfce7;color:#166534">S</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Sarah Al-Mansoori</strong> just signed up for <span class="highlight">Mangrove Restoration Drive</span> 🌱</div>
+                            <div class="feed-time" data-en="2 minutes ago" data-ar="منذ دقيقتين">2 minutes ago</div>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <div class="feed-avatar" style="background:#dbeafe;color:#1e40af">Q</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Qatar Eco Society</strong> posted a new opportunity: <span class="highlight">Desert Reforestation Initiative</span></div>
+                            <div class="feed-time" data-en="15 minutes ago" data-ar="منذ ١٥ دقيقة">15 minutes ago</div>
+                            <div class="feed-action"><iconify-icon icon="solar:arrow-right-linear"></iconify-icon> <span data-en="View opportunity" data-ar="عرض الفرصة">View opportunity</span></div>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <div class="feed-avatar" style="background:#fef3c7;color:#92400e">A</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Ahmed Al-Kuwari</strong> <span data-en="completed 10 volunteer hours" data-ar="أتم ١٠ ساعات تطوع">completed 10 volunteer hours</span> 🎉</div>
+                            <div class="feed-time" data-en="1 hour ago" data-ar="منذ ساعة">1 hour ago</div>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <div class="feed-avatar" style="background:#f3e8ff;color:#6b21a8">N</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Noora Hassan</strong> <span data-en="joined the network" data-ar="انضمت إلى الشبكة">joined the network</span> — <span class="highlight" data-en="welcome!" data-ar="أهلاً بها!">welcome!</span></div>
+                            <div class="feed-time" data-en="3 hours ago" data-ar="منذ ٣ ساعات">3 hours ago</div>
+                        </div>
+                    </div>
+                    <div class="feed-item">
+                        <div class="feed-avatar" style="background:#dcfce7;color:#166534">G</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Green Future Inc.</strong> <span data-en="is now a verified partner" data-ar="أصبحت شريكاً موثقاً">is now a verified partner</span> ✅</div>
+                            <div class="feed-time" data-en="Yesterday" data-ar="أمس">Yesterday</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Leaderboard -->
+            <div>
+                <div class="section-header" style="margin-bottom:1.25rem">
+                    <h2 class="section-title" data-en="Top Contributors" data-ar="أبرز المساهمين">Top Contributors</h2>
+                    <a href="#" class="section-link" data-en="Full board →" data-ar="عرض الكل →">Full board →</a>
+                </div>
+                <div class="leaderboard-card">
+                    <div class="lb-item">
+                        <div class="lb-rank top">1</div>
+                        <div class="lb-avatar" style="background:#dcfce7;color:#166534">F</div>
+                        <div class="lb-name">Fatima Al-Dosari</div>
+                        <div class="lb-score">124 hrs</div>
+                    </div>
+                    <div class="lb-item">
+                        <div class="lb-rank top">2</div>
+                        <div class="lb-avatar" style="background:#dbeafe;color:#1e40af">K</div>
+                        <div class="lb-name">Khalid Al-Emadi</div>
+                        <div class="lb-score">98 hrs</div>
+                    </div>
+                    <div class="lb-item">
+                        <div class="lb-rank top">3</div>
+                        <div class="lb-avatar" style="background:#fef3c7;color:#92400e">L</div>
+                        <div class="lb-name">Lina Mahmoud</div>
+                        <div class="lb-score">87 hrs</div>
+                    </div>
+                    <div class="lb-item">
+                        <div class="lb-rank">4</div>
+                        <div class="lb-avatar" style="background:#f3e8ff;color:#6b21a8">Y</div>
+                        <div class="lb-name">Yousef Al-Sulaiti</div>
+                        <div class="lb-score">72 hrs</div>
+                    </div>
+                    <div class="lb-item">
+                        <div class="lb-rank">5</div>
+                        <div class="lb-avatar" style="background:#e8dfc8;color:#7a6a50">R</div>
+                        <div class="lb-name">Reem Al-Naimi</div>
+                        <div class="lb-score">65 hrs</div>
+                    </div>
+                    <div class="lb-item you">
+                        <div class="lb-rank">12</div>
+                        <div class="lb-avatar" style="background:rgba(168,224,99,0.2);color:#1a5c38">M</div>
+                        <div class="lb-name">
+                            <span data-en="You" data-ar="أنت">You</span>
+                            <span class="lb-you-badge" data-en="YOU" data-ar="أنت">YOU</span>
+                        </div>
+                        <div class="lb-score">47 hrs</div>
+                    </div>
+                </div>
+
+                <!-- Active orgs -->
+                <div class="section-header" style="margin: 1.5rem 0 1rem">
+                    <h2 class="section-title" style="font-size:1.1rem" data-en="Active Organizations" data-ar="المنظمات النشطة">Active Organizations</h2>
+                </div>
+                <div class="org-list">
+                    <div class="org-item">
+                        <div class="org-logo" style="background:#dcfce7;color:#166534">QE</div>
+                        <div class="org-info">
+                            <div class="org-name">Qatar Eco Society</div>
+                            <div class="org-type" data-en="NGO · Verified" data-ar="منظمة غير حكومية · موثقة">NGO · Verified</div>
+                        </div>
+                        <div class="org-opp-count" data-en="3 events" data-ar="٣ فعاليات">3 events</div>
+                    </div>
+                    <div class="org-item">
+                        <div class="org-logo" style="background:#dbeafe;color:#1e40af">GF</div>
+                        <div class="org-info">
+                            <div class="org-name">Green Future Inc.</div>
+                            <div class="org-type" data-en="Eco-Business · Verified" data-ar="شركة بيئية · موثقة">Eco-Business · Verified</div>
+                        </div>
+                        <div class="org-opp-count" data-en="2 events" data-ar="فعاليتان">2 events</div>
+                    </div>
+                    <div class="org-item">
+                        <div class="org-logo" style="background:#fef3c7;color:#92400e">QU</div>
+                        <div class="org-info">
+                            <div class="org-name">QU Green Innovators</div>
+                            <div class="org-type" data-en="Student Club" data-ar="نادٍ طلابي">Student Club</div>
+                        </div>
+                        <div class="org-opp-count" data-en="1 event" data-ar="فعالية">1 event</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </main>
+</div>
+
+<!-- Page transition -->
+<div id="page-transition">
+    <img id="transition-logo" src="assets/IMG.PNG" alt="EcoAwareness" style="width:100%;height:100%;object-fit:contain;">
+</div>
+
+<script>
+// ── SUPABASE ─────────────────────────────────────────────
+const supabaseUrl = 'https://nqvhxjsryatqgfvtjbki.supabase.co';
+const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xdmh4anNyeWF0cWdmdnRqYmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDYxMDAsImV4cCI6MjA4ODYyMjEwMH0.HrnrIq5bK3FhxmHaLxWPIG0nD-CI-3ReHCoO5RL1c3M';
+const supabase = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
+
+// ── AUTH GUARD ───────────────────────────────────────────
+async function initDashboard() {
+    const { data: { session } } = await supabase.auth.getSession();
+
+    if (!session) {
+        // Not logged in — redirect to sign in
+        window.location.href = 'signin.html';
+        return;
+    }
+
+    const user = session.user;
+    const meta = user.user_metadata || {};
+    const firstName = meta.first_name || user.email.split('@')[0];
+    const fullName = meta.full_name || firstName;
+    const initial = firstName.charAt(0).toUpperCase();
+
+    // Update UI with real user data
+    document.getElementById('greeting-name').textContent = firstName;
+    document.getElementById('sidebar-name').textContent = fullName;
+    document.getElementById('sidebar-avatar').textContent = initial;
+}
+
+// ── LOGOUT ───────────────────────────────────────────────
+document.getElementById('logout-btn').addEventListener('click', async () => {
+    await supabase.auth.signOut();
+    window.location.href = 'index.html';
+});
+
+// ── LENIS ────────────────────────────────────────────────
+const lenis = new Lenis({ duration: 1.3, easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)), smooth: true });
+function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+requestAnimationFrame(raf);
+
+// ── SCROLL REVEAL ────────────────────────────────────────
+const obs = new IntersectionObserver(entries => {
+    entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); obs.unobserve(e.target); } });
+}, { threshold: 0.08 });
+document.querySelectorAll('.reveal').forEach((el, i) => {
+    obs.observe(el);
+});
+setTimeout(() => document.querySelectorAll('.reveal').forEach(el => el.classList.add('visible')), 100);
+
+// ── CHART ────────────────────────────────────────────────
+const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+const monthsAr = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+const hours = [2, 0, 4, 6, 3, 5, 8, 7, 4, 8, 0, 0];
+const maxH = Math.max(...hours);
+const currentMonth = new Date().getMonth();
+const chartEl = document.getElementById('chart-bars');
+
+months.forEach((m, i) => {
+    const pct = maxH > 0 ? (hours[i] / maxH) * 100 : 0;
+    const wrap = document.createElement('div');
+    wrap.className = 'chart-bar-wrap';
+    wrap.innerHTML = `
+        <div class="chart-bar ${i === currentMonth ? 'highlight' : ''}" style="height:${Math.max(pct, hours[i] > 0 ? 8 : 2)}%" data-hours="${hours[i]}" title="${hours[i]} hrs"></div>
+        <span class="chart-month">${m}</span>`;
+    chartEl.appendChild(wrap);
+});
+
+// ── LANGUAGE ─────────────────────────────────────────────
+let isArabic = false;
+function applyLanguage() {
+    const body = document.body;
+    const html = document.documentElement;
+    const label = document.getElementById('lang-label');
+    if (isArabic) { body.classList.add('ar'); html.setAttribute('lang','ar'); html.setAttribute('dir','rtl'); label.textContent = 'English'; }
+    else { body.classList.remove('ar'); html.setAttribute('lang','en'); html.setAttribute('dir','ltr'); label.textContent = 'عربي'; }
+    document.querySelectorAll('[data-en]').forEach(el => {
+        const val = isArabic ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+        if (val !== null) el.innerHTML = val;
+    });
+    // Update chart months
+    const bars = document.querySelectorAll('.chart-month');
+    bars.forEach((el, i) => { el.textContent = isArabic ? monthsAr[i] : months[i]; });
+    localStorage.setItem('hub_lang', isArabic ? 'ar' : 'en');
+}
+document.getElementById('lang-toggle').addEventListener('click', () => { isArabic = !isArabic; applyLanguage(); });
+if (localStorage.getItem('hub_lang') === 'ar') { isArabic = true; applyLanguage(); }
+
+// ── PAGE TRANSITION ──────────────────────────────────────
+document.addEventListener('DOMContentLoaded', () => {
+    initDashboard();
+    const overlay = document.getElementById('page-transition');
+    const logo = document.getElementById('transition-logo');
+    requestAnimationFrame(() => { overlay.style.opacity = '0'; });
+    document.querySelectorAll('a').forEach(link => {
+        link.addEventListener('click', function(e) {
+            const url = this.getAttribute('href');
+            const tgt = this.getAttribute('target');
+            if (!url || url.startsWith('#') || url.startsWith('mailto:') || url.startsWith('tel:') || tgt === '_blank' || (this.hostname !== window.location.hostname && this.hostname !== '')) return;
+            e.preventDefault();
+            overlay.style.opacity = '1'; logo.style.transform = 'scale(1.1)';
+            setTimeout(() => { window.location.href = url; }, 400);
+        });
+    });
+    window.addEventListener('pageshow', e => { if (e.persisted) { overlay.style.opacity = '0'; logo.style.transform = 'scale(1)'; } });
+});
+</script>
+</body>
+</html>
