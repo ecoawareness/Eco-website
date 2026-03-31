@@ -1,4 +1,3 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -17,69 +16,39 @@
     
     <style>
         body { font-family: 'Inter', sans-serif; }
-
         .input-field {
-            width: 100%;
-            padding: 0.875rem 1.25rem;
-            border-radius: 9999px;
-            border: 1px solid rgba(229,231,235,0.8);
-            background: white;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-            font-size: 1rem;
-            transition: all 0.2s;
-            outline: none;
-            color: #111827;
+            width: 100%; padding: 0.875rem 1.25rem; border-radius: 9999px;
+            border: 1px solid rgba(229,231,235,0.8); background: white;
+            box-shadow: 0 1px 2px rgba(0,0,0,0.04); font-size: 1rem;
+            transition: all 0.2s; outline: none; color: #111827;
         }
         .input-field::placeholder { color: #9ca3af; }
-        .input-field:focus {
-            border-color: #16a34a;
-            box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
-        }
-        .input-field.error {
-            border-color: #ef4444;
-            box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
-        }
-
+        .input-field:focus { border-color: #16a34a; box-shadow: 0 0 0 3px rgba(22,163,74,0.12); }
+        .input-field.error { border-color: #ef4444; box-shadow: 0 0 0 3px rgba(239,68,68,0.1); }
         #toast {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            opacity: 0;
+            position: fixed; bottom: 2rem; left: 50%;
+            transform: translateX(-50%) translateY(20px); opacity: 0;
             transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            z-index: 9000;
-            pointer-events: none;
+            z-index: 9000; pointer-events: none;
         }
-        #toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
-        }
-
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
         .btn-spinner {
-            display: inline-block;
-            width: 18px; height: 18px;
-            border: 2px solid rgba(255,255,255,0.4);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            vertical-align: middle;
-            margin-right: 8px;
+            display: inline-block; width: 18px; height: 18px;
+            border: 2px solid rgba(255,255,255,0.4); border-top-color: white;
+            border-radius: 50%; animation: spin 0.7s linear infinite;
+            vertical-align: middle; margin-right: 8px;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
     </style>
 </head>
 <body class="bg-white text-gray-900 antialiased selection:bg-[#16a34a]/20 selection:text-[#16a34a]">
 
-    <!-- Toast -->
     <div id="toast">
         <div id="toast-inner" class="flex items-center gap-3 px-5 py-3.5 rounded-full shadow-lg text-sm font-medium"></div>
     </div>
 
     <div class="flex min-h-screen">
-
-        <!-- LEFT: Form Panel -->
         <div class="w-full lg:w-1/2 flex flex-col relative px-6 py-12 sm:px-12 lg:px-20 justify-center">
-
             <div class="absolute top-8 left-6 sm:left-12 lg:left-20">
                 <a href="index.html" class="flex items-center gap-2 text-base text-gray-500 hover:text-gray-900 transition-colors duration-200">
                     <iconify-icon icon="solar:alt-arrow-left-linear" class="text-xl"></iconify-icon>
@@ -88,21 +57,17 @@
             </div>
 
             <div class="w-full max-w-[440px] mx-auto mt-12 lg:mt-0">
-
                 <div class="mb-10">
                     <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight text-gray-900 mb-3">Welcome Back</h1>
                     <p class="text-lg text-gray-500 font-light">Sign in to continue driving sustainable action.</p>
                 </div>
 
-                <!-- Form -->
                 <div class="space-y-5">
-
                     <div>
                         <label class="block text-sm font-medium text-gray-700 mb-1.5 ml-1">Email Address</label>
                         <input id="email" type="email" placeholder="Enter your email address" class="input-field">
                         <p id="email-error" class="hidden mt-1.5 ml-1 text-xs text-red-500"></p>
                     </div>
-
                     <div>
                         <div class="flex items-center justify-between mb-1.5">
                             <label class="block text-sm font-medium text-gray-700 ml-1">Password</label>
@@ -116,11 +81,9 @@
                         </div>
                         <p id="password-error" class="hidden mt-1.5 ml-1 text-xs text-red-500"></p>
                     </div>
-
                     <button id="signinBtn" type="button" class="w-full bg-[#16a34a] hover:bg-[#15803d] text-white font-medium py-3.5 rounded-full transition-all duration-200 text-base shadow-sm hover:shadow mt-2">
                         Sign In
                     </button>
-
                 </div>
 
                 <div class="flex items-center my-8">
@@ -137,11 +100,9 @@
                 <p class="text-center mt-10 text-base text-gray-500">
                     Don't have an account? <a href="signup.html" class="text-[#16a34a] font-medium hover:text-[#15803d] transition-colors">Create one</a>
                 </p>
-
             </div>
         </div>
 
-        <!-- RIGHT: Image Panel -->
         <div class="hidden lg:flex lg:w-1/2 relative bg-gray-900 overflow-hidden">
             <img src="assets/education city.jpg" alt="Collaborate for Change" class="absolute inset-0 w-full h-full object-cover">
             <div class="absolute inset-0 bg-gradient-to-t from-[#022c22]/90 via-[#022c22]/30 to-transparent"></div>
@@ -152,10 +113,8 @@
                 </div>
             </div>
         </div>
-
     </div>
 
-    <!-- Page transition overlay -->
     <div id="page-transition" style="position: fixed; inset: 0; z-index: 9999; background-color: white; display: flex; align-items: center; justify-content: center; opacity: 1; transition: all 400ms ease-out; pointer-events: none;">
         <div id="transition-logo" style="width: 5rem; height: 5rem; display: flex; align-items: center; justify-content: center; transform: scale(1); transition: transform 500ms;">
             <img src="assets/IMG.PNG" alt="EcoAwareness Logo" style="width: 100%; height: 100%; object-fit: contain;">
@@ -165,12 +124,10 @@
     <script>lucide.createIcons();</script>
 
     <script>
-        // ─── Supabase Init ───────────────────────────────────────────
         const supabaseUrl = 'https://nqvhxjsryatqgfvtjbki.supabase.co';
         const supabaseAnonKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xdmh4anNyeWF0cWdmdnRqYmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDYxMDAsImV4cCI6MjA4ODYyMjEwMH0.HrnrIq5bK3FhxmHaLxWPIG0nD-CI-3ReHCoO5RL1c3M';
         const supabaseClient = window.supabase.createClient(supabaseUrl, supabaseAnonKey);
 
-        // ─── Toast ───────────────────────────────────────────────────
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             const inner = document.getElementById('toast-inner');
@@ -181,7 +138,6 @@
             setTimeout(() => toast.classList.remove('show'), 4000);
         }
 
-        // ─── Field Helpers ───────────────────────────────────────────
         function showError(fieldId, message) {
             const field = document.getElementById(fieldId);
             const error = document.getElementById(fieldId + '-error');
@@ -195,7 +151,6 @@
             if (error) error.classList.add('hidden');
         }
 
-        // ─── Toggle Password ─────────────────────────────────────────
         const passwordInput = document.getElementById('password');
         document.getElementById('togglePassword').addEventListener('click', () => {
             const isPassword = passwordInput.type === 'password';
@@ -206,14 +161,10 @@
             lucide.createIcons();
         });
 
-        // ─── Sign In ─────────────────────────────────────────────────
         document.getElementById('signinBtn').addEventListener('click', async () => {
-            clearError('email');
-            clearError('password');
-
+            clearError('email'); clearError('password');
             const email = document.getElementById('email').value.trim();
             const password = passwordInput.value;
-
             let valid = true;
             if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('email', 'Please enter a valid email address'); valid = false; }
             if (!password) { showError('password', 'Please enter your password'); valid = false; }
@@ -224,9 +175,7 @@
             btn.disabled = true;
 
             const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
-
-            btn.innerHTML = 'Sign In';
-            btn.disabled = false;
+            btn.innerHTML = 'Sign In'; btn.disabled = false;
 
             if (error) {
                 if (error.message.toLowerCase().includes('invalid')) {
@@ -235,68 +184,55 @@
                     showToast('Incorrect email or password', 'error');
                 } else if (error.message.toLowerCase().includes('confirm')) {
                     showToast('Please confirm your email first', 'error');
-                } else {
-                    showToast(error.message, 'error');
-                }
+                } else { showToast(error.message, 'error'); }
                 return;
             }
 
             showToast('Welcome back! 🌿', 'success');
-            setTimeout(() => { window.location.href = 'index.html'; }, 1200);
+            // ✅ CHANGED: redirects to dashboard after login
+            setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
         });
 
-        // ─── Forgot Password ─────────────────────────────────────────
         document.getElementById('forgotPasswordBtn').addEventListener('click', async () => {
             const email = document.getElementById('email').value.trim();
-            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-                showError('email', 'Enter your email address first');
-                return;
-            }
-            const { error } = await supabaseClient.auth.resetPasswordForEmail(email, {
-                redirectTo: window.location.origin + '/signin.html'
-            });
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('email', 'Enter your email address first'); return; }
+            const { error } = await supabaseClient.auth.resetPasswordForEmail(email, { redirectTo: window.location.origin + '/signin.html' });
             if (error) { showToast(error.message, 'error'); return; }
             showToast('Password reset email sent! Check your inbox ✉️', 'success');
         });
 
-        // ─── Google OAuth ────────────────────────────────────────────
         document.getElementById('googleSignInBtn').addEventListener('click', async () => {
             const btn = document.getElementById('googleSignInBtn');
             btn.innerHTML = '<iconify-icon icon="logos:google-icon" class="text-xl"></iconify-icon> Connecting to Google...';
-            btn.style.opacity = '0.6';
-            btn.style.pointerEvents = 'none';
+            btn.style.opacity = '0.6'; btn.style.pointerEvents = 'none';
 
             const { error } = await supabaseClient.auth.signInWithOAuth({
                 provider: 'google',
-                options: { redirectTo: window.location.origin + '/index.html' }
+                // ✅ CHANGED: Google also redirects to dashboard
+                options: { redirectTo: window.location.origin + '/dashboard.html' }
             });
 
             if (error) {
                 showToast(error.message, 'error');
                 btn.innerHTML = '<iconify-icon icon="logos:google-icon" class="text-xl"></iconify-icon> Continue with Google';
-                btn.style.opacity = '1';
-                btn.style.pointerEvents = 'auto';
+                btn.style.opacity = '1'; btn.style.pointerEvents = 'auto';
             }
         });
 
-        // ─── Page Transition ─────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', () => {
             const overlay = document.getElementById('page-transition');
             const logo = document.getElementById('transition-logo');
             requestAnimationFrame(() => { overlay.style.opacity = '0'; });
-
             document.querySelectorAll('a').forEach(link => {
                 link.addEventListener('click', function(e) {
                     const targetUrl = this.getAttribute('href');
                     const targetAttr = this.getAttribute('target');
                     if (!targetUrl || targetUrl.startsWith('#') || targetUrl.startsWith('mailto:') || targetUrl.startsWith('tel:') || targetAttr === '_blank' || (this.hostname !== window.location.hostname && this.hostname !== '')) return;
                     e.preventDefault();
-                    overlay.style.opacity = '1';
-                    logo.style.transform = 'scale(1.1)';
+                    overlay.style.opacity = '1'; logo.style.transform = 'scale(1.1)';
                     setTimeout(() => { window.location.href = targetUrl; }, 400);
                 });
             });
-
             window.addEventListener('pageshow', (event) => {
                 if (event.persisted) { overlay.style.opacity = '0'; logo.style.transform = 'scale(1)'; }
             });
