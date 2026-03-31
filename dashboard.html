@@ -80,7 +80,7 @@
         }
         body.ar .sb-badge { margin-left: 0; margin-right: auto; }
         .sb-user {
-            padding: 1rem 1.25rem; border-top: 1px solid rgba(255,255,255,0.08);
+            padding: 1rem 1.25rem 0.75rem; border-top: 1px solid rgba(255,255,255,0.08);
             display: flex; align-items: center; gap: 0.7rem;
         }
         .sb-avatar {
@@ -92,8 +92,17 @@
         .sb-user-info { flex: 1; min-width: 0; }
         .sb-user-name { font-size: 0.8rem; font-weight: 500; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
         .sb-user-role { font-size: 0.67rem; color: rgba(255,255,255,0.38); }
-        .sb-logout { color: rgba(255,255,255,0.28); cursor: pointer; border: none; background: none; padding: 0.2rem; transition: color 0.2s; }
-        .sb-logout:hover { color: rgba(255,255,255,0.7); }
+        .sb-signout-btn {
+            width: calc(100% - 2.5rem); margin: 0 1.25rem 1rem;
+            display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px; padding: 0.6rem 1rem;
+            color: rgba(255,255,255,0.6); font-size: 0.82rem; font-weight: 500;
+            cursor: pointer; transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+        }
+        body.ar .sb-signout-btn { font-family: 'Noto Naskh Arabic', serif; }
+        .sb-signout-btn:hover { background: rgba(196,98,45,0.2); border-color: rgba(196,98,45,0.3); color: #ffb49a; }
+        .sb-signout-btn iconify-icon { font-size: 1rem; }
 
         /* MAIN */
         .main { flex: 1; display: flex; flex-direction: column; overflow: hidden; }
@@ -408,8 +417,11 @@
                 <div class="sb-user-name" id="sb-name">Mohammed Elfatih</div>
                 <div class="sb-user-role" data-en="Climate Activist" data-ar="ناشط مناخي">Climate Activist</div>
             </div>
-            <button class="sb-logout" id="logout-btn" title="Sign out"><iconify-icon icon="solar:logout-linear" style="font-size:1.1rem"></iconify-icon></button>
         </div>
+        <button class="sb-signout-btn" id="logout-btn">
+            <iconify-icon icon="solar:logout-linear"></iconify-icon>
+            <span data-en="Sign Out" data-ar="تسجيل الخروج">Sign Out</span>
+        </button>
     </aside>
 
     <!-- MAIN -->
@@ -579,7 +591,7 @@
                 </div>
                 <div class="settings-card">
                     <h3 data-en="Account Settings" data-ar="إعدادات الحساب">Account Settings</h3>
-                    <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:letter-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Email Address" data-ar="البريد الإلكتروني">Email Address</div><div class="setting-sub" id="p-email">mohammeddontforget@gmail.com</div></div></div><span style="font-size:0.68rem;background:rgba(26,92,56,0.1);color:var(--green);border-radius:100px;padding:0.18rem 0.55rem" data-en="Verified" data-ar="موثق">Verified</span></div>
+                    <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:letter-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Email Address" data-ar="البريد الإلكتروني">Email Address</div><div class="setting-sub" id="p-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e78a888f868a8a828383888993818895808293a7808a868e8bc984888a">[email&#160;protected]</a></div></div></div><span style="font-size:0.68rem;background:rgba(26,92,56,0.1);color:var(--green);border-radius:100px;padding:0.18rem 0.55rem" data-en="Verified" data-ar="موثق">Verified</span></div>
                     <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:bell-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Notifications" data-ar="الإشعارات">Notifications</div><div class="setting-sub" data-en="Email updates for new opportunities" data-ar="تحديثات بريدية للفرص الجديدة">Email updates for new opportunities</div></div></div><div style="width:34px;height:18px;background:var(--green);border-radius:100px;position:relative;cursor:pointer"><span style="position:absolute;right:2px;top:2px;width:14px;height:14px;background:white;border-radius:50%;display:block"></span></div></div>
                     <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:logout-linear" style="color:rgba(196,98,45,0.7)"></iconify-icon><div class="setting-label" style="color:var(--rust)" data-en="Sign Out" data-ar="تسجيل الخروج">Sign Out</div></div><button id="p-logout" style="font-size:0.75rem;background:rgba(196,98,45,0.1);color:var(--rust);border:none;border-radius:100px;padding:0.32rem 0.8rem;cursor:pointer;font-family:'DM Sans',sans-serif" data-en="Sign Out" data-ar="خروج">Sign Out</button></div>
                 </div>
@@ -589,7 +601,7 @@
     </div><!-- /main -->
 </div><!-- /app -->
 
-<script>
+<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // SUPABASE
 const sb = window.supabase.createClient(
     'https://nqvhxjsryatqgfvtjbki.supabase.co',
@@ -708,12 +720,4 @@ function applyLang() {
         el.placeholder = isArabic ? el.getAttribute('data-placeholder-ar') : el.getAttribute('data-placeholder-en');
     });
     document.querySelectorAll('.cm').forEach((el,i) => { el.textContent = isArabic ? monthsAr[i] : months[i]; });
-    localStorage.setItem('hub_lang', isArabic ? 'ar' : 'en');
-}
-document.getElementById('lang-toggle').addEventListener('click', () => { isArabic = !isArabic; applyLang(); });
-if (localStorage.getItem('hub_lang') === 'ar') { isArabic = true; applyLang(); }
-
-init();
-</script>
-</body>
-</html>
+    localStorage.setItem('hub_lang', isArabic ? 'ar' 
