@@ -380,8 +380,128 @@
         .setting-label { font-size: 0.8rem; font-weight: 500; }
         .setting-sub { font-size: 0.7rem; color: rgba(0,0,0,0.4); }
 
-        @media (max-width: 1100px) { .two-col { grid-template-columns: 1fr; } .stat-grid { grid-template-columns: repeat(2,1fr); } .net-stats { grid-template-columns: repeat(2,1fr); } }
-        @media (max-width: 768px) { .qa-grid { grid-template-columns: 1fr; } .sb-item span { display: block; } }
+        /* MY EVENTS */
+        .my-evt-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .my-evt {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 13px;
+            padding: 1.1rem 1.25rem; display: flex; align-items: center; gap: 1rem;
+            transition: all 0.18s; cursor: pointer;
+        }
+        .my-evt:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 3px 12px rgba(0,0,0,0.05); }
+        .my-evt-date { width: 48px; flex-shrink: 0; text-align: center; background: var(--sand); border-radius: 9px; padding: 0.45rem 0.25rem; }
+        .my-evt-mo { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--rust); font-weight: 600; }
+        .my-evt-dy { font-family: 'Instrument Serif', serif; font-size: 1.4rem; color: var(--ink); line-height: 1; }
+        .my-evt-body { flex: 1; min-width: 0; }
+        .my-evt-title { font-family: 'Instrument Serif', serif; font-size: 1.02rem; margin-bottom: 0.18rem; }
+        body.ar .my-evt-title { font-family: 'Noto Naskh Arabic', serif; }
+        .my-evt-meta { font-size: 0.72rem; color: rgba(0,0,0,0.42); display: flex; flex-wrap: wrap; gap: 0.75rem; }
+        .my-evt-meta-item { display: flex; align-items: center; gap: 0.3rem; }
+        .my-evt-meta-item iconify-icon { font-size: 0.82rem; color: rgba(0,0,0,0.28); }
+        .evt-status { display: inline-flex; align-items: center; padding: 0.2rem 0.65rem; border-radius: 100px; font-size: 0.65rem; font-weight: 600; flex-shrink: 0; letter-spacing: 0.02em; }
+        .evt-status.upcoming { background: rgba(26,92,56,0.1); color: var(--green); }
+        .evt-status.completed { background: rgba(168,224,99,0.2); color: #3d6b14; }
+        .evt-status.cancelled { background: rgba(196,98,45,0.1); color: var(--rust); }
+
+        /* MY IMPACT */
+        .impact-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.875rem; margin-bottom: 1.5rem; }
+        .impact-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 13px;
+            padding: 1.1rem 1.25rem; text-align: center; transition: all 0.2s;
+        }
+        .impact-card:hover { transform: translateY(-1px); box-shadow: 0 4px 18px rgba(0,0,0,0.06); }
+        .impact-icon { width: 40px; height: 40px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin: 0 auto 0.65rem; }
+        .impact-num { font-family: 'Instrument Serif', serif; font-size: 1.9rem; line-height: 1; margin-bottom: 0.15rem; }
+        .impact-label { font-size: 0.7rem; color: rgba(0,0,0,0.42); }
+        .impact-trend { font-size: 0.66rem; color: var(--green); margin-top: 0.2rem; }
+
+        .goal-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px;
+            padding: 1.5rem; margin-bottom: 1.1rem; display: flex; align-items: center; gap: 2rem;
+        }
+        .goal-ring-wrap { flex-shrink: 0; position: relative; width: 120px; height: 120px; }
+        .goal-ring-wrap svg { width: 120px; height: 120px; transform: rotate(-90deg); }
+        .goal-ring-bg { fill: none; stroke: var(--sand); stroke-width: 8; }
+        .goal-ring-fill { fill: none; stroke: var(--green); stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 0.8s ease; }
+        .goal-ring-text {
+            position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .goal-ring-num { font-family: 'Instrument Serif', serif; font-size: 1.6rem; line-height: 1; color: var(--green); }
+        .goal-ring-sub { font-size: 0.6rem; color: rgba(0,0,0,0.38); }
+        .goal-info { flex: 1; }
+        .goal-title { font-family: 'Instrument Serif', serif; font-size: 1.15rem; margin-bottom: 0.35rem; }
+        body.ar .goal-title { font-family: 'Noto Naskh Arabic', serif; }
+        .goal-desc { font-size: 0.8rem; color: rgba(0,0,0,0.48); line-height: 1.6; margin-bottom: 0.75rem; }
+        .goal-bar-wrap { display: flex; align-items: center; gap: 0.65rem; }
+        .goal-bar { flex: 1; height: 5px; background: var(--sand); border-radius: 99px; overflow: hidden; }
+        .goal-bar-fill { height: 100%; background: var(--green); border-radius: 99px; }
+        .goal-bar-label { font-size: 0.7rem; color: rgba(0,0,0,0.42); white-space: nowrap; }
+
+        .timeline-card { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px; padding: 1.25rem; }
+        .timeline-card h3 { font-family: 'Instrument Serif', serif; font-size: 1.1rem; margin-bottom: 1rem; }
+        body.ar .timeline-card h3 { font-family: 'Noto Naskh Arabic', serif; }
+        .timeline { position: relative; padding-left: 1.5rem; }
+        body.ar .timeline { padding-left: 0; padding-right: 1.5rem; }
+        .timeline::before {
+            content: ''; position: absolute; left: 0; top: 0.3rem; bottom: 0.3rem; width: 2px;
+            background: var(--sand); border-radius: 99px;
+        }
+        body.ar .timeline::before { left: auto; right: 0; }
+        .tl-item { position: relative; padding-bottom: 1.25rem; }
+        .tl-item:last-child { padding-bottom: 0; }
+        .tl-dot {
+            position: absolute; left: -1.5rem; top: 0.15rem; width: 10px; height: 10px;
+            border-radius: 50%; background: var(--green); border: 2px solid white; box-shadow: 0 0 0 2px var(--sand);
+        }
+        body.ar .tl-dot { left: auto; right: -1.5rem; }
+        .tl-dot.dim { background: var(--sand); }
+        .tl-month { font-size: 0.68rem; font-weight: 600; color: var(--green); margin-bottom: 0.18rem; text-transform: uppercase; letter-spacing: 0.06em; }
+        body.ar .tl-month { letter-spacing: 0; }
+        .tl-text { font-size: 0.78rem; color: rgba(0,0,0,0.55); line-height: 1.55; }
+        .tl-text strong { color: var(--ink); font-weight: 500; }
+
+        /* LEADERBOARD FULL */
+        .lb-full { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px; overflow: hidden; }
+        .lb-header {
+            display: grid; grid-template-columns: 48px 36px 1fr 80px 70px 80px;
+            gap: 0.75rem; padding: 0.75rem 1.25rem; background: var(--sand);
+            font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(0,0,0,0.42);
+        }
+        body.ar .lb-header { letter-spacing: 0; font-size: 0.72rem; }
+        .lb-row {
+            display: grid; grid-template-columns: 48px 36px 1fr 80px 70px 80px;
+            gap: 0.75rem; padding: 0.75rem 1.25rem; align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.04); transition: background 0.15s;
+        }
+        .lb-row:last-child { border-bottom: none; }
+        .lb-row:hover { background: rgba(0,0,0,0.013); }
+        .lb-row.you-row { background: rgba(168,224,99,0.08); }
+        .lb-row-rank { font-family: 'Instrument Serif', serif; font-size: 1.05rem; text-align: center; color: rgba(0,0,0,0.22); }
+        .lb-row-rank.gold { color: #b8860b; }
+        .lb-row-rank.silver { color: #808080; }
+        .lb-row-rank.bronze { color: #cd7f32; }
+        .lb-row-av { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 500; }
+        .lb-row-name { font-size: 0.82rem; font-weight: 500; }
+        .lb-row-hrs { font-size: 0.78rem; color: var(--green); font-weight: 500; text-align: center; }
+        .lb-row-evts { font-size: 0.78rem; color: rgba(0,0,0,0.48); text-align: center; }
+        .lb-row-pts { font-size: 0.78rem; font-weight: 600; text-align: center; color: var(--ink); }
+
+        /* COMMUNITY FEED FULL */
+        .feed-full { display: flex; flex-direction: column; gap: 0.65rem; }
+        .feed-full-item {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 12px;
+            padding: 1rem 1.2rem; display: flex; gap: 0.85rem; transition: all 0.15s;
+        }
+        .feed-full-item:hover { border-color: rgba(26,92,56,0.15); box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
+        .feed-av { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Instrument Serif', serif; font-size: 0.9rem; }
+        .feed-body { flex: 1; min-width: 0; }
+        .feed-text { font-size: 0.82rem; line-height: 1.55; color: rgba(0,0,0,0.62); margin-bottom: 0.25rem; }
+        .feed-text strong { color: var(--ink); font-weight: 500; }
+        .feed-text .fhi { color: var(--green); font-weight: 500; }
+        .feed-time { font-size: 0.66rem; color: rgba(0,0,0,0.3); }
+        .feed-type-icon { flex-shrink: 0; width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; align-self: center; }
+
+        @media (max-width: 1100px) { .two-col { grid-template-columns: 1fr; } .stat-grid { grid-template-columns: repeat(2,1fr); } .net-stats { grid-template-columns: repeat(2,1fr); } .impact-stats { grid-template-columns: repeat(2,1fr); } .goal-card { flex-direction: column; text-align: center; } .lb-header, .lb-row { grid-template-columns: 40px 32px 1fr 65px 55px 65px; gap: 0.5rem; font-size: 0.72rem; } }
+        @media (max-width: 768px) { .qa-grid { grid-template-columns: 1fr; } .sb-item span { display: block; } .impact-stats { grid-template-columns: 1fr; } .lb-header, .lb-row { grid-template-columns: 32px 28px 1fr 55px 45px 55px; gap: 0.35rem; padding: 0.6rem 0.75rem; } }
     </style>
 </head>
 <body>
@@ -399,8 +519,8 @@
             <div class="sb-label" data-en="My Space" data-ar="مساحتي">My Space</div>
             <button class="sb-item active" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:home-linear"></iconify-icon><span data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</span></button>
             <button class="sb-item" data-sec="profile" onclick="navigate('profile')"><iconify-icon icon="solar:user-linear"></iconify-icon><span data-en="My Profile" data-ar="ملفي الشخصي">My Profile</span></button>
-            <button class="sb-item" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="My Events" data-ar="فعالياتي">My Events</span><span class="sb-badge">3</span></button>
-            <button class="sb-item" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:chart-linear"></iconify-icon><span data-en="My Impact" data-ar="أثري">My Impact</span></button>
+            <button class="sb-item" data-sec="events" onclick="navigate('events')"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="My Events" data-ar="فعالياتي">My Events</span><span class="sb-badge">3</span></button>
+            <button class="sb-item" data-sec="impact" onclick="navigate('impact')"><iconify-icon icon="solar:chart-linear"></iconify-icon><span data-en="My Impact" data-ar="أثري">My Impact</span></button>
 
             <div class="sb-label" data-en="Explore" data-ar="استكشف">Explore</div>
             <button class="sb-item" data-sec="opportunities" onclick="navigate('opportunities')"><iconify-icon icon="solar:compass-linear"></iconify-icon><span data-en="Opportunities" data-ar="الفرص">Opportunities</span><span class="sb-badge">24</span></button>
@@ -408,8 +528,8 @@
             <button class="sb-item" data-sec="resources" onclick="navigate('resources')"><iconify-icon icon="solar:book-linear"></iconify-icon><span data-en="Resources" data-ar="الموارد">Resources</span></button>
 
             <div class="sb-label" data-en="Community" data-ar="المجتمع">Community</div>
-            <button class="sb-item" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:ranking-linear"></iconify-icon><span data-en="Leaderboard" data-ar="المتصدرون">Leaderboard</span></button>
-            <button class="sb-item" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:chat-round-line-linear"></iconify-icon><span data-en="Community Feed" data-ar="تغذية المجتمع">Community Feed</span></button>
+            <button class="sb-item" data-sec="leaderboard" onclick="navigate('leaderboard')"><iconify-icon icon="solar:ranking-linear"></iconify-icon><span data-en="Leaderboard" data-ar="المتصدرون">Leaderboard</span></button>
+            <button class="sb-item" data-sec="feed" onclick="navigate('feed')"><iconify-icon icon="solar:chat-round-line-linear"></iconify-icon><span data-en="Community Feed" data-ar="تغذية المجتمع">Community Feed</span></button>
         </nav>
         <div class="sb-user">
             <div class="sb-avatar" id="sb-avatar">M</div>
@@ -597,6 +717,394 @@
                 </div>
             </div>
 
+            <!-- ═══ MY EVENTS ═══ -->
+            <div class="sec" id="sec-events">
+                <div style="margin-bottom:1.25rem">
+                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Your " data-ar="فعالياتك ">Your </span><em style="font-style:italic;color:var(--green)" data-en="registered events." data-ar="المسجّلة.">registered events.</em></h2>
+                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="Track your upcoming, completed, and cancelled events." data-ar="تتبّع فعالياتك القادمة والمكتملة والملغاة.">Track your upcoming, completed, and cancelled events.</p>
+                </div>
+                <div class="pills" id="evt-pills">
+                    <button class="pill active" onclick="setPill(this,'#evt-pills')" data-en="All" data-ar="الكل">All</button>
+                    <button class="pill" onclick="setPill(this,'#evt-pills')" data-en="Upcoming" data-ar="قادمة">Upcoming</button>
+                    <button class="pill" onclick="setPill(this,'#evt-pills')" data-en="Completed" data-ar="مكتملة">Completed</button>
+                    <button class="pill" onclick="setPill(this,'#evt-pills')" data-en="Cancelled" data-ar="ملغاة">Cancelled</button>
+                </div>
+                <div class="my-evt-list">
+                    <div class="my-evt">
+                        <div class="my-evt-date"><div class="my-evt-mo" data-en="OCT" data-ar="أكت">OCT</div><div class="my-evt-dy">24</div></div>
+                        <div class="my-evt-body">
+                            <div class="my-evt-title" data-en="Mangrove Restoration Drive" data-ar="حملة استعادة المانغروف">Mangrove Restoration Drive</div>
+                            <div class="my-evt-meta">
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Al Thakira, Al Khor" data-ar="الثخيرة، الخور">Al Thakira, Al Khor</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon><span data-en="7:00 AM" data-ar="٧:٠٠ ص">7:00 AM</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar Eco Society" data-ar="جمعية قطر البيئية">Qatar Eco Society</span></span>
+                            </div>
+                        </div>
+                        <span class="evt-status upcoming" data-en="Upcoming" data-ar="قادمة">Upcoming</span>
+                    </div>
+                    <div class="my-evt">
+                        <div class="my-evt-date"><div class="my-evt-mo" data-en="NOV" data-ar="نوف">NOV</div><div class="my-evt-dy">02</div></div>
+                        <div class="my-evt-body">
+                            <div class="my-evt-title" data-en="Circular Economy Workshop" data-ar="ورشة الاقتصاد الدائري">Circular Economy Workshop</div>
+                            <div class="my-evt-meta">
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:monitor-linear"></iconify-icon><span data-en="Remote (Zoom)" data-ar="عن بُعد (زووم)">Remote (Zoom)</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon><span data-en="4:00 PM" data-ar="٤:٠٠ م">4:00 PM</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar National Library" data-ar="المكتبة الوطنية قطر">Qatar National Library</span></span>
+                            </div>
+                        </div>
+                        <span class="evt-status upcoming" data-en="Upcoming" data-ar="قادمة">Upcoming</span>
+                    </div>
+                    <div class="my-evt">
+                        <div class="my-evt-date"><div class="my-evt-mo" data-en="NOV" data-ar="نوف">NOV</div><div class="my-evt-dy">15</div></div>
+                        <div class="my-evt-body">
+                            <div class="my-evt-title" data-en="Desert Cleanup Campaign" data-ar="حملة تنظيف الصحراء">Desert Cleanup Campaign</div>
+                            <div class="my-evt-meta">
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Sealine Beach, Mesaieed" data-ar="شاطئ سيلاين، مسيعيد">Sealine Beach, Mesaieed</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon><span data-en="6:00 AM" data-ar="٦:٠٠ ص">6:00 AM</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Doha Youth Environment" data-ar="بيئة شباب الدوحة">Doha Youth Environment</span></span>
+                            </div>
+                        </div>
+                        <span class="evt-status upcoming" data-en="Upcoming" data-ar="قادمة">Upcoming</span>
+                    </div>
+                    <div class="my-evt">
+                        <div class="my-evt-date"><div class="my-evt-mo" data-en="SEP" data-ar="سبت">SEP</div><div class="my-evt-dy">10</div></div>
+                        <div class="my-evt-body">
+                            <div class="my-evt-title" data-en="Beach Cleanup & Microplastics Audit" data-ar="تنظيف الشاطئ وتدقيق البلاستيك">Beach Cleanup & Microplastics Audit</div>
+                            <div class="my-evt-meta">
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Katara Beach, Doha" data-ar="شاطئ كتارا، الدوحة">Katara Beach, Doha</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon><span data-en="6:30 AM" data-ar="٦:٣٠ ص">6:30 AM</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar Eco Society" data-ar="جمعية قطر البيئية">Qatar Eco Society</span></span>
+                            </div>
+                        </div>
+                        <span class="evt-status completed" data-en="Completed" data-ar="مكتملة">Completed</span>
+                    </div>
+                    <div class="my-evt">
+                        <div class="my-evt-date"><div class="my-evt-mo" data-en="AUG" data-ar="أغس">AUG</div><div class="my-evt-dy">22</div></div>
+                        <div class="my-evt-body">
+                            <div class="my-evt-title" data-en="Solar Panel Installation Workshop" data-ar="ورشة تركيب الألواح الشمسية">Solar Panel Installation Workshop</div>
+                            <div class="my-evt-meta">
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="QU Research Complex" data-ar="مجمع البحوث، جامعة قطر">QU Research Complex</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon><span data-en="10:00 AM" data-ar="١٠:٠٠ ص">10:00 AM</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar University" data-ar="جامعة قطر">Qatar University</span></span>
+                            </div>
+                        </div>
+                        <span class="evt-status completed" data-en="Completed" data-ar="مكتملة">Completed</span>
+                    </div>
+                    <div class="my-evt">
+                        <div class="my-evt-date"><div class="my-evt-mo" data-en="JUL" data-ar="يول">JUL</div><div class="my-evt-dy">18</div></div>
+                        <div class="my-evt-body">
+                            <div class="my-evt-title" data-en="Sustainable Fashion Meetup" data-ar="لقاء الأزياء المستدامة">Sustainable Fashion Meetup</div>
+                            <div class="my-evt-meta">
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Msheireb Downtown, Doha" data-ar="مشيرب، الدوحة">Msheireb Downtown, Doha</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon><span data-en="5:00 PM" data-ar="٥:٠٠ م">5:00 PM</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Green Future Inc." data-ar="شركة المستقبل الأخضر">Green Future Inc.</span></span>
+                            </div>
+                        </div>
+                        <span class="evt-status completed" data-en="Completed" data-ar="مكتملة">Completed</span>
+                    </div>
+                    <div class="my-evt">
+                        <div class="my-evt-date"><div class="my-evt-mo" data-en="JUN" data-ar="يون">JUN</div><div class="my-evt-dy">05</div></div>
+                        <div class="my-evt-body">
+                            <div class="my-evt-title" data-en="World Environment Day Rally" data-ar="مسيرة يوم البيئة العالمي">World Environment Day Rally</div>
+                            <div class="my-evt-meta">
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Aspire Park, Doha" data-ar="حديقة أسباير، الدوحة">Aspire Park, Doha</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon><span data-en="8:00 AM" data-ar="٨:٠٠ ص">8:00 AM</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="EcoQatar Foundation" data-ar="مؤسسة إيكو قطر">EcoQatar Foundation</span></span>
+                            </div>
+                        </div>
+                        <span class="evt-status cancelled" data-en="Cancelled" data-ar="ملغاة">Cancelled</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ MY IMPACT ═══ -->
+            <div class="sec" id="sec-impact">
+                <div style="margin-bottom:1.25rem">
+                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Your " data-ar="أثرك ">Your </span><em style="font-style:italic;color:var(--green)" data-en="environmental impact." data-ar="البيئي.">environmental impact.</em></h2>
+                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="See the difference you're making for Qatar's environment." data-ar="شاهد الفرق الذي تصنعه لبيئة قطر.">See the difference you're making for Qatar's environment.</p>
+                </div>
+                <div class="impact-stats">
+                    <div class="impact-card"><div class="impact-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon></div><div class="impact-num">47</div><div class="impact-label" data-en="Volunteer Hours" data-ar="ساعة تطوع">Volunteer Hours</div><div class="impact-trend">↑ <span data-en="12 this month" data-ar="١٢ هذا الشهر">12 this month</span></div></div>
+                    <div class="impact-card"><div class="impact-icon" style="background:rgba(168,224,99,0.2);color:#4a7c20"><iconify-icon icon="solar:leaf-linear"></iconify-icon></div><div class="impact-num">8</div><div class="impact-label" data-en="Events Attended" data-ar="فعالية حضرتها">Events Attended</div><div class="impact-trend">↑ <span data-en="3 this month" data-ar="٣ هذا الشهر">3 this month</span></div></div>
+                    <div class="impact-card"><div class="impact-icon" style="background:rgba(196,98,45,0.1);color:var(--rust)"><iconify-icon icon="solar:cloud-linear"></iconify-icon></div><div class="impact-num">1.2t</div><div class="impact-label" data-en="CO₂ Offset" data-ar="تعويض ثاني أكسيد الكربون">CO₂ Offset</div><div class="impact-trend">↑ <span data-en="0.3t this month" data-ar="٠٫٣ طن هذا الشهر">0.3t this month</span></div></div>
+                    <div class="impact-card"><div class="impact-icon" style="background:rgba(200,184,154,0.25);color:#7a6a50"><iconify-icon icon="solar:tree-linear"></iconify-icon></div><div class="impact-num">23</div><div class="impact-label" data-en="Trees Planted" data-ar="شجرة مزروعة">Trees Planted</div><div class="impact-trend">↑ <span data-en="5 this month" data-ar="٥ هذا الشهر">5 this month</span></div></div>
+                </div>
+
+                <div class="goal-card">
+                    <div class="goal-ring-wrap">
+                        <svg viewBox="0 0 120 120">
+                            <circle class="goal-ring-bg" cx="60" cy="60" r="50"></circle>
+                            <circle class="goal-ring-fill" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="166.5"></circle>
+                        </svg>
+                        <div class="goal-ring-text">
+                            <span class="goal-ring-num">47%</span>
+                            <span class="goal-ring-sub" data-en="of goal" data-ar="من الهدف">of goal</span>
+                        </div>
+                    </div>
+                    <div class="goal-info">
+                        <h3 class="goal-title" data-en="Yearly Goal: 100 Hours" data-ar="الهدف السنوي: ١٠٠ ساعة">Yearly Goal: 100 Hours</h3>
+                        <p class="goal-desc" data-en="You've completed 47 of your 100-hour volunteer goal for 2024. Keep up the great work — you're ahead of last year's pace!" data-ar="أكملت ٤٧ من أصل ١٠٠ ساعة تطوع لعام ٢٠٢٤. استمر في العمل الرائع — أنت متقدم على وتيرة العام الماضي!">You've completed 47 of your 100-hour volunteer goal for 2024. Keep up the great work — you're ahead of last year's pace!</p>
+                        <div class="goal-bar-wrap">
+                            <div class="goal-bar"><div class="goal-bar-fill" style="width:47%"></div></div>
+                            <span class="goal-bar-label" data-en="47 / 100 hrs" data-ar="٤٧ / ١٠٠ ساعة">47 / 100 hrs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-card">
+                    <h3 data-en="Activity Timeline" data-ar="الجدول الزمني للنشاط">Activity Timeline</h3>
+                    <div class="timeline">
+                        <div class="tl-item">
+                            <div class="tl-dot"></div>
+                            <div class="tl-month" data-en="October 2024" data-ar="أكتوبر ٢٠٢٤">October 2024</div>
+                            <div class="tl-text"><strong data-en="12 hours" data-ar="١٢ ساعة">12 hours</strong> — <span data-en="Registered for Mangrove Restoration Drive. Participated in Beach Cleanup prep session." data-ar="سجّلت في حملة استعادة المانغروف. شاركت في جلسة تحضيرية لتنظيف الشاطئ.">Registered for Mangrove Restoration Drive. Participated in Beach Cleanup prep session.</span></div>
+                        </div>
+                        <div class="tl-item">
+                            <div class="tl-dot"></div>
+                            <div class="tl-month" data-en="September 2024" data-ar="سبتمبر ٢٠٢٤">September 2024</div>
+                            <div class="tl-text"><strong data-en="8 hours" data-ar="٨ ساعات">8 hours</strong> — <span data-en="Completed Beach Cleanup & Microplastics Audit at Katara Beach. Collected 12kg of waste." data-ar="أكملت تنظيف الشاطئ وتدقيق البلاستيك في شاطئ كتارا. جمعت ١٢ كغم من النفايات.">Completed Beach Cleanup & Microplastics Audit at Katara Beach. Collected 12kg of waste.</span></div>
+                        </div>
+                        <div class="tl-item">
+                            <div class="tl-dot"></div>
+                            <div class="tl-month" data-en="August 2024" data-ar="أغسطس ٢٠٢٤">August 2024</div>
+                            <div class="tl-text"><strong data-en="7 hours" data-ar="٧ ساعات">7 hours</strong> — <span data-en="Attended Solar Panel Installation Workshop at QU. Earned 'Renewable Energy' badge." data-ar="حضرت ورشة تركيب الألواح الشمسية في جامعة قطر. حصلت على شارة 'الطاقة المتجددة'.">Attended Solar Panel Installation Workshop at QU. Earned 'Renewable Energy' badge.</span></div>
+                        </div>
+                        <div class="tl-item">
+                            <div class="tl-dot"></div>
+                            <div class="tl-month" data-en="July 2024" data-ar="يوليو ٢٠٢٤">July 2024</div>
+                            <div class="tl-text"><strong data-en="4 hours" data-ar="٤ ساعات">4 hours</strong> — <span data-en="Sustainable Fashion Meetup at Msheireb. Connected with 3 new organizations." data-ar="لقاء الأزياء المستدامة في مشيرب. تواصلت مع ٣ منظمات جديدة.">Sustainable Fashion Meetup at Msheireb. Connected with 3 new organizations.</span></div>
+                        </div>
+                        <div class="tl-item">
+                            <div class="tl-dot dim"></div>
+                            <div class="tl-month" data-en="June 2024" data-ar="يونيو ٢٠٢٤">June 2024</div>
+                            <div class="tl-text"><strong data-en="5 hours" data-ar="٥ ساعات">5 hours</strong> — <span data-en="World Environment Day activities at Aspire Park. Planted 8 native trees." data-ar="أنشطة يوم البيئة العالمي في حديقة أسباير. زرعت ٨ أشجار محلية.">World Environment Day activities at Aspire Park. Planted 8 native trees.</span></div>
+                        </div>
+                        <div class="tl-item">
+                            <div class="tl-dot dim"></div>
+                            <div class="tl-month" data-en="May 2024" data-ar="مايو ٢٠٢٤">May 2024</div>
+                            <div class="tl-text"><strong data-en="6 hours" data-ar="٦ ساعات">6 hours</strong> — <span data-en="Desert Reforestation project in Al Shahaniya. Planted 15 ghaf seedlings." data-ar="مشروع إعادة تشجير الصحراء في الشحانية. زرعت ١٥ شتلة غاف.">Desert Reforestation project in Al Shahaniya. Planted 15 ghaf seedlings.</span></div>
+                        </div>
+                        <div class="tl-item">
+                            <div class="tl-dot dim"></div>
+                            <div class="tl-month" data-en="April 2024" data-ar="أبريل ٢٠٢٤">April 2024</div>
+                            <div class="tl-text"><strong data-en="3 hours" data-ar="٣ ساعات">3 hours</strong> — <span data-en="Joined The Hub platform. Attended first orientation workshop online." data-ar="انضممت إلى منصة The Hub. حضرت أول ورشة تعريفية عن بُعد.">Joined The Hub platform. Attended first orientation workshop online.</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ LEADERBOARD ═══ -->
+            <div class="sec" id="sec-leaderboard">
+                <div style="margin-bottom:1.25rem">
+                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Community " data-ar="المتصدرون في ">Community </span><em style="font-style:italic;color:var(--green)" data-en="leaderboard." data-ar="المجتمع.">leaderboard.</em></h2>
+                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="Top contributors driving climate action across Qatar." data-ar="أبرز المساهمين في قيادة العمل المناخي في قطر.">Top contributors driving climate action across Qatar.</p>
+                </div>
+                <div class="lb-full">
+                    <div class="lb-header">
+                        <span data-en="Rank" data-ar="الترتيب">Rank</span>
+                        <span></span>
+                        <span data-en="Name" data-ar="الاسم">Name</span>
+                        <span style="text-align:center" data-en="Hours" data-ar="الساعات">Hours</span>
+                        <span style="text-align:center" data-en="Events" data-ar="الفعاليات">Events</span>
+                        <span style="text-align:center" data-en="Points" data-ar="النقاط">Points</span>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank gold">1</div>
+                        <div class="lb-row-av" style="background:#dcfce7;color:#166534">F</div>
+                        <div class="lb-row-name">Fatima Al-Dosari</div>
+                        <div class="lb-row-hrs">124</div>
+                        <div class="lb-row-evts">18</div>
+                        <div class="lb-row-pts">2,480</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank silver">2</div>
+                        <div class="lb-row-av" style="background:#dbeafe;color:#1e40af">K</div>
+                        <div class="lb-row-name">Khalid Al-Emadi</div>
+                        <div class="lb-row-hrs">98</div>
+                        <div class="lb-row-evts">14</div>
+                        <div class="lb-row-pts">1,960</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank bronze">3</div>
+                        <div class="lb-row-av" style="background:#fef3c7;color:#92400e">L</div>
+                        <div class="lb-row-name">Lina Mahmoud</div>
+                        <div class="lb-row-hrs">87</div>
+                        <div class="lb-row-evts">12</div>
+                        <div class="lb-row-pts">1,740</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank">4</div>
+                        <div class="lb-row-av" style="background:#f3e8ff;color:#6b21a8">Y</div>
+                        <div class="lb-row-name">Yousef Al-Sulaiti</div>
+                        <div class="lb-row-hrs">72</div>
+                        <div class="lb-row-evts">11</div>
+                        <div class="lb-row-pts">1,440</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank">5</div>
+                        <div class="lb-row-av" style="background:#e8dfc8;color:#7a6a50">R</div>
+                        <div class="lb-row-name">Reem Al-Naimi</div>
+                        <div class="lb-row-hrs">65</div>
+                        <div class="lb-row-evts">10</div>
+                        <div class="lb-row-pts">1,300</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank">6</div>
+                        <div class="lb-row-av" style="background:#dbeafe;color:#1e40af">O</div>
+                        <div class="lb-row-name">Omar Al-Thani</div>
+                        <div class="lb-row-hrs">61</div>
+                        <div class="lb-row-evts">9</div>
+                        <div class="lb-row-pts">1,220</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank">7</div>
+                        <div class="lb-row-av" style="background:#dcfce7;color:#166534">S</div>
+                        <div class="lb-row-name">Sarah Al-Mansoori</div>
+                        <div class="lb-row-hrs">58</div>
+                        <div class="lb-row-evts">9</div>
+                        <div class="lb-row-pts">1,160</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank">8</div>
+                        <div class="lb-row-av" style="background:#fef3c7;color:#92400e">A</div>
+                        <div class="lb-row-name">Ahmed Al-Kuwari</div>
+                        <div class="lb-row-hrs">55</div>
+                        <div class="lb-row-evts">8</div>
+                        <div class="lb-row-pts">1,100</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank">9</div>
+                        <div class="lb-row-av" style="background:#f3e8ff;color:#6b21a8">N</div>
+                        <div class="lb-row-name">Noora Hassan</div>
+                        <div class="lb-row-hrs">52</div>
+                        <div class="lb-row-evts">7</div>
+                        <div class="lb-row-pts">1,040</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank">10</div>
+                        <div class="lb-row-av" style="background:#dcfce7;color:#166534">H</div>
+                        <div class="lb-row-name">Hassan Al-Marri</div>
+                        <div class="lb-row-hrs">50</div>
+                        <div class="lb-row-evts">7</div>
+                        <div class="lb-row-pts">1,000</div>
+                    </div>
+                    <div class="lb-row you-row">
+                        <div class="lb-row-rank">12</div>
+                        <div class="lb-row-av" style="background:rgba(168,224,99,0.2);color:#1a5c38" id="lb-avatar">M</div>
+                        <div class="lb-row-name"><span id="lb-name" data-en="You" data-ar="أنت">You</span> <span class="lb-you-tag" data-en="YOU" data-ar="أنت">YOU</span></div>
+                        <div class="lb-row-hrs">47</div>
+                        <div class="lb-row-evts">8</div>
+                        <div class="lb-row-pts">940</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ COMMUNITY FEED ═══ -->
+            <div class="sec" id="sec-feed">
+                <div style="margin-bottom:1.25rem">
+                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Community " data-ar="تغذية ">Community </span><em style="font-style:italic;color:var(--green)" data-en="feed." data-ar="المجتمع.">feed.</em></h2>
+                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="See what's happening across Qatar's climate community." data-ar="شاهد ما يحدث في مجتمع المناخ في قطر.">See what's happening across Qatar's climate community.</p>
+                </div>
+                <div class="feed-full">
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#dcfce7;color:#166534">S</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Sarah Al-Mansoori</strong> <span data-en="signed up for" data-ar="سجّلت في">signed up for</span> <span class="fhi" data-en="Mangrove Restoration Drive" data-ar="حملة استعادة المانغروف">Mangrove Restoration Drive</span> 🌱</div>
+                            <div class="feed-time" data-en="2 minutes ago" data-ar="منذ دقيقتين">2 minutes ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(26,92,56,0.08);color:var(--green)"><iconify-icon icon="solar:calendar-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#dbeafe;color:#1e40af">Q</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Qatar Eco Society</strong> <span data-en="posted a new opportunity:" data-ar="نشرت فرصة جديدة:">posted a new opportunity:</span> <span class="fhi" data-en="Desert Reforestation Initiative" data-ar="مبادرة إعادة تشجير الصحراء">Desert Reforestation Initiative</span></div>
+                            <div class="feed-time" data-en="15 minutes ago" data-ar="منذ ١٥ دقيقة">15 minutes ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(59,130,246,0.08);color:#3b82f6"><iconify-icon icon="solar:compass-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#fef3c7;color:#92400e">A</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Ahmed Al-Kuwari</strong> <span data-en="completed" data-ar="أتمّ">completed</span> <span class="fhi" data-en="10 volunteer hours" data-ar="١٠ ساعات تطوع">10 volunteer hours</span> 🎉</div>
+                            <div class="feed-time" data-en="1 hour ago" data-ar="منذ ساعة">1 hour ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(168,224,99,0.15);color:#4a7c20"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#f3e8ff;color:#6b21a8">N</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Noora Hassan</strong> <span data-en="joined the network —" data-ar="انضمت إلى الشبكة —">joined the network —</span> <span class="fhi" data-en="welcome!" data-ar="أهلاً بها!">welcome!</span></div>
+                            <div class="feed-time" data-en="3 hours ago" data-ar="منذ ٣ ساعات">3 hours ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(107,33,168,0.08);color:#6b21a8"><iconify-icon icon="solar:user-plus-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#dcfce7;color:#166534">G</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Green Future Inc.</strong> <span data-en="is now a" data-ar="أصبحت">is now a</span> <span class="fhi" data-en="verified partner" data-ar="شريكاً موثقاً">verified partner</span> ✅</div>
+                            <div class="feed-time" data-en="5 hours ago" data-ar="منذ ٥ ساعات">5 hours ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(26,92,56,0.08);color:var(--green)"><iconify-icon icon="solar:check-circle-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#dbeafe;color:#1e40af">K</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Khalid Al-Emadi</strong> <span data-en="reached" data-ar="وصل إلى">reached</span> <span class="fhi" data-en="#2 on the leaderboard" data-ar="المركز الثاني في المتصدرين">#2 on the leaderboard</span> 🏆</div>
+                            <div class="feed-time" data-en="Yesterday" data-ar="أمس">Yesterday</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(196,98,45,0.08);color:var(--rust)"><iconify-icon icon="solar:ranking-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#fef3c7;color:#92400e">L</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Lina Mahmoud</strong> <span data-en="signed up for" data-ar="سجّلت في">signed up for</span> <span class="fhi" data-en="Circular Economy Workshop" data-ar="ورشة الاقتصاد الدائري">Circular Economy Workshop</span></div>
+                            <div class="feed-time" data-en="Yesterday" data-ar="أمس">Yesterday</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(26,92,56,0.08);color:var(--green)"><iconify-icon icon="solar:calendar-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#e8dfc8;color:#7a6a50">R</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Reem Al-Naimi</strong> <span data-en="planted" data-ar="زرعت">planted</span> <span class="fhi" data-en="5 ghaf trees in Al Shahaniya" data-ar="٥ أشجار غاف في الشحانية">5 ghaf trees in Al Shahaniya</span> 🌳</div>
+                            <div class="feed-time" data-en="2 days ago" data-ar="منذ يومين">2 days ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(168,224,99,0.15);color:#4a7c20"><iconify-icon icon="solar:tree-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#dcfce7;color:#166534">D</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong data-en="Doha Youth Environment" data-ar="بيئة شباب الدوحة">Doha Youth Environment</strong> <span data-en="added a new event:" data-ar="أضافت فعالية جديدة:">added a new event:</span> <span class="fhi" data-en="Beach Cleanup & Microplastics Audit" data-ar="تنظيف الشاطئ وتدقيق البلاستيك">Beach Cleanup & Microplastics Audit</span></div>
+                            <div class="feed-time" data-en="2 days ago" data-ar="منذ يومين">2 days ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(59,130,246,0.08);color:#3b82f6"><iconify-icon icon="solar:compass-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#f3e8ff;color:#6b21a8">Y</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Yousef Al-Sulaiti</strong> <span data-en="completed the" data-ar="أكمل">completed the</span> <span class="fhi" data-en="Solar Energy Campus Tour" data-ar="جولة الطاقة الشمسية">Solar Energy Campus Tour</span></div>
+                            <div class="feed-time" data-en="3 days ago" data-ar="منذ ٣ أيام">3 days ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(168,224,99,0.15);color:#4a7c20"><iconify-icon icon="solar:check-circle-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#dbeafe;color:#1e40af">Q</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong data-en="QU Green Innovators" data-ar="مبتكرو قطر الخضر">QU Green Innovators</strong> <span data-en="hit a milestone:" data-ar="حققت إنجازاً:">hit a milestone:</span> <span class="fhi" data-en="500+ community members!" data-ar="٥٠٠+ عضو في المجتمع!">500+ community members!</span> 🚀</div>
+                            <div class="feed-time" data-en="4 days ago" data-ar="منذ ٤ أيام">4 days ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(196,98,45,0.08);color:var(--rust)"><iconify-icon icon="solar:cup-star-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#fef3c7;color:#92400e">H</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Hassan Al-Marri</strong> <span data-en="connected with" data-ar="تواصل مع">connected with</span> <span class="fhi" data-en="EcoQatar Foundation" data-ar="مؤسسة إيكو قطر">EcoQatar Foundation</span></div>
+                            <div class="feed-time" data-en="5 days ago" data-ar="منذ ٥ أيام">5 days ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(107,33,168,0.08);color:#6b21a8"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></div>
+                    </div>
+                </div>
+            </div>
+
         </div><!-- /scroll-area -->
     </div><!-- /main -->
 </div><!-- /app -->
@@ -655,9 +1163,13 @@ document.getElementById('p-logout').addEventListener('click', doLogout);
 // NAVIGATE
 const titles = {
     home: { en: '<em data-en="Good morning," data-ar="صباح الخير،">Good morning,</em> <span id="greeting-name"> Mohammed</span> 🌿' },
+    events: { en: 'My <em style="font-style:italic;color:var(--green)">Events.</em>', ar: '<em style="color:var(--green)">فعالياتي.</em>' },
+    impact: { en: 'My <em style="font-style:italic;color:var(--green)">Impact.</em>', ar: '<em style="color:var(--green)">أثري.</em>' },
     opportunities: { en: 'Find your next <em style="font-style:italic;color:var(--green)">opportunity.</em>', ar: 'اعثر على <em style="color:var(--green)">فرصتك القادمة.</em>' },
     network: { en: 'The <em style="font-style:italic;color:var(--green)">green network.</em>', ar: 'الشبكة <em style="color:var(--green)">الخضراء.</em>' },
     resources: { en: '<em style="font-style:italic;color:var(--green)">Resources</em> & Guides.', ar: '<em style="color:var(--green)">الموارد</em> والأدلة.' },
+    leaderboard: { en: 'Community <em style="font-style:italic;color:var(--green)">Leaderboard.</em>', ar: '<em style="color:var(--green)">المتصدرون</em> في المجتمع.' },
+    feed: { en: 'Community <em style="font-style:italic;color:var(--green)">Feed.</em>', ar: 'تغذية <em style="color:var(--green)">المجتمع.</em>' },
     profile: { en: 'My <em style="font-style:italic;color:var(--green)">Profile.</em>', ar: '<em style="color:var(--green)">ملفي</em> الشخصي.' }
 };
 
@@ -666,7 +1178,9 @@ function navigate(sec) {
     document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('active'));
     const el = document.getElementById('sec-' + sec);
     if (el) el.classList.add('active');
-    document.querySelectorAll(`[data-sec="${sec}"]`).forEach(n => n.classList.add('active'));
+    // Only highlight the exact sidebar button for this section
+    const btn = document.querySelector(`.sb-item[data-sec="${sec}"]`);
+    if (btn) btn.classList.add('active');
     // Update title
     const t = titles[sec];
     if (t) {
