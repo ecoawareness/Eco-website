@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>The Hub — Dashboard</title>
+    <title>EcoHub — Dashboard</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
@@ -320,40 +320,102 @@
         body.ar .org-conn { font-family: 'Noto Naskh Arabic', serif; }
         .org-conn:hover { background: var(--green); color: #fff; border-color: var(--green); }
 
-        /* RESOURCES */
-        .res-hero {
-            background: var(--green); border-radius: 14px; padding: 1.75rem;
+        /* RESOURCES — EDITORIAL */
+        .res-featured {
+            background: var(--green); border-radius: 16px; padding: 2rem 2.25rem;
             margin-bottom: 1.5rem; position: relative; overflow: hidden;
+            display: flex; gap: 2rem; align-items: center;
         }
-        .res-hero::before { content: ''; position: absolute; inset: 0; background: radial-gradient(ellipse 60% 80% at 80% 50%, rgba(168,224,99,0.14) 0%, transparent 60%); }
-        .res-hero h2 { font-family: 'Instrument Serif', serif; font-size: clamp(1.4rem,2.5vw,2rem); color: #fff; line-height: 1.15; margin-bottom: 0.4rem; position: relative; z-index: 1; }
-        body.ar .res-hero h2 { font-family: 'Noto Naskh Arabic', serif; }
-        .res-hero h2 em { font-style: italic; color: var(--lime); }
-        body.ar .res-hero h2 em { font-style: normal; }
-        .res-hero p { font-size: 0.85rem; color: rgba(255,255,255,0.6); position: relative; z-index: 1; }
-        .res-cats { display: grid; grid-template-columns: repeat(auto-fill, minmax(240px,1fr)); gap: 1rem; margin-bottom: 1.5rem; }
+        .res-featured::before {
+            content: ''; position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 50% 70% at 85% 40%, rgba(168,224,99,0.12) 0%, transparent 60%),
+                radial-gradient(ellipse 30% 50% at 10% 80%, rgba(196,98,45,0.08) 0%, transparent 50%);
+        }
+        .res-featured::after {
+            content: ''; position: absolute; right: -2rem; top: -1rem;
+            width: 200px; height: 200px; border-radius: 50%;
+            background: rgba(168,224,99,0.06); pointer-events: none;
+        }
+        .res-feat-body { flex: 1; position: relative; z-index: 1; }
+        .res-feat-eyebrow {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            background: rgba(168,224,99,0.12); border: 1px solid rgba(168,224,99,0.25);
+            color: var(--lime); padding: 0.3rem 0.8rem; border-radius: 100px;
+            font-size: 0.62rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+        body.ar .res-feat-eyebrow { letter-spacing: 0; font-size: 0.72rem; }
+        .res-feat-title {
+            font-family: 'Instrument Serif', serif; font-size: clamp(1.5rem,2.8vw,2.1rem);
+            color: #fff; line-height: 1.18; margin-bottom: 0.65rem;
+        }
+        body.ar .res-feat-title { font-family: 'Noto Naskh Arabic', serif; line-height: 1.4; }
+        .res-feat-title em { font-style: italic; color: var(--lime); }
+        body.ar .res-feat-title em { font-style: normal; }
+        .res-feat-desc {
+            font-size: 0.85rem; color: rgba(255,255,255,0.62); line-height: 1.7;
+            max-width: 520px; margin-bottom: 1.1rem;
+        }
+        .res-feat-stats { display: flex; gap: 1.5rem; }
+        .res-feat-stat { display: flex; flex-direction: column; }
+        .res-feat-stat-num { font-family: 'Instrument Serif', serif; font-size: 1.3rem; color: var(--lime); line-height: 1; }
+        .res-feat-stat-label { font-size: 0.6rem; color: rgba(255,255,255,0.4); margin-top: 0.12rem; text-transform: uppercase; letter-spacing: 0.06em; }
+        body.ar .res-feat-stat-label { letter-spacing: 0; }
+
+        .res-cats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.875rem; margin-bottom: 1.75rem; }
         .res-cat {
-            background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 13px;
-            padding: 1.25rem; transition: all 0.2s; cursor: pointer;
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px;
+            padding: 1.25rem; transition: all 0.2s; cursor: pointer; position: relative; overflow: hidden;
         }
-        .res-cat:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 6px 22px rgba(0,0,0,0.07); transform: translateY(-2px); }
-        .res-cat-icon { width: 40px; height: 40px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin-bottom: 0.875rem; }
-        .res-cat h3 { font-family: 'Instrument Serif', serif; font-size: 1.05rem; margin-bottom: 0.3rem; }
+        .res-cat:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 6px 22px rgba(0,0,0,0.06); transform: translateY(-2px); }
+        .res-cat-emoji { font-size: 1.5rem; margin-bottom: 0.75rem; display: block; }
+        .res-cat h3 { font-family: 'Instrument Serif', serif; font-size: 1.02rem; margin-bottom: 0.3rem; line-height: 1.25; }
         body.ar .res-cat h3 { font-family: 'Noto Naskh Arabic', serif; }
-        .res-cat p { font-size: 0.75rem; color: rgba(0,0,0,0.48); line-height: 1.52; margin-bottom: 0.75rem; }
-        .res-count { font-size: 0.7rem; color: var(--green); font-weight: 500; }
+        .res-cat p { font-size: 0.72rem; color: rgba(0,0,0,0.45); line-height: 1.55; margin-bottom: 0.65rem; }
+        .res-cat-count { font-size: 0.66rem; color: var(--green); font-weight: 500; display: flex; align-items: center; gap: 0.25rem; }
+
+        .res-reads-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1rem; }
+        .res-reads-title { font-family: 'Instrument Serif', serif; font-size: 1.15rem; }
+        body.ar .res-reads-title { font-family: 'Noto Naskh Arabic', serif; }
         .res-list { display: flex; flex-direction: column; gap: 0.65rem; }
         .res-item {
-            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 11px;
-            padding: 0.875rem 1.1rem; display: flex; align-items: center; gap: 0.875rem;
-            transition: all 0.18s; cursor: pointer;
+            background: white; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px;
+            padding: 1rem 1.2rem; display: flex; align-items: center; gap: 1rem;
+            transition: all 0.18s; cursor: pointer; position: relative;
+            border-left: 3px solid transparent;
         }
-        .res-item:hover { border-color: rgba(26,92,56,0.2); }
-        .ri-icon { width: 38px; height: 38px; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0; }
+        body.ar .res-item { border-left: 1px solid rgba(0,0,0,0.06); border-right: 3px solid transparent; }
+        .res-item.bl-green { border-left-color: var(--green); }
+        .res-item.bl-lime { border-left-color: var(--lime); }
+        .res-item.bl-rust { border-left-color: var(--rust); }
+        body.ar .res-item.bl-green { border-left-color: transparent; border-right-color: var(--green); }
+        body.ar .res-item.bl-lime { border-left-color: transparent; border-right-color: var(--lime); }
+        body.ar .res-item.bl-rust { border-left-color: transparent; border-right-color: var(--rust); }
+        .res-item:hover { box-shadow: 0 4px 16px rgba(0,0,0,0.06); transform: translateY(-1px); }
         .ri-body { flex: 1; min-width: 0; }
-        .ri-title { font-size: 0.845rem; font-weight: 500; margin-bottom: 0.18rem; }
-        .ri-meta { font-size: 0.7rem; color: rgba(0,0,0,0.38); }
-        .ri-action { font-size: 0.72rem; color: var(--green); font-weight: 500; flex-shrink: 0; display: flex; align-items: center; gap: 0.22rem; }
+        .ri-title { font-family: 'Instrument Serif', serif; font-size: 0.95rem; margin-bottom: 0.22rem; line-height: 1.3; transition: color 0.15s; }
+        body.ar .ri-title { font-family: 'Noto Naskh Arabic', serif; }
+        .res-item:hover .ri-title { color: var(--green); }
+        .ri-source { font-size: 0.7rem; color: rgba(0,0,0,0.4); margin-bottom: 0.35rem; }
+        .ri-row { display: flex; align-items: center; gap: 0.5rem; flex-wrap: wrap; }
+        .ri-badge {
+            display: inline-flex; align-items: center; padding: 0.12rem 0.5rem;
+            border-radius: 100px; font-size: 0.58rem; font-weight: 600; letter-spacing: 0.03em;
+        }
+        .ri-badge.article { background: rgba(26,92,56,0.1); color: var(--green); }
+        .ri-badge.report { background: rgba(59,130,246,0.1); color: #2563eb; }
+        .ri-badge.video { background: rgba(196,98,45,0.1); color: var(--rust); }
+        .ri-badge.guide { background: rgba(168,224,99,0.2); color: #3d6b14; }
+        .ri-time { font-size: 0.65rem; color: rgba(0,0,0,0.3); }
+        .ri-read-btn {
+            flex-shrink: 0; display: flex; align-items: center; gap: 0.25rem;
+            font-size: 0.76rem; color: var(--green); font-weight: 500;
+            background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
+            padding: 0.4rem 0.75rem; border-radius: 8px; transition: all 0.15s;
+        }
+        body.ar .ri-read-btn { font-family: 'Noto Naskh Arabic', serif; }
+        .ri-read-btn:hover { background: rgba(26,92,56,0.08); }
 
         /* PROFILE */
         .profile-card { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px; overflow: hidden; margin-bottom: 1.1rem; }
@@ -380,8 +442,247 @@
         .setting-label { font-size: 0.8rem; font-weight: 500; }
         .setting-sub { font-size: 0.7rem; color: rgba(0,0,0,0.4); }
 
-        @media (max-width: 1100px) { .two-col { grid-template-columns: 1fr; } .stat-grid { grid-template-columns: repeat(2,1fr); } .net-stats { grid-template-columns: repeat(2,1fr); } }
-        @media (max-width: 768px) { .qa-grid { grid-template-columns: 1fr; } .sb-item span { display: block; } }
+        /* MY EVENTS */
+        .my-evt-list { display: flex; flex-direction: column; gap: 0.75rem; }
+        .my-evt {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 13px;
+            padding: 1.1rem 1.25rem; display: flex; align-items: center; gap: 1rem;
+            transition: all 0.18s; cursor: pointer;
+        }
+        .my-evt:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 3px 12px rgba(0,0,0,0.05); }
+        .my-evt-date { width: 48px; flex-shrink: 0; text-align: center; background: var(--sand); border-radius: 9px; padding: 0.45rem 0.25rem; }
+        .my-evt-mo { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--rust); font-weight: 600; }
+        .my-evt-dy { font-family: 'Instrument Serif', serif; font-size: 1.4rem; color: var(--ink); line-height: 1; }
+        .my-evt-body { flex: 1; min-width: 0; }
+        .my-evt-title { font-family: 'Instrument Serif', serif; font-size: 1.02rem; margin-bottom: 0.18rem; }
+        body.ar .my-evt-title { font-family: 'Noto Naskh Arabic', serif; }
+        .my-evt-meta { font-size: 0.72rem; color: rgba(0,0,0,0.42); display: flex; flex-wrap: wrap; gap: 0.75rem; }
+        .my-evt-meta-item { display: flex; align-items: center; gap: 0.3rem; }
+        .my-evt-meta-item iconify-icon { font-size: 0.82rem; color: rgba(0,0,0,0.28); }
+        .evt-status { display: inline-flex; align-items: center; padding: 0.2rem 0.65rem; border-radius: 100px; font-size: 0.65rem; font-weight: 600; flex-shrink: 0; letter-spacing: 0.02em; }
+        .evt-status.upcoming { background: rgba(26,92,56,0.1); color: var(--green); }
+        .evt-status.completed { background: rgba(168,224,99,0.2); color: #3d6b14; }
+        .evt-status.cancelled { background: rgba(196,98,45,0.1); color: var(--rust); }
+
+        /* MY IMPACT */
+        .impact-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.875rem; margin-bottom: 1.5rem; }
+        .impact-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 13px;
+            padding: 1.1rem 1.25rem; text-align: center; transition: all 0.2s;
+        }
+        .impact-card:hover { transform: translateY(-1px); box-shadow: 0 4px 18px rgba(0,0,0,0.06); }
+        .impact-icon { width: 40px; height: 40px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin: 0 auto 0.65rem; }
+        .impact-num { font-family: 'Instrument Serif', serif; font-size: 1.9rem; line-height: 1; margin-bottom: 0.15rem; }
+        .impact-label { font-size: 0.7rem; color: rgba(0,0,0,0.42); }
+        .impact-trend { font-size: 0.66rem; color: var(--green); margin-top: 0.2rem; }
+
+        .goal-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px;
+            padding: 1.5rem; margin-bottom: 1.1rem; display: flex; align-items: center; gap: 2rem;
+        }
+        .goal-ring-wrap { flex-shrink: 0; position: relative; width: 120px; height: 120px; }
+        .goal-ring-wrap svg { width: 120px; height: 120px; transform: rotate(-90deg); }
+        .goal-ring-bg { fill: none; stroke: var(--sand); stroke-width: 8; }
+        .goal-ring-fill { fill: none; stroke: var(--green); stroke-width: 8; stroke-linecap: round; transition: stroke-dashoffset 0.8s ease; }
+        .goal-ring-text {
+            position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center;
+        }
+        .goal-ring-num { font-family: 'Instrument Serif', serif; font-size: 1.6rem; line-height: 1; color: var(--green); }
+        .goal-ring-sub { font-size: 0.6rem; color: rgba(0,0,0,0.38); }
+        .goal-info { flex: 1; }
+        .goal-title { font-family: 'Instrument Serif', serif; font-size: 1.15rem; margin-bottom: 0.35rem; }
+        body.ar .goal-title { font-family: 'Noto Naskh Arabic', serif; }
+        .goal-desc { font-size: 0.8rem; color: rgba(0,0,0,0.48); line-height: 1.6; margin-bottom: 0.75rem; }
+        .goal-bar-wrap { display: flex; align-items: center; gap: 0.65rem; }
+        .goal-bar { flex: 1; height: 5px; background: var(--sand); border-radius: 99px; overflow: hidden; }
+        .goal-bar-fill { height: 100%; background: var(--green); border-radius: 99px; }
+        .goal-bar-label { font-size: 0.7rem; color: rgba(0,0,0,0.42); white-space: nowrap; }
+
+        .timeline-card { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px; padding: 1.25rem; }
+        .timeline-card h3 { font-family: 'Instrument Serif', serif; font-size: 1.1rem; margin-bottom: 1rem; }
+        body.ar .timeline-card h3 { font-family: 'Noto Naskh Arabic', serif; }
+        .timeline { position: relative; padding-left: 1.5rem; }
+        body.ar .timeline { padding-left: 0; padding-right: 1.5rem; }
+        .timeline::before {
+            content: ''; position: absolute; left: 0; top: 0.3rem; bottom: 0.3rem; width: 2px;
+            background: var(--sand); border-radius: 99px;
+        }
+        body.ar .timeline::before { left: auto; right: 0; }
+        .tl-item { position: relative; padding-bottom: 1.25rem; }
+        .tl-item:last-child { padding-bottom: 0; }
+        .tl-dot {
+            position: absolute; left: -1.5rem; top: 0.15rem; width: 10px; height: 10px;
+            border-radius: 50%; background: var(--green); border: 2px solid white; box-shadow: 0 0 0 2px var(--sand);
+        }
+        body.ar .tl-dot { left: auto; right: -1.5rem; }
+        .tl-dot.dim { background: var(--sand); }
+        .tl-month { font-size: 0.68rem; font-weight: 600; color: var(--green); margin-bottom: 0.18rem; text-transform: uppercase; letter-spacing: 0.06em; }
+        body.ar .tl-month { letter-spacing: 0; }
+        .tl-text { font-size: 0.78rem; color: rgba(0,0,0,0.55); line-height: 1.55; }
+        .tl-text strong { color: var(--ink); font-weight: 500; }
+
+        /* LEADERBOARD FULL */
+        .lb-full { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px; overflow: hidden; }
+        .lb-header {
+            display: grid; grid-template-columns: 48px 36px 1fr 80px 70px 80px;
+            gap: 0.75rem; padding: 0.75rem 1.25rem; background: var(--sand);
+            font-size: 0.62rem; font-weight: 600; text-transform: uppercase; letter-spacing: 0.08em; color: rgba(0,0,0,0.42);
+        }
+        body.ar .lb-header { letter-spacing: 0; font-size: 0.72rem; }
+        .lb-row {
+            display: grid; grid-template-columns: 48px 36px 1fr 80px 70px 80px;
+            gap: 0.75rem; padding: 0.75rem 1.25rem; align-items: center;
+            border-bottom: 1px solid rgba(0,0,0,0.04); transition: background 0.15s;
+        }
+        .lb-row:last-child { border-bottom: none; }
+        .lb-row:hover { background: rgba(0,0,0,0.013); }
+        .lb-row.you-row { background: rgba(168,224,99,0.08); }
+        .lb-row-rank { font-family: 'Instrument Serif', serif; font-size: 1.05rem; text-align: center; color: rgba(0,0,0,0.22); }
+        .lb-row-rank.gold { color: #b8860b; }
+        .lb-row-rank.silver { color: #808080; }
+        .lb-row-rank.bronze { color: #cd7f32; }
+        .lb-row-av { width: 30px; height: 30px; border-radius: 50%; display: flex; align-items: center; justify-content: center; font-size: 0.72rem; font-weight: 500; }
+        .lb-row-name { font-size: 0.82rem; font-weight: 500; }
+        .lb-row-hrs { font-size: 0.78rem; color: var(--green); font-weight: 500; text-align: center; }
+        .lb-row-evts { font-size: 0.78rem; color: rgba(0,0,0,0.48); text-align: center; }
+        .lb-row-pts { font-size: 0.78rem; font-weight: 600; text-align: center; color: var(--ink); }
+
+        /* COMMUNITY FEED FULL */
+        .feed-full { display: flex; flex-direction: column; gap: 0.65rem; }
+        .feed-full-item {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 12px;
+            padding: 1rem 1.2rem; display: flex; gap: 0.85rem; transition: all 0.15s;
+        }
+        .feed-full-item:hover { border-color: rgba(26,92,56,0.15); box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
+        .feed-av { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Instrument Serif', serif; font-size: 0.9rem; }
+        .feed-body { flex: 1; min-width: 0; }
+        .feed-text { font-size: 0.82rem; line-height: 1.55; color: rgba(0,0,0,0.62); margin-bottom: 0.25rem; }
+        .feed-text strong { color: var(--ink); font-weight: 500; }
+        .feed-text .fhi { color: var(--green); font-weight: 500; }
+        .feed-time { font-size: 0.66rem; color: rgba(0,0,0,0.3); }
+        .feed-type-icon { flex-shrink: 0; width: 28px; height: 28px; border-radius: 7px; display: flex; align-items: center; justify-content: center; font-size: 0.8rem; align-self: center; }
+
+        /* TOAST */
+        .dash-toast {
+            position: fixed; bottom: 2rem; left: 50%; z-index: 9800;
+            transform: translateX(-50%) translateY(20px); opacity: 0;
+            transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); pointer-events: none;
+        }
+        .dash-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .dash-toast-inner {
+            display: flex; align-items: center; gap: 0.5rem;
+            background: var(--ink); color: #fff; padding: 0.65rem 1.2rem;
+            border-radius: 100px; font-size: 0.8rem; font-weight: 500;
+            box-shadow: 0 8px 30px rgba(0,0,0,0.2); white-space: nowrap;
+        }
+        body.ar .dash-toast-inner { font-family: 'Noto Naskh Arabic', serif; }
+
+        /* POST EVENT MODAL EXTRAS */
+        .modal-body input.modal-input {
+            width: 100%; padding: 0.65rem 0.9rem; border: 1px solid rgba(0,0,0,0.12);
+            border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+            outline: none; background: white; transition: border-color 0.2s;
+        }
+        body.ar .modal-body input.modal-input { font-family: 'Noto Naskh Arabic', serif; }
+        .modal-body input.modal-input:focus { border-color: var(--green); }
+        .modal-submit-btn {
+            width: 100%; padding: 0.7rem; border-radius: 9px; border: none;
+            background: var(--green); color: #fff; font-size: 0.85rem; font-weight: 500;
+            cursor: pointer; transition: background 0.15s; font-family: 'DM Sans', sans-serif;
+            margin-top: 0.65rem;
+        }
+        body.ar .modal-submit-btn { font-family: 'Noto Naskh Arabic', serif; }
+        .modal-submit-btn:hover { background: var(--green-light); }
+        .modal-desc { font-size: 0.82rem; color: rgba(0,0,0,0.52); line-height: 1.6; margin-bottom: 1rem; }
+        .modal-success { text-align: center; padding: 1rem 0; }
+        .modal-success iconify-icon { font-size: 2.5rem; color: var(--green); margin-bottom: 0.5rem; display: block; }
+        .modal-success p { font-size: 0.85rem; color: rgba(0,0,0,0.55); }
+
+        /* OPP DETAIL MODAL */
+        .opp-detail-tag { display: inline-flex; align-items: center; gap: 0.3rem; padding: 0.25rem 0.7rem; border-radius: 100px; font-size: 0.7rem; font-weight: 500; margin-bottom: 0.875rem; }
+        .opp-detail-title { font-family: 'Instrument Serif', serif; font-size: 1.35rem; line-height: 1.2; margin-bottom: 0.35rem; }
+        body.ar .opp-detail-title { font-family: 'Noto Naskh Arabic', serif; }
+        .opp-detail-org { font-size: 0.8rem; color: rgba(0,0,0,0.45); margin-bottom: 1rem; display: flex; align-items: center; gap: 0.35rem; }
+        .opp-detail-meta { display: flex; flex-direction: column; gap: 0.45rem; margin-bottom: 1.25rem; padding: 0.875rem; background: rgba(0,0,0,0.025); border-radius: 10px; }
+        .opp-detail-meta-item { display: flex; align-items: center; gap: 0.5rem; font-size: 0.8rem; color: rgba(0,0,0,0.55); }
+        .opp-detail-meta-item iconify-icon { font-size: 1rem; color: rgba(0,0,0,0.3); }
+
+        /* INVITE MODAL */
+        .modal-overlay {
+            position: fixed; inset: 0; z-index: 9500;
+            background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 0; pointer-events: none; transition: opacity 0.22s;
+        }
+        .modal-overlay.open { opacity: 1; pointer-events: auto; }
+        .modal {
+            background: var(--paper); border-radius: 16px;
+            width: 90%; max-width: 480px; overflow: hidden;
+            box-shadow: 0 20px 60px rgba(0,0,0,0.2);
+            transform: translateY(12px) scale(0.97); transition: transform 0.22s;
+        }
+        .modal-overlay.open .modal { transform: none; }
+        .modal-header {
+            background: var(--green); padding: 1.25rem 1.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+        }
+        .modal-header h2 {
+            font-family: 'Instrument Serif', serif; font-size: 1.2rem; color: #fff; line-height: 1.3;
+        }
+        body.ar .modal-header h2 { font-family: 'Noto Naskh Arabic', serif; }
+        .modal-close {
+            width: 30px; height: 30px; border-radius: 50%; border: none;
+            background: rgba(255,255,255,0.12); color: #fff; font-size: 1.1rem;
+            cursor: pointer; display: flex; align-items: center; justify-content: center;
+            transition: background 0.15s; flex-shrink: 0;
+        }
+        .modal-close:hover { background: rgba(255,255,255,0.25); }
+        .modal-body { padding: 1.5rem; }
+        .invite-label { font-size: 0.75rem; font-weight: 500; color: rgba(0,0,0,0.52); margin-bottom: 0.5rem; }
+        .invite-link-box {
+            display: flex; align-items: center; gap: 0.5rem;
+            background: white; border: 1px solid rgba(0,0,0,0.1); border-radius: 10px;
+            padding: 0.15rem 0.15rem 0.15rem 0.85rem; margin-bottom: 1.25rem;
+        }
+        body.ar .invite-link-box { padding: 0.15rem 0.85rem 0.15rem 0.15rem; }
+        .invite-link-text {
+            flex: 1; font-size: 0.78rem; color: var(--ink); font-family: 'DM Sans', sans-serif;
+            overflow: hidden; text-overflow: ellipsis; white-space: nowrap;
+            min-width: 0; user-select: all; direction: ltr;
+        }
+        .invite-copy-btn {
+            flex-shrink: 0; background: var(--green); color: #fff; border: none; border-radius: 8px;
+            padding: 0.55rem 1rem; font-size: 0.78rem; font-weight: 500; cursor: pointer;
+            transition: all 0.18s; font-family: 'DM Sans', sans-serif;
+            white-space: nowrap;
+        }
+        body.ar .invite-copy-btn { font-family: 'Noto Naskh Arabic', serif; }
+        .invite-copy-btn:hover { background: var(--green-light); }
+        .invite-copy-btn.copied { background: #4a7c20; }
+        .invite-divider {
+            display: flex; align-items: center; gap: 0.75rem; margin-bottom: 1.25rem;
+        }
+        .invite-divider::before, .invite-divider::after {
+            content: ''; flex: 1; height: 1px; background: rgba(0,0,0,0.08);
+        }
+        .invite-divider span { font-size: 0.7rem; color: rgba(0,0,0,0.32); white-space: nowrap; }
+        .invite-share-btns { display: flex; gap: 0.65rem; }
+        .invite-share-btn {
+            flex: 1; display: flex; align-items: center; justify-content: center; gap: 0.45rem;
+            padding: 0.7rem 1rem; border-radius: 10px; border: none;
+            font-size: 0.82rem; font-weight: 500; cursor: pointer;
+            transition: all 0.18s; font-family: 'DM Sans', sans-serif;
+            text-decoration: none;
+        }
+        body.ar .invite-share-btn { font-family: 'Noto Naskh Arabic', serif; }
+        .invite-share-btn iconify-icon { font-size: 1.1rem; }
+        .invite-share-btn.whatsapp { background: #25d366; color: #fff; }
+        .invite-share-btn.whatsapp:hover { background: #1ebe57; }
+        .invite-share-btn.email { background: white; color: var(--ink); border: 1px solid rgba(0,0,0,0.12); }
+        .invite-share-btn.email:hover { border-color: var(--green); color: var(--green); }
+
+        @media (max-width: 1100px) { .two-col { grid-template-columns: 1fr; } .stat-grid { grid-template-columns: repeat(2,1fr); } .net-stats { grid-template-columns: repeat(2,1fr); } .impact-stats { grid-template-columns: repeat(2,1fr); } .goal-card { flex-direction: column; text-align: center; } .lb-header, .lb-row { grid-template-columns: 40px 32px 1fr 65px 55px 65px; gap: 0.5rem; font-size: 0.72rem; } .res-cats { grid-template-columns: repeat(2,1fr); } .res-featured { flex-direction: column; } }
+        @media (max-width: 768px) { .qa-grid { grid-template-columns: 1fr; } .sb-item span { display: block; } .impact-stats { grid-template-columns: 1fr; } .lb-header, .lb-row { grid-template-columns: 32px 28px 1fr 55px 45px 55px; gap: 0.35rem; padding: 0.6rem 0.75rem; } .res-cats { grid-template-columns: 1fr; } .res-feat-stats { flex-wrap: wrap; } }
     </style>
 </head>
 <body>
@@ -393,14 +694,14 @@
     <aside class="sidebar">
         <div class="sb-logo" onclick="navigate('home')">
             <span class="sb-logo-dot"></span>
-            <span class="sb-logo-text" data-en="The Hub" data-ar="المنصة">The Hub</span>
+            <span class="sb-logo-text" data-en="EcoHub" data-ar="EcoHub">EcoHub</span>
         </div>
         <nav class="sb-nav">
             <div class="sb-label" data-en="My Space" data-ar="مساحتي">My Space</div>
             <button class="sb-item active" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:home-linear"></iconify-icon><span data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</span></button>
             <button class="sb-item" data-sec="profile" onclick="navigate('profile')"><iconify-icon icon="solar:user-linear"></iconify-icon><span data-en="My Profile" data-ar="ملفي الشخصي">My Profile</span></button>
-            <button class="sb-item" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="My Events" data-ar="فعالياتي">My Events</span><span class="sb-badge">3</span></button>
-            <button class="sb-item" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:chart-linear"></iconify-icon><span data-en="My Impact" data-ar="أثري">My Impact</span></button>
+            <button class="sb-item" data-sec="events" onclick="navigate('events')"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="My Events" data-ar="فعالياتي">My Events</span><span class="sb-badge">3</span></button>
+            <button class="sb-item" data-sec="impact" onclick="navigate('impact')"><iconify-icon icon="solar:chart-linear"></iconify-icon><span data-en="My Impact" data-ar="أثري">My Impact</span></button>
 
             <div class="sb-label" data-en="Explore" data-ar="استكشف">Explore</div>
             <button class="sb-item" data-sec="opportunities" onclick="navigate('opportunities')"><iconify-icon icon="solar:compass-linear"></iconify-icon><span data-en="Opportunities" data-ar="الفرص">Opportunities</span><span class="sb-badge">24</span></button>
@@ -408,8 +709,8 @@
             <button class="sb-item" data-sec="resources" onclick="navigate('resources')"><iconify-icon icon="solar:book-linear"></iconify-icon><span data-en="Resources" data-ar="الموارد">Resources</span></button>
 
             <div class="sb-label" data-en="Community" data-ar="المجتمع">Community</div>
-            <button class="sb-item" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:ranking-linear"></iconify-icon><span data-en="Leaderboard" data-ar="المتصدرون">Leaderboard</span></button>
-            <button class="sb-item" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:chat-round-line-linear"></iconify-icon><span data-en="Community Feed" data-ar="تغذية المجتمع">Community Feed</span></button>
+            <button class="sb-item" data-sec="leaderboard" onclick="navigate('leaderboard')"><iconify-icon icon="solar:ranking-linear"></iconify-icon><span data-en="Leaderboard" data-ar="المتصدرون">Leaderboard</span></button>
+            <button class="sb-item" data-sec="feed" onclick="navigate('feed')"><iconify-icon icon="solar:chat-round-line-linear"></iconify-icon><span data-en="Community Feed" data-ar="تغذية المجتمع">Community Feed</span></button>
         </nav>
         <div class="sb-user">
             <div class="sb-avatar" id="sb-avatar">M</div>
@@ -430,7 +731,7 @@
             <h1 class="page-title" id="page-title"><em data-en="Good morning," data-ar="صباح الخير،">Good morning,</em> <span id="greeting-name">Mohammed</span> 🌿</h1>
             <div class="tb-actions">
                 <button class="tb-btn" onclick="navigate('opportunities')"><iconify-icon icon="solar:compass-linear"></iconify-icon><span data-en="Opportunities" data-ar="الفرص">Opportunities</span></button>
-                <button class="tb-btn primary"><iconify-icon icon="solar:add-circle-linear"></iconify-icon><span data-en="Post Event" data-ar="انشر فعالية">Post Event</span></button>
+                <button class="tb-btn primary" onclick="openPostEventModal()"><iconify-icon icon="solar:add-circle-linear"></iconify-icon><span data-en="Post Event" data-ar="انشر فعالية">Post Event</span></button>
             </div>
         </div>
 
@@ -469,7 +770,7 @@
                     <div class="qa" onclick="navigate('opportunities')"><div class="qa-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:compass-linear"></iconify-icon></div><div class="qa-text"><h4 data-en="Browse Opportunities" data-ar="تصفح الفرص">Browse Opportunities</h4><p data-en="24 new events waiting for you" data-ar="٢٤ فعالية جديدة تنتظرك">24 new events waiting for you</p></div></div>
                     <div class="qa" onclick="navigate('network')"><div class="qa-icon" style="background:rgba(196,98,45,0.1);color:var(--rust)"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></div><div class="qa-text"><h4 data-en="Explore the Network" data-ar="استكشف الشبكة">Explore the Network</h4><p data-en="60+ orgs, clubs & government bodies" data-ar="٦٠+ منظمة ونادٍ وجهة حكومية">60+ orgs, clubs & government bodies</p></div></div>
                     <div class="qa" onclick="navigate('resources')"><div class="qa-icon" style="background:rgba(168,224,99,0.2);color:#4a7c20"><iconify-icon icon="solar:book-linear"></iconify-icon></div><div class="qa-text"><h4 data-en="Learn & Grow" data-ar="تعلّم وانمُ">Learn & Grow</h4><p data-en="Playbooks, guides & interviews" data-ar="أدلة، كتيبات ومقابلات">Playbooks, guides & interviews</p></div></div>
-                    <div class="qa"><div class="qa-icon" style="background:rgba(0,0,0,0.05);color:rgba(0,0,0,0.45)"><iconify-icon icon="solar:share-linear"></iconify-icon></div><div class="qa-text"><h4 data-en="Invite a Friend" data-ar="ادعُ صديقاً">Invite a Friend</h4><p data-en="Grow the community together" data-ar="نمّوا المجتمع معاً">Grow the community together</p></div></div>
+                    <div class="qa" onclick="openInviteModal()"><div class="qa-icon" style="background:rgba(0,0,0,0.05);color:rgba(0,0,0,0.45)"><iconify-icon icon="solar:share-linear"></iconify-icon></div><div class="qa-text"><h4 data-en="Invite a Friend" data-ar="ادعُ صديقاً">Invite a Friend</h4><p data-en="Grow the community together" data-ar="نمّوا المجتمع معاً">Grow the community together</p></div></div>
                 </div>
 
                 <div class="two-col">
@@ -503,22 +804,23 @@
                     <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Find your next " data-ar="اعثر على فرصتك ">Find your next </span><em style="font-style:italic;color:var(--green)" data-en="climate opportunity." data-ar="المناخية القادمة.">climate opportunity.</em></h2>
                     <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="24 active opportunities across Qatar" data-ar="٢٤ فرصة نشطة في قطر">24 active opportunities across Qatar</p>
                 </div>
-                <div class="search-wrap"><span class="s-icon"><iconify-icon icon="solar:magnifer-linear"></iconify-icon></span><input class="s-input" placeholder="Search projects, organizations or keywords..." data-placeholder-en="Search projects, organizations or keywords..." data-placeholder-ar="ابحث عن مشاريع أو منظمات..."></div>
-                <div class="pills">
-                    <button class="pill active" onclick="setPill(this,'.pills')" data-en="All" data-ar="الكل">All</button>
-                    <button class="pill" onclick="setPill(this,'.pills')" data-en="Conservation" data-ar="الحفاظ على البيئة">Conservation</button>
-                    <button class="pill" onclick="setPill(this,'.pills')" data-en="Volunteering" data-ar="تطوع">Volunteering</button>
-                    <button class="pill" onclick="setPill(this,'.pills')" data-en="Workshops" data-ar="ورش العمل">Workshops</button>
-                    <button class="pill" onclick="setPill(this,'.pills')" data-en="Education" data-ar="تعليم">Education</button>
-                    <button class="pill" onclick="setPill(this,'.pills')" data-en="This Week" data-ar="هذا الأسبوع">This Week</button>
+                <div class="search-wrap"><span class="s-icon"><iconify-icon icon="solar:magnifer-linear"></iconify-icon></span><input class="s-input" id="opp-search" oninput="filterOpportunities()" placeholder="Search projects, organizations or keywords..." data-placeholder-en="Search projects, organizations or keywords..." data-placeholder-ar="ابحث عن مشاريع أو منظمات..."></div>
+                <div class="pills" id="opp-pills">
+                    <button class="pill active" onclick="filterOppByPill(this,'All')" data-en="All" data-ar="الكل">All</button>
+                    <button class="pill" onclick="filterOppByPill(this,'Conservation')" data-en="Conservation" data-ar="الحفاظ على البيئة">Conservation</button>
+                    <button class="pill" onclick="filterOppByPill(this,'Volunteering')" data-en="Volunteering" data-ar="تطوع">Volunteering</button>
+                    <button class="pill" onclick="filterOppByPill(this,'Workshops')" data-en="Workshops" data-ar="ورش العمل">Workshops</button>
+                    <button class="pill" onclick="filterOppByPill(this,'Education')" data-en="Education" data-ar="تعليم">Education</button>
+                    <button class="pill" onclick="filterOppByPill(this,'This Week')" data-en="This Week" data-ar="هذا الأسبوع">This Week</button>
                 </div>
-                <div class="opp-grid">
-                    <div class="opp-card"><div class="oc-top"><span class="otag tcon"><iconify-icon icon="solar:leaf-linear"></iconify-icon><span data-en="Conservation" data-ar="الحفاظ">Conservation</span></span><span class="oc-date" data-en="2 days ago" data-ar="منذ يومين">2 days ago</span></div><h3 class="oc-title" data-en="Mangrove Restoration Drive" data-ar="حملة استعادة المانغروف">Mangrove Restoration Drive</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar Eco Society" data-ar="جمعية قطر البيئية">Qatar Eco Society</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Sat, Oct 24 · 7:00 AM" data-ar="السبت، ٢٤ أكتوبر · ٧:٠٠ ص">Sat, Oct 24 · 7:00 AM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Al Thakira Mangroves, Al Khor" data-ar="مانغروف الثخيرة، الخور">Al Thakira Mangroves, Al Khor</span></div></div><div class="prog-info"><span class="prog-spots" data-en="15 / 20 Spots" data-ar="١٥ / ٢٠ مقعداً">15 / 20 Spots</span><span class="prog-status" data-en="High Demand" data-ar="طلب عالٍ">High Demand</span></div><div class="prog-bar"><div class="prog-fill" style="width:75%;background:#1a5c38"></div></div><button class="oc-btn"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
-                    <div class="opp-card"><div class="oc-top"><span class="otag twor"><iconify-icon icon="solar:presentation-graph-linear"></iconify-icon><span data-en="Workshop" data-ar="ورشة">Workshop</span></span><span class="oc-date" data-en="5 days ago" data-ar="منذ ٥ أيام">5 days ago</span></div><h3 class="oc-title" data-en="Corporate Sustainability Basics" data-ar="أساسيات الاستدامة المؤسسية">Corporate Sustainability Basics</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Green Future Inc." data-ar="شركة المستقبل الأخضر">Green Future Inc.</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Wed, Nov 02 · 4:00 PM" data-ar="الأربعاء، ٢ نوفمبر · ٤:٠٠ م">Wed, Nov 02 · 4:00 PM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:monitor-linear"></iconify-icon><span data-en="Remote (Zoom)" data-ar="عن بُعد (زووم)">Remote (Zoom)</span></div></div><div class="prog-info"><span class="prog-spots" data-en="45 / 50 Spots" data-ar="٤٥ / ٥٠ مقعداً">45 / 50 Spots</span><span class="prog-status" data-en="Closing Soon" data-ar="ينتهي قريباً">Closing Soon</span></div><div class="prog-bar"><div class="prog-fill" style="width:90%;background:#3b82f6"></div></div><button class="oc-btn"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
-                    <div class="opp-card"><div class="oc-top"><span class="otag tvol"><iconify-icon icon="solar:hand-heart-linear"></iconify-icon><span data-en="Volunteering" data-ar="تطوع">Volunteering</span></span><span class="oc-date" data-en="1 week ago" data-ar="منذ أسبوع">1 week ago</span></div><h3 class="oc-title" data-en="Beach Cleanup & Microplastics Audit" data-ar="تنظيف الشاطئ وتدقيق البلاستيك">Beach Cleanup & Microplastics Audit</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Doha Youth Environment" data-ar="بيئة شباب الدوحة">Doha Youth Environment</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Fri, Nov 15 · 6:00 AM" data-ar="الجمعة، ١٥ نوفمبر · ٦:٠٠ ص">Fri, Nov 15 · 6:00 AM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Sealine Beach, Mesaieed" data-ar="شاطئ سيلاين، مسيعيد">Sealine Beach, Mesaieed</span></div></div><div class="prog-info"><span class="prog-spots" data-en="8 / 30 Spots" data-ar="٨ / ٣٠ مقعداً">8 / 30 Spots</span><span class="prog-status" data-en="Open" data-ar="مفتوح">Open</span></div><div class="prog-bar"><div class="prog-fill" style="width:26%;background:#f59e0b"></div></div><button class="oc-btn"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
-                    <div class="opp-card"><span class="urg" data-en="1 Spot Left!" data-ar="مقعد واحد!">1 Spot Left!</span><div class="oc-top"><span class="otag tedu"><iconify-icon icon="solar:graduation-cap-linear"></iconify-icon><span data-en="Education" data-ar="تعليم">Education</span></span><span class="oc-date" data-en="Today" data-ar="اليوم">Today</span></div><h3 class="oc-title" data-en="Solar Energy Campus Tour" data-ar="جولة الطاقة الشمسية">Solar Energy Campus Tour</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar University" data-ar="جامعة قطر">Qatar University</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Mon, Nov 20 · 10:00 AM" data-ar="الاثنين، ٢٠ نوفمبر · ١٠:٠٠ ص">Mon, Nov 20 · 10:00 AM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="QU Research Complex" data-ar="مجمع البحوث، جامعة قطر">QU Research Complex</span></div></div><div class="prog-info"><span class="prog-spots" style="color:#dc2626" data-en="19 / 20 Spots" data-ar="١٩ / ٢٠ مقعداً">19 / 20 Spots</span><span class="prog-status" data-en="Almost Full" data-ar="شبه ممتلئ">Almost Full</span></div><div class="prog-bar"><div class="prog-fill" style="width:95%;background:#ef4444"></div></div><button class="oc-btn"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
-                    <div class="opp-card"><div class="oc-top"><span class="otag tcon"><iconify-icon icon="solar:leaf-linear"></iconify-icon><span data-en="Conservation" data-ar="الحفاظ">Conservation</span></span><span class="oc-date" data-en="3 days ago" data-ar="منذ ٣ أيام">3 days ago</span></div><h3 class="oc-title" data-en="Desert Reforestation Initiative" data-ar="مبادرة إعادة تشجير الصحراء">Desert Reforestation Initiative</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="EcoQatar Foundation" data-ar="مؤسسة إيكو قطر">EcoQatar Foundation</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Sat, Dec 07 · 6:30 AM" data-ar="السبت، ٧ ديسمبر · ٦:٣٠ ص">Sat, Dec 07 · 6:30 AM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Al Shahaniya, Doha" data-ar="الشحانية، الدوحة">Al Shahaniya, Doha</span></div></div><div class="prog-info"><span class="prog-spots" data-en="22 / 50 Spots" data-ar="٢٢ / ٥٠ مقعداً">22 / 50 Spots</span><span class="prog-status" data-en="Open" data-ar="مفتوح">Open</span></div><div class="prog-bar"><div class="prog-fill" style="width:44%;background:#1a5c38"></div></div><button class="oc-btn"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
-                    <div class="opp-card"><div class="oc-top"><span class="otag twor"><iconify-icon icon="solar:presentation-graph-linear"></iconify-icon><span data-en="Workshop" data-ar="ورشة">Workshop</span></span><span class="oc-date" data-en="6 days ago" data-ar="منذ ٦ أيام">6 days ago</span></div><h3 class="oc-title" data-en="Circular Economy & Zero Waste Living" data-ar="الاقتصاد الدائري والحياة الخالية من النفايات">Circular Economy & Zero Waste Living</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar National Library" data-ar="المكتبة الوطنية قطر">Qatar National Library</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Thu, Nov 28 · 5:00 PM" data-ar="الخميس، ٢٨ نوفمبر · ٥:٠٠ م">Thu, Nov 28 · 5:00 PM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Qatar National Library, Education City" data-ar="المكتبة الوطنية، المدينة التعليمية">Qatar National Library, Education City</span></div></div><div class="prog-info"><span class="prog-spots" data-en="30 / 60 Spots" data-ar="٣٠ / ٦٠ مقعداً">30 / 60 Spots</span><span class="prog-status" data-en="Open" data-ar="مفتوح">Open</span></div><div class="prog-bar"><div class="prog-fill" style="width:50%;background:#3b82f6"></div></div><button class="oc-btn"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
+                <div class="opp-grid" id="opp-grid">
+                    <div class="opp-card" data-cat="Conservation"><div class="oc-top"><span class="otag tcon"><iconify-icon icon="solar:leaf-linear"></iconify-icon><span data-en="Conservation" data-ar="الحفاظ">Conservation</span></span><span class="oc-date" data-en="2 days ago" data-ar="منذ يومين">2 days ago</span></div><h3 class="oc-title" data-en="Mangrove Restoration Drive" data-ar="حملة استعادة المانغروف">Mangrove Restoration Drive</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar Eco Society" data-ar="جمعية قطر البيئية">Qatar Eco Society</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Sat, Oct 24 · 7:00 AM" data-ar="السبت، ٢٤ أكتوبر · ٧:٠٠ ص">Sat, Oct 24 · 7:00 AM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Al Thakira Mangroves, Al Khor" data-ar="مانغروف الثخيرة، الخور">Al Thakira Mangroves, Al Khor</span></div></div><div class="prog-info"><span class="prog-spots" data-en="15 / 20 Spots" data-ar="١٥ / ٢٠ مقعداً">15 / 20 Spots</span><span class="prog-status" data-en="High Demand" data-ar="طلب عالٍ">High Demand</span></div><div class="prog-bar"><div class="prog-fill" style="width:75%;background:#1a5c38"></div></div><button class="oc-btn" onclick="openOppModal(this)"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
+                    <div class="opp-card" data-cat="Workshops"><div class="oc-top"><span class="otag twor"><iconify-icon icon="solar:presentation-graph-linear"></iconify-icon><span data-en="Workshop" data-ar="ورشة">Workshop</span></span><span class="oc-date" data-en="5 days ago" data-ar="منذ ٥ أيام">5 days ago</span></div><h3 class="oc-title" data-en="Corporate Sustainability Basics" data-ar="أساسيات الاستدامة المؤسسية">Corporate Sustainability Basics</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Green Future Inc." data-ar="شركة المستقبل الأخضر">Green Future Inc.</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Wed, Nov 02 · 4:00 PM" data-ar="الأربعاء، ٢ نوفمبر · ٤:٠٠ م">Wed, Nov 02 · 4:00 PM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:monitor-linear"></iconify-icon><span data-en="Remote (Zoom)" data-ar="عن بُعد (زووم)">Remote (Zoom)</span></div></div><div class="prog-info"><span class="prog-spots" data-en="45 / 50 Spots" data-ar="٤٥ / ٥٠ مقعداً">45 / 50 Spots</span><span class="prog-status" data-en="Closing Soon" data-ar="ينتهي قريباً">Closing Soon</span></div><div class="prog-bar"><div class="prog-fill" style="width:90%;background:#3b82f6"></div></div><button class="oc-btn" onclick="openOppModal(this)"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
+                    <div class="opp-card" data-cat="Volunteering"><div class="oc-top"><span class="otag tvol"><iconify-icon icon="solar:hand-heart-linear"></iconify-icon><span data-en="Volunteering" data-ar="تطوع">Volunteering</span></span><span class="oc-date" data-en="1 week ago" data-ar="منذ أسبوع">1 week ago</span></div><h3 class="oc-title" data-en="Beach Cleanup & Microplastics Audit" data-ar="تنظيف الشاطئ وتدقيق البلاستيك">Beach Cleanup & Microplastics Audit</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Doha Youth Environment" data-ar="بيئة شباب الدوحة">Doha Youth Environment</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Fri, Nov 15 · 6:00 AM" data-ar="الجمعة، ١٥ نوفمبر · ٦:٠٠ ص">Fri, Nov 15 · 6:00 AM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Sealine Beach, Mesaieed" data-ar="شاطئ سيلاين، مسيعيد">Sealine Beach, Mesaieed</span></div></div><div class="prog-info"><span class="prog-spots" data-en="8 / 30 Spots" data-ar="٨ / ٣٠ مقعداً">8 / 30 Spots</span><span class="prog-status" data-en="Open" data-ar="مفتوح">Open</span></div><div class="prog-bar"><div class="prog-fill" style="width:26%;background:#f59e0b"></div></div><button class="oc-btn" onclick="openOppModal(this)"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
+                    <div class="opp-card" data-cat="Education"><span class="urg" data-en="1 Spot Left!" data-ar="مقعد واحد!">1 Spot Left!</span><div class="oc-top"><span class="otag tedu"><iconify-icon icon="solar:graduation-cap-linear"></iconify-icon><span data-en="Education" data-ar="تعليم">Education</span></span><span class="oc-date" data-en="Today" data-ar="اليوم">Today</span></div><h3 class="oc-title" data-en="Solar Energy Campus Tour" data-ar="جولة الطاقة الشمسية">Solar Energy Campus Tour</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar University" data-ar="جامعة قطر">Qatar University</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Mon, Nov 20 · 10:00 AM" data-ar="الاثنين، ٢٠ نوفمبر · ١٠:٠٠ ص">Mon, Nov 20 · 10:00 AM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="QU Research Complex" data-ar="مجمع البحوث، جامعة قطر">QU Research Complex</span></div></div><div class="prog-info"><span class="prog-spots" style="color:#dc2626" data-en="19 / 20 Spots" data-ar="١٩ / ٢٠ مقعداً">19 / 20 Spots</span><span class="prog-status" data-en="Almost Full" data-ar="شبه ممتلئ">Almost Full</span></div><div class="prog-bar"><div class="prog-fill" style="width:95%;background:#ef4444"></div></div><button class="oc-btn" onclick="openOppModal(this)"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
+                    <div class="opp-card" data-cat="Conservation"><div class="oc-top"><span class="otag tcon"><iconify-icon icon="solar:leaf-linear"></iconify-icon><span data-en="Conservation" data-ar="الحفاظ">Conservation</span></span><span class="oc-date" data-en="3 days ago" data-ar="منذ ٣ أيام">3 days ago</span></div><h3 class="oc-title" data-en="Desert Reforestation Initiative" data-ar="مبادرة إعادة تشجير الصحراء">Desert Reforestation Initiative</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="EcoQatar Foundation" data-ar="مؤسسة إيكو قطر">EcoQatar Foundation</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Sat, Dec 07 · 6:30 AM" data-ar="السبت، ٧ ديسمبر · ٦:٣٠ ص">Sat, Dec 07 · 6:30 AM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Al Shahaniya, Doha" data-ar="الشحانية، الدوحة">Al Shahaniya, Doha</span></div></div><div class="prog-info"><span class="prog-spots" data-en="22 / 50 Spots" data-ar="٢٢ / ٥٠ مقعداً">22 / 50 Spots</span><span class="prog-status" data-en="Open" data-ar="مفتوح">Open</span></div><div class="prog-bar"><div class="prog-fill" style="width:44%;background:#1a5c38"></div></div><button class="oc-btn" onclick="openOppModal(this)"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
+                    <div class="opp-card" data-cat="Workshops"><div class="oc-top"><span class="otag twor"><iconify-icon icon="solar:presentation-graph-linear"></iconify-icon><span data-en="Workshop" data-ar="ورشة">Workshop</span></span><span class="oc-date" data-en="6 days ago" data-ar="منذ ٦ أيام">6 days ago</span></div><h3 class="oc-title" data-en="Circular Economy & Zero Waste Living" data-ar="الاقتصاد الدائري والحياة الخالية من النفايات">Circular Economy & Zero Waste Living</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar National Library" data-ar="المكتبة الوطنية قطر">Qatar National Library</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Thu, Nov 28 · 5:00 PM" data-ar="الخميس، ٢٨ نوفمبر · ٥:٠٠ م">Thu, Nov 28 · 5:00 PM</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Qatar National Library, Education City" data-ar="المكتبة الوطنية، المدينة التعليمية">Qatar National Library, Education City</span></div></div><div class="prog-info"><span class="prog-spots" data-en="30 / 60 Spots" data-ar="٣٠ / ٦٠ مقعداً">30 / 60 Spots</span><span class="prog-status" data-en="Open" data-ar="مفتوح">Open</span></div><div class="prog-bar"><div class="prog-fill" style="width:50%;background:#3b82f6"></div></div><button class="oc-btn" onclick="openOppModal(this)"><span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
+                    <div class="opp-no-results" id="opp-no-results" style="display:none;grid-column:1/-1;text-align:center;padding:2.5rem 1rem"><iconify-icon icon="solar:magnifer-linear" style="font-size:2rem;color:rgba(0,0,0,0.15);margin-bottom:0.5rem;display:block"></iconify-icon><div style="font-family:'Instrument Serif',serif;font-size:1.1rem;color:rgba(0,0,0,0.35);margin-bottom:0.2rem" data-en="No results found" data-ar="لم يتم العثور على نتائج">No results found</div><div style="font-size:0.78rem;color:rgba(0,0,0,0.25)" data-en="Try a different search term or filter" data-ar="جرّب كلمة بحث أو فلتر مختلف">Try a different search term or filter</div></div>
                 </div>
             </div>
 
@@ -529,11 +831,11 @@
                     <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="63 organizations, clubs & government bodies" data-ar="٦٣ منظمة ونادٍ وجهة حكومية">63 organizations, clubs & government bodies</p>
                 </div>
                 <div class="pills" id="net-pills">
-                    <button class="pill active" onclick="setPill(this,'#net-pills')" data-en="All" data-ar="الكل">All</button>
-                    <button class="pill" onclick="setPill(this,'#net-pills')" data-en="NGOs" data-ar="المنظمات غير الحكومية">NGOs</button>
-                    <button class="pill" onclick="setPill(this,'#net-pills')" data-en="Student Clubs" data-ar="الأندية الطلابية">Student Clubs</button>
-                    <button class="pill" onclick="setPill(this,'#net-pills')" data-en="Eco-Businesses" data-ar="الشركات البيئية">Eco-Businesses</button>
-                    <button class="pill" onclick="setPill(this,'#net-pills')" data-en="Government" data-ar="حكومية">Government</button>
+                    <button class="pill active" onclick="filterNetByPill(this,'All')" data-en="All" data-ar="الكل">All</button>
+                    <button class="pill" onclick="filterNetByPill(this,'NGOs')" data-en="NGOs" data-ar="المنظمات غير الحكومية">NGOs</button>
+                    <button class="pill" onclick="filterNetByPill(this,'Student Clubs')" data-en="Student Clubs" data-ar="الأندية الطلابية">Student Clubs</button>
+                    <button class="pill" onclick="filterNetByPill(this,'Eco-Businesses')" data-en="Eco-Businesses" data-ar="الشركات البيئية">Eco-Businesses</button>
+                    <button class="pill" onclick="filterNetByPill(this,'Government')" data-en="Government" data-ar="حكومية">Government</button>
                 </div>
                 <div class="net-stats">
                     <div class="nsc"><div class="nsc-num">12</div><div class="nsc-label" data-en="NGOs" data-ar="منظمات">NGOs</div></div>
@@ -541,33 +843,153 @@
                     <div class="nsc"><div class="nsc-num">15</div><div class="nsc-label" data-en="Student Clubs" data-ar="أندية طلابية">Student Clubs</div></div>
                     <div class="nsc"><div class="nsc-num">8</div><div class="nsc-label" data-en="Government" data-ar="حكومية">Government</div></div>
                 </div>
-                <div class="org-grid">
-                    <div class="org-card"><div class="org-banner" style="background:linear-gradient(135deg,#1a5c38,#2d7a4f)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#1a5c38">QE</div></div><div class="org-hr"><div class="org-name" data-en="Qatar Eco Society" data-ar="جمعية قطر البيئية">Qatar Eco Society</div><iconify-icon icon="solar:check-circle-linear" class="org-ver"></iconify-icon></div><div class="org-badge" data-en="NGO" data-ar="منظمة غير حكومية">NGO</div><p class="org-desc" data-en="Preserving Qatar's coastal ecosystems through microplastic audits and community-driven cleanups." data-ar="حماية النظم البيئية الساحلية في قطر من خلال تدقيق البلاستيك وحملات التنظيف.">Preserving Qatar's coastal ecosystems through microplastic audits and community-driven cleanups.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="3 events" data-ar="٣ فعاليات">3 events</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>240+</span></div><button class="org-conn"><span data-en="Connect" data-ar="تواصل">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
-                    <div class="org-card"><div class="org-banner" style="background:linear-gradient(135deg,#1e3a5f,#2d5986)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#1e3a5f">QU</div></div><div class="org-hr"><div class="org-name" data-en="QU Green Innovators" data-ar="مبتكرو قطر الخضر">QU Green Innovators</div><iconify-icon icon="solar:check-circle-linear" class="org-ver"></iconify-icon></div><div class="org-badge" data-en="Student Club" data-ar="نادٍ طلابي">Student Club</div><p class="org-desc" data-en="Building renewable tech prototypes and advocating for sustainable campus policies at Qatar University." data-ar="بناء نماذج تقنية متجددة والدفاع عن سياسات مستدامة في جامعة قطر.">Building renewable tech prototypes and advocating for sustainable campus policies at Qatar University.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="1 event" data-ar="فعالية">1 event</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>85+</span></div><button class="org-conn"><span data-en="Connect" data-ar="تواصل">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
-                    <div class="org-card"><div class="org-banner" style="background:linear-gradient(135deg,#c4622d,#e07a45)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#c4622d">GF</div></div><div class="org-hr"><div class="org-name" data-en="Green Future Inc." data-ar="شركة المستقبل الأخضر">Green Future Inc.</div><iconify-icon icon="solar:check-circle-linear" class="org-ver"></iconify-icon></div><div class="org-badge" data-en="Eco-Business" data-ar="شركة بيئية">Eco-Business</div><p class="org-desc" data-en="Corporate sustainability training, ESG compliance workshops, and organizational restructuring for eco-efficiency." data-ar="تدريب على الاستدامة المؤسسية وورش امتثال بيئي وإعادة هيكلة.">Corporate sustainability training, ESG compliance workshops, and organizational restructuring for eco-efficiency.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="4 events" data-ar="٤ فعاليات">4 events</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>450+</span></div><button class="org-conn"><span data-en="Connect" data-ar="تواصل">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
-                    <div class="org-card"><div class="org-banner" style="background:linear-gradient(135deg,#166534,#1a7a3e)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#166534">DY</div></div><div class="org-hr"><div class="org-name" data-en="Doha Youth Environment" data-ar="بيئة شباب الدوحة">Doha Youth Environment</div></div><div class="org-badge" data-en="NGO" data-ar="منظمة غير حكومية">NGO</div><p class="org-desc" data-en="Organizing weekly beach cleanups, desert restoration, and tree planting campaigns across Qatar." data-ar="تنظيم حملات تنظيف الشواطئ الأسبوعية واستعادة الصحراء وزراعة الأشجار.">Organizing weekly beach cleanups, desert restoration, and tree planting campaigns across Qatar.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="2 events" data-ar="فعاليتان">2 events</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>180+</span></div><button class="org-conn"><span data-en="Connect" data-ar="تواصل">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
+                <div class="org-grid" id="org-grid">
+                    <div class="org-card" data-type="NGOs"><div class="org-banner" style="background:linear-gradient(135deg,#1a5c38,#2d7a4f)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#1a5c38">QE</div></div><div class="org-hr"><div class="org-name" data-en="Qatar Eco Society" data-ar="جمعية قطر البيئية">Qatar Eco Society</div><iconify-icon icon="solar:check-circle-linear" class="org-ver"></iconify-icon></div><div class="org-badge" data-en="NGO" data-ar="منظمة غير حكومية">NGO</div><p class="org-desc" data-en="Preserving Qatar's coastal ecosystems through microplastic audits and community-driven cleanups." data-ar="حماية النظم البيئية الساحلية في قطر من خلال تدقيق البلاستيك وحملات التنظيف.">Preserving Qatar's coastal ecosystems through microplastic audits and community-driven cleanups.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="3 events" data-ar="٣ فعاليات">3 events</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>240+</span></div><button class="org-conn" onclick="showConnectToast(this)"><span data-en="Connect" data-ar="تواصل">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
+                    <div class="org-card" data-type="Student Clubs"><div class="org-banner" style="background:linear-gradient(135deg,#1e3a5f,#2d5986)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#1e3a5f">QU</div></div><div class="org-hr"><div class="org-name" data-en="QU Green Innovators" data-ar="مبتكرو قطر الخضر">QU Green Innovators</div><iconify-icon icon="solar:check-circle-linear" class="org-ver"></iconify-icon></div><div class="org-badge" data-en="Student Club" data-ar="نادٍ طلابي">Student Club</div><p class="org-desc" data-en="Building renewable tech prototypes and advocating for sustainable campus policies at Qatar University." data-ar="بناء نماذج تقنية متجددة والدفاع عن سياسات مستدامة في جامعة قطر.">Building renewable tech prototypes and advocating for sustainable campus policies at Qatar University.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="1 event" data-ar="فعالية">1 event</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>85+</span></div><button class="org-conn" onclick="showConnectToast(this)"><span data-en="Connect" data-ar="تواصل">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
+                    <div class="org-card" data-type="Eco-Businesses"><div class="org-banner" style="background:linear-gradient(135deg,#c4622d,#e07a45)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#c4622d">GF</div></div><div class="org-hr"><div class="org-name" data-en="Green Future Inc." data-ar="شركة المستقبل الأخضر">Green Future Inc.</div><iconify-icon icon="solar:check-circle-linear" class="org-ver"></iconify-icon></div><div class="org-badge" data-en="Eco-Business" data-ar="شركة بيئية">Eco-Business</div><p class="org-desc" data-en="Corporate sustainability training, ESG compliance workshops, and organizational restructuring for eco-efficiency." data-ar="تدريب على الاستدامة المؤسسية وورش امتثال بيئي وإعادة هيكلة.">Corporate sustainability training, ESG compliance workshops, and organizational restructuring for eco-efficiency.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="4 events" data-ar="٤ فعاليات">4 events</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>450+</span></div><button class="org-conn" onclick="showConnectToast(this)"><span data-en="Connect" data-ar="تواصل">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
+                    <div class="org-card" data-type="NGOs"><div class="org-banner" style="background:linear-gradient(135deg,#166534,#1a7a3e)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#166534">DY</div></div><div class="org-hr"><div class="org-name" data-en="Doha Youth Environment" data-ar="بيئة شباب الدوحة">Doha Youth Environment</div></div><div class="org-badge" data-en="NGO" data-ar="منظمة غير حكومية">NGO</div><p class="org-desc" data-en="Organizing weekly beach cleanups, desert restoration, and tree planting campaigns across Qatar." data-ar="تنظيم حملات تنظيف الشواطئ الأسبوعية واستعادة الصحراء وزراعة الأشجار.">Organizing weekly beach cleanups, desert restoration, and tree planting campaigns across Qatar.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="2 events" data-ar="فعاليتان">2 events</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>180+</span></div><button class="org-conn" onclick="showConnectToast(this)"><span data-en="Connect" data-ar="تواصل">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
                 </div>
             </div>
 
             <!-- ═══ RESOURCES ═══ -->
             <div class="sec" id="sec-resources">
-                <div class="res-hero">
-                    <h2><span data-en="Everything you need to " data-ar="كل ما تحتاجه ">Everything you need to </span><em data-en="drive climate action." data-ar="لقيادة العمل المناخي.">drive climate action.</em></h2>
-                    <p style="margin-top:0.4rem" data-en="Playbooks, guides, interviews and more — curated for Qatar's sustainability community." data-ar="كتيبات وأدلة ومقابلات وأكثر — مختارة لمجتمع الاستدامة في قطر.">Playbooks, guides, interviews and more — curated for Qatar's sustainability community.</p>
+
+                <!-- FEATURED HERO -->
+                <div class="res-featured">
+                    <div class="res-feat-body">
+                        <div class="res-feat-eyebrow" data-en="Featured" data-ar="مميز">Featured</div>
+                        <h2 class="res-feat-title"><span data-en="Qatar's " data-ar="رحلة قطر ">Qatar's </span><em data-en="Climate Journey" data-ar="المناخية">Climate Journey</em></h2>
+                        <p class="res-feat-desc" data-en="Qatar's National Vision 2030 commits to balancing economic growth with environmental stewardship. The National Environment and Climate Change Strategy (NECCS) sets targets for reducing carbon intensity, expanding renewable energy to 20% by 2030, and protecting critical ecosystems like Al Thakira's mangroves and the Arabian Gulf's coral reefs." data-ar="تلتزم رؤية قطر الوطنية ٢٠٣٠ بتحقيق التوازن بين النمو الاقتصادي والمحافظة على البيئة. تحدد الاستراتيجية الوطنية للبيئة وتغير المناخ أهدافاً لخفض كثافة الكربون وتوسيع الطاقة المتجددة إلى ٢٠٪ بحلول ٢٠٣٠ وحماية النظم البيئية الحيوية كمانغروف الذخيرة والشعاب المرجانية في الخليج العربي.">Qatar's National Vision 2030 commits to balancing economic growth with environmental stewardship. The National Environment and Climate Change Strategy (NECCS) sets targets for reducing carbon intensity, expanding renewable energy to 20% by 2030, and protecting critical ecosystems like Al Thakira's mangroves and the Arabian Gulf's coral reefs.</p>
+                        <div class="res-feat-stats">
+                            <div class="res-feat-stat"><span class="res-feat-stat-num">20%</span><span class="res-feat-stat-label" data-en="Renewable by 2030" data-ar="طاقة متجددة بحلول ٢٠٣٠">Renewable by 2030</span></div>
+                            <div class="res-feat-stat"><span class="res-feat-stat-num">25%</span><span class="res-feat-stat-label" data-en="Carbon Reduction" data-ar="خفض الكربون">Carbon Reduction</span></div>
+                            <div class="res-feat-stat"><span class="res-feat-stat-num">800MW</span><span class="res-feat-stat-label" data-en="Al Kharsaah Solar" data-ar="محطة الخرسعة الشمسية">Al Kharsaah Solar</span></div>
+                        </div>
+                    </div>
                 </div>
+
+                <!-- RESEARCH CATEGORIES -->
+                <div class="sh" style="margin-bottom:0.85rem"><h2 class="sh-title" data-en="Research Categories" data-ar="فئات البحث">Research Categories</h2></div>
                 <div class="res-cats">
-                    <div class="res-cat"><div class="res-cat-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:book-2-linear"></iconify-icon></div><h3 data-en="Featured Playbooks" data-ar="الكتيبات المميزة">Featured Playbooks</h3><p data-en="Step-by-step guides for organizing cleanups, planting drives, and workshops." data-ar="أدلة لتنظيم حملات التنظيف ومبادرات الزراعة وورش العمل.">Step-by-step guides for organizing cleanups, planting drives, and workshops.</p><div class="res-count" data-en="8 playbooks available" data-ar="٨ كتيبات متاحة">8 playbooks available</div></div>
-                    <div class="res-cat"><div class="res-cat-icon" style="background:rgba(196,98,45,0.1);color:var(--rust)"><iconify-icon icon="solar:play-circle-linear"></iconify-icon></div><h3 data-en="Exclusive Interviews" data-ar="مقابلات حصرية">Exclusive Interviews</h3><p data-en="Insights from Qatar's top environmental leaders, scientists and youth advocates." data-ar="رؤى من كبار القادة البيئيين والعلماء والمدافعين عن الشباب في قطر.">Insights from Qatar's top environmental leaders, scientists and youth advocates.</p><div class="res-count" data-en="12 interviews available" data-ar="١٢ مقابلة متاحة">12 interviews available</div></div>
-                    <div class="res-cat"><div class="res-cat-icon" style="background:rgba(168,224,99,0.2);color:#4a7c20"><iconify-icon icon="solar:map-linear"></iconify-icon></div><h3 data-en="Vision 2030 Guides" data-ar="أدلة رؤية ٢٠٣٠">Vision 2030 Guides</h3><p data-en="Understand Qatar's National Vision 2030 environmental pillar and how your work contributes." data-ar="افهم الركيزة البيئية لرؤية قطر الوطنية ٢٠٣٠ وكيف يساهم عملك فيها.">Understand Qatar's National Vision 2030 environmental pillar and how your work contributes.</p><div class="res-count" data-en="5 guides available" data-ar="٥ أدلة متاحة">5 guides available</div></div>
-                    <div class="res-cat"><div class="res-cat-icon" style="background:rgba(0,0,0,0.05);color:rgba(0,0,0,0.45)"><iconify-icon icon="solar:calendar-linear"></iconify-icon></div><h3 data-en="Active Competitions" data-ar="المسابقات النشطة">Active Competitions</h3><p data-en="Grants, hackathons, and competitions open to youth across Qatar right now." data-ar="منح وهاكاثونات ومسابقات مفتوحة للشباب في قطر الآن.">Grants, hackathons, and competitions open to youth across Qatar right now.</p><div class="res-count" data-en="3 open now" data-ar="٣ مفتوحة الآن">3 open now</div></div>
+                    <div class="res-cat">
+                        <span class="res-cat-emoji">🌍</span>
+                        <h3 data-en="Qatar & the Gulf" data-ar="قطر والخليج">Qatar & the Gulf</h3>
+                        <p data-en="Local climate efforts by QNCC, Earthna Center for a Sustainable Future, and the Middle East Climate Conference (MECC) initiatives." data-ar="الجهود المناخية المحلية من اللجنة الوطنية لتغير المناخ ومركز أرضنا ومبادرات مؤتمر الشرق الأوسط للمناخ.">Local climate efforts by QNCC, Earthna Center for a Sustainable Future, and the Middle East Climate Conference (MECC) initiatives.</p>
+                        <div class="res-cat-count"><iconify-icon icon="solar:book-2-linear" style="font-size:0.75rem"></iconify-icon><span data-en="14 resources" data-ar="١٤ مصدراً">14 resources</span></div>
+                    </div>
+                    <div class="res-cat">
+                        <span class="res-cat-emoji">🌱</span>
+                        <h3 data-en="Global Climate Action" data-ar="العمل المناخي العالمي">Global Climate Action</h3>
+                        <p data-en="IPCC assessment reports, COP summit outcomes, Paris Agreement explainers, and global net-zero transition frameworks." data-ar="تقارير تقييم الهيئة الحكومية الدولية ونتائج مؤتمرات الأطراف واتفاقية باريس وأطر التحول العالمي.">IPCC assessment reports, COP summit outcomes, Paris Agreement explainers, and global net-zero transition frameworks.</p>
+                        <div class="res-cat-count"><iconify-icon icon="solar:book-2-linear" style="font-size:0.75rem"></iconify-icon><span data-en="22 resources" data-ar="٢٢ مصدراً">22 resources</span></div>
+                    </div>
+                    <div class="res-cat">
+                        <span class="res-cat-emoji">☀️</span>
+                        <h3 data-en="Clean Energy" data-ar="الطاقة النظيفة">Clean Energy</h3>
+                        <p data-en="Qatar's Al Kharsaah solar plant, LNG transition strategy, hydrogen roadmap, and the global shift to renewables." data-ar="محطة الخرسعة الشمسية واستراتيجية التحول للغاز الطبيعي المسال وخارطة الهيدروجين والتحول العالمي للطاقة المتجددة.">Qatar's Al Kharsaah solar plant, LNG transition strategy, hydrogen roadmap, and the global shift to renewables.</p>
+                        <div class="res-cat-count"><iconify-icon icon="solar:book-2-linear" style="font-size:0.75rem"></iconify-icon><span data-en="18 resources" data-ar="١٨ مصدراً">18 resources</span></div>
+                    </div>
+                    <div class="res-cat">
+                        <span class="res-cat-emoji">🧑‍🤝‍🧑</span>
+                        <h3 data-en="Youth & Community" data-ar="الشباب والمجتمع">Youth & Community</h3>
+                        <p data-en="How young people worldwide are driving climate action — from Fridays for Future to campus sustainability clubs." data-ar="كيف يقود الشباب حول العالم العمل المناخي — من حركة أيام الجمعة من أجل المستقبل إلى أندية الاستدامة الجامعية.">How young people worldwide are driving climate action — from Fridays for Future to campus sustainability clubs.</p>
+                        <div class="res-cat-count"><iconify-icon icon="solar:book-2-linear" style="font-size:0.75rem"></iconify-icon><span data-en="11 resources" data-ar="١١ مصدراً">11 resources</span></div>
+                    </div>
                 </div>
-                <div class="sh"><h2 class="sh-title" data-en="Latest Resources" data-ar="أحدث الموارد">Latest Resources</h2></div>
+
+                <!-- RECENT READS -->
+                <div class="res-reads-header">
+                    <h2 class="res-reads-title" data-en="Recent Reads" data-ar="قراءات حديثة">Recent Reads</h2>
+                </div>
                 <div class="res-list">
-                    <div class="res-item"><div class="ri-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:book-2-linear"></iconify-icon></div><div class="ri-body"><div class="ri-title" data-en="The Paperless Week Playbook" data-ar="كتيب الأسبوع الخالي من الورق">The Paperless Week Playbook</div><div class="ri-meta" data-en="Playbook · 12 min read" data-ar="كتيب · ١٢ دقيقة قراءة">Playbook · 12 min read</div></div><div class="ri-action"><span data-en="Download" data-ar="تحميل">Download</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></div></div>
-                    <div class="res-item"><div class="ri-icon" style="background:rgba(196,98,45,0.1);color:var(--rust)"><iconify-icon icon="solar:play-circle-linear"></iconify-icon></div><div class="ri-body"><div class="ri-title" data-en="Interview: Qatar's Mangrove Conservation Lead" data-ar="مقابلة: قائد الحفاظ على المانغروف في قطر">Interview: Qatar's Mangrove Conservation Lead</div><div class="ri-meta" data-en="Interview · 24 min watch" data-ar="مقابلة · ٢٤ دقيقة مشاهدة">Interview · 24 min watch</div></div><div class="ri-action"><span data-en="Watch" data-ar="مشاهدة">Watch</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></div></div>
-                    <div class="res-item"><div class="ri-icon" style="background:rgba(168,224,99,0.2);color:#4a7c20"><iconify-icon icon="solar:map-linear"></iconify-icon></div><div class="ri-body"><div class="ri-title" data-en="QNV 2030: Environmental Development Pillar Guide" data-ar="دليل ركيزة التنمية البيئية في رؤية قطر ٢٠٣٠">QNV 2030: Environmental Development Pillar Guide</div><div class="ri-meta" data-en="Guide · 8 min read" data-ar="دليل · ٨ دقائق قراءة">Guide · 8 min read</div></div><div class="ri-action"><span data-en="Read" data-ar="قراءة">Read</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></div></div>
-                    <div class="res-item"><div class="ri-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:book-2-linear"></iconify-icon></div><div class="ri-body"><div class="ri-title" data-en="Eco-Club Starter Kit" data-ar="كتيب بدء النادي البيئي">Eco-Club Starter Kit</div><div class="ri-meta" data-en="Toolkit · 18 min read" data-ar="أداة · ١٨ دقيقة قراءة">Toolkit · 18 min read</div></div><div class="ri-action"><span data-en="Download" data-ar="تحميل">Download</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></div></div>
-                    <div class="res-item"><div class="ri-icon" style="background:rgba(0,0,0,0.05);color:rgba(0,0,0,0.45)"><iconify-icon icon="solar:calendar-linear"></iconify-icon></div><div class="ri-body"><div class="ri-title" data-en="Green Innovation Hackathon 2024" data-ar="هاكاثون الابتكار الأخضر ٢٠٢٤">Green Innovation Hackathon 2024</div><div class="ri-meta" data-en="Competition · Deadline: Oct 15" data-ar="مسابقة · الموعد النهائي: ١٥ أكتوبر">Competition · Deadline: Oct 15</div></div><div class="ri-action"><span data-en="Apply" data-ar="تقديم">Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></div></div>
+                    <div class="res-item bl-green">
+                        <div class="ri-body">
+                            <div class="ri-title" data-en="Qatar's National Environment and Climate Change Strategy Explained" data-ar="شرح الاستراتيجية الوطنية لقطر للبيئة وتغير المناخ">Qatar's National Environment and Climate Change Strategy Explained</div>
+                            <div class="ri-source" data-en="Earthna Center · Qatar Foundation" data-ar="مركز أرضنا · مؤسسة قطر">Earthna Center · Qatar Foundation</div>
+                            <div class="ri-row">
+                                <span class="ri-badge guide" data-en="Guide" data-ar="دليل">Guide</span>
+                                <span class="ri-time" data-en="12 min read" data-ar="١٢ دقيقة قراءة">12 min read</span>
+                            </div>
+                        </div>
+                        <button class="ri-read-btn"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                    </div>
+                    <div class="res-item bl-lime">
+                        <div class="ri-body">
+                            <div class="ri-title" data-en="IPCC AR6 Synthesis Report: Key Findings for the Gulf Region" data-ar="التقرير التجميعي السادس للهيئة الحكومية الدولية: النتائج الرئيسية لمنطقة الخليج">IPCC AR6 Synthesis Report: Key Findings for the Gulf Region</div>
+                            <div class="ri-source" data-en="IPCC · United Nations" data-ar="الهيئة الحكومية الدولية · الأمم المتحدة">IPCC · United Nations</div>
+                            <div class="ri-row">
+                                <span class="ri-badge report" data-en="Report" data-ar="تقرير">Report</span>
+                                <span class="ri-time" data-en="25 min read" data-ar="٢٥ دقيقة قراءة">25 min read</span>
+                            </div>
+                        </div>
+                        <button class="ri-read-btn"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                    </div>
+                    <div class="res-item bl-rust">
+                        <div class="ri-body">
+                            <div class="ri-title" data-en="Inside Al Kharsaah: Qatar's 800MW Solar Power Plant" data-ar="داخل الخرسعة: محطة قطر للطاقة الشمسية بقدرة ٨٠٠ ميغاواط">Inside Al Kharsaah: Qatar's 800MW Solar Power Plant</div>
+                            <div class="ri-source" data-en="QatarEnergy · Siraj Energy" data-ar="قطر للطاقة · سراج للطاقة">QatarEnergy · Siraj Energy</div>
+                            <div class="ri-row">
+                                <span class="ri-badge video" data-en="Video" data-ar="فيديو">Video</span>
+                                <span class="ri-time" data-en="18 min watch" data-ar="١٨ دقيقة مشاهدة">18 min watch</span>
+                            </div>
+                        </div>
+                        <button class="ri-read-btn"><span data-en="Watch" data-ar="شاهد">Watch</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                    </div>
+                    <div class="res-item bl-green">
+                        <div class="ri-body">
+                            <div class="ri-title" data-en="COP28 to COP29: What Changed for Small Gulf States" data-ar="من مؤتمر الأطراف ٢٨ إلى ٢٩: ما الذي تغير لدول الخليج الصغيرة">COP28 to COP29: What Changed for Small Gulf States</div>
+                            <div class="ri-source" data-en="UNEP · Climate Action Tracker" data-ar="برنامج الأمم المتحدة للبيئة · متتبع العمل المناخي">UNEP · Climate Action Tracker</div>
+                            <div class="ri-row">
+                                <span class="ri-badge article" data-en="Article" data-ar="مقال">Article</span>
+                                <span class="ri-time" data-en="8 min read" data-ar="٨ دقائق قراءة">8 min read</span>
+                            </div>
+                        </div>
+                        <button class="ri-read-btn"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                    </div>
+                    <div class="res-item bl-lime">
+                        <div class="ri-body">
+                            <div class="ri-title" data-en="Mangrove Conservation in Al Thakira: A Community Success Story" data-ar="الحفاظ على المانغروف في الذخيرة: قصة نجاح مجتمعية">Mangrove Conservation in Al Thakira: A Community Success Story</div>
+                            <div class="ri-source" data-en="Qatar National Council for Climate Change" data-ar="اللجنة الوطنية القطرية لتغير المناخ">Qatar National Council for Climate Change</div>
+                            <div class="ri-row">
+                                <span class="ri-badge article" data-en="Article" data-ar="مقال">Article</span>
+                                <span class="ri-time" data-en="6 min read" data-ar="٦ دقائق قراءة">6 min read</span>
+                            </div>
+                        </div>
+                        <button class="ri-read-btn"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                    </div>
+                    <div class="res-item bl-rust">
+                        <div class="ri-body">
+                            <div class="ri-title" data-en="The Paris Agreement in Plain Language: A Youth Guide" data-ar="اتفاقية باريس بلغة بسيطة: دليل الشباب">The Paris Agreement in Plain Language: A Youth Guide</div>
+                            <div class="ri-source" data-en="UNICEF · UN Climate Change" data-ar="اليونيسف · تغير المناخ في الأمم المتحدة">UNICEF · UN Climate Change</div>
+                            <div class="ri-row">
+                                <span class="ri-badge guide" data-en="Guide" data-ar="دليل">Guide</span>
+                                <span class="ri-time" data-en="15 min read" data-ar="١٥ دقيقة قراءة">15 min read</span>
+                            </div>
+                        </div>
+                        <button class="ri-read-btn"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                    </div>
+                    <div class="res-item bl-green">
+                        <div class="ri-body">
+                            <div class="ri-title" data-en="Qatar's Hydrogen Roadmap: From LNG to Green Energy" data-ar="خارطة طريق الهيدروجين في قطر: من الغاز الطبيعي إلى الطاقة الخضراء">Qatar's Hydrogen Roadmap: From LNG to Green Energy</div>
+                            <div class="ri-source" data-en="QatarEnergy · International Energy Agency" data-ar="قطر للطاقة · وكالة الطاقة الدولية">QatarEnergy · International Energy Agency</div>
+                            <div class="ri-row">
+                                <span class="ri-badge report" data-en="Report" data-ar="تقرير">Report</span>
+                                <span class="ri-time" data-en="20 min read" data-ar="٢٠ دقيقة قراءة">20 min read</span>
+                            </div>
+                        </div>
+                        <button class="ri-read-btn"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                    </div>
+                    <div class="res-item bl-lime">
+                        <div class="ri-body">
+                            <div class="ri-title" data-en="How University Students Are Building Climate Clubs Across the Gulf" data-ar="كيف يبني طلاب الجامعات أندية المناخ في دول الخليج">How University Students Are Building Climate Clubs Across the Gulf</div>
+                            <div class="ri-source" data-en="Earthna Center · Education City" data-ar="مركز أرضنا · المدينة التعليمية">Earthna Center · Education City</div>
+                            <div class="ri-row">
+                                <span class="ri-badge article" data-en="Article" data-ar="مقال">Article</span>
+                                <span class="ri-time" data-en="10 min read" data-ar="١٠ دقائق قراءة">10 min read</span>
+                            </div>
+                        </div>
+                        <button class="ri-read-btn"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                    </div>
                 </div>
             </div>
 
@@ -578,9 +1000,16 @@
                     <div class="p-body">
                         <div class="p-av-row">
                             <div class="p-av" id="p-avatar">M</div>
-                            <button class="p-edit"><iconify-icon icon="solar:pen-linear"></iconify-icon><span data-en="Edit Profile" data-ar="تعديل الملف">Edit Profile</span></button>
+                            <button class="p-edit" id="edit-profile-btn" onclick="toggleEditProfile()"><iconify-icon icon="solar:pen-linear"></iconify-icon><span data-en="Edit Profile" data-ar="تعديل الملف">Edit Profile</span></button>
                         </div>
                         <div class="p-name" id="p-name">Mohammed Elfatih</div>
+                        <div id="edit-profile-form" style="display:none;margin-top:0.5rem;margin-bottom:0.5rem">
+                            <div style="display:flex;gap:0.5rem;align-items:center">
+                                <input id="edit-name-input" type="text" style="flex:1;padding:0.55rem 0.85rem;border:1px solid rgba(0,0,0,0.12);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.85rem;outline:none;background:white;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='rgba(0,0,0,0.12)'">
+                                <button onclick="saveProfile()" style="background:var(--green);color:#fff;border:none;border-radius:9px;padding:0.55rem 1rem;font-size:0.78rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:background 0.15s" onmouseover="this.style.background='var(--green-light)'" onmouseout="this.style.background='var(--green)'"><span data-en="Save" data-ar="حفظ">Save</span></button>
+                                <button onclick="toggleEditProfile()" style="background:transparent;color:rgba(0,0,0,0.45);border:1px solid rgba(0,0,0,0.1);border-radius:9px;padding:0.55rem 0.85rem;font-size:0.78rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s" onmouseover="this.style.borderColor='rgba(0,0,0,0.25)'" onmouseout="this.style.borderColor='rgba(0,0,0,0.1)'"><span data-en="Cancel" data-ar="إلغاء">Cancel</span></button>
+                            </div>
+                        </div>
                         <div class="p-role" data-en="Climate Activist · EcoAwareness QA Founder · Doha, Qatar" data-ar="ناشط مناخي · مؤسس EcoAwareness QA · الدوحة، قطر">Climate Activist · EcoAwareness QA Founder · Doha, Qatar</div>
                         <div class="p-stats">
                             <div class="p-stat"><div class="p-stat-num">47</div><div class="p-stat-label" data-en="Volunteer Hours" data-ar="ساعات تطوع">Volunteer Hours</div></div>
@@ -592,14 +1021,453 @@
                 <div class="settings-card">
                     <h3 data-en="Account Settings" data-ar="إعدادات الحساب">Account Settings</h3>
                     <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:letter-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Email Address" data-ar="البريد الإلكتروني">Email Address</div><div class="setting-sub" id="p-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e78a888f868a8a828383888993818895808293a7808a868e8bc984888a">[email&#160;protected]</a></div></div></div><span style="font-size:0.68rem;background:rgba(26,92,56,0.1);color:var(--green);border-radius:100px;padding:0.18rem 0.55rem" data-en="Verified" data-ar="موثق">Verified</span></div>
-                    <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:bell-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Notifications" data-ar="الإشعارات">Notifications</div><div class="setting-sub" data-en="Email updates for new opportunities" data-ar="تحديثات بريدية للفرص الجديدة">Email updates for new opportunities</div></div></div><div style="width:34px;height:18px;background:var(--green);border-radius:100px;position:relative;cursor:pointer"><span style="position:absolute;right:2px;top:2px;width:14px;height:14px;background:white;border-radius:50%;display:block"></span></div></div>
+                    <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:bell-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Notifications" data-ar="الإشعارات">Notifications</div><div class="setting-sub" data-en="Email updates for new opportunities" data-ar="تحديثات بريدية للفرص الجديدة">Email updates for new opportunities</div></div></div><div id="notif-toggle" onclick="toggleNotifications()" style="width:34px;height:18px;border-radius:100px;position:relative;cursor:pointer;transition:background 0.25s"><span id="notif-knob" style="position:absolute;top:2px;width:14px;height:14px;background:white;border-radius:50%;display:block;transition:left 0.25s,right 0.25s;box-shadow:0 1px 3px rgba(0,0,0,0.15)"></span></div></div>
                     <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:logout-linear" style="color:rgba(196,98,45,0.7)"></iconify-icon><div class="setting-label" style="color:var(--rust)" data-en="Sign Out" data-ar="تسجيل الخروج">Sign Out</div></div><button id="p-logout" onclick="doLogout()" style="font-size:0.75rem;background:rgba(196,98,45,0.1);color:var(--rust);border:none;border-radius:100px;padding:0.32rem 0.8rem;cursor:pointer;font-family:'DM Sans',sans-serif" data-en="Sign Out" data-ar="خروج">Sign Out</button></div>
+                </div>
+            </div>
+
+            <!-- ═══ MY EVENTS ═══ -->
+            <div class="sec" id="sec-events">
+                <div style="margin-bottom:1.25rem">
+                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Your " data-ar="فعالياتك ">Your </span><em style="font-style:italic;color:var(--green)" data-en="registered events." data-ar="المسجّلة.">registered events.</em></h2>
+                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="Track your upcoming, completed, and cancelled events." data-ar="تتبّع فعالياتك القادمة والمكتملة والملغاة.">Track your upcoming, completed, and cancelled events.</p>
+                </div>
+                <div class="pills" id="evt-pills">
+                    <button class="pill active" onclick="filterEvtByPill(this,'All')" data-en="All" data-ar="الكل">All</button>
+                    <button class="pill" onclick="filterEvtByPill(this,'Upcoming')" data-en="Upcoming" data-ar="قادمة">Upcoming</button>
+                    <button class="pill" onclick="filterEvtByPill(this,'Completed')" data-en="Completed" data-ar="مكتملة">Completed</button>
+                    <button class="pill" onclick="filterEvtByPill(this,'Cancelled')" data-en="Cancelled" data-ar="ملغاة">Cancelled</button>
+                </div>
+                <div class="my-evt-list" id="my-evt-list">
+                    <div class="my-evt" data-status="Upcoming">
+                        <div class="my-evt-date"><div class="my-evt-mo" data-en="OCT" data-ar="أكت">OCT</div><div class="my-evt-dy">24</div></div>
+                        <div class="my-evt-body">
+                            <div class="my-evt-title" data-en="Mangrove Restoration Drive" data-ar="حملة استعادة المانغروف">Mangrove Restoration Drive</div>
+                            <div class="my-evt-meta">
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Al Thakira, Al Khor" data-ar="الثخيرة، الخور">Al Thakira, Al Khor</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon><span data-en="7:00 AM" data-ar="٧:٠٠ ص">7:00 AM</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar Eco Society" data-ar="جمعية قطر البيئية">Qatar Eco Society</span></span>
+                            </div>
+                        </div>
+                        <span class="evt-status upcoming" data-en="Upcoming" data-ar="قادمة">Upcoming</span>
+                    </div>
+                    <div class="my-evt" data-status="Upcoming">
+                        <div class="my-evt-date"><div class="my-evt-mo" data-en="NOV" data-ar="نوف">NOV</div><div class="my-evt-dy">02</div></div>
+                        <div class="my-evt-body">
+                            <div class="my-evt-title" data-en="Circular Economy Workshop" data-ar="ورشة الاقتصاد الدائري">Circular Economy Workshop</div>
+                            <div class="my-evt-meta">
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:monitor-linear"></iconify-icon><span data-en="Remote (Zoom)" data-ar="عن بُعد (زووم)">Remote (Zoom)</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon><span data-en="4:00 PM" data-ar="٤:٠٠ م">4:00 PM</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar National Library" data-ar="المكتبة الوطنية قطر">Qatar National Library</span></span>
+                            </div>
+                        </div>
+                        <span class="evt-status upcoming" data-en="Upcoming" data-ar="قادمة">Upcoming</span>
+                    </div>
+                    <div class="my-evt" data-status="Upcoming">
+                        <div class="my-evt-date"><div class="my-evt-mo" data-en="NOV" data-ar="نوف">NOV</div><div class="my-evt-dy">15</div></div>
+                        <div class="my-evt-body">
+                            <div class="my-evt-title" data-en="Desert Cleanup Campaign" data-ar="حملة تنظيف الصحراء">Desert Cleanup Campaign</div>
+                            <div class="my-evt-meta">
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Sealine Beach, Mesaieed" data-ar="شاطئ سيلاين، مسيعيد">Sealine Beach, Mesaieed</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon><span data-en="6:00 AM" data-ar="٦:٠٠ ص">6:00 AM</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Doha Youth Environment" data-ar="بيئة شباب الدوحة">Doha Youth Environment</span></span>
+                            </div>
+                        </div>
+                        <span class="evt-status upcoming" data-en="Upcoming" data-ar="قادمة">Upcoming</span>
+                    </div>
+                    <div class="my-evt" data-status="Completed">
+                        <div class="my-evt-date"><div class="my-evt-mo" data-en="SEP" data-ar="سبت">SEP</div><div class="my-evt-dy">10</div></div>
+                        <div class="my-evt-body">
+                            <div class="my-evt-title" data-en="Beach Cleanup & Microplastics Audit" data-ar="تنظيف الشاطئ وتدقيق البلاستيك">Beach Cleanup & Microplastics Audit</div>
+                            <div class="my-evt-meta">
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Katara Beach, Doha" data-ar="شاطئ كتارا، الدوحة">Katara Beach, Doha</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon><span data-en="6:30 AM" data-ar="٦:٣٠ ص">6:30 AM</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar Eco Society" data-ar="جمعية قطر البيئية">Qatar Eco Society</span></span>
+                            </div>
+                        </div>
+                        <span class="evt-status completed" data-en="Completed" data-ar="مكتملة">Completed</span>
+                    </div>
+                    <div class="my-evt" data-status="Completed">
+                        <div class="my-evt-date"><div class="my-evt-mo" data-en="AUG" data-ar="أغس">AUG</div><div class="my-evt-dy">22</div></div>
+                        <div class="my-evt-body">
+                            <div class="my-evt-title" data-en="Solar Panel Installation Workshop" data-ar="ورشة تركيب الألواح الشمسية">Solar Panel Installation Workshop</div>
+                            <div class="my-evt-meta">
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="QU Research Complex" data-ar="مجمع البحوث، جامعة قطر">QU Research Complex</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon><span data-en="10:00 AM" data-ar="١٠:٠٠ ص">10:00 AM</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Qatar University" data-ar="جامعة قطر">Qatar University</span></span>
+                            </div>
+                        </div>
+                        <span class="evt-status completed" data-en="Completed" data-ar="مكتملة">Completed</span>
+                    </div>
+                    <div class="my-evt" data-status="Completed">
+                        <div class="my-evt-date"><div class="my-evt-mo" data-en="JUL" data-ar="يول">JUL</div><div class="my-evt-dy">18</div></div>
+                        <div class="my-evt-body">
+                            <div class="my-evt-title" data-en="Sustainable Fashion Meetup" data-ar="لقاء الأزياء المستدامة">Sustainable Fashion Meetup</div>
+                            <div class="my-evt-meta">
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Msheireb Downtown, Doha" data-ar="مشيرب، الدوحة">Msheireb Downtown, Doha</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon><span data-en="5:00 PM" data-ar="٥:٠٠ م">5:00 PM</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="Green Future Inc." data-ar="شركة المستقبل الأخضر">Green Future Inc.</span></span>
+                            </div>
+                        </div>
+                        <span class="evt-status completed" data-en="Completed" data-ar="مكتملة">Completed</span>
+                    </div>
+                    <div class="my-evt" data-status="Cancelled">
+                        <div class="my-evt-date"><div class="my-evt-mo" data-en="JUN" data-ar="يون">JUN</div><div class="my-evt-dy">05</div></div>
+                        <div class="my-evt-body">
+                            <div class="my-evt-title" data-en="World Environment Day Rally" data-ar="مسيرة يوم البيئة العالمي">World Environment Day Rally</div>
+                            <div class="my-evt-meta">
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Aspire Park, Doha" data-ar="حديقة أسباير، الدوحة">Aspire Park, Doha</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon><span data-en="8:00 AM" data-ar="٨:٠٠ ص">8:00 AM</span></span>
+                                <span class="my-evt-meta-item"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="EcoQatar Foundation" data-ar="مؤسسة إيكو قطر">EcoQatar Foundation</span></span>
+                            </div>
+                        </div>
+                        <span class="evt-status cancelled" data-en="Cancelled" data-ar="ملغاة">Cancelled</span>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ MY IMPACT ═══ -->
+            <div class="sec" id="sec-impact">
+                <div style="margin-bottom:1.25rem">
+                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Your " data-ar="أثرك ">Your </span><em style="font-style:italic;color:var(--green)" data-en="environmental impact." data-ar="البيئي.">environmental impact.</em></h2>
+                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="See the difference you're making for Qatar's environment." data-ar="شاهد الفرق الذي تصنعه لبيئة قطر.">See the difference you're making for Qatar's environment.</p>
+                </div>
+                <div class="impact-stats">
+                    <div class="impact-card"><div class="impact-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon></div><div class="impact-num">47</div><div class="impact-label" data-en="Volunteer Hours" data-ar="ساعة تطوع">Volunteer Hours</div><div class="impact-trend">↑ <span data-en="12 this month" data-ar="١٢ هذا الشهر">12 this month</span></div></div>
+                    <div class="impact-card"><div class="impact-icon" style="background:rgba(168,224,99,0.2);color:#4a7c20"><iconify-icon icon="solar:leaf-linear"></iconify-icon></div><div class="impact-num">8</div><div class="impact-label" data-en="Events Attended" data-ar="فعالية حضرتها">Events Attended</div><div class="impact-trend">↑ <span data-en="3 this month" data-ar="٣ هذا الشهر">3 this month</span></div></div>
+                    <div class="impact-card"><div class="impact-icon" style="background:rgba(196,98,45,0.1);color:var(--rust)"><iconify-icon icon="solar:cloud-linear"></iconify-icon></div><div class="impact-num">1.2t</div><div class="impact-label" data-en="CO₂ Offset" data-ar="تعويض ثاني أكسيد الكربون">CO₂ Offset</div><div class="impact-trend">↑ <span data-en="0.3t this month" data-ar="٠٫٣ طن هذا الشهر">0.3t this month</span></div></div>
+                    <div class="impact-card"><div class="impact-icon" style="background:rgba(200,184,154,0.25);color:#7a6a50"><iconify-icon icon="solar:tree-linear"></iconify-icon></div><div class="impact-num">23</div><div class="impact-label" data-en="Trees Planted" data-ar="شجرة مزروعة">Trees Planted</div><div class="impact-trend">↑ <span data-en="5 this month" data-ar="٥ هذا الشهر">5 this month</span></div></div>
+                </div>
+
+                <div class="goal-card">
+                    <div class="goal-ring-wrap">
+                        <svg viewBox="0 0 120 120">
+                            <circle class="goal-ring-bg" cx="60" cy="60" r="50"></circle>
+                            <circle class="goal-ring-fill" cx="60" cy="60" r="50" stroke-dasharray="314.16" stroke-dashoffset="166.5"></circle>
+                        </svg>
+                        <div class="goal-ring-text">
+                            <span class="goal-ring-num">47%</span>
+                            <span class="goal-ring-sub" data-en="of goal" data-ar="من الهدف">of goal</span>
+                        </div>
+                    </div>
+                    <div class="goal-info">
+                        <h3 class="goal-title" data-en="Yearly Goal: 100 Hours" data-ar="الهدف السنوي: ١٠٠ ساعة">Yearly Goal: 100 Hours</h3>
+                        <p class="goal-desc" data-en="You've completed 47 of your 100-hour volunteer goal for 2024. Keep up the great work — you're ahead of last year's pace!" data-ar="أكملت ٤٧ من أصل ١٠٠ ساعة تطوع لعام ٢٠٢٤. استمر في العمل الرائع — أنت متقدم على وتيرة العام الماضي!">You've completed 47 of your 100-hour volunteer goal for 2024. Keep up the great work — you're ahead of last year's pace!</p>
+                        <div class="goal-bar-wrap">
+                            <div class="goal-bar"><div class="goal-bar-fill" style="width:47%"></div></div>
+                            <span class="goal-bar-label" data-en="47 / 100 hrs" data-ar="٤٧ / ١٠٠ ساعة">47 / 100 hrs</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="timeline-card">
+                    <h3 data-en="Activity Timeline" data-ar="الجدول الزمني للنشاط">Activity Timeline</h3>
+                    <div class="timeline">
+                        <div class="tl-item">
+                            <div class="tl-dot"></div>
+                            <div class="tl-month" data-en="October 2024" data-ar="أكتوبر ٢٠٢٤">October 2024</div>
+                            <div class="tl-text"><strong data-en="12 hours" data-ar="١٢ ساعة">12 hours</strong> — <span data-en="Registered for Mangrove Restoration Drive. Participated in Beach Cleanup prep session." data-ar="سجّلت في حملة استعادة المانغروف. شاركت في جلسة تحضيرية لتنظيف الشاطئ.">Registered for Mangrove Restoration Drive. Participated in Beach Cleanup prep session.</span></div>
+                        </div>
+                        <div class="tl-item">
+                            <div class="tl-dot"></div>
+                            <div class="tl-month" data-en="September 2024" data-ar="سبتمبر ٢٠٢٤">September 2024</div>
+                            <div class="tl-text"><strong data-en="8 hours" data-ar="٨ ساعات">8 hours</strong> — <span data-en="Completed Beach Cleanup & Microplastics Audit at Katara Beach. Collected 12kg of waste." data-ar="أكملت تنظيف الشاطئ وتدقيق البلاستيك في شاطئ كتارا. جمعت ١٢ كغم من النفايات.">Completed Beach Cleanup & Microplastics Audit at Katara Beach. Collected 12kg of waste.</span></div>
+                        </div>
+                        <div class="tl-item">
+                            <div class="tl-dot"></div>
+                            <div class="tl-month" data-en="August 2024" data-ar="أغسطس ٢٠٢٤">August 2024</div>
+                            <div class="tl-text"><strong data-en="7 hours" data-ar="٧ ساعات">7 hours</strong> — <span data-en="Attended Solar Panel Installation Workshop at QU. Earned 'Renewable Energy' badge." data-ar="حضرت ورشة تركيب الألواح الشمسية في جامعة قطر. حصلت على شارة 'الطاقة المتجددة'.">Attended Solar Panel Installation Workshop at QU. Earned 'Renewable Energy' badge.</span></div>
+                        </div>
+                        <div class="tl-item">
+                            <div class="tl-dot"></div>
+                            <div class="tl-month" data-en="July 2024" data-ar="يوليو ٢٠٢٤">July 2024</div>
+                            <div class="tl-text"><strong data-en="4 hours" data-ar="٤ ساعات">4 hours</strong> — <span data-en="Sustainable Fashion Meetup at Msheireb. Connected with 3 new organizations." data-ar="لقاء الأزياء المستدامة في مشيرب. تواصلت مع ٣ منظمات جديدة.">Sustainable Fashion Meetup at Msheireb. Connected with 3 new organizations.</span></div>
+                        </div>
+                        <div class="tl-item">
+                            <div class="tl-dot dim"></div>
+                            <div class="tl-month" data-en="June 2024" data-ar="يونيو ٢٠٢٤">June 2024</div>
+                            <div class="tl-text"><strong data-en="5 hours" data-ar="٥ ساعات">5 hours</strong> — <span data-en="World Environment Day activities at Aspire Park. Planted 8 native trees." data-ar="أنشطة يوم البيئة العالمي في حديقة أسباير. زرعت ٨ أشجار محلية.">World Environment Day activities at Aspire Park. Planted 8 native trees.</span></div>
+                        </div>
+                        <div class="tl-item">
+                            <div class="tl-dot dim"></div>
+                            <div class="tl-month" data-en="May 2024" data-ar="مايو ٢٠٢٤">May 2024</div>
+                            <div class="tl-text"><strong data-en="6 hours" data-ar="٦ ساعات">6 hours</strong> — <span data-en="Desert Reforestation project in Al Shahaniya. Planted 15 ghaf seedlings." data-ar="مشروع إعادة تشجير الصحراء في الشحانية. زرعت ١٥ شتلة غاف.">Desert Reforestation project in Al Shahaniya. Planted 15 ghaf seedlings.</span></div>
+                        </div>
+                        <div class="tl-item">
+                            <div class="tl-dot dim"></div>
+                            <div class="tl-month" data-en="April 2024" data-ar="أبريل ٢٠٢٤">April 2024</div>
+                            <div class="tl-text"><strong data-en="3 hours" data-ar="٣ ساعات">3 hours</strong> — <span data-en="Joined EcoHub platform. Attended first orientation workshop online." data-ar="انضممت إلى منصة EcoHub. حضرت أول ورشة تعريفية عن بُعد.">Joined EcoHub platform. Attended first orientation workshop online.</span></div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ LEADERBOARD ═══ -->
+            <div class="sec" id="sec-leaderboard">
+                <div style="margin-bottom:1.25rem">
+                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Community " data-ar="المتصدرون في ">Community </span><em style="font-style:italic;color:var(--green)" data-en="leaderboard." data-ar="المجتمع.">leaderboard.</em></h2>
+                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="Top contributors driving climate action across Qatar." data-ar="أبرز المساهمين في قيادة العمل المناخي في قطر.">Top contributors driving climate action across Qatar.</p>
+                </div>
+                <div class="lb-full">
+                    <div class="lb-header">
+                        <span data-en="Rank" data-ar="الترتيب">Rank</span>
+                        <span></span>
+                        <span data-en="Name" data-ar="الاسم">Name</span>
+                        <span style="text-align:center" data-en="Hours" data-ar="الساعات">Hours</span>
+                        <span style="text-align:center" data-en="Events" data-ar="الفعاليات">Events</span>
+                        <span style="text-align:center" data-en="Points" data-ar="النقاط">Points</span>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank gold">1</div>
+                        <div class="lb-row-av" style="background:#dcfce7;color:#166534">F</div>
+                        <div class="lb-row-name">Fatima Al-Dosari</div>
+                        <div class="lb-row-hrs">124</div>
+                        <div class="lb-row-evts">18</div>
+                        <div class="lb-row-pts">2,480</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank silver">2</div>
+                        <div class="lb-row-av" style="background:#dbeafe;color:#1e40af">K</div>
+                        <div class="lb-row-name">Khalid Al-Emadi</div>
+                        <div class="lb-row-hrs">98</div>
+                        <div class="lb-row-evts">14</div>
+                        <div class="lb-row-pts">1,960</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank bronze">3</div>
+                        <div class="lb-row-av" style="background:#fef3c7;color:#92400e">L</div>
+                        <div class="lb-row-name">Lina Mahmoud</div>
+                        <div class="lb-row-hrs">87</div>
+                        <div class="lb-row-evts">12</div>
+                        <div class="lb-row-pts">1,740</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank">4</div>
+                        <div class="lb-row-av" style="background:#f3e8ff;color:#6b21a8">Y</div>
+                        <div class="lb-row-name">Yousef Al-Sulaiti</div>
+                        <div class="lb-row-hrs">72</div>
+                        <div class="lb-row-evts">11</div>
+                        <div class="lb-row-pts">1,440</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank">5</div>
+                        <div class="lb-row-av" style="background:#e8dfc8;color:#7a6a50">R</div>
+                        <div class="lb-row-name">Reem Al-Naimi</div>
+                        <div class="lb-row-hrs">65</div>
+                        <div class="lb-row-evts">10</div>
+                        <div class="lb-row-pts">1,300</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank">6</div>
+                        <div class="lb-row-av" style="background:#dbeafe;color:#1e40af">O</div>
+                        <div class="lb-row-name">Omar Al-Thani</div>
+                        <div class="lb-row-hrs">61</div>
+                        <div class="lb-row-evts">9</div>
+                        <div class="lb-row-pts">1,220</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank">7</div>
+                        <div class="lb-row-av" style="background:#dcfce7;color:#166534">S</div>
+                        <div class="lb-row-name">Sarah Al-Mansoori</div>
+                        <div class="lb-row-hrs">58</div>
+                        <div class="lb-row-evts">9</div>
+                        <div class="lb-row-pts">1,160</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank">8</div>
+                        <div class="lb-row-av" style="background:#fef3c7;color:#92400e">A</div>
+                        <div class="lb-row-name">Ahmed Al-Kuwari</div>
+                        <div class="lb-row-hrs">55</div>
+                        <div class="lb-row-evts">8</div>
+                        <div class="lb-row-pts">1,100</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank">9</div>
+                        <div class="lb-row-av" style="background:#f3e8ff;color:#6b21a8">N</div>
+                        <div class="lb-row-name">Noora Hassan</div>
+                        <div class="lb-row-hrs">52</div>
+                        <div class="lb-row-evts">7</div>
+                        <div class="lb-row-pts">1,040</div>
+                    </div>
+                    <div class="lb-row">
+                        <div class="lb-row-rank">10</div>
+                        <div class="lb-row-av" style="background:#dcfce7;color:#166534">H</div>
+                        <div class="lb-row-name">Hassan Al-Marri</div>
+                        <div class="lb-row-hrs">50</div>
+                        <div class="lb-row-evts">7</div>
+                        <div class="lb-row-pts">1,000</div>
+                    </div>
+                    <div class="lb-row you-row">
+                        <div class="lb-row-rank">12</div>
+                        <div class="lb-row-av" style="background:rgba(168,224,99,0.2);color:#1a5c38" id="lb-avatar">M</div>
+                        <div class="lb-row-name"><span id="lb-name" data-en="You" data-ar="أنت">You</span> <span class="lb-you-tag" data-en="YOU" data-ar="أنت">YOU</span></div>
+                        <div class="lb-row-hrs">47</div>
+                        <div class="lb-row-evts">8</div>
+                        <div class="lb-row-pts">940</div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ═══ COMMUNITY FEED ═══ -->
+            <div class="sec" id="sec-feed">
+                <div style="margin-bottom:1.25rem">
+                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Community " data-ar="تغذية ">Community </span><em style="font-style:italic;color:var(--green)" data-en="feed." data-ar="المجتمع.">feed.</em></h2>
+                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="See what's happening across Qatar's climate community." data-ar="شاهد ما يحدث في مجتمع المناخ في قطر.">See what's happening across Qatar's climate community.</p>
+                </div>
+                <div class="feed-full">
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#dcfce7;color:#166534">S</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Sarah Al-Mansoori</strong> <span data-en="signed up for" data-ar="سجّلت في">signed up for</span> <span class="fhi" data-en="Mangrove Restoration Drive" data-ar="حملة استعادة المانغروف">Mangrove Restoration Drive</span> 🌱</div>
+                            <div class="feed-time" data-en="2 minutes ago" data-ar="منذ دقيقتين">2 minutes ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(26,92,56,0.08);color:var(--green)"><iconify-icon icon="solar:calendar-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#dbeafe;color:#1e40af">Q</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Qatar Eco Society</strong> <span data-en="posted a new opportunity:" data-ar="نشرت فرصة جديدة:">posted a new opportunity:</span> <span class="fhi" data-en="Desert Reforestation Initiative" data-ar="مبادرة إعادة تشجير الصحراء">Desert Reforestation Initiative</span></div>
+                            <div class="feed-time" data-en="15 minutes ago" data-ar="منذ ١٥ دقيقة">15 minutes ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(59,130,246,0.08);color:#3b82f6"><iconify-icon icon="solar:compass-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#fef3c7;color:#92400e">A</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Ahmed Al-Kuwari</strong> <span data-en="completed" data-ar="أتمّ">completed</span> <span class="fhi" data-en="10 volunteer hours" data-ar="١٠ ساعات تطوع">10 volunteer hours</span> 🎉</div>
+                            <div class="feed-time" data-en="1 hour ago" data-ar="منذ ساعة">1 hour ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(168,224,99,0.15);color:#4a7c20"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#f3e8ff;color:#6b21a8">N</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Noora Hassan</strong> <span data-en="joined the network —" data-ar="انضمت إلى الشبكة —">joined the network —</span> <span class="fhi" data-en="welcome!" data-ar="أهلاً بها!">welcome!</span></div>
+                            <div class="feed-time" data-en="3 hours ago" data-ar="منذ ٣ ساعات">3 hours ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(107,33,168,0.08);color:#6b21a8"><iconify-icon icon="solar:user-plus-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#dcfce7;color:#166534">G</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Green Future Inc.</strong> <span data-en="is now a" data-ar="أصبحت">is now a</span> <span class="fhi" data-en="verified partner" data-ar="شريكاً موثقاً">verified partner</span> ✅</div>
+                            <div class="feed-time" data-en="5 hours ago" data-ar="منذ ٥ ساعات">5 hours ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(26,92,56,0.08);color:var(--green)"><iconify-icon icon="solar:check-circle-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#dbeafe;color:#1e40af">K</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Khalid Al-Emadi</strong> <span data-en="reached" data-ar="وصل إلى">reached</span> <span class="fhi" data-en="#2 on the leaderboard" data-ar="المركز الثاني في المتصدرين">#2 on the leaderboard</span> 🏆</div>
+                            <div class="feed-time" data-en="Yesterday" data-ar="أمس">Yesterday</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(196,98,45,0.08);color:var(--rust)"><iconify-icon icon="solar:ranking-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#fef3c7;color:#92400e">L</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Lina Mahmoud</strong> <span data-en="signed up for" data-ar="سجّلت في">signed up for</span> <span class="fhi" data-en="Circular Economy Workshop" data-ar="ورشة الاقتصاد الدائري">Circular Economy Workshop</span></div>
+                            <div class="feed-time" data-en="Yesterday" data-ar="أمس">Yesterday</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(26,92,56,0.08);color:var(--green)"><iconify-icon icon="solar:calendar-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#e8dfc8;color:#7a6a50">R</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Reem Al-Naimi</strong> <span data-en="planted" data-ar="زرعت">planted</span> <span class="fhi" data-en="5 ghaf trees in Al Shahaniya" data-ar="٥ أشجار غاف في الشحانية">5 ghaf trees in Al Shahaniya</span> 🌳</div>
+                            <div class="feed-time" data-en="2 days ago" data-ar="منذ يومين">2 days ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(168,224,99,0.15);color:#4a7c20"><iconify-icon icon="solar:tree-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#dcfce7;color:#166534">D</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong data-en="Doha Youth Environment" data-ar="بيئة شباب الدوحة">Doha Youth Environment</strong> <span data-en="added a new event:" data-ar="أضافت فعالية جديدة:">added a new event:</span> <span class="fhi" data-en="Beach Cleanup & Microplastics Audit" data-ar="تنظيف الشاطئ وتدقيق البلاستيك">Beach Cleanup & Microplastics Audit</span></div>
+                            <div class="feed-time" data-en="2 days ago" data-ar="منذ يومين">2 days ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(59,130,246,0.08);color:#3b82f6"><iconify-icon icon="solar:compass-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#f3e8ff;color:#6b21a8">Y</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Yousef Al-Sulaiti</strong> <span data-en="completed the" data-ar="أكمل">completed the</span> <span class="fhi" data-en="Solar Energy Campus Tour" data-ar="جولة الطاقة الشمسية">Solar Energy Campus Tour</span></div>
+                            <div class="feed-time" data-en="3 days ago" data-ar="منذ ٣ أيام">3 days ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(168,224,99,0.15);color:#4a7c20"><iconify-icon icon="solar:check-circle-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#dbeafe;color:#1e40af">Q</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong data-en="QU Green Innovators" data-ar="مبتكرو قطر الخضر">QU Green Innovators</strong> <span data-en="hit a milestone:" data-ar="حققت إنجازاً:">hit a milestone:</span> <span class="fhi" data-en="500+ community members!" data-ar="٥٠٠+ عضو في المجتمع!">500+ community members!</span> 🚀</div>
+                            <div class="feed-time" data-en="4 days ago" data-ar="منذ ٤ أيام">4 days ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(196,98,45,0.08);color:var(--rust)"><iconify-icon icon="solar:cup-star-linear"></iconify-icon></div>
+                    </div>
+                    <div class="feed-full-item">
+                        <div class="feed-av" style="background:#fef3c7;color:#92400e">H</div>
+                        <div class="feed-body">
+                            <div class="feed-text"><strong>Hassan Al-Marri</strong> <span data-en="connected with" data-ar="تواصل مع">connected with</span> <span class="fhi" data-en="EcoQatar Foundation" data-ar="مؤسسة إيكو قطر">EcoQatar Foundation</span></div>
+                            <div class="feed-time" data-en="5 days ago" data-ar="منذ ٥ أيام">5 days ago</div>
+                        </div>
+                        <div class="feed-type-icon" style="background:rgba(107,33,168,0.08);color:#6b21a8"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></div>
+                    </div>
                 </div>
             </div>
 
         </div><!-- /scroll-area -->
     </div><!-- /main -->
 </div><!-- /app -->
+
+<!-- INVITE MODAL -->
+<div class="modal-overlay" id="invite-modal" onclick="closeInviteModal(event)">
+    <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h2 id="invite-modal-title" data-en="Invite a Friend to EcoHub 🌿" data-ar="ادعُ صديقاً إلى EcoHub 🌿">Invite a Friend to EcoHub 🌿</h2>
+            <button class="modal-close" onclick="closeInviteModal()"><iconify-icon icon="solar:close-circle-linear"></iconify-icon></button>
+        </div>
+        <div class="modal-body">
+            <div class="invite-label" data-en="Your unique invite link" data-ar="رابط الدعوة الخاص بك">Your unique invite link</div>
+            <div class="invite-link-box">
+                <div class="invite-link-text" id="invite-link-text">https://eco-website-lemon.vercel.app/signup.html?ref=...</div>
+                <button class="invite-copy-btn" id="invite-copy-btn" onclick="copyInviteLink()"><span data-en="Copy Link" data-ar="نسخ الرابط">Copy Link</span></button>
+            </div>
+            <div class="invite-divider"><span data-en="or share via" data-ar="أو شارك عبر">or share via</span></div>
+            <div class="invite-share-btns">
+                <a class="invite-share-btn whatsapp" id="invite-wa-btn" href="#" target="_blank" rel="noopener"><iconify-icon icon="mdi:whatsapp"></iconify-icon><span data-en="WhatsApp" data-ar="واتساب">WhatsApp</span></a>
+                <a class="invite-share-btn email" id="invite-email-btn" href="#" target="_blank" rel="noopener"><iconify-icon icon="solar:letter-linear"></iconify-icon><span data-en="Email" data-ar="البريد">Email</span></a>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- POST EVENT MODAL -->
+<div class="modal-overlay" id="post-event-modal" onclick="closeGenericModal('post-event-modal',event)">
+    <div class="modal" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h2 data-en="Coming Soon 🌿" data-ar="قريباً 🌿">Coming Soon 🌿</h2>
+            <button class="modal-close" onclick="closeGenericModal('post-event-modal')"><iconify-icon icon="solar:close-circle-linear"></iconify-icon></button>
+        </div>
+        <div class="modal-body" id="post-event-body">
+            <p class="modal-desc" data-en="Organization posting is coming soon. Want to be notified when it launches?" data-ar="نشر الفعاليات من المنظمات قادم قريباً. هل تريد أن يتم إعلامك عند الإطلاق؟">Organization posting is coming soon. Want to be notified when it launches?</p>
+            <input class="modal-input" id="post-event-email" type="email" placeholder="your@email.com">
+            <button class="modal-submit-btn" onclick="submitPostEventNotify()"><span data-en="Notify Me" data-ar="أعلمني">Notify Me</span></button>
+        </div>
+    </div>
+</div>
+
+<!-- OPP DETAIL MODAL -->
+<div class="modal-overlay" id="opp-detail-modal" onclick="closeGenericModal('opp-detail-modal',event)">
+    <div class="modal" style="max-width:520px" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h2 data-en="Opportunity Details" data-ar="تفاصيل الفرصة">Opportunity Details</h2>
+            <button class="modal-close" onclick="closeGenericModal('opp-detail-modal')"><iconify-icon icon="solar:close-circle-linear"></iconify-icon></button>
+        </div>
+        <div class="modal-body" id="opp-detail-body"></div>
+    </div>
+</div>
+
+<!-- TOAST -->
+<div class="dash-toast" id="dash-toast"><div class="dash-toast-inner" id="dash-toast-inner"></div></div>
 
 <script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
 // SUPABASE
@@ -609,6 +1477,8 @@ const sb = window.supabase.createClient(
 );
 
 // AUTH
+let currentUserId = '';
+
 async function init() {
     let { data: { session } } = await sb.auth.getSession();
     if (!session) {
@@ -629,6 +1499,10 @@ async function init() {
     document.getElementById('p-avatar').textContent = initial;
     document.getElementById('p-name').textContent = fullName;
     document.getElementById('p-email').textContent = session.user.email;
+
+    // Invite link
+    currentUserId = session.user.id;
+    document.getElementById('invite-link-text').textContent = 'https://eco-website-lemon.vercel.app/signup.html?ref=' + currentUserId;
 
     // Smart greeting
     const h = new Date().getHours();
@@ -655,9 +1529,13 @@ document.getElementById('p-logout').addEventListener('click', doLogout);
 // NAVIGATE
 const titles = {
     home: { en: '<em data-en="Good morning," data-ar="صباح الخير،">Good morning,</em> <span id="greeting-name"> Mohammed</span> 🌿' },
+    events: { en: 'My <em style="font-style:italic;color:var(--green)">Events.</em>', ar: '<em style="color:var(--green)">فعالياتي.</em>' },
+    impact: { en: 'My <em style="font-style:italic;color:var(--green)">Impact.</em>', ar: '<em style="color:var(--green)">أثري.</em>' },
     opportunities: { en: 'Find your next <em style="font-style:italic;color:var(--green)">opportunity.</em>', ar: 'اعثر على <em style="color:var(--green)">فرصتك القادمة.</em>' },
     network: { en: 'The <em style="font-style:italic;color:var(--green)">green network.</em>', ar: 'الشبكة <em style="color:var(--green)">الخضراء.</em>' },
     resources: { en: '<em style="font-style:italic;color:var(--green)">Resources</em> & Guides.', ar: '<em style="color:var(--green)">الموارد</em> والأدلة.' },
+    leaderboard: { en: 'Community <em style="font-style:italic;color:var(--green)">Leaderboard.</em>', ar: '<em style="color:var(--green)">المتصدرون</em> في المجتمع.' },
+    feed: { en: 'Community <em style="font-style:italic;color:var(--green)">Feed.</em>', ar: 'تغذية <em style="color:var(--green)">المجتمع.</em>' },
     profile: { en: 'My <em style="font-style:italic;color:var(--green)">Profile.</em>', ar: '<em style="color:var(--green)">ملفي</em> الشخصي.' }
 };
 
@@ -666,7 +1544,9 @@ function navigate(sec) {
     document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('active'));
     const el = document.getElementById('sec-' + sec);
     if (el) el.classList.add('active');
-    document.querySelectorAll(`[data-sec="${sec}"]`).forEach(n => n.classList.add('active'));
+    // Only highlight the exact sidebar button for this section
+    const btn = document.querySelector(`.sb-item[data-sec="${sec}"]`);
+    if (btn) btn.classList.add('active');
     // Update title
     const t = titles[sec];
     if (t) {
@@ -730,6 +1610,59 @@ function applyLang() {
 }
 document.getElementById('lang-toggle').addEventListener('click', () => { isArabic = !isArabic; applyLang(); });
 if (localStorage.getItem('hub_lang') === 'ar') { isArabic = true; applyLang(); }
+
+// INVITE MODAL
+function getInviteLink() {
+    return 'https://eco-website-lemon.vercel.app/signup.html?ref=' + currentUserId;
+}
+
+function openInviteModal() {
+    const link = getInviteLink();
+    document.getElementById('invite-link-text').textContent = link;
+
+    // WhatsApp
+    const msgEn = "Hey! I just joined EcoHub — Qatar's youth climate action platform. Join me and let's make a real impact together 🌿 " + link;
+    const msgAr = "مرحباً! لقد انضممت للتو إلى EcoHub — منصة الشباب القطري للعمل المناخي. انضم إليّ ولنصنع أثراً حقيقياً معاً 🌿 " + link;
+    const waMsg = encodeURIComponent(isArabic ? msgAr : msgEn);
+    document.getElementById('invite-wa-btn').href = 'https://wa.me/?text=' + waMsg;
+
+    // Email
+    const subject = encodeURIComponent('Join me on EcoHub 🌿');
+    const body = encodeURIComponent(msgEn);
+    document.getElementById('invite-email-btn').href = 'mailto:?subject=' + subject + '&body=' + body;
+
+    // Reset copy button
+    const copyBtn = document.getElementById('invite-copy-btn');
+    const copySpan = copyBtn.querySelector('span');
+    copySpan.textContent = isArabic ? 'نسخ الرابط' : 'Copy Link';
+    copyBtn.classList.remove('copied');
+
+    document.getElementById('invite-modal').classList.add('open');
+}
+
+function closeInviteModal(e) {
+    if (e && e.target !== e.currentTarget) return;
+    document.getElementById('invite-modal').classList.remove('open');
+}
+
+function copyInviteLink() {
+    const link = getInviteLink();
+    navigator.clipboard.writeText(link).then(() => {
+        const btn = document.getElementById('invite-copy-btn');
+        const span = btn.querySelector('span');
+        btn.classList.add('copied');
+        span.textContent = isArabic ? 'تم النسخ! ✓' : 'Copied! ✓';
+        setTimeout(() => {
+            btn.classList.remove('copied');
+            span.textContent = isArabic ? 'نسخ الرابط' : 'Copy Link';
+        }, 2000);
+    });
+}
+
+// Close modal on Escape key
+document.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') closeInviteModal();
+});
 
 init();
 </script>
