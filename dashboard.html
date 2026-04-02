@@ -7,10 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script defer src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
             --ink: #0a0a0a; --paper: #f5f0e8; --green: #1a5c38;
@@ -68,13 +67,16 @@
             display: flex; align-items: center; gap: 0.7rem; padding: 0.62rem 0.75rem;
             border-radius: 10px; color: rgba(255,255,255,0.55); cursor: pointer;
             border: none; background: none; width: 100%; text-align: left;
-            font-size: 0.855rem; font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+            font-size: 0.855rem; font-family: 'DM Sans', sans-serif;
+            transition: background 0.15s ease, color 0.15s ease, border-color 0.15s ease;
+            border-left: 3px solid transparent; position: relative;
         }
-        body.ar .sb-item { text-align: right; font-family: 'Noto Naskh Arabic', serif; }
+        body.ar .sb-item { text-align: right; font-family: 'Noto Naskh Arabic', serif; border-left: none; border-right: 3px solid transparent; }
         .sb-item:hover { background: rgba(255,255,255,0.08); color: rgba(255,255,255,0.9); }
-        .sb-item.active { background: rgba(168,224,99,0.14); color: #fff; }
-        .sb-item.active iconify-icon { color: var(--lime); }
-        .sb-item iconify-icon { font-size: 1.05rem; flex-shrink: 0; }
+        .sb-item.active { background: rgba(168,224,99,0.14); color: #fff; border-left-color: var(--lime); }
+        body.ar .sb-item.active { border-left-color: transparent; border-right-color: var(--lime); }
+        .sb-item.active iconify-icon { color: var(--lime); transform: scale(1.1); }
+        .sb-item iconify-icon { font-size: 1.05rem; flex-shrink: 0; transition: transform 0.15s ease, color 0.15s ease; }
         .sb-badge {
             margin-left: auto; background: var(--lime); color: var(--ink);
             border-radius: 100px; padding: 0.08rem 0.45rem; font-size: 0.62rem; font-weight: 600;
@@ -131,22 +133,54 @@
         .tb-btn:hover { border-color: var(--green); color: var(--green); }
         .tb-btn.primary { background: var(--green); color: #fff; border-color: var(--green); }
         .tb-btn.primary:hover { background: var(--green-light); }
+        .sb-toggle { display: none; }
+        .sb-backdrop { display: none; }
 
         /* SCROLL AREA */
         .scroll-area { flex: 1; overflow-y: auto; overflow-x: hidden; }
 
         /* SECTIONS */
-        .sec { display: none; padding: 1.75rem; max-width: 1080px; }
-        .sec.active { display: block; animation: fadeUp 0.22s ease both; }
-        @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+        .sec { display: none; padding: 1.75rem; max-width: 1080px; opacity: 0; transform: translateY(12px); }
+        .sec.active { display: block; }
+        .sec.sec-enter { animation: secIn 0.2s ease forwards; }
+        .sec.sec-exit { display: block; animation: secOut 0.15s ease forwards; }
+        @keyframes secIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
+        @keyframes secOut { from { opacity:1; transform:none; } to { opacity:0; transform:translateY(-8px); } }
+        /* Stagger children in entering sections */
+        .sec.sec-enter .stat-card,
+        .sec.sec-enter .opp-card,
+        .sec.sec-enter .org-card,
+        .sec.sec-enter .res-item,
+        .sec.sec-enter .my-evt,
+        .sec.sec-enter .impact-card,
+        .sec.sec-enter .profile-card,
+        .sec.sec-enter .settings-card {
+            animation: cardIn 0.25s ease both;
+        }
+        .sec.sec-enter > :nth-child(1) { animation-delay: 0.04s; }
+        .sec.sec-enter > :nth-child(2) { animation-delay: 0.08s; }
+        .sec.sec-enter > :nth-child(3) { animation-delay: 0.12s; }
+        @keyframes cardIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+
+        /* SECTION HERO */
+        .sec-hero { margin-bottom: 1.25rem; }
+        .sec-hero h2 { font-family: 'Instrument Serif', serif; font-size: 1.55rem; line-height: 1.15; margin-bottom: 0.25rem; }
+        body.ar .sec-hero h2 { font-family: 'Noto Naskh Arabic', serif; }
+        .sec-hero h2 em { font-style: italic; color: var(--green); }
+        body.ar .sec-hero h2 em { font-style: normal; }
+        .sec-hero p { font-size: 0.845rem; color: rgba(0,0,0,0.45); }
+
+        /* PERF: contain layout for heavy cards */
+        .opp-card, .org-card, .my-evt, .feed-full-item, .lb-row, .res-item { contain: layout style; }
 
         /* STAT CARDS */
         .stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.875rem; margin-bottom: 1.5rem; }
         .stat-card {
             background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 13px;
-            padding: 1.1rem 1.25rem; position: relative; overflow: hidden; transition: all 0.2s;
+            padding: 1.1rem 1.25rem; position: relative; overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease;
         }
-        .stat-card:hover { transform: translateY(-1px); box-shadow: 0 4px 18px rgba(0,0,0,0.06); }
+        .stat-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.08); }
         .stat-card::after { content:''; position:absolute; bottom:0; left:0; right:0; height:3px; border-radius:0 0 13px 13px; }
         .stat-card.a::after { background: var(--green); }
         .stat-card.b::after { background: var(--lime); }
@@ -258,9 +292,10 @@
         .opp-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(290px,1fr)); gap: 1rem; }
         .opp-card {
             background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 13px;
-            padding: 1.4rem; display: flex; flex-direction: column; transition: all 0.2s; position: relative; overflow: hidden;
+            padding: 1.4rem; display: flex; flex-direction: column; position: relative; overflow: hidden;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         }
-        .opp-card:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 6px 22px rgba(0,0,0,0.07); transform: translateY(-2px); }
+        .opp-card:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 8px 28px rgba(0,0,0,0.08); transform: translateY(-3px); }
         .oc-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.875rem; }
         .otag { display: inline-flex; align-items: center; gap: 0.28rem; padding: 0.22rem 0.65rem; border-radius: 100px; font-size: 0.65rem; font-weight: 500; }
         .tcon { background: #dcfce7; color: #166534; } .twor { background: #dbeafe; color: #1e40af; }
@@ -296,8 +331,8 @@
         .nsc-label { font-size: 0.65rem; color: rgba(0,0,0,0.42); text-transform: uppercase; letter-spacing: 0.06em; }
         body.ar .nsc-label { letter-spacing: 0; }
         .org-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(300px,1fr)); gap: 1rem; }
-        .org-card { background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 13px; overflow: hidden; transition: all 0.2s; }
-        .org-card:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 6px 22px rgba(0,0,0,0.07); transform: translateY(-2px); }
+        .org-card { background: white; border: 1px solid rgba(0,0,0,0.08); border-radius: 13px; overflow: hidden; transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; }
+        .org-card:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 8px 28px rgba(0,0,0,0.08); transform: translateY(-3px); }
         .org-banner { height: 66px; position: relative; overflow: hidden; }
         .org-pattern { position: absolute; inset: 0; opacity: 0.08; background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 16px 16px; }
         .org-body { padding: 0 1.1rem 1.1rem; }
@@ -383,9 +418,10 @@
         .res-item {
             background: white; border: 1px solid rgba(0,0,0,0.06); border-radius: 12px;
             padding: 1rem 1.2rem; display: flex; align-items: center; gap: 1rem;
-            transition: all 0.18s; cursor: pointer; position: relative;
-            border-left: 3px solid transparent;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+            cursor: pointer; position: relative; border-left: 3px solid transparent;
         }
+        .res-item:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.08); }
         body.ar .res-item { border-left: 1px solid rgba(0,0,0,0.06); border-right: 3px solid transparent; }
         .res-item.bl-green { border-left-color: var(--green); }
         .res-item.bl-lime { border-left-color: var(--lime); }
@@ -414,26 +450,85 @@
             font-size: 0.76rem; color: var(--green); font-weight: 500;
             background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif;
             padding: 0.4rem 0.75rem; border-radius: 8px; transition: all 0.15s;
+            text-decoration: none;
         }
         body.ar .ri-read-btn { font-family: 'Noto Naskh Arabic', serif; }
         .ri-read-btn:hover { background: rgba(26,92,56,0.08); }
 
         /* PROFILE */
         .profile-card { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px; overflow: hidden; margin-bottom: 1.1rem; }
-        .p-banner { height: 90px; background: linear-gradient(135deg, var(--green), var(--green-light)); position: relative; }
-        .p-banner::before { content: ''; position: absolute; inset: 0; opacity: 0.08; background-image: radial-gradient(circle, white 1px, transparent 1px); background-size: 18px 18px; }
-        .p-body { padding: 0 1.4rem 1.4rem; }
-        .p-av-row { display: flex; align-items: flex-end; justify-content: space-between; margin-top: -28px; margin-bottom: 0.875rem; }
-        .p-av { width: 56px; height: 56px; border-radius: 50%; background: white; border: 3px solid var(--paper); display: flex; align-items: center; justify-content: center; font-family: 'Instrument Serif', serif; font-size: 1.4rem; color: var(--green); box-shadow: 0 2px 8px rgba(0,0,0,0.1); }
+        .p-body { padding: 1.75rem; }
+        .p-av-wrap { display: flex; align-items: center; gap: 1.25rem; margin-bottom: 1.5rem; }
+        .p-av {
+            width: 80px; height: 80px; border-radius: 50%; flex-shrink: 0;
+            background: rgba(26,92,56,0.08); border: 3px solid var(--sand);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Instrument Serif', serif; font-size: 2rem; color: var(--green);
+            box-shadow: 0 2px 8px rgba(0,0,0,0.08); cursor: pointer;
+            position: relative; overflow: hidden; transition: all 0.2s;
+        }
+        .p-av:hover { border-color: var(--green); }
+        .p-av img { width: 100%; height: 100%; object-fit: cover; border-radius: 50%; }
+        .p-av-overlay {
+            position: absolute; inset: 0; background: rgba(0,0,0,0.45); display: flex;
+            align-items: center; justify-content: center; opacity: 0; transition: opacity 0.2s;
+            border-radius: 50%; color: #fff; font-size: 1.2rem;
+        }
+        .p-av:hover .p-av-overlay { opacity: 1; }
+        .p-av-info { flex: 1; }
+        .p-name { font-family: 'Instrument Serif', serif; font-size: 1.4rem; margin-bottom: 0.15rem; }
+        body.ar .p-name { font-family: 'Noto Naskh Arabic', serif; }
+        .p-bio { font-size: 0.82rem; color: rgba(0,0,0,0.48); line-height: 1.55; margin-bottom: 0.25rem; }
+        .p-location { font-size: 0.75rem; color: rgba(0,0,0,0.38); display: flex; align-items: center; gap: 0.3rem; }
+        .p-location iconify-icon { font-size: 0.85rem; }
         .p-edit { display: inline-flex; align-items: center; gap: 0.32rem; background: white; border: 1px solid rgba(0,0,0,0.1); border-radius: 100px; padding: 0.42rem 0.9rem; font-size: 0.75rem; font-weight: 500; color: rgba(0,0,0,0.58); cursor: pointer; transition: all 0.18s; font-family: 'DM Sans', sans-serif; }
         .p-edit:hover { border-color: var(--green); color: var(--green); }
-        .p-name { font-family: 'Instrument Serif', serif; font-size: 1.4rem; margin-bottom: 0.18rem; }
-        body.ar .p-name { font-family: 'Noto Naskh Arabic', serif; }
-        .p-role { font-size: 0.8rem; color: rgba(0,0,0,0.42); margin-bottom: 1rem; }
+        .p-edit-form { display: none; margin-bottom: 1.25rem; }
+        .p-edit-form.open { display: flex; flex-direction: column; gap: 0.65rem; }
+        .p-field { display: flex; flex-direction: column; gap: 0.25rem; }
+        .p-field label { font-size: 0.7rem; font-weight: 500; color: rgba(0,0,0,0.45); text-transform: uppercase; letter-spacing: 0.06em; }
+        body.ar .p-field label { letter-spacing: 0; }
+        .p-field input, .p-field textarea {
+            width: 100%; padding: 0.6rem 0.85rem; border: 1px solid rgba(0,0,0,0.12);
+            border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+            outline: none; background: white; transition: border-color 0.2s; resize: none;
+        }
+        body.ar .p-field input, body.ar .p-field textarea { font-family: 'Noto Naskh Arabic', serif; }
+        .p-field input:focus, .p-field textarea:focus { border-color: var(--green); }
+        .p-edit-actions { display: flex; gap: 0.5rem; margin-top: 0.25rem; }
+        .p-save-btn {
+            background: var(--green); color: #fff; border: none; border-radius: 9px;
+            padding: 0.55rem 1.25rem; font-size: 0.8rem; font-weight: 500; cursor: pointer;
+            font-family: 'DM Sans', sans-serif; transition: background 0.15s;
+        }
+        body.ar .p-save-btn { font-family: 'Noto Naskh Arabic', serif; }
+        .p-save-btn:hover { background: var(--green-light); }
+        .p-cancel-btn {
+            background: transparent; color: rgba(0,0,0,0.45); border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 9px; padding: 0.55rem 1rem; font-size: 0.8rem; cursor: pointer;
+            font-family: 'DM Sans', sans-serif; transition: all 0.15s;
+        }
+        body.ar .p-cancel-btn { font-family: 'Noto Naskh Arabic', serif; }
+        .p-cancel-btn:hover { border-color: rgba(0,0,0,0.25); }
         .p-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; padding-top: 1.1rem; border-top: 1px solid rgba(0,0,0,0.06); }
         .p-stat { text-align: center; }
         .p-stat-num { font-family: 'Instrument Serif', serif; font-size: 1.4rem; color: var(--green); }
         .p-stat-label { font-size: 0.67rem; color: rgba(0,0,0,0.38); margin-top: 0.08rem; }
+
+        /* POST EVENT FORM */
+        .pe-form { display: flex; flex-direction: column; gap: 0.75rem; }
+        .pe-field { display: flex; flex-direction: column; gap: 0.25rem; }
+        .pe-field label { font-size: 0.7rem; font-weight: 500; color: rgba(0,0,0,0.45); text-transform: uppercase; letter-spacing: 0.06em; }
+        body.ar .pe-field label { letter-spacing: 0; }
+        .pe-field input, .pe-field textarea, .pe-field select {
+            width: 100%; padding: 0.6rem 0.85rem; border: 1px solid rgba(0,0,0,0.12);
+            border-radius: 9px; font-family: 'DM Sans', sans-serif; font-size: 0.85rem;
+            outline: none; background: white; transition: border-color 0.2s; resize: none;
+        }
+        body.ar .pe-field input, body.ar .pe-field textarea { font-family: 'Noto Naskh Arabic', serif; }
+        .pe-field input:focus, .pe-field textarea:focus { border-color: var(--green); }
+        .pe-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        @media (max-width: 520px) { .pe-row { grid-template-columns: 1fr; } }
         .settings-card { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px; padding: 1.25rem; }
         .settings-card h3 { font-family: 'Instrument Serif', serif; font-size: 1.05rem; margin-bottom: 0.875rem; }
         body.ar .settings-card h3 { font-family: 'Noto Naskh Arabic', serif; }
@@ -448,9 +543,9 @@
         .my-evt {
             background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 13px;
             padding: 1.1rem 1.25rem; display: flex; align-items: center; gap: 1rem;
-            transition: all 0.18s; cursor: pointer;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease; cursor: pointer;
         }
-        .my-evt:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 3px 12px rgba(0,0,0,0.05); }
+        .my-evt:hover { border-color: rgba(26,92,56,0.2); box-shadow: 0 8px 28px rgba(0,0,0,0.08); transform: translateY(-3px); }
         .my-evt-date { width: 48px; flex-shrink: 0; text-align: center; background: var(--sand); border-radius: 9px; padding: 0.45rem 0.25rem; }
         .my-evt-mo { font-size: 0.55rem; text-transform: uppercase; letter-spacing: 0.06em; color: var(--rust); font-weight: 600; }
         .my-evt-dy { font-family: 'Instrument Serif', serif; font-size: 1.4rem; color: var(--ink); line-height: 1; }
@@ -469,9 +564,10 @@
         .impact-stats { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.875rem; margin-bottom: 1.5rem; }
         .impact-card {
             background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 13px;
-            padding: 1.1rem 1.25rem; text-align: center; transition: all 0.2s;
+            padding: 1.1rem 1.25rem; text-align: center;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         }
-        .impact-card:hover { transform: translateY(-1px); box-shadow: 0 4px 18px rgba(0,0,0,0.06); }
+        .impact-card:hover { transform: translateY(-3px); box-shadow: 0 8px 28px rgba(0,0,0,0.08); }
         .impact-icon { width: 40px; height: 40px; border-radius: 9px; display: flex; align-items: center; justify-content: center; font-size: 1.1rem; margin: 0 auto 0.65rem; }
         .impact-num { font-family: 'Instrument Serif', serif; font-size: 1.9rem; line-height: 1; margin-bottom: 0.15rem; }
         .impact-label { font-size: 0.7rem; color: rgba(0,0,0,0.42); }
@@ -552,9 +648,10 @@
         .feed-full { display: flex; flex-direction: column; gap: 0.65rem; }
         .feed-full-item {
             background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 12px;
-            padding: 1rem 1.2rem; display: flex; gap: 0.85rem; transition: all 0.15s;
+            padding: 1rem 1.2rem; display: flex; gap: 0.85rem;
+            transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
         }
-        .feed-full-item:hover { border-color: rgba(26,92,56,0.15); box-shadow: 0 2px 10px rgba(0,0,0,0.04); }
+        .feed-full-item:hover { border-color: rgba(26,92,56,0.15); box-shadow: 0 6px 22px rgba(0,0,0,0.06); transform: translateY(-2px); }
         .feed-av { width: 36px; height: 36px; border-radius: 50%; flex-shrink: 0; display: flex; align-items: center; justify-content: center; font-family: 'Instrument Serif', serif; font-size: 0.9rem; }
         .feed-body { flex: 1; min-width: 0; }
         .feed-text { font-size: 0.82rem; line-height: 1.55; color: rgba(0,0,0,0.62); margin-bottom: 0.25rem; }
@@ -565,11 +662,13 @@
 
         /* TOAST */
         .dash-toast {
-            position: fixed; bottom: 2rem; left: 50%; z-index: 9800;
-            transform: translateX(-50%) translateY(20px); opacity: 0;
-            transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1); pointer-events: none;
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 9800;
+            transform: translateY(20px); opacity: 0;
+            transition: transform 0.3s cubic-bezier(0.34,1.56,0.64,1), opacity 0.3s ease;
+            pointer-events: none;
         }
-        .dash-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        .dash-toast.show { opacity: 1; transform: translateY(0); pointer-events: auto; }
+        body.ar .dash-toast { right: auto; left: 2rem; }
         .dash-toast-inner {
             display: flex; align-items: center; gap: 0.5rem;
             background: var(--ink); color: #fff; padding: 0.65rem 1.2rem;
@@ -613,16 +712,18 @@
             position: fixed; inset: 0; z-index: 9500;
             background: rgba(0,0,0,0.45); backdrop-filter: blur(4px);
             display: flex; align-items: center; justify-content: center;
-            opacity: 0; pointer-events: none; transition: opacity 0.22s;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.2s ease;
         }
         .modal-overlay.open { opacity: 1; pointer-events: auto; }
         .modal {
             background: var(--paper); border-radius: 16px;
             width: 90%; max-width: 480px; overflow: hidden;
             box-shadow: 0 20px 60px rgba(0,0,0,0.2);
-            transform: translateY(12px) scale(0.97); transition: transform 0.22s;
+            transform: translateY(10px) scale(0.95); opacity: 0;
+            transition: transform 0.2s cubic-bezier(0.34,1.56,0.64,1), opacity 0.2s ease;
         }
-        .modal-overlay.open .modal { transform: none; }
+        .modal-overlay.open .modal { transform: none; opacity: 1; }
         .modal-header {
             background: var(--green); padding: 1.25rem 1.5rem;
             display: flex; align-items: center; justify-content: space-between;
@@ -797,7 +898,36 @@
         .ecoid-howto-text p { font-size: 0.68rem; color: rgba(0,0,0,0.42); line-height: 1.5; }
 
         @media (max-width: 1100px) { .two-col { grid-template-columns: 1fr; } .stat-grid { grid-template-columns: repeat(2,1fr); } .net-stats { grid-template-columns: repeat(2,1fr); } .impact-stats { grid-template-columns: repeat(2,1fr); } .goal-card { flex-direction: column; text-align: center; } .lb-header, .lb-row { grid-template-columns: 40px 32px 1fr 65px 55px 65px; gap: 0.5rem; font-size: 0.72rem; } .res-cats { grid-template-columns: repeat(2,1fr); } .res-featured { flex-direction: column; } .ecoid-layout { grid-template-columns: 1fr; } .ecoid-card { min-height: auto; } }
-        @media (max-width: 768px) { .qa-grid { grid-template-columns: 1fr; } .sb-item span { display: block; } .impact-stats { grid-template-columns: 1fr; } .lb-header, .lb-row { grid-template-columns: 32px 28px 1fr 55px 45px 55px; gap: 0.35rem; padding: 0.6rem 0.75rem; } .res-cats { grid-template-columns: 1fr; } .res-feat-stats { flex-wrap: wrap; } .ecoid-stats { grid-template-columns: 1fr; } .ecoid-howto-grid { grid-template-columns: 1fr; } }
+        @media (max-width: 768px) {
+            .qa-grid { grid-template-columns: 1fr; } .sb-item span { display: block; }
+            .impact-stats { grid-template-columns: 1fr; }
+            .lb-header, .lb-row { grid-template-columns: 32px 28px 1fr 55px 45px 55px; gap: 0.35rem; padding: 0.6rem 0.75rem; }
+            .res-cats { grid-template-columns: 1fr; } .res-feat-stats { flex-wrap: wrap; }
+            .ecoid-stats { grid-template-columns: 1fr; } .ecoid-howto-grid { grid-template-columns: 1fr; }
+            /* Mobile sidebar slide */
+            .sidebar {
+                position: fixed; top: 0; left: 0; height: 100vh;
+                transform: translateX(-100%);
+                transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
+                z-index: 200;
+            }
+            body.ar .sidebar { left: auto; right: 0; transform: translateX(100%); }
+            .sidebar.sb-open { transform: translateX(0); }
+            .sb-backdrop {
+                position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+                z-index: 199; opacity: 0; pointer-events: none;
+                transition: opacity 0.25s ease;
+            }
+            .sb-backdrop.show { opacity: 1; pointer-events: auto; }
+            .sb-backdrop { display: block; }
+            .sb-toggle {
+                display: flex; align-items: center; justify-content: center;
+                width: 36px; height: 36px; border: 1px solid rgba(0,0,0,0.1);
+                border-radius: 10px; background: white; cursor: pointer;
+                font-size: 1.1rem; color: rgba(0,0,0,0.5); transition: all 0.15s;
+            }
+            .sb-toggle:hover { border-color: var(--green); color: var(--green); }
+        }
     </style>
 </head>
 <body>
@@ -843,7 +973,9 @@
 
     <!-- MAIN -->
     <div class="main">
+        <div class="sb-backdrop" id="sb-backdrop" onclick="toggleSidebar()"></div>
         <div class="topbar">
+            <button class="sb-toggle" id="sb-toggle" onclick="toggleSidebar()"><iconify-icon icon="solar:hamburger-menu-linear"></iconify-icon></button>
             <h1 class="page-title" id="page-title"><em data-en="Good morning," data-ar="صباح الخير،">Good morning,</em> <span id="greeting-name">Mohammed</span> 🌿</h1>
             <div class="tb-actions">
                 <button class="tb-btn" onclick="navigate('opportunities')"><iconify-icon icon="solar:compass-linear"></iconify-icon><span data-en="Opportunities" data-ar="الفرص">Opportunities</span></button>
@@ -854,7 +986,7 @@
         <div class="scroll-area">
 
             <!-- ═══ HOME ═══ -->
-            <div class="sec active" id="sec-home">
+            <div class="sec active sec-enter" id="sec-home">
                 <div class="stat-grid">
                     <div class="stat-card a"><div class="stat-icon g"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon></div><div class="stat-num">47</div><div class="stat-label" data-en="Volunteer Hours" data-ar="ساعات التطوع">Volunteer Hours</div><div class="stat-trend">↑ <span data-en="12 this month" data-ar="١٢ هذا الشهر">12 this month</span></div></div>
                     <div class="stat-card b"><div class="stat-icon l"><iconify-icon icon="solar:leaf-linear"></iconify-icon></div><div class="stat-num">8</div><div class="stat-label" data-en="Events Attended" data-ar="فعاليات حضرتها">Events Attended</div><div class="stat-trend">↑ <span data-en="3 this month" data-ar="٣ هذا الشهر">3 this month</span></div></div>
@@ -916,11 +1048,11 @@
 
             <!-- ═══ OPPORTUNITIES ═══ -->
             <div class="sec" id="sec-opportunities">
-                <div style="margin-bottom:1.25rem">
-                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Find your next " data-ar="اعثر على فرصتك ">Find your next </span><em style="font-style:italic;color:var(--green)" data-en="climate opportunity." data-ar="المناخية القادمة.">climate opportunity.</em></h2>
-                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="24 active opportunities across Qatar" data-ar="٢٤ فرصة نشطة في قطر">24 active opportunities across Qatar</p>
+                <div class="sec-hero">
+                    <h2><span data-en="Find your next " data-ar="اعثر على فرصتك ">Find your next </span><em data-en="climate opportunity." data-ar="المناخية القادمة.">climate opportunity.</em></h2>
+                    <p data-en="24 active opportunities across Qatar" data-ar="٢٤ فرصة نشطة في قطر">24 active opportunities across Qatar</p>
                 </div>
-                <div class="search-wrap"><span class="s-icon"><iconify-icon icon="solar:magnifer-linear"></iconify-icon></span><input class="s-input" id="opp-search" oninput="filterOpportunities()" placeholder="Search projects, organizations or keywords..." data-placeholder-en="Search projects, organizations or keywords..." data-placeholder-ar="ابحث عن مشاريع أو منظمات..."></div>
+                <div class="search-wrap"><span class="s-icon"><iconify-icon icon="solar:magnifer-linear"></iconify-icon></span><input class="s-input" id="opp-search" oninput="debouncedSearch()" placeholder="Search projects, organizations or keywords..." data-placeholder-en="Search projects, organizations or keywords..." data-placeholder-ar="ابحث عن مشاريع أو منظمات..."></div>
                 <div class="pills" id="opp-pills">
                     <button class="pill active" onclick="filterOppByPill(this,'All')" data-en="All" data-ar="الكل">All</button>
                     <button class="pill" onclick="filterOppByPill(this,'Conservation')" data-en="Conservation" data-ar="الحفاظ على البيئة">Conservation</button>
@@ -942,9 +1074,9 @@
 
             <!-- ═══ NETWORK ═══ -->
             <div class="sec" id="sec-network">
-                <div style="margin-bottom:1.25rem">
-                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Meet Qatar's " data-ar="تعرّف على الشبكة ">Meet Qatar's </span><em style="font-style:italic;color:var(--green)" data-en="green network." data-ar="الخضراء في قطر.">green network.</em></h2>
-                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="63 organizations, clubs & government bodies" data-ar="٦٣ منظمة ونادٍ وجهة حكومية">63 organizations, clubs & government bodies</p>
+                <div class="sec-hero">
+                    <h2><span data-en="Meet Qatar's " data-ar="تعرّف على الشبكة ">Meet Qatar's </span><em data-en="green network." data-ar="الخضراء في قطر.">green network.</em></h2>
+                    <p data-en="63 organizations, clubs & government bodies" data-ar="٦٣ منظمة ونادٍ وجهة حكومية">63 organizations, clubs & government bodies</p>
                 </div>
                 <div class="pills" id="net-pills">
                     <button class="pill active" onclick="filterNetByPill(this,'All')" data-en="All" data-ar="الكل">All</button>
@@ -1027,7 +1159,7 @@
                                 <span class="ri-time" data-en="12 min read" data-ar="١٢ دقيقة قراءة">12 min read</span>
                             </div>
                         </div>
-                        <button class="ri-read-btn"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                        <a class="ri-read-btn" href="https://www.earthna.qa/en/knowledge-hub" target="_blank" rel="noopener"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></a>
                     </div>
                     <div class="res-item bl-lime">
                         <div class="ri-body">
@@ -1038,7 +1170,7 @@
                                 <span class="ri-time" data-en="25 min read" data-ar="٢٥ دقيقة قراءة">25 min read</span>
                             </div>
                         </div>
-                        <button class="ri-read-btn"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                        <a class="ri-read-btn" href="https://www.ipcc.ch/report/ar6/syr/" target="_blank" rel="noopener"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></a>
                     </div>
                     <div class="res-item bl-rust">
                         <div class="ri-body">
@@ -1049,7 +1181,7 @@
                                 <span class="ri-time" data-en="18 min watch" data-ar="١٨ دقيقة مشاهدة">18 min watch</span>
                             </div>
                         </div>
-                        <button class="ri-read-btn"><span data-en="Watch" data-ar="شاهد">Watch</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                        <a class="ri-read-btn" href="https://www.youtube.com/watch?v=qYGDxDGQpTo" target="_blank" rel="noopener"><span data-en="Watch" data-ar="شاهد">Watch</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></a>
                     </div>
                     <div class="res-item bl-green">
                         <div class="ri-body">
@@ -1060,7 +1192,7 @@
                                 <span class="ri-time" data-en="8 min read" data-ar="٨ دقائق قراءة">8 min read</span>
                             </div>
                         </div>
-                        <button class="ri-read-btn"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                        <a class="ri-read-btn" href="https://www.unep.org/topics/climate-action" target="_blank" rel="noopener"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></a>
                     </div>
                     <div class="res-item bl-lime">
                         <div class="ri-body">
@@ -1071,7 +1203,7 @@
                                 <span class="ri-time" data-en="6 min read" data-ar="٦ دقائق قراءة">6 min read</span>
                             </div>
                         </div>
-                        <button class="ri-read-btn"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                        <a class="ri-read-btn" href="https://www.mme.gov.qa/eng/Pages/default.aspx" target="_blank" rel="noopener"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></a>
                     </div>
                     <div class="res-item bl-rust">
                         <div class="ri-body">
@@ -1082,7 +1214,7 @@
                                 <span class="ri-time" data-en="15 min read" data-ar="١٥ دقيقة قراءة">15 min read</span>
                             </div>
                         </div>
-                        <button class="ri-read-btn"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                        <a class="ri-read-btn" href="https://www.unicef.org/environment-and-climate-change" target="_blank" rel="noopener"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></a>
                     </div>
                     <div class="res-item bl-green">
                         <div class="ri-body">
@@ -1093,7 +1225,7 @@
                                 <span class="ri-time" data-en="20 min read" data-ar="٢٠ دقيقة قراءة">20 min read</span>
                             </div>
                         </div>
-                        <button class="ri-read-btn"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                        <a class="ri-read-btn" href="https://www.gco.gov.qa/en/about-qatar/qnv2030/" target="_blank" rel="noopener"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></a>
                     </div>
                     <div class="res-item bl-lime">
                         <div class="ri-body">
@@ -1104,7 +1236,7 @@
                                 <span class="ri-time" data-en="10 min read" data-ar="١٠ دقائق قراءة">10 min read</span>
                             </div>
                         </div>
-                        <button class="ri-read-btn"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>
+                        <a class="ri-read-btn" href="https://www.earthna.qa" target="_blank" rel="noopener"><span data-en="Read" data-ar="اقرأ">Read</span> <iconify-icon icon="solar:arrow-right-linear"></iconify-icon></a>
                     </div>
                 </div>
             </div>
@@ -1112,21 +1244,39 @@
             <!-- ═══ PROFILE ═══ -->
             <div class="sec" id="sec-profile">
                 <div class="profile-card">
-                    <div class="p-banner"></div>
                     <div class="p-body">
-                        <div class="p-av-row">
-                            <div class="p-av" id="p-avatar">M</div>
-                            <button class="p-edit" id="edit-profile-btn" onclick="toggleEditProfile()"><iconify-icon icon="solar:pen-linear"></iconify-icon><span data-en="Edit Profile" data-ar="تعديل الملف">Edit Profile</span></button>
+                        <div class="p-av-wrap">
+                            <div class="p-av" id="p-avatar" onclick="document.getElementById('avatar-input').click()">
+                                M
+                                <div class="p-av-overlay"><iconify-icon icon="solar:camera-linear"></iconify-icon></div>
+                            </div>
+                            <input type="file" id="avatar-input" accept="image/*" style="display:none" onchange="uploadAvatar(this)">
+                            <div class="p-av-info">
+                                <div class="p-name" id="p-name">Mohammed Elfatih</div>
+                                <div class="p-bio" id="p-bio" data-en="Climate activist and youth organizer." data-ar="ناشط مناخي ومنظّم شبابي.">Climate activist and youth organizer.</div>
+                                <div class="p-location" id="p-location"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Doha, Qatar" data-ar="الدوحة، قطر">Doha, Qatar</span></div>
+                            </div>
+                            <button class="p-edit" onclick="toggleEditProfile()"><iconify-icon icon="solar:pen-linear"></iconify-icon><span data-en="Edit Profile" data-ar="تعديل الملف">Edit Profile</span></button>
                         </div>
-                        <div class="p-name" id="p-name">Mohammed Elfatih</div>
-                        <div id="edit-profile-form" style="display:none;margin-top:0.5rem;margin-bottom:0.5rem">
-                            <div style="display:flex;gap:0.5rem;align-items:center">
-                                <input id="edit-name-input" type="text" style="flex:1;padding:0.55rem 0.85rem;border:1px solid rgba(0,0,0,0.12);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.85rem;outline:none;background:white;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='rgba(0,0,0,0.12)'">
-                                <button onclick="saveProfile()" style="background:var(--green);color:#fff;border:none;border-radius:9px;padding:0.55rem 1rem;font-size:0.78rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;white-space:nowrap;transition:background 0.15s" onmouseover="this.style.background='var(--green-light)'" onmouseout="this.style.background='var(--green)'"><span data-en="Save" data-ar="حفظ">Save</span></button>
-                                <button onclick="toggleEditProfile()" style="background:transparent;color:rgba(0,0,0,0.45);border:1px solid rgba(0,0,0,0.1);border-radius:9px;padding:0.55rem 0.85rem;font-size:0.78rem;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.15s" onmouseover="this.style.borderColor='rgba(0,0,0,0.25)'" onmouseout="this.style.borderColor='rgba(0,0,0,0.1)'"><span data-en="Cancel" data-ar="إلغاء">Cancel</span></button>
+                        <!-- Edit Form -->
+                        <div class="p-edit-form" id="p-edit-form">
+                            <div class="p-field">
+                                <label data-en="Display Name" data-ar="الاسم">Display Name</label>
+                                <input type="text" id="edit-name-input" placeholder="Your name">
+                            </div>
+                            <div class="p-field">
+                                <label data-en="Bio" data-ar="نبذة">Bio</label>
+                                <textarea id="edit-bio-input" rows="2" placeholder="A short bio about yourself"></textarea>
+                            </div>
+                            <div class="p-field">
+                                <label data-en="Location" data-ar="الموقع">Location</label>
+                                <input type="text" id="edit-location-input" placeholder="City, Country">
+                            </div>
+                            <div class="p-edit-actions">
+                                <button class="p-save-btn" onclick="saveProfile()"><span data-en="Save Changes" data-ar="حفظ التغييرات">Save Changes</span></button>
+                                <button class="p-cancel-btn" onclick="toggleEditProfile()"><span data-en="Cancel" data-ar="إلغاء">Cancel</span></button>
                             </div>
                         </div>
-                        <div class="p-role" data-en="Climate Activist · EcoAwareness QA Founder · Doha, Qatar" data-ar="ناشط مناخي · مؤسس EcoAwareness QA · الدوحة، قطر">Climate Activist · EcoAwareness QA Founder · Doha, Qatar</div>
                         <div class="p-stats">
                             <div class="p-stat"><div class="p-stat-num">47</div><div class="p-stat-label" data-en="Volunteer Hours" data-ar="ساعات تطوع">Volunteer Hours</div></div>
                             <div class="p-stat"><div class="p-stat-num">8</div><div class="p-stat-label" data-en="Events Attended" data-ar="فعاليات حضرتها">Events Attended</div></div>
@@ -1136,7 +1286,7 @@
                 </div>
                 <div class="settings-card">
                     <h3 data-en="Account Settings" data-ar="إعدادات الحساب">Account Settings</h3>
-                    <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:letter-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Email Address" data-ar="البريد الإلكتروني">Email Address</div><div class="setting-sub" id="p-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e78a888f868a8a828383888993818895808293a7808a868e8bc984888a">[email&#160;protected]</a></div></div></div><span style="font-size:0.68rem;background:rgba(26,92,56,0.1);color:var(--green);border-radius:100px;padding:0.18rem 0.55rem" data-en="Verified" data-ar="موثق">Verified</span></div>
+                    <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:letter-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Email Address" data-ar="البريد الإلكتروني">Email Address</div><div class="setting-sub" id="p-email">loading...</div></div></div><span style="font-size:0.68rem;background:rgba(26,92,56,0.1);color:var(--green);border-radius:100px;padding:0.18rem 0.55rem" data-en="Verified" data-ar="موثق">Verified</span></div>
                     <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:bell-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Notifications" data-ar="الإشعارات">Notifications</div><div class="setting-sub" data-en="Email updates for new opportunities" data-ar="تحديثات بريدية للفرص الجديدة">Email updates for new opportunities</div></div></div><div id="notif-toggle" onclick="toggleNotifications()" style="width:34px;height:18px;border-radius:100px;position:relative;cursor:pointer;transition:background 0.25s"><span id="notif-knob" style="position:absolute;top:2px;width:14px;height:14px;background:white;border-radius:50%;display:block;transition:left 0.25s,right 0.25s;box-shadow:0 1px 3px rgba(0,0,0,0.15)"></span></div></div>
                     <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:logout-linear" style="color:rgba(196,98,45,0.7)"></iconify-icon><div class="setting-label" style="color:var(--rust)" data-en="Sign Out" data-ar="تسجيل الخروج">Sign Out</div></div><button id="p-logout" onclick="doLogout()" style="font-size:0.75rem;background:rgba(196,98,45,0.1);color:var(--rust);border:none;border-radius:100px;padding:0.32rem 0.8rem;cursor:pointer;font-family:'DM Sans',sans-serif" data-en="Sign Out" data-ar="خروج">Sign Out</button></div>
                 </div>
@@ -1144,9 +1294,9 @@
 
             <!-- ═══ MY EVENTS ═══ -->
             <div class="sec" id="sec-events">
-                <div style="margin-bottom:1.25rem">
-                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Your " data-ar="فعالياتك ">Your </span><em style="font-style:italic;color:var(--green)" data-en="registered events." data-ar="المسجّلة.">registered events.</em></h2>
-                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="Track your upcoming, completed, and cancelled events." data-ar="تتبّع فعالياتك القادمة والمكتملة والملغاة.">Track your upcoming, completed, and cancelled events.</p>
+                <div class="sec-hero">
+                    <h2><span data-en="Your " data-ar="فعالياتك ">Your </span><em data-en="registered events." data-ar="المسجّلة.">registered events.</em></h2>
+                    <p data-en="Track your upcoming, completed, and cancelled events." data-ar="تتبّع فعالياتك القادمة والمكتملة والملغاة.">Track your upcoming, completed, and cancelled events.</p>
                 </div>
                 <div class="pills" id="evt-pills">
                     <button class="pill active" onclick="filterEvtByPill(this,'All')" data-en="All" data-ar="الكل">All</button>
@@ -1244,9 +1394,9 @@
 
             <!-- ═══ MY IMPACT ═══ -->
             <div class="sec" id="sec-impact">
-                <div style="margin-bottom:1.25rem">
-                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Your " data-ar="أثرك ">Your </span><em style="font-style:italic;color:var(--green)" data-en="environmental impact." data-ar="البيئي.">environmental impact.</em></h2>
-                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="See the difference you're making for Qatar's environment." data-ar="شاهد الفرق الذي تصنعه لبيئة قطر.">See the difference you're making for Qatar's environment.</p>
+                <div class="sec-hero">
+                    <h2><span data-en="Your " data-ar="أثرك ">Your </span><em data-en="environmental impact." data-ar="البيئي.">environmental impact.</em></h2>
+                    <p data-en="See the difference you're making for Qatar's environment." data-ar="شاهد الفرق الذي تصنعه لبيئة قطر.">See the difference you're making for Qatar's environment.</p>
                 </div>
                 <div class="impact-stats">
                     <div class="impact-card"><div class="impact-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon></div><div class="impact-num">47</div><div class="impact-label" data-en="Volunteer Hours" data-ar="ساعة تطوع">Volunteer Hours</div><div class="impact-trend">↑ <span data-en="12 this month" data-ar="١٢ هذا الشهر">12 this month</span></div></div>
@@ -1320,10 +1470,11 @@
 
             <!-- ═══ LEADERBOARD ═══ -->
             <div class="sec" id="sec-leaderboard">
-                <div style="margin-bottom:1.25rem">
-                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Community " data-ar="المتصدرون في ">Community </span><em style="font-style:italic;color:var(--green)" data-en="leaderboard." data-ar="المجتمع.">leaderboard.</em></h2>
-                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="Top contributors driving climate action across Qatar." data-ar="أبرز المساهمين في قيادة العمل المناخي في قطر.">Top contributors driving climate action across Qatar.</p>
+                <div class="sec-hero">
+                    <h2><span data-en="Community " data-ar="المتصدرون في ">Community </span><em data-en="leaderboard." data-ar="المجتمع.">leaderboard.</em></h2>
+                    <p data-en="Top contributors driving climate action across Qatar." data-ar="أبرز المساهمين في قيادة العمل المناخي في قطر.">Top contributors driving climate action across Qatar.</p>
                 </div>
+                <div id="lazy-leaderboard">
                 <div class="lb-full">
                     <div class="lb-header">
                         <span data-en="Rank" data-ar="الترتيب">Rank</span>
@@ -1422,15 +1573,16 @@
                         <div class="lb-row-pts">940</div>
                     </div>
                 </div>
+                </div><!-- /lazy-leaderboard -->
             </div>
 
             <!-- ═══ COMMUNITY FEED ═══ -->
             <div class="sec" id="sec-feed">
-                <div style="margin-bottom:1.25rem">
-                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Community " data-ar="تغذية ">Community </span><em style="font-style:italic;color:var(--green)" data-en="feed." data-ar="المجتمع.">feed.</em></h2>
-                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="See what's happening across Qatar's climate community." data-ar="شاهد ما يحدث في مجتمع المناخ في قطر.">See what's happening across Qatar's climate community.</p>
+                <div class="sec-hero">
+                    <h2><span data-en="Community " data-ar="تغذية ">Community </span><em data-en="feed." data-ar="المجتمع.">feed.</em></h2>
+                    <p data-en="See what's happening across Qatar's climate community." data-ar="شاهد ما يحدث في مجتمع المناخ في قطر.">See what's happening across Qatar's climate community.</p>
                 </div>
-                <div class="feed-full">
+                <div id="lazy-feed"><div class="feed-full">
                     <div class="feed-full-item">
                         <div class="feed-av" style="background:#dcfce7;color:#166534">S</div>
                         <div class="feed-body">
@@ -1527,14 +1679,15 @@
                         </div>
                         <div class="feed-type-icon" style="background:rgba(107,33,168,0.08);color:#6b21a8"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></div>
                     </div>
-                </div>
+                </div><!-- /feed-full -->
+                </div><!-- /lazy-feed -->
             </div>
 
             <!-- ═══ ECO ID ═══ -->
             <div class="sec" id="sec-ecoid">
-                <div style="margin-bottom:1.25rem">
-                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Your " data-ar="بطاقتك ">Your </span><em style="font-style:italic;color:var(--green)" data-en="Eco ID." data-ar="البيئية.">Eco ID.</em></h2>
-                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="Your digital identity card for Qatar's climate community." data-ar="بطاقة هويتك الرقمية لمجتمع المناخ في قطر.">Your digital identity card for Qatar's climate community.</p>
+                <div class="sec-hero">
+                    <h2><span data-en="Your " data-ar="بطاقتك ">Your </span><em data-en="Eco ID." data-ar="البيئية.">Eco ID.</em></h2>
+                    <p data-en="Your digital identity card for Qatar's climate community." data-ar="بطاقة هويتك الرقمية لمجتمع المناخ في قطر.">Your digital identity card for Qatar's climate community.</p>
                 </div>
 
                 <div class="ecoid-layout">
@@ -1673,15 +1826,41 @@
 
 <!-- POST EVENT MODAL -->
 <div class="modal-overlay" id="post-event-modal" onclick="closeGenericModal('post-event-modal',event)">
-    <div class="modal" onclick="event.stopPropagation()">
+    <div class="modal" style="max-width:540px" onclick="event.stopPropagation()">
         <div class="modal-header">
-            <h2 data-en="Coming Soon 🌿" data-ar="قريباً 🌿">Coming Soon 🌿</h2>
+            <h2 data-en="Post an Event 🌿" data-ar="أضف فعالية 🌿">Post an Event 🌿</h2>
             <button class="modal-close" onclick="closeGenericModal('post-event-modal')"><iconify-icon icon="solar:close-circle-linear"></iconify-icon></button>
         </div>
-        <div class="modal-body" id="post-event-body">
-            <p class="modal-desc" data-en="Organization posting is coming soon. Want to be notified when it launches?" data-ar="نشر الفعاليات من المنظمات قادم قريباً. هل تريد أن يتم إعلامك عند الإطلاق؟">Organization posting is coming soon. Want to be notified when it launches?</p>
-            <input class="modal-input" id="post-event-email" type="email" placeholder="your@email.com">
-            <button class="modal-submit-btn" onclick="submitPostEventNotify()"><span data-en="Notify Me" data-ar="أعلمني">Notify Me</span></button>
+        <div class="modal-body">
+            <div class="pe-form" id="pe-form">
+                <div class="pe-field">
+                    <label data-en="Event Name" data-ar="اسم الفعالية">Event Name</label>
+                    <input type="text" id="pe-name" placeholder="Beach Cleanup Drive">
+                </div>
+                <div class="pe-field">
+                    <label data-en="Organization" data-ar="المنظمة">Organization</label>
+                    <input type="text" id="pe-org" placeholder="EcoAwareness QA">
+                </div>
+                <div class="pe-row">
+                    <div class="pe-field">
+                        <label data-en="Date" data-ar="التاريخ">Date</label>
+                        <input type="date" id="pe-date">
+                    </div>
+                    <div class="pe-field">
+                        <label data-en="Location" data-ar="الموقع">Location</label>
+                        <input type="text" id="pe-location" placeholder="Al Wakrah Beach">
+                    </div>
+                </div>
+                <div class="pe-field">
+                    <label data-en="Description" data-ar="الوصف">Description</label>
+                    <textarea id="pe-desc" rows="3" placeholder="Describe the event, goals, and what volunteers should bring..."></textarea>
+                </div>
+                <div class="pe-field">
+                    <label data-en="Expected Volunteers" data-ar="عدد المتطوعين المتوقع">Expected Volunteers</label>
+                    <input type="number" id="pe-volunteers" min="1" placeholder="25">
+                </div>
+                <button class="modal-submit-btn" onclick="submitPostEvent()"><span data-en="Submit Event" data-ar="إرسال الفعالية">Submit Event</span></button>
+            </div>
         </div>
     </div>
 </div>
@@ -1700,7 +1879,7 @@
 <!-- TOAST -->
 <div class="dash-toast" id="dash-toast"><div class="dash-toast-inner" id="dash-toast-inner"></div></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // SUPABASE
 const sb = window.supabase.createClient(
     'https://nqvhxjsryatqgfvtjbki.supabase.co',
@@ -1727,9 +1906,25 @@ async function init() {
     document.getElementById('sb-avatar').textContent = initial;
     document.getElementById('sb-name').textContent = fullName;
     document.getElementById('greeting-name').textContent = ' ' + firstName;
-    document.getElementById('p-avatar').textContent = initial;
     document.getElementById('p-name').textContent = fullName;
     document.getElementById('p-email').textContent = session.user.email;
+
+    // Profile avatar — use uploaded image or initial
+    if (meta.avatar_url) {
+        setAvatarImage(meta.avatar_url);
+    } else {
+        const pAv = document.getElementById('p-avatar');
+        // Set initial but keep overlay
+        const overlay = pAv.querySelector('.p-av-overlay');
+        pAv.childNodes[0].textContent = initial;
+    }
+
+    // Bio & location from metadata
+    if (meta.bio) document.getElementById('p-bio').textContent = meta.bio;
+    if (meta.location) {
+        const locSpan = document.getElementById('p-location').querySelector('span');
+        if (locSpan) locSpan.textContent = meta.location;
+    }
 
     // Invite link
     currentUserId = session.user.id;
@@ -1747,18 +1942,20 @@ async function init() {
         greetEl.setAttribute('data-en', en); greetEl.setAttribute('data-ar', ar);
         greetEl.textContent = isArabic ? ar : en;
     }
+
+    // Animate home stat numbers on first load
+    requestAnimationFrame(() => animateStatNumbers());
 }
 
 // LOGOUT
 async function doLogout() {
-    try { await sb.auth.signOut(); } catch(e) { console.log(e); }
+    try { await sb.auth.signOut(); } catch(e) { /* silent */ }
     // Clear any local storage just in case
     localStorage.removeItem('sb-' + 'nqvhxjsryatqgfvtjbki' + '-auth-token');
     // Redirect to home, signed out
     window.location.replace('index.html');
 }
-document.getElementById('logout-btn').addEventListener('click', doLogout);
-document.getElementById('p-logout').addEventListener('click', doLogout);
+// logout handled by onclick attributes on buttons
 
 // NAVIGATE
 const titles = {
@@ -1774,14 +1971,64 @@ const titles = {
     ecoid: { en: 'Your <em style="font-style:italic;color:var(--green)">Eco ID.</em>', ar: 'بطاقتك <em style="color:var(--green)">البيئية.</em>' }
 };
 
+// LAZY LOADING — inject heavy section content on first visit
+const _loadedSections = new Set(['home']); // home is always pre-rendered
+function lazyLoadSection(sec) {
+    if (_loadedSections.has(sec)) return;
+    _loadedSections.add(sec);
+    const tpl = document.getElementById('tpl-' + sec);
+    const target = document.getElementById('lazy-' + sec);
+    if (tpl && target) {
+        target.innerHTML = tpl.innerHTML;
+        // Re-apply current language to new content
+        if (isArabic) {
+            target.querySelectorAll('[data-en]').forEach(el => {
+                const v = el.getAttribute('data-ar');
+                if (v !== null) el.innerHTML = v;
+            });
+        }
+    }
+}
+
+let _navBusy = false;
 function navigate(sec) {
-    document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+    if (_navBusy) return;
+    const current = document.querySelector('.sec.active');
+    const next = document.getElementById('sec-' + sec);
+    if (!next || current === next) return;
+
+    // Sidebar active state
     document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('active'));
-    const el = document.getElementById('sec-' + sec);
-    if (el) el.classList.add('active');
-    // Only highlight the exact sidebar button for this section
     const btn = document.querySelector(`.sb-item[data-sec="${sec}"]`);
     if (btn) btn.classList.add('active');
+
+    // Close mobile sidebar if open
+    if (window.innerWidth <= 768) {
+        document.querySelector('.sidebar')?.classList.remove('sb-open');
+        document.getElementById('sb-backdrop')?.classList.remove('show');
+    }
+
+    // Lazy load before showing
+    lazyLoadSection(sec);
+
+    // Animate transition
+    if (current) {
+        _navBusy = true;
+        current.classList.add('sec-exit');
+        current.addEventListener('animationend', function handler() {
+            current.removeEventListener('animationend', handler);
+            current.classList.remove('active', 'sec-exit', 'sec-enter');
+            // Show new section
+            next.classList.add('active', 'sec-enter');
+            _navBusy = false;
+            // Count up stats if navigating to home
+            if (sec === 'home') animateStatNumbers();
+        }, { once: true });
+    } else {
+        next.classList.add('active', 'sec-enter');
+        if (sec === 'home') animateStatNumbers();
+    }
+
     // Update title
     const t = titles[sec];
     if (t) {
@@ -1790,7 +2037,6 @@ function navigate(sec) {
             titleEl.innerHTML = t.en;
             const nameEl = document.getElementById('greeting-name');
             if (nameEl) nameEl.textContent = ' ' + (document.getElementById('sb-name')?.textContent.split(' ')[0] || 'Mohammed');
-            // re-apply greeting
             const h = new Date().getHours();
             const greetEl = titleEl.querySelector('em');
             if (greetEl) {
@@ -1804,6 +2050,42 @@ function navigate(sec) {
         }
     }
     document.querySelector('.scroll-area').scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+// STAT NUMBER COUNT-UP ANIMATION
+let _statsAnimated = false;
+function animateStatNumbers() {
+    if (_statsAnimated) return;
+    _statsAnimated = true;
+    document.querySelectorAll('#sec-home .stat-num').forEach(el => {
+        const raw = el.textContent.trim();
+        const prefix = raw.match(/^[^0-9]*/)[0]; // e.g. "#"
+        const suffix = raw.match(/[^0-9]*$/)[0]; // e.g. "t"
+        const numStr = raw.replace(prefix, '').replace(suffix, '');
+        const target = parseFloat(numStr);
+        if (isNaN(target) || target === 0) return;
+        const isFloat = numStr.includes('.');
+        const duration = 800;
+        const start = performance.now();
+        el.textContent = prefix + '0' + suffix;
+        function tick(now) {
+            const progress = Math.min((now - start) / duration, 1);
+            // ease-out cubic
+            const eased = 1 - Math.pow(1 - progress, 3);
+            const val = eased * target;
+            el.textContent = prefix + (isFloat ? val.toFixed(1) : Math.round(val)) + suffix;
+            if (progress < 1) requestAnimationFrame(tick);
+        }
+        requestAnimationFrame(tick);
+    });
+}
+
+// MOBILE SIDEBAR TOGGLE
+function toggleSidebar() {
+    const sb = document.querySelector('.sidebar');
+    const bd = document.getElementById('sb-backdrop');
+    sb.classList.toggle('sb-open');
+    bd.classList.toggle('show');
 }
 
 // PILLS
@@ -1894,6 +2176,13 @@ function copyInviteLink() {
     });
 }
 
+// DEBOUNCE SEARCH (300ms)
+let _searchTimer = null;
+function debouncedSearch() {
+    clearTimeout(_searchTimer);
+    _searchTimer = setTimeout(filterOpportunities, 300);
+}
+
 // TOAST
 function showDashToast(msg) {
     const t = document.getElementById('dash-toast');
@@ -1901,6 +2190,178 @@ function showDashToast(msg) {
     inner.textContent = msg;
     t.classList.add('show');
     setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// GENERIC MODAL CLOSE
+function closeGenericModal(id, event) {
+    if (event && event.target !== event.currentTarget) return;
+    document.getElementById(id).classList.remove('open');
+}
+
+// POST EVENT
+function openPostEventModal() {
+    // Reset form
+    const form = document.getElementById('pe-form');
+    if (form) form.querySelectorAll('input, textarea').forEach(el => el.value = '');
+    document.getElementById('post-event-modal').classList.add('open');
+}
+
+function submitPostEvent() {
+    const name = document.getElementById('pe-name').value.trim();
+    const org = document.getElementById('pe-org').value.trim();
+    const date = document.getElementById('pe-date').value;
+    const location = document.getElementById('pe-location').value.trim();
+    const desc = document.getElementById('pe-desc').value.trim();
+    const volunteers = document.getElementById('pe-volunteers').value.trim();
+
+    if (!name || !org || !date) {
+        showDashToast(isArabic ? 'يرجى ملء الحقول المطلوبة' : 'Please fill in the required fields');
+        return;
+    }
+
+    const subject = encodeURIComponent('New Event Submission: ' + name);
+    const body = encodeURIComponent(
+        'EVENT SUBMISSION — EcoHub\n' +
+        '━━━━━━━━━━━━━━━━━━━━\n\n' +
+        'Event Name: ' + name + '\n' +
+        'Organization: ' + org + '\n' +
+        'Date: ' + date + '\n' +
+        'Location: ' + (location || 'Not specified') + '\n' +
+        'Expected Volunteers: ' + (volunteers || 'Not specified') + '\n\n' +
+        'Description:\n' + (desc || 'No description provided.') + '\n\n' +
+        '━━━━━━━━━━━━━━━━━━━━\n' +
+        'Sent from EcoHub Dashboard'
+    );
+
+    window.open('mailto:ecoawarenessme@gmail.com?subject=' + subject + '&body=' + body, '_self');
+    closeGenericModal('post-event-modal');
+    showDashToast(isArabic ? 'تم فتح البريد الإلكتروني — أرسل الفعالية!' : 'Email opened — send your event!');
+}
+
+// PROFILE — EDIT / SAVE / AVATAR UPLOAD
+function toggleEditProfile() {
+    const form = document.getElementById('p-edit-form');
+    const isOpen = form.classList.contains('open');
+    if (!isOpen) {
+        // Populate inputs from current display values
+        document.getElementById('edit-name-input').value = document.getElementById('p-name').textContent;
+        document.getElementById('edit-bio-input').value = document.getElementById('p-bio').textContent;
+        const locSpan = document.getElementById('p-location').querySelector('span');
+        document.getElementById('edit-location-input').value = locSpan ? locSpan.textContent : '';
+    }
+    form.classList.toggle('open');
+}
+
+async function saveProfile() {
+    const name = document.getElementById('edit-name-input').value.trim();
+    const bio = document.getElementById('edit-bio-input').value.trim();
+    const location = document.getElementById('edit-location-input').value.trim();
+
+    if (!name) {
+        showDashToast(isArabic ? 'الاسم مطلوب' : 'Name is required');
+        return;
+    }
+
+    try {
+        const { error } = await sb.auth.updateUser({
+            data: { full_name: name, name: name, bio: bio, location: location }
+        });
+        if (error) throw error;
+
+        // Update all UI elements
+        document.getElementById('p-name').textContent = name;
+        document.getElementById('sb-name').textContent = name;
+        document.getElementById('p-bio').textContent = bio || (isArabic ? 'ناشط مناخي ومنظّم شبابي.' : 'Climate activist and youth organizer.');
+        const locSpan = document.getElementById('p-location').querySelector('span');
+        if (locSpan) locSpan.textContent = location || (isArabic ? 'الدوحة، قطر' : 'Doha, Qatar');
+
+        // Update sidebar avatar initial
+        const initial = name.charAt(0).toUpperCase();
+        const pAv = document.getElementById('p-avatar');
+        if (!pAv.querySelector('img')) pAv.childNodes[0].textContent = initial;
+        document.getElementById('sb-avatar').textContent = initial;
+
+        // Update greeting
+        const firstName = name.split(' ')[0];
+        const greetName = document.getElementById('greeting-name');
+        if (greetName) greetName.textContent = ' ' + firstName;
+
+        // Update Eco ID name
+        const ecoidName = document.getElementById('ecoid-name');
+        if (ecoidName) ecoidName.textContent = name;
+
+        document.getElementById('p-edit-form').classList.remove('open');
+        showDashToast(isArabic ? 'تم حفظ الملف الشخصي' : 'Profile saved!');
+    } catch (e) {
+        showDashToast(isArabic ? 'خطأ في الحفظ' : 'Error saving profile');
+    }
+}
+
+async function uploadAvatar(input) {
+    const file = input.files[0];
+    if (!file) return;
+
+    // Validate file
+    if (!file.type.startsWith('image/')) {
+        showDashToast(isArabic ? 'يرجى اختيار صورة' : 'Please select an image');
+        return;
+    }
+    if (file.size > 2 * 1024 * 1024) {
+        showDashToast(isArabic ? 'الحد الأقصى 2 ميجابايت' : 'Max file size is 2MB');
+        return;
+    }
+
+    try {
+        const { data: { session } } = await sb.auth.getSession();
+        if (!session) return;
+
+        const ext = file.name.split('.').pop();
+        const filePath = session.user.id + '/avatar.' + ext;
+
+        // Upload to Supabase Storage
+        const { error: upErr } = await sb.storage.from('avatars').upload(filePath, file, { upsert: true });
+        if (upErr) throw upErr;
+
+        // Get public URL
+        const { data: urlData } = sb.storage.from('avatars').getPublicUrl(filePath);
+        const avatarUrl = urlData.publicUrl + '?t=' + Date.now(); // cache bust
+
+        // Save URL to user metadata
+        await sb.auth.updateUser({ data: { avatar_url: avatarUrl } });
+
+        // Update all avatar elements
+        setAvatarImage(avatarUrl);
+        showDashToast(isArabic ? 'تم تحديث الصورة' : 'Profile photo updated!');
+    } catch (e) {
+        showDashToast(isArabic ? 'خطأ في رفع الصورة' : 'Error uploading photo');
+    }
+    // Reset input so same file can be re-selected
+    input.value = '';
+}
+
+function setAvatarImage(url) {
+    // Profile avatar
+    const pAv = document.getElementById('p-avatar');
+    let pImg = pAv.querySelector('img');
+    if (!pImg) {
+        // Clear text node (initial letter), keep overlay
+        const overlay = pAv.querySelector('.p-av-overlay');
+        pAv.textContent = '';
+        pImg = document.createElement('img');
+        pAv.appendChild(pImg);
+        if (overlay) pAv.appendChild(overlay);
+    }
+    pImg.src = url;
+
+    // Sidebar avatar
+    const sbAv = document.getElementById('sb-avatar');
+    sbAv.innerHTML = '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%">';
+
+    // Eco ID avatar
+    const ecoidAv = document.getElementById('ecoid-avatar');
+    if (ecoidAv) {
+        ecoidAv.innerHTML = '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%">';
+    }
 }
 
 // ECO ID
@@ -1979,9 +2440,11 @@ function shareEcoId() {
     }
 }
 
-// Close modal on Escape key
+// Close all modals on Escape key
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeInviteModal();
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+    }
 });
 
 init();
