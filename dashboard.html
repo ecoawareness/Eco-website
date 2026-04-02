@@ -7,10 +7,9 @@
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script defer src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
             --ink: #0a0a0a; --paper: #f5f0e8; --green: #1a5c38;
@@ -139,6 +138,17 @@
         .sec { display: none; padding: 1.75rem; max-width: 1080px; }
         .sec.active { display: block; animation: fadeUp 0.22s ease both; }
         @keyframes fadeUp { from { opacity:0; transform:translateY(10px); } to { opacity:1; transform:none; } }
+
+        /* SECTION HERO */
+        .sec-hero { margin-bottom: 1.25rem; }
+        .sec-hero h2 { font-family: 'Instrument Serif', serif; font-size: 1.55rem; line-height: 1.15; margin-bottom: 0.25rem; }
+        body.ar .sec-hero h2 { font-family: 'Noto Naskh Arabic', serif; }
+        .sec-hero h2 em { font-style: italic; color: var(--green); }
+        body.ar .sec-hero h2 em { font-style: normal; }
+        .sec-hero p { font-size: 0.845rem; color: rgba(0,0,0,0.45); }
+
+        /* PERF: contain layout for heavy cards */
+        .opp-card, .org-card, .my-evt, .feed-full-item, .lb-row, .res-item { contain: layout style; }
 
         /* STAT CARDS */
         .stat-grid { display: grid; grid-template-columns: repeat(4,1fr); gap: 0.875rem; margin-bottom: 1.5rem; }
@@ -916,11 +926,11 @@
 
             <!-- ═══ OPPORTUNITIES ═══ -->
             <div class="sec" id="sec-opportunities">
-                <div style="margin-bottom:1.25rem">
-                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Find your next " data-ar="اعثر على فرصتك ">Find your next </span><em style="font-style:italic;color:var(--green)" data-en="climate opportunity." data-ar="المناخية القادمة.">climate opportunity.</em></h2>
-                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="24 active opportunities across Qatar" data-ar="٢٤ فرصة نشطة في قطر">24 active opportunities across Qatar</p>
+                <div class="sec-hero">
+                    <h2><span data-en="Find your next " data-ar="اعثر على فرصتك ">Find your next </span><em data-en="climate opportunity." data-ar="المناخية القادمة.">climate opportunity.</em></h2>
+                    <p data-en="24 active opportunities across Qatar" data-ar="٢٤ فرصة نشطة في قطر">24 active opportunities across Qatar</p>
                 </div>
-                <div class="search-wrap"><span class="s-icon"><iconify-icon icon="solar:magnifer-linear"></iconify-icon></span><input class="s-input" id="opp-search" oninput="filterOpportunities()" placeholder="Search projects, organizations or keywords..." data-placeholder-en="Search projects, organizations or keywords..." data-placeholder-ar="ابحث عن مشاريع أو منظمات..."></div>
+                <div class="search-wrap"><span class="s-icon"><iconify-icon icon="solar:magnifer-linear"></iconify-icon></span><input class="s-input" id="opp-search" oninput="debouncedSearch()" placeholder="Search projects, organizations or keywords..." data-placeholder-en="Search projects, organizations or keywords..." data-placeholder-ar="ابحث عن مشاريع أو منظمات..."></div>
                 <div class="pills" id="opp-pills">
                     <button class="pill active" onclick="filterOppByPill(this,'All')" data-en="All" data-ar="الكل">All</button>
                     <button class="pill" onclick="filterOppByPill(this,'Conservation')" data-en="Conservation" data-ar="الحفاظ على البيئة">Conservation</button>
@@ -942,9 +952,9 @@
 
             <!-- ═══ NETWORK ═══ -->
             <div class="sec" id="sec-network">
-                <div style="margin-bottom:1.25rem">
-                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Meet Qatar's " data-ar="تعرّف على الشبكة ">Meet Qatar's </span><em style="font-style:italic;color:var(--green)" data-en="green network." data-ar="الخضراء في قطر.">green network.</em></h2>
-                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="63 organizations, clubs & government bodies" data-ar="٦٣ منظمة ونادٍ وجهة حكومية">63 organizations, clubs & government bodies</p>
+                <div class="sec-hero">
+                    <h2><span data-en="Meet Qatar's " data-ar="تعرّف على الشبكة ">Meet Qatar's </span><em data-en="green network." data-ar="الخضراء في قطر.">green network.</em></h2>
+                    <p data-en="63 organizations, clubs & government bodies" data-ar="٦٣ منظمة ونادٍ وجهة حكومية">63 organizations, clubs & government bodies</p>
                 </div>
                 <div class="pills" id="net-pills">
                     <button class="pill active" onclick="filterNetByPill(this,'All')" data-en="All" data-ar="الكل">All</button>
@@ -1136,7 +1146,7 @@
                 </div>
                 <div class="settings-card">
                     <h3 data-en="Account Settings" data-ar="إعدادات الحساب">Account Settings</h3>
-                    <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:letter-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Email Address" data-ar="البريد الإلكتروني">Email Address</div><div class="setting-sub" id="p-email"><a href="/cdn-cgi/l/email-protection" class="__cf_email__" data-cfemail="e78a888f868a8a828383888993818895808293a7808a868e8bc984888a">[email&#160;protected]</a></div></div></div><span style="font-size:0.68rem;background:rgba(26,92,56,0.1);color:var(--green);border-radius:100px;padding:0.18rem 0.55rem" data-en="Verified" data-ar="موثق">Verified</span></div>
+                    <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:letter-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Email Address" data-ar="البريد الإلكتروني">Email Address</div><div class="setting-sub" id="p-email">loading...</div></div></div><span style="font-size:0.68rem;background:rgba(26,92,56,0.1);color:var(--green);border-radius:100px;padding:0.18rem 0.55rem" data-en="Verified" data-ar="موثق">Verified</span></div>
                     <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:bell-linear" style="color:rgba(0,0,0,0.38)"></iconify-icon><div><div class="setting-label" data-en="Notifications" data-ar="الإشعارات">Notifications</div><div class="setting-sub" data-en="Email updates for new opportunities" data-ar="تحديثات بريدية للفرص الجديدة">Email updates for new opportunities</div></div></div><div id="notif-toggle" onclick="toggleNotifications()" style="width:34px;height:18px;border-radius:100px;position:relative;cursor:pointer;transition:background 0.25s"><span id="notif-knob" style="position:absolute;top:2px;width:14px;height:14px;background:white;border-radius:50%;display:block;transition:left 0.25s,right 0.25s;box-shadow:0 1px 3px rgba(0,0,0,0.15)"></span></div></div>
                     <div class="setting-row"><div class="setting-left"><iconify-icon icon="solar:logout-linear" style="color:rgba(196,98,45,0.7)"></iconify-icon><div class="setting-label" style="color:var(--rust)" data-en="Sign Out" data-ar="تسجيل الخروج">Sign Out</div></div><button id="p-logout" onclick="doLogout()" style="font-size:0.75rem;background:rgba(196,98,45,0.1);color:var(--rust);border:none;border-radius:100px;padding:0.32rem 0.8rem;cursor:pointer;font-family:'DM Sans',sans-serif" data-en="Sign Out" data-ar="خروج">Sign Out</button></div>
                 </div>
@@ -1144,9 +1154,9 @@
 
             <!-- ═══ MY EVENTS ═══ -->
             <div class="sec" id="sec-events">
-                <div style="margin-bottom:1.25rem">
-                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Your " data-ar="فعالياتك ">Your </span><em style="font-style:italic;color:var(--green)" data-en="registered events." data-ar="المسجّلة.">registered events.</em></h2>
-                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="Track your upcoming, completed, and cancelled events." data-ar="تتبّع فعالياتك القادمة والمكتملة والملغاة.">Track your upcoming, completed, and cancelled events.</p>
+                <div class="sec-hero">
+                    <h2><span data-en="Your " data-ar="فعالياتك ">Your </span><em data-en="registered events." data-ar="المسجّلة.">registered events.</em></h2>
+                    <p data-en="Track your upcoming, completed, and cancelled events." data-ar="تتبّع فعالياتك القادمة والمكتملة والملغاة.">Track your upcoming, completed, and cancelled events.</p>
                 </div>
                 <div class="pills" id="evt-pills">
                     <button class="pill active" onclick="filterEvtByPill(this,'All')" data-en="All" data-ar="الكل">All</button>
@@ -1244,9 +1254,9 @@
 
             <!-- ═══ MY IMPACT ═══ -->
             <div class="sec" id="sec-impact">
-                <div style="margin-bottom:1.25rem">
-                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Your " data-ar="أثرك ">Your </span><em style="font-style:italic;color:var(--green)" data-en="environmental impact." data-ar="البيئي.">environmental impact.</em></h2>
-                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="See the difference you're making for Qatar's environment." data-ar="شاهد الفرق الذي تصنعه لبيئة قطر.">See the difference you're making for Qatar's environment.</p>
+                <div class="sec-hero">
+                    <h2><span data-en="Your " data-ar="أثرك ">Your </span><em data-en="environmental impact." data-ar="البيئي.">environmental impact.</em></h2>
+                    <p data-en="See the difference you're making for Qatar's environment." data-ar="شاهد الفرق الذي تصنعه لبيئة قطر.">See the difference you're making for Qatar's environment.</p>
                 </div>
                 <div class="impact-stats">
                     <div class="impact-card"><div class="impact-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon></div><div class="impact-num">47</div><div class="impact-label" data-en="Volunteer Hours" data-ar="ساعة تطوع">Volunteer Hours</div><div class="impact-trend">↑ <span data-en="12 this month" data-ar="١٢ هذا الشهر">12 this month</span></div></div>
@@ -1320,10 +1330,11 @@
 
             <!-- ═══ LEADERBOARD ═══ -->
             <div class="sec" id="sec-leaderboard">
-                <div style="margin-bottom:1.25rem">
-                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Community " data-ar="المتصدرون في ">Community </span><em style="font-style:italic;color:var(--green)" data-en="leaderboard." data-ar="المجتمع.">leaderboard.</em></h2>
-                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="Top contributors driving climate action across Qatar." data-ar="أبرز المساهمين في قيادة العمل المناخي في قطر.">Top contributors driving climate action across Qatar.</p>
+                <div class="sec-hero">
+                    <h2><span data-en="Community " data-ar="المتصدرون في ">Community </span><em data-en="leaderboard." data-ar="المجتمع.">leaderboard.</em></h2>
+                    <p data-en="Top contributors driving climate action across Qatar." data-ar="أبرز المساهمين في قيادة العمل المناخي في قطر.">Top contributors driving climate action across Qatar.</p>
                 </div>
+                <div id="lazy-leaderboard">
                 <div class="lb-full">
                     <div class="lb-header">
                         <span data-en="Rank" data-ar="الترتيب">Rank</span>
@@ -1422,15 +1433,16 @@
                         <div class="lb-row-pts">940</div>
                     </div>
                 </div>
+                </div><!-- /lazy-leaderboard -->
             </div>
 
             <!-- ═══ COMMUNITY FEED ═══ -->
             <div class="sec" id="sec-feed">
-                <div style="margin-bottom:1.25rem">
-                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Community " data-ar="تغذية ">Community </span><em style="font-style:italic;color:var(--green)" data-en="feed." data-ar="المجتمع.">feed.</em></h2>
-                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="See what's happening across Qatar's climate community." data-ar="شاهد ما يحدث في مجتمع المناخ في قطر.">See what's happening across Qatar's climate community.</p>
+                <div class="sec-hero">
+                    <h2><span data-en="Community " data-ar="تغذية ">Community </span><em data-en="feed." data-ar="المجتمع.">feed.</em></h2>
+                    <p data-en="See what's happening across Qatar's climate community." data-ar="شاهد ما يحدث في مجتمع المناخ في قطر.">See what's happening across Qatar's climate community.</p>
                 </div>
-                <div class="feed-full">
+                <div id="lazy-feed"><div class="feed-full">
                     <div class="feed-full-item">
                         <div class="feed-av" style="background:#dcfce7;color:#166534">S</div>
                         <div class="feed-body">
@@ -1527,14 +1539,15 @@
                         </div>
                         <div class="feed-type-icon" style="background:rgba(107,33,168,0.08);color:#6b21a8"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></div>
                     </div>
-                </div>
+                </div><!-- /feed-full -->
+                </div><!-- /lazy-feed -->
             </div>
 
             <!-- ═══ ECO ID ═══ -->
             <div class="sec" id="sec-ecoid">
-                <div style="margin-bottom:1.25rem">
-                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Your " data-ar="بطاقتك ">Your </span><em style="font-style:italic;color:var(--green)" data-en="Eco ID." data-ar="البيئية.">Eco ID.</em></h2>
-                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="Your digital identity card for Qatar's climate community." data-ar="بطاقة هويتك الرقمية لمجتمع المناخ في قطر.">Your digital identity card for Qatar's climate community.</p>
+                <div class="sec-hero">
+                    <h2><span data-en="Your " data-ar="بطاقتك ">Your </span><em data-en="Eco ID." data-ar="البيئية.">Eco ID.</em></h2>
+                    <p data-en="Your digital identity card for Qatar's climate community." data-ar="بطاقة هويتك الرقمية لمجتمع المناخ في قطر.">Your digital identity card for Qatar's climate community.</p>
                 </div>
 
                 <div class="ecoid-layout">
@@ -1700,7 +1713,7 @@
 <!-- TOAST -->
 <div class="dash-toast" id="dash-toast"><div class="dash-toast-inner" id="dash-toast-inner"></div></div>
 
-<script data-cfasync="false" src="/cdn-cgi/scripts/5c5dd728/cloudflare-static/email-decode.min.js"></script><script>
+<script>
 // SUPABASE
 const sb = window.supabase.createClient(
     'https://nqvhxjsryatqgfvtjbki.supabase.co',
@@ -1751,14 +1764,13 @@ async function init() {
 
 // LOGOUT
 async function doLogout() {
-    try { await sb.auth.signOut(); } catch(e) { console.log(e); }
+    try { await sb.auth.signOut(); } catch(e) { /* silent */ }
     // Clear any local storage just in case
     localStorage.removeItem('sb-' + 'nqvhxjsryatqgfvtjbki' + '-auth-token');
     // Redirect to home, signed out
     window.location.replace('index.html');
 }
-document.getElementById('logout-btn').addEventListener('click', doLogout);
-document.getElementById('p-logout').addEventListener('click', doLogout);
+// logout handled by onclick attributes on buttons
 
 // NAVIGATE
 const titles = {
@@ -1774,9 +1786,29 @@ const titles = {
     ecoid: { en: 'Your <em style="font-style:italic;color:var(--green)">Eco ID.</em>', ar: 'بطاقتك <em style="color:var(--green)">البيئية.</em>' }
 };
 
+// LAZY LOADING — inject heavy section content on first visit
+const _loadedSections = new Set(['home']); // home is always pre-rendered
+function lazyLoadSection(sec) {
+    if (_loadedSections.has(sec)) return;
+    _loadedSections.add(sec);
+    const tpl = document.getElementById('tpl-' + sec);
+    const target = document.getElementById('lazy-' + sec);
+    if (tpl && target) {
+        target.innerHTML = tpl.innerHTML;
+        // Re-apply current language to new content
+        if (isArabic) {
+            target.querySelectorAll('[data-en]').forEach(el => {
+                const v = el.getAttribute('data-ar');
+                if (v !== null) el.innerHTML = v;
+            });
+        }
+    }
+}
+
 function navigate(sec) {
     document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
     document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('active'));
+    lazyLoadSection(sec);
     const el = document.getElementById('sec-' + sec);
     if (el) el.classList.add('active');
     // Only highlight the exact sidebar button for this section
@@ -1894,6 +1926,13 @@ function copyInviteLink() {
     });
 }
 
+// DEBOUNCE SEARCH (300ms)
+let _searchTimer = null;
+function debouncedSearch() {
+    clearTimeout(_searchTimer);
+    _searchTimer = setTimeout(filterOpportunities, 300);
+}
+
 // TOAST
 function showDashToast(msg) {
     const t = document.getElementById('dash-toast');
@@ -1979,9 +2018,11 @@ function shareEcoId() {
     }
 }
 
-// Close modal on Escape key
+// Close all modals on Escape key
 document.addEventListener('keydown', (e) => {
-    if (e.key === 'Escape') closeInviteModal();
+    if (e.key === 'Escape') {
+        document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
+    }
 });
 
 init();
