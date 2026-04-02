@@ -932,16 +932,6 @@
 </head>
 <body>
 
-<!-- LOADING SCREEN -->
-<div id="loading-screen" style="position:fixed;inset:0;z-index:99999;background:var(--paper);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:0.75rem;transition:opacity 0.3s ease">
-    <div style="display:flex;align-items:center;gap:0.6rem">
-        <span style="width:10px;height:10px;background:var(--lime);border-radius:50%"></span>
-        <span style="font-family:'Instrument Serif',serif;font-size:1.6rem;color:var(--green)">EcoHub</span>
-    </div>
-    <div style="width:36px;height:36px;border:2.5px solid var(--sand);border-top-color:var(--green);border-radius:50%;animation:spin 0.7s linear infinite"></div>
-</div>
-<style>@keyframes spin{to{transform:rotate(360deg)}}</style>
-
 <button id="lang-toggle"><span class="ldot"></span><span id="lang-label">عربي</span></button>
 
 <div class="app">
@@ -1956,9 +1946,6 @@ async function init() {
     // Animate home stat numbers on first load
     requestAnimationFrame(() => animateStatNumbers());
 
-    // Dismiss loading screen
-    const ls = document.getElementById('loading-screen');
-    if (ls) { ls.style.opacity = '0'; setTimeout(() => ls.remove(), 300); }
 }
 
 // LOGOUT
