@@ -10,6 +10,7 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
             --ink: #0a0a0a; --paper: #f5f0e8; --green: #1a5c38;
@@ -681,8 +682,122 @@
         .invite-share-btn.email { background: white; color: var(--ink); border: 1px solid rgba(0,0,0,0.12); }
         .invite-share-btn.email:hover { border-color: var(--green); color: var(--green); }
 
-        @media (max-width: 1100px) { .two-col { grid-template-columns: 1fr; } .stat-grid { grid-template-columns: repeat(2,1fr); } .net-stats { grid-template-columns: repeat(2,1fr); } .impact-stats { grid-template-columns: repeat(2,1fr); } .goal-card { flex-direction: column; text-align: center; } .lb-header, .lb-row { grid-template-columns: 40px 32px 1fr 65px 55px 65px; gap: 0.5rem; font-size: 0.72rem; } .res-cats { grid-template-columns: repeat(2,1fr); } .res-featured { flex-direction: column; } }
-        @media (max-width: 768px) { .qa-grid { grid-template-columns: 1fr; } .sb-item span { display: block; } .impact-stats { grid-template-columns: 1fr; } .lb-header, .lb-row { grid-template-columns: 32px 28px 1fr 55px 45px 55px; gap: 0.35rem; padding: 0.6rem 0.75rem; } .res-cats { grid-template-columns: 1fr; } .res-feat-stats { flex-wrap: wrap; } }
+        /* ECO ID */
+        .ecoid-layout { display: grid; grid-template-columns: 380px 1fr; gap: 1.5rem; margin-bottom: 1.5rem; }
+        .ecoid-card {
+            background: linear-gradient(145deg, var(--green) 0%, #0d3d22 100%);
+            border-radius: 20px; padding: 2rem 1.75rem; position: relative; overflow: hidden;
+            color: #fff; min-height: 420px; display: flex; flex-direction: column;
+        }
+        .ecoid-card::before {
+            content: ''; position: absolute; top: -40px; right: -40px;
+            width: 200px; height: 200px; border-radius: 50%;
+            background: rgba(168,224,99,0.08); pointer-events: none;
+        }
+        .ecoid-card::after {
+            content: ''; position: absolute; bottom: -60px; left: -30px;
+            width: 180px; height: 180px; border-radius: 50%;
+            background: rgba(196,98,45,0.06); pointer-events: none;
+        }
+        .ecoid-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.5rem; position: relative; z-index: 1; }
+        .ecoid-logo { display: flex; align-items: center; gap: 0.5rem; }
+        .ecoid-logo-dot { width: 7px; height: 7px; background: var(--lime); border-radius: 50%; }
+        .ecoid-logo-text { font-family: 'Instrument Serif', serif; font-size: 1rem; color: #fff; }
+        body.ar .ecoid-logo-text { font-family: 'Noto Naskh Arabic', serif; }
+        .ecoid-verified {
+            display: inline-flex; align-items: center; gap: 0.35rem;
+            background: rgba(168,224,99,0.15); border: 1px solid rgba(168,224,99,0.3);
+            color: var(--lime); padding: 0.25rem 0.7rem; border-radius: 100px;
+            font-size: 0.6rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+        }
+        body.ar .ecoid-verified { letter-spacing: 0; font-size: 0.7rem; }
+        .ecoid-verified iconify-icon { font-size: 0.85rem; }
+        .ecoid-center { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; position: relative; z-index: 1; gap: 0.75rem; }
+        .ecoid-avatar {
+            width: 72px; height: 72px; border-radius: 50%; flex-shrink: 0;
+            background: rgba(168,224,99,0.18); border: 2.5px solid rgba(168,224,99,0.45);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Instrument Serif', serif; font-size: 2rem; color: var(--lime);
+        }
+        .ecoid-name { font-family: 'Instrument Serif', serif; font-size: 1.35rem; color: #fff; text-align: center; line-height: 1.2; }
+        body.ar .ecoid-name { font-family: 'Noto Naskh Arabic', serif; }
+        .ecoid-role { font-size: 0.72rem; color: rgba(255,255,255,0.45); text-align: center; }
+        .ecoid-qr {
+            background: #fff; border-radius: 12px; padding: 10px; margin-top: 0.5rem;
+            display: flex; align-items: center; justify-content: center;
+        }
+        .ecoid-qr canvas, .ecoid-qr img { border-radius: 6px; }
+        .ecoid-member-id {
+            font-family: 'DM Sans', monospace; font-size: 0.72rem; color: rgba(255,255,255,0.5);
+            letter-spacing: 0.15em; text-align: center; margin-top: 0.25rem;
+        }
+        .ecoid-bottom { display: flex; align-items: center; justify-content: space-between; margin-top: auto; padding-top: 1rem; border-top: 1px solid rgba(255,255,255,0.08); position: relative; z-index: 1; }
+        .ecoid-valid { font-size: 0.65rem; color: rgba(255,255,255,0.35); }
+        .ecoid-valid strong { color: rgba(255,255,255,0.6); font-weight: 500; }
+        .ecoid-actions { display: flex; gap: 0.5rem; }
+        .ecoid-act-btn {
+            display: inline-flex; align-items: center; gap: 0.35rem;
+            background: rgba(255,255,255,0.1); border: 1px solid rgba(255,255,255,0.15);
+            border-radius: 100px; padding: 0.4rem 0.85rem;
+            font-size: 0.72rem; color: rgba(255,255,255,0.7); cursor: pointer;
+            transition: all 0.2s; font-family: 'DM Sans', sans-serif;
+        }
+        body.ar .ecoid-act-btn { font-family: 'Noto Naskh Arabic', serif; }
+        .ecoid-act-btn:hover { background: rgba(168,224,99,0.2); border-color: rgba(168,224,99,0.35); color: #fff; }
+        .ecoid-act-btn iconify-icon { font-size: 0.9rem; }
+
+        .ecoid-side { display: flex; flex-direction: column; gap: 1.25rem; }
+        .ecoid-stats { display: grid; grid-template-columns: repeat(3,1fr); gap: 0.75rem; }
+        .ecoid-stat {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 13px;
+            padding: 1.1rem; text-align: center; transition: all 0.2s;
+        }
+        .ecoid-stat:hover { transform: translateY(-1px); box-shadow: 0 4px 16px rgba(0,0,0,0.06); }
+        .ecoid-stat-icon { width: 36px; height: 36px; border-radius: 9px; display: inline-flex; align-items: center; justify-content: center; font-size: 1rem; margin-bottom: 0.65rem; }
+        .ecoid-stat-num { font-family: 'Instrument Serif', serif; font-size: 1.65rem; line-height: 1; margin-bottom: 0.15rem; }
+        .ecoid-stat-label { font-size: 0.68rem; color: rgba(0,0,0,0.42); }
+
+        .ecoid-badges-panel {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px; padding: 1.25rem;
+        }
+        .ecoid-badges-title { font-family: 'Instrument Serif', serif; font-size: 1.05rem; margin-bottom: 0.85rem; }
+        body.ar .ecoid-badges-title { font-family: 'Noto Naskh Arabic', serif; }
+        .ecoid-badges { display: flex; flex-direction: column; gap: 0.6rem; }
+        .ecoid-badge {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.7rem 0.9rem; border-radius: 10px;
+            background: rgba(26,92,56,0.04); border: 1px solid rgba(26,92,56,0.08);
+        }
+        .ecoid-badge-icon {
+            width: 34px; height: 34px; border-radius: 8px; display: flex;
+            align-items: center; justify-content: center; font-size: 0.95rem; flex-shrink: 0;
+        }
+        .ecoid-badge-text { flex: 1; }
+        .ecoid-badge-name { font-size: 0.82rem; font-weight: 500; margin-bottom: 0.08rem; }
+        .ecoid-badge-desc { font-size: 0.68rem; color: rgba(0,0,0,0.42); }
+        .ecoid-badge-check { color: var(--green); font-size: 1.1rem; flex-shrink: 0; }
+
+        .ecoid-howto {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px; padding: 1.25rem;
+        }
+        .ecoid-howto-title { font-family: 'Instrument Serif', serif; font-size: 1.05rem; margin-bottom: 0.85rem; }
+        body.ar .ecoid-howto-title { font-family: 'Noto Naskh Arabic', serif; }
+        .ecoid-howto-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 0.65rem; }
+        .ecoid-howto-item {
+            display: flex; align-items: flex-start; gap: 0.65rem;
+            padding: 0.75rem; border-radius: 10px; background: var(--paper);
+        }
+        .ecoid-howto-num {
+            width: 26px; height: 26px; border-radius: 50%; flex-shrink: 0;
+            background: var(--green); color: #fff; display: flex; align-items: center;
+            justify-content: center; font-size: 0.68rem; font-weight: 600;
+            font-family: 'DM Sans', sans-serif;
+        }
+        .ecoid-howto-text h4 { font-size: 0.82rem; font-weight: 500; margin-bottom: 0.12rem; }
+        .ecoid-howto-text p { font-size: 0.68rem; color: rgba(0,0,0,0.42); line-height: 1.5; }
+
+        @media (max-width: 1100px) { .two-col { grid-template-columns: 1fr; } .stat-grid { grid-template-columns: repeat(2,1fr); } .net-stats { grid-template-columns: repeat(2,1fr); } .impact-stats { grid-template-columns: repeat(2,1fr); } .goal-card { flex-direction: column; text-align: center; } .lb-header, .lb-row { grid-template-columns: 40px 32px 1fr 65px 55px 65px; gap: 0.5rem; font-size: 0.72rem; } .res-cats { grid-template-columns: repeat(2,1fr); } .res-featured { flex-direction: column; } .ecoid-layout { grid-template-columns: 1fr; } .ecoid-card { min-height: auto; } }
+        @media (max-width: 768px) { .qa-grid { grid-template-columns: 1fr; } .sb-item span { display: block; } .impact-stats { grid-template-columns: 1fr; } .lb-header, .lb-row { grid-template-columns: 32px 28px 1fr 55px 45px 55px; gap: 0.35rem; padding: 0.6rem 0.75rem; } .res-cats { grid-template-columns: 1fr; } .res-feat-stats { flex-wrap: wrap; } .ecoid-stats { grid-template-columns: 1fr; } .ecoid-howto-grid { grid-template-columns: 1fr; } }
     </style>
 </head>
 <body>
@@ -702,6 +817,7 @@
             <button class="sb-item" data-sec="profile" onclick="navigate('profile')"><iconify-icon icon="solar:user-linear"></iconify-icon><span data-en="My Profile" data-ar="ملفي الشخصي">My Profile</span></button>
             <button class="sb-item" data-sec="events" onclick="navigate('events')"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="My Events" data-ar="فعالياتي">My Events</span><span class="sb-badge">3</span></button>
             <button class="sb-item" data-sec="impact" onclick="navigate('impact')"><iconify-icon icon="solar:chart-linear"></iconify-icon><span data-en="My Impact" data-ar="أثري">My Impact</span></button>
+            <button class="sb-item" data-sec="ecoid" onclick="navigate('ecoid')"><iconify-icon icon="solar:card-linear"></iconify-icon><span data-en="Eco ID" data-ar="بطاقة Eco">Eco ID</span></button>
 
             <div class="sb-label" data-en="Explore" data-ar="استكشف">Explore</div>
             <button class="sb-item" data-sec="opportunities" onclick="navigate('opportunities')"><iconify-icon icon="solar:compass-linear"></iconify-icon><span data-en="Opportunities" data-ar="الفرص">Opportunities</span><span class="sb-badge">24</span></button>
@@ -1414,6 +1530,121 @@
                 </div>
             </div>
 
+            <!-- ═══ ECO ID ═══ -->
+            <div class="sec" id="sec-ecoid">
+                <div style="margin-bottom:1.25rem">
+                    <h2 style="font-family:'Instrument Serif',serif;font-size:1.55rem;line-height:1.15;margin-bottom:0.25rem"><span data-en="Your " data-ar="بطاقتك ">Your </span><em style="font-style:italic;color:var(--green)" data-en="Eco ID." data-ar="البيئية.">Eco ID.</em></h2>
+                    <p style="font-size:0.845rem;color:rgba(0,0,0,0.45)" data-en="Your digital identity card for Qatar's climate community." data-ar="بطاقة هويتك الرقمية لمجتمع المناخ في قطر.">Your digital identity card for Qatar's climate community.</p>
+                </div>
+
+                <div class="ecoid-layout">
+                    <!-- ID CARD -->
+                    <div class="ecoid-card" id="ecoid-card">
+                        <div class="ecoid-top">
+                            <div class="ecoid-logo">
+                                <span class="ecoid-logo-dot"></span>
+                                <span class="ecoid-logo-text">EcoHub</span>
+                            </div>
+                            <span class="ecoid-verified"><iconify-icon icon="solar:verified-check-bold"></iconify-icon><span data-en="VERIFIED" data-ar="موثّق">VERIFIED</span></span>
+                        </div>
+                        <div class="ecoid-center">
+                            <div class="ecoid-avatar" id="ecoid-avatar">M</div>
+                            <div class="ecoid-name" id="ecoid-name">Mohammed Elfatih</div>
+                            <div class="ecoid-role" data-en="EcoHub Member" data-ar="عضو EcoHub">EcoHub Member</div>
+                            <div class="ecoid-qr" id="ecoid-qr"></div>
+                            <div class="ecoid-member-id" id="ecoid-member-id">ECO-XXXXXXXX</div>
+                        </div>
+                        <div class="ecoid-bottom">
+                            <div class="ecoid-valid"><span data-en="Valid until" data-ar="صالحة حتى">Valid until</span><br><strong id="ecoid-valid-time">—</strong></div>
+                            <div class="ecoid-actions">
+                                <button class="ecoid-act-btn" onclick="saveEcoId()"><iconify-icon icon="solar:download-minimalistic-linear"></iconify-icon><span data-en="Save" data-ar="حفظ">Save</span></button>
+                                <button class="ecoid-act-btn" onclick="shareEcoId()"><iconify-icon icon="solar:share-linear"></iconify-icon><span data-en="Share" data-ar="مشاركة">Share</span></button>
+                            </div>
+                        </div>
+                    </div>
+
+                    <!-- SIDE PANEL -->
+                    <div class="ecoid-side">
+                        <!-- Stats -->
+                        <div class="ecoid-stats">
+                            <div class="ecoid-stat">
+                                <div class="ecoid-stat-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon></div>
+                                <div class="ecoid-stat-num">47</div>
+                                <div class="ecoid-stat-label" data-en="Volunteer Hours" data-ar="ساعات التطوع">Volunteer Hours</div>
+                            </div>
+                            <div class="ecoid-stat">
+                                <div class="ecoid-stat-icon" style="background:rgba(168,224,99,0.2);color:#4a7c20"><iconify-icon icon="solar:calendar-linear"></iconify-icon></div>
+                                <div class="ecoid-stat-num">8</div>
+                                <div class="ecoid-stat-label" data-en="Events Attended" data-ar="فعاليات حضرتها">Events Attended</div>
+                            </div>
+                            <div class="ecoid-stat">
+                                <div class="ecoid-stat-icon" style="background:rgba(196,98,45,0.1);color:var(--rust)"><iconify-icon icon="solar:ranking-linear"></iconify-icon></div>
+                                <div class="ecoid-stat-num">#12</div>
+                                <div class="ecoid-stat-label" data-en="Community Rank" data-ar="ترتيب المجتمع">Community Rank</div>
+                            </div>
+                        </div>
+
+                        <!-- Verification Badges -->
+                        <div class="ecoid-badges-panel">
+                            <h3 class="ecoid-badges-title" data-en="Verification Badges" data-ar="شارات التوثيق">Verification Badges</h3>
+                            <div class="ecoid-badges">
+                                <div class="ecoid-badge">
+                                    <div class="ecoid-badge-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:letter-linear"></iconify-icon></div>
+                                    <div class="ecoid-badge-text">
+                                        <div class="ecoid-badge-name" data-en="Email Verified" data-ar="البريد الإلكتروني موثّق">Email Verified</div>
+                                        <div class="ecoid-badge-desc" data-en="Your email address has been confirmed" data-ar="تم تأكيد عنوان بريدك الإلكتروني">Your email address has been confirmed</div>
+                                    </div>
+                                    <iconify-icon class="ecoid-badge-check" icon="solar:check-circle-bold"></iconify-icon>
+                                </div>
+                                <div class="ecoid-badge">
+                                    <div class="ecoid-badge-icon" style="background:rgba(168,224,99,0.15);color:#4a7c20"><iconify-icon icon="solar:shield-check-linear"></iconify-icon></div>
+                                    <div class="ecoid-badge-text">
+                                        <div class="ecoid-badge-name" data-en="Active Member" data-ar="عضو نشط">Active Member</div>
+                                        <div class="ecoid-badge-desc" data-en="Attended 5+ events and logged 20+ hours" data-ar="حضر ٥+ فعاليات وسجّل ٢٠+ ساعة">Attended 5+ events and logged 20+ hours</div>
+                                    </div>
+                                    <iconify-icon class="ecoid-badge-check" icon="solar:check-circle-bold"></iconify-icon>
+                                </div>
+                            </div>
+                        </div>
+
+                        <!-- How to Use -->
+                        <div class="ecoid-howto">
+                            <h3 class="ecoid-howto-title" data-en="How to Use Your Eco ID" data-ar="كيف تستخدم بطاقتك البيئية">How to Use Your Eco ID</h3>
+                            <div class="ecoid-howto-grid">
+                                <div class="ecoid-howto-item">
+                                    <div class="ecoid-howto-num">1</div>
+                                    <div class="ecoid-howto-text">
+                                        <h4 data-en="Event Check-in" data-ar="تسجيل الحضور">Event Check-in</h4>
+                                        <p data-en="Show your QR code at any EcoHub event for instant check-in and attendance tracking." data-ar="اعرض رمز QR الخاص بك في أي فعالية EcoHub للتسجيل الفوري وتتبع الحضور.">Show your QR code at any EcoHub event for instant check-in and attendance tracking.</p>
+                                    </div>
+                                </div>
+                                <div class="ecoid-howto-item">
+                                    <div class="ecoid-howto-num">2</div>
+                                    <div class="ecoid-howto-text">
+                                        <h4 data-en="Log Volunteer Hours" data-ar="تسجيل ساعات التطوع">Log Volunteer Hours</h4>
+                                        <p data-en="Organizers scan your ID to automatically log your volunteer hours and contributions." data-ar="يقوم المنظمون بمسح بطاقتك لتسجيل ساعات التطوع والمساهمات تلقائياً.">Organizers scan your ID to automatically log your volunteer hours and contributions.</p>
+                                    </div>
+                                </div>
+                                <div class="ecoid-howto-item">
+                                    <div class="ecoid-howto-num">3</div>
+                                    <div class="ecoid-howto-text">
+                                        <h4 data-en="Verify Member Status" data-ar="التحقق من العضوية">Verify Member Status</h4>
+                                        <p data-en="Partners can verify your membership and badges by scanning the QR code." data-ar="يمكن للشركاء التحقق من عضويتك وشاراتك عن طريق مسح رمز QR.">Partners can verify your membership and badges by scanning the QR code.</p>
+                                    </div>
+                                </div>
+                                <div class="ecoid-howto-item">
+                                    <div class="ecoid-howto-num">4</div>
+                                    <div class="ecoid-howto-text">
+                                        <h4 data-en="Mobile Access" data-ar="الوصول عبر الهاتف">Mobile Access</h4>
+                                        <p data-en="Save your Eco ID to your phone for quick access anywhere, even offline." data-ar="احفظ بطاقتك البيئية على هاتفك للوصول السريع في أي مكان، حتى بدون إنترنت.">Save your Eco ID to your phone for quick access anywhere, even offline.</p>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div><!-- /scroll-area -->
     </div><!-- /main -->
 </div><!-- /app -->
@@ -1504,6 +1735,9 @@ async function init() {
     currentUserId = session.user.id;
     document.getElementById('invite-link-text').textContent = 'https://eco-website-lemon.vercel.app/signup.html?ref=' + currentUserId;
 
+    // Eco ID
+    initEcoId(currentUserId, fullName, initial);
+
     // Smart greeting
     const h = new Date().getHours();
     const greetEl = document.querySelector('#page-title em');
@@ -1536,7 +1770,8 @@ const titles = {
     resources: { en: '<em style="font-style:italic;color:var(--green)">Resources</em> & Guides.', ar: '<em style="color:var(--green)">الموارد</em> والأدلة.' },
     leaderboard: { en: 'Community <em style="font-style:italic;color:var(--green)">Leaderboard.</em>', ar: '<em style="color:var(--green)">المتصدرون</em> في المجتمع.' },
     feed: { en: 'Community <em style="font-style:italic;color:var(--green)">Feed.</em>', ar: 'تغذية <em style="color:var(--green)">المجتمع.</em>' },
-    profile: { en: 'My <em style="font-style:italic;color:var(--green)">Profile.</em>', ar: '<em style="color:var(--green)">ملفي</em> الشخصي.' }
+    profile: { en: 'My <em style="font-style:italic;color:var(--green)">Profile.</em>', ar: '<em style="color:var(--green)">ملفي</em> الشخصي.' },
+    ecoid: { en: 'Your <em style="font-style:italic;color:var(--green)">Eco ID.</em>', ar: 'بطاقتك <em style="color:var(--green)">البيئية.</em>' }
 };
 
 function navigate(sec) {
@@ -1657,6 +1892,91 @@ function copyInviteLink() {
             span.textContent = isArabic ? 'نسخ الرابط' : 'Copy Link';
         }, 2000);
     });
+}
+
+// TOAST
+function showDashToast(msg) {
+    const t = document.getElementById('dash-toast');
+    const inner = document.getElementById('dash-toast-inner');
+    inner.textContent = msg;
+    t.classList.add('show');
+    setTimeout(() => t.classList.remove('show'), 2500);
+}
+
+// ECO ID
+let ecoIdQrInstance = null;
+let ecoIdTimerInterval = null;
+
+function generateEcoMemberId(userId) {
+    const hash = userId.replace(/-/g, '').substring(0, 8).toUpperCase();
+    return 'ECO-' + hash;
+}
+
+function initEcoId(userId, fullName, initial) {
+    // Set avatar, name, member ID
+    document.getElementById('ecoid-avatar').textContent = initial;
+    document.getElementById('ecoid-name').textContent = fullName;
+    const memberId = generateEcoMemberId(userId);
+    document.getElementById('ecoid-member-id').textContent = memberId;
+
+    // Generate QR code from user ID
+    const qrContainer = document.getElementById('ecoid-qr');
+    qrContainer.innerHTML = '';
+    ecoIdQrInstance = new QRCode(qrContainer, {
+        text: 'https://eco-website-lemon.vercel.app/verify?uid=' + userId,
+        width: 120, height: 120,
+        colorDark: '#1a5c38', colorLight: '#ffffff',
+        correctLevel: QRCode.CorrectLevel.M
+    });
+
+    // Set valid-until and start refresh
+    updateEcoIdValidity();
+    if (ecoIdTimerInterval) clearInterval(ecoIdTimerInterval);
+    ecoIdTimerInterval = setInterval(updateEcoIdValidity, 5 * 60 * 1000); // every 5 min
+}
+
+function updateEcoIdValidity() {
+    const now = new Date();
+    const valid = new Date(now.getTime() + 5 * 60 * 1000);
+    const months = ['Jan','Feb','Mar','Apr','May','Jun','Jul','Aug','Sep','Oct','Nov','Dec'];
+    const monthsAr = ['يناير','فبراير','مارس','أبريل','مايو','يونيو','يوليو','أغسطس','سبتمبر','أكتوبر','نوفمبر','ديسمبر'];
+    const d = valid.getDate(), m = valid.getMonth(), y = valid.getFullYear();
+    const h = valid.getHours().toString().padStart(2,'0'), min = valid.getMinutes().toString().padStart(2,'0');
+    const el = document.getElementById('ecoid-valid-time');
+    if (el) el.textContent = isArabic
+        ? `${d} ${monthsAr[m]} ${y} · ${h}:${min}`
+        : `${months[m]} ${d}, ${y} · ${h}:${min}`;
+}
+
+function saveEcoId() {
+    const card = document.getElementById('ecoid-card');
+    // Use canvas from QR code
+    const canvas = card.querySelector('canvas');
+    if (canvas) {
+        const link = document.createElement('a');
+        link.download = 'ecohub-id-card.png';
+        link.href = canvas.toDataURL('image/png');
+        link.click();
+        showDashToast(isArabic ? 'تم حفظ رمز QR! 🌿' : 'QR code saved! 🌿');
+    } else {
+        showDashToast(isArabic ? 'لقطة الشاشة غير متاحة حالياً' : 'Screenshot not available yet');
+    }
+}
+
+function shareEcoId() {
+    const memberId = document.getElementById('ecoid-member-id')?.textContent || 'ECO-ID';
+    const name = document.getElementById('ecoid-name')?.textContent || 'Member';
+    const text = isArabic
+        ? `🌿 أنا ${name} — عضو موثّق في EcoHub! معرّفي: ${memberId}`
+        : `🌿 I'm ${name} — a verified EcoHub member! My ID: ${memberId}`;
+
+    if (navigator.share) {
+        navigator.share({ title: 'EcoHub Eco ID', text: text, url: 'https://eco-website-lemon.vercel.app' }).catch(() => {});
+    } else {
+        navigator.clipboard.writeText(text).then(() => {
+            showDashToast(isArabic ? 'تم نسخ معلومات البطاقة! 🌿' : 'ID info copied to clipboard! 🌿');
+        });
+    }
 }
 
 // Close modal on Escape key
