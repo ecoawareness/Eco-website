@@ -879,16 +879,25 @@
         .ecoid-howto-text h4 { font-size: 0.82rem; font-weight: 500; margin-bottom: 0.12rem; }
         .ecoid-howto-text p { font-size: 0.68rem; color: rgba(0,0,0,0.42); line-height: 1.5; }
 
-        @media (max-width: 1100px) { .two-col { grid-template-columns: 1fr; } .stat-grid { grid-template-columns: repeat(2,1fr); } .net-stats { grid-template-columns: repeat(2,1fr); } .impact-stats { grid-template-columns: repeat(2,1fr); } .goal-card { flex-direction: column; text-align: center; } .lb-header, .lb-row { grid-template-columns: 40px 32px 1fr 65px 55px 65px; gap: 0.5rem; font-size: 0.72rem; } .res-cats { grid-template-columns: repeat(2,1fr); } .res-featured { flex-direction: column; } .ecoid-layout { grid-template-columns: 1fr; } .ecoid-card { min-height: auto; } }
+        /* ═══ TABLET ≤1100px ═══ */
+        @media (max-width: 1100px) {
+            .two-col { grid-template-columns: 1fr; }
+            .stat-grid { grid-template-columns: repeat(2,1fr); }
+            .net-stats { grid-template-columns: repeat(2,1fr); }
+            .impact-stats { grid-template-columns: repeat(2,1fr); }
+            .goal-card { flex-direction: column; text-align: center; }
+            .lb-header, .lb-row { grid-template-columns: 40px 32px 1fr 65px 55px 65px; gap: 0.5rem; font-size: 0.72rem; }
+            .res-cats { grid-template-columns: repeat(2,1fr); }
+            .res-featured { flex-direction: column; }
+            .ecoid-layout { grid-template-columns: 1fr; }
+            .ecoid-card { min-height: auto; }
+        }
+
+        /* ═══ MOBILE ≤768px ═══ */
         @media (max-width: 768px) {
-            .qa-grid { grid-template-columns: 1fr; } .sb-item span { display: block; }
-            .impact-stats { grid-template-columns: 1fr; }
-            .lb-header, .lb-row { grid-template-columns: 32px 28px 1fr 55px 45px 55px; gap: 0.35rem; padding: 0.6rem 0.75rem; }
-            .res-cats { grid-template-columns: 1fr; } .res-feat-stats { flex-wrap: wrap; }
-            .ecoid-stats { grid-template-columns: 1fr; } .ecoid-howto-grid { grid-template-columns: 1fr; }
-            /* Mobile sidebar slide */
+            /* Sidebar — slide in from left */
             .sidebar {
-                position: fixed; top: 0; left: 0; height: 100vh;
+                position: fixed; top: 0; left: 0; height: 100vh; width: 280px;
                 transform: translateX(-100%);
                 transition: transform 0.25s cubic-bezier(0.4,0,0.2,1);
                 z-index: 200;
@@ -896,19 +905,100 @@
             body.ar .sidebar { left: auto; right: 0; transform: translateX(100%); }
             .sidebar.sb-open { transform: translateX(0); }
             .sb-backdrop {
-                position: fixed; inset: 0; background: rgba(0,0,0,0.4);
+                display: block; position: fixed; inset: 0; background: rgba(0,0,0,0.4);
                 z-index: 199; opacity: 0; pointer-events: none;
                 transition: opacity 0.25s ease;
             }
             .sb-backdrop.show { opacity: 1; pointer-events: auto; }
-            .sb-backdrop { display: block; }
             .sb-toggle {
                 display: flex; align-items: center; justify-content: center;
-                width: 36px; height: 36px; border: 1px solid rgba(0,0,0,0.1);
+                width: 44px; height: 44px; border: 1px solid rgba(0,0,0,0.1);
                 border-radius: 10px; background: white; cursor: pointer;
-                font-size: 1.1rem; color: rgba(0,0,0,0.5); transition: all 0.15s;
+                font-size: 1.2rem; color: rgba(0,0,0,0.5); transition: all 0.15s;
+                flex-shrink: 0;
             }
             .sb-toggle:hover { border-color: var(--green); color: var(--green); }
+            .sb-item { padding: 0.72rem 0.75rem; min-height: 44px; }
+
+            /* Topbar — stack & compact */
+            .topbar { padding: 0.75rem 1rem; gap: 0.5rem; }
+            .page-title { font-size: 1.1rem; flex: 1; min-width: 0; }
+            .tb-actions { gap: 0.4rem; }
+            .tb-btn.tb-opp-btn { display: none; }
+            .tb-btn { padding: 0.5rem 0.75rem; font-size: 0.72rem; min-height: 44px; }
+            .tb-btn.primary span { display: none; }
+            .tb-btn.primary { padding: 0.5rem 0.7rem; border-radius: 10px; }
+            .tb-btn.primary iconify-icon { font-size: 1.15rem; }
+
+            /* Sections — compact padding */
+            .sec { padding: 1rem; }
+            .sec-hero h2 { font-size: 1.25rem; }
+            .sec-hero p { font-size: 0.8rem; }
+
+            /* Stat grid → 2 cols */
+            .stat-grid { grid-template-columns: repeat(2,1fr); gap: 0.65rem; }
+
+            /* Quick actions & two-col */
+            .qa-grid { grid-template-columns: 1fr; }
+            .two-col { grid-template-columns: 1fr; }
+
+            /* Opportunity cards → full width */
+            .opp-grid { grid-template-columns: 1fr; }
+
+            /* Network org cards → full width */
+            .org-grid { grid-template-columns: 1fr; }
+            .net-stats { grid-template-columns: repeat(2,1fr); }
+
+            /* Resources */
+            .res-cats { grid-template-columns: 1fr; }
+            .res-feat-stats { flex-wrap: wrap; }
+            .res-featured { flex-direction: column; }
+
+            /* Impact */
+            .impact-stats { grid-template-columns: 1fr; }
+            .goal-card { flex-direction: column; text-align: center; gap: 1rem; }
+
+            /* Leaderboard — hide Hours & Events columns */
+            .lb-header, .lb-row {
+                grid-template-columns: 32px 28px 1fr 60px;
+                gap: 0.35rem; padding: 0.6rem 0.75rem;
+            }
+            .lb-header span:nth-child(4), .lb-header span:nth-child(5),
+            .lb-row > :nth-child(4), .lb-row > :nth-child(5) { display: none; }
+
+            /* Eco ID */
+            .ecoid-layout { grid-template-columns: 1fr; }
+            .ecoid-card { min-height: auto; }
+            .ecoid-stats { grid-template-columns: 1fr; }
+            .ecoid-howto-grid { grid-template-columns: 1fr; }
+
+            /* Charts — horizontal scroll */
+            .chart-bars { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+
+            /* Modals — full-width on mobile */
+            .modal { width: 95%; max-width: none; border-radius: 14px; }
+            .modal-header { padding: 1rem 1.15rem; }
+            .modal-header h2 { font-size: 1rem; }
+            .modal-body { padding: 1rem 1.15rem; }
+
+            /* Profile */
+            .p-av-wrap { flex-direction: column; align-items: flex-start; gap: 1rem; }
+            .p-edit { align-self: flex-start; }
+
+            /* Pills — horizontal scroll */
+            .pills { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; padding-bottom: 0.25rem; }
+            .pill { white-space: nowrap; flex-shrink: 0; min-height: 44px; display: inline-flex; align-items: center; }
+        }
+
+        /* ═══ SMALL PHONE ≤480px ═══ */
+        @media (max-width: 480px) {
+            .stat-grid { grid-template-columns: 1fr; }
+            .net-stats { grid-template-columns: 1fr; }
+            .pe-row { grid-template-columns: 1fr; }
+            .p-stats { grid-template-columns: 1fr; gap: 0.5rem; }
+            .topbar { padding: 0.65rem 0.75rem; }
+            .sec { padding: 0.75rem; }
+            .page-title { font-size: 1rem; }
         }
     </style>
 </head>
@@ -960,7 +1050,7 @@
             <button class="sb-toggle" id="sb-toggle" onclick="toggleSidebar()"><iconify-icon icon="solar:hamburger-menu-linear"></iconify-icon></button>
             <h1 class="page-title" id="page-title"><em data-en="Good morning," data-ar="صباح الخير،">Good morning,</em> <span id="greeting-name">Mohammed</span> 🌿</h1>
             <div class="tb-actions">
-                <button class="tb-btn" onclick="navigate('opportunities')"><iconify-icon icon="solar:compass-linear"></iconify-icon><span data-en="Opportunities" data-ar="الفرص">Opportunities</span></button>
+                <button class="tb-btn tb-opp-btn" onclick="navigate('opportunities')"><iconify-icon icon="solar:compass-linear"></iconify-icon><span data-en="Opportunities" data-ar="الفرص">Opportunities</span></button>
                 <button class="tb-btn primary" onclick="openPostEventModal()"><iconify-icon icon="solar:add-circle-linear"></iconify-icon><span data-en="Post Event" data-ar="انشر فعالية">Post Event</span></button>
             </div>
         </div>
