@@ -141,26 +141,8 @@
 
         /* SECTIONS */
         .sec { display: none; padding: 1.75rem; max-width: 1080px; }
-        .sec.active { display: block; opacity: 1; transform: none; }
-        .sec.sec-enter { animation: secIn 0.2s ease both; }
-        .sec.sec-exit { display: block; animation: secOut 0.15s ease forwards; }
-        @keyframes secIn { from { opacity:0; transform:translateY(12px); } to { opacity:1; transform:none; } }
-        @keyframes secOut { from { opacity:1; transform:none; } to { opacity:0; transform:translateY(-8px); } }
-        /* Stagger children in entering sections */
-        .sec.sec-enter .stat-card,
-        .sec.sec-enter .opp-card,
-        .sec.sec-enter .org-card,
-        .sec.sec-enter .res-item,
-        .sec.sec-enter .my-evt,
-        .sec.sec-enter .impact-card,
-        .sec.sec-enter .profile-card,
-        .sec.sec-enter .settings-card {
-            animation: cardIn 0.25s ease both;
-        }
-        .sec.sec-enter > :nth-child(1) { animation-delay: 0.04s; }
-        .sec.sec-enter > :nth-child(2) { animation-delay: 0.08s; }
-        .sec.sec-enter > :nth-child(3) { animation-delay: 0.12s; }
-        @keyframes cardIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
+        .sec.active { display: block; animation: fadeIn 0.18s ease; }
+        @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
 
         /* SECTION HERO */
         .sec-hero { margin-bottom: 1.25rem; }
@@ -986,7 +968,7 @@
         <div class="scroll-area">
 
             <!-- ═══ HOME ═══ -->
-            <div class="sec active sec-enter" id="sec-home">
+            <div class="sec active" id="sec-home">
                 <div class="stat-grid">
                     <div class="stat-card a"><div class="stat-icon g"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon></div><div class="stat-num">47</div><div class="stat-label" data-en="Volunteer Hours" data-ar="ساعات التطوع">Volunteer Hours</div><div class="stat-trend">↑ <span data-en="12 this month" data-ar="١٢ هذا الشهر">12 this month</span></div></div>
                     <div class="stat-card b"><div class="stat-icon l"><iconify-icon icon="solar:leaf-linear"></iconify-icon></div><div class="stat-num">8</div><div class="stat-label" data-en="Events Attended" data-ar="فعاليات حضرتها">Events Attended</div><div class="stat-trend">↑ <span data-en="3 this month" data-ar="٣ هذا الشهر">3 this month</span></div></div>
@@ -1991,13 +1973,13 @@ function lazyLoadSection(sec) {
     }
 }
 
-let _navBusy = false;
 function navigate(sec) {
-    if (_navBusy) return;
-    const current = document.querySelector('.sec.active');
     const next = document.getElementById('sec-' + sec);
     if (!next) return;
-    if (current === next) return;
+
+    // Hide all sections, show target
+    document.querySelectorAll('.sec').forEach(s => s.classList.remove('active'));
+    next.classList.add('active');
 
     // Sidebar active state
     document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('active'));
@@ -2013,22 +1995,8 @@ function navigate(sec) {
     // Lazy load before showing
     lazyLoadSection(sec);
 
-    // Animate transition — use setTimeout for reliability (animationend can be unreliable)
-    if (current) {
-        _navBusy = true;
-        // Remove sec-enter first so sec-exit animation plays cleanly
-        current.classList.remove('sec-enter');
-        current.classList.add('sec-exit');
-        setTimeout(() => {
-            current.classList.remove('active', 'sec-exit');
-            next.classList.add('active', 'sec-enter');
-            _navBusy = false;
-            if (sec === 'home') animateStatNumbers();
-        }, 150); // matches secOut animation duration
-    } else {
-        next.classList.add('active', 'sec-enter');
-        if (sec === 'home') animateStatNumbers();
-    }
+    // Stat count-up on home
+    if (sec === 'home') animateStatNumbers();
 
     // Update title
     const t = titles[sec];
@@ -2050,7 +2018,7 @@ function navigate(sec) {
             titleEl.innerHTML = isArabic && t.ar ? t.ar : t.en;
         }
     }
-    document.querySelector('.scroll-area').scrollTo({ top: 0, behavior: 'smooth' });
+    document.querySelector('.scroll-area').scrollTo({ top: 0 });
 }
 
 // STAT NUMBER COUNT-UP ANIMATION
