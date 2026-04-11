@@ -1921,14 +1921,14 @@
                             <div style="width:40px;height:40px;border-radius:10px;background:rgba(26,92,56,0.1);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0">📧</div>
                             <div>
                                 <div style="font-size:0.7rem;color:rgba(0,0,0,0.42);margin-bottom:0.15rem" data-en="Email" data-ar="البريد الإلكتروني">Email</div>
-                                <div style="font-size:0.82rem;font-weight:500">ecoawareness@gmail.com</div>
+                                <div style="font-size:0.82rem;font-weight:500">ecoawarenessme@gmail.com</div>
                             </div>
                         </div>
                         <div style="background:white;border:1px solid rgba(0,0,0,0.07);border-radius:13px;padding:1.1rem 1.25rem;display:flex;align-items:center;gap:0.875rem">
                             <div style="width:40px;height:40px;border-radius:10px;background:rgba(196,98,45,0.1);color:var(--rust);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0">📸</div>
                             <div>
                                 <div style="font-size:0.7rem;color:rgba(0,0,0,0.42);margin-bottom:0.15rem" data-en="Instagram" data-ar="إنستغرام">Instagram</div>
-                                <div style="font-size:0.82rem;font-weight:500">@ecoawareness.qa</div>
+                                <a href="https://www.instagram.com/ecoawareness.qa" target="_blank" rel="noopener" style="font-size:0.82rem;font-weight:500;color:inherit;text-decoration:none">@ecoawareness.qa</a>
                             </div>
                         </div>
                         <div style="background:white;border:1px solid rgba(0,0,0,0.07);border-radius:13px;padding:1.1rem 1.25rem;display:flex;align-items:center;gap:0.875rem">
@@ -2676,7 +2676,7 @@ function submitApplication() {
         'Change they want to make:\n' + change + '\n\n' +
         'Why they want to join:\n' + why
     );
-    window.location.href = 'mailto:ecoawareness@gmail.com?subject=' + subject + '&body=' + body;
+    window.location.href = 'mailto:ecoawarenessme@gmail.com?subject=' + subject + '&body=' + body;
     document.getElementById('apply-form-wrap').style.display = 'none';
     document.getElementById('apply-success').style.display = 'block';
 }
@@ -2692,7 +2692,7 @@ function sendContactMessage() {
     }
     const mailSubject = encodeURIComponent('[EcoHub] ' + subject + ' — from ' + name);
     const mailBody = encodeURIComponent('From: ' + name + '\n\n' + message);
-    window.location.href = 'mailto:ecoawareness@gmail.com?subject=' + mailSubject + '&body=' + mailBody;
+    window.location.href = 'mailto:ecoawarenessme@gmail.com?subject=' + mailSubject + '&body=' + mailBody;
 }
 
 init();
