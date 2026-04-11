@@ -879,6 +879,88 @@
         .ecoid-howto-text h4 { font-size: 0.82rem; font-weight: 500; margin-bottom: 0.12rem; }
         .ecoid-howto-text p { font-size: 0.68rem; color: rgba(0,0,0,0.42); line-height: 1.5; }
 
+        /* ECOBOT CHAT */
+        .ecobot-wrap { display: flex; flex-direction: column; height: calc(100vh - 120px); max-height: 700px; }
+        .ecobot-header {
+            background: var(--green); border-radius: 14px 14px 0 0; padding: 1rem 1.25rem;
+            display: flex; align-items: center; gap: 0.75rem; flex-shrink: 0;
+        }
+        .ecobot-hdr-av {
+            width: 36px; height: 36px; border-radius: 50%; background: rgba(168,224,99,0.2);
+            display: flex; align-items: center; justify-content: center;
+            font-family: 'Instrument Serif', serif; font-size: 1rem; color: var(--lime);
+        }
+        .ecobot-hdr-info { flex: 1; }
+        .ecobot-hdr-name { font-size: 0.92rem; font-weight: 500; color: #fff; }
+        .ecobot-hdr-status { font-size: 0.65rem; color: rgba(255,255,255,0.6); display: flex; align-items: center; gap: 0.35rem; }
+        .ecobot-hdr-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--lime); }
+        .ecobot-messages {
+            flex: 1; overflow-y: auto; padding: 1.25rem; background: var(--paper);
+            display: flex; flex-direction: column; gap: 0.85rem;
+            border-left: 1px solid rgba(0,0,0,0.07); border-right: 1px solid rgba(0,0,0,0.07);
+        }
+        .ecobot-msg { display: flex; gap: 0.6rem; max-width: 85%; animation: fadeIn 0.18s ease; }
+        .ecobot-msg.bot { align-self: flex-start; }
+        .ecobot-msg.user { align-self: flex-end; flex-direction: row-reverse; }
+        .ecobot-msg-av {
+            width: 28px; height: 28px; border-radius: 50%; flex-shrink: 0;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.7rem; font-weight: 600;
+        }
+        .ecobot-msg.bot .ecobot-msg-av { background: rgba(26,92,56,0.1); color: var(--green); }
+        .ecobot-msg.user .ecobot-msg-av { background: var(--green); color: #fff; }
+        .ecobot-bubble {
+            padding: 0.75rem 1rem; border-radius: 14px; font-size: 0.84rem; line-height: 1.6;
+        }
+        .ecobot-msg.bot .ecobot-bubble {
+            background: white; border: 1px solid rgba(0,0,0,0.06);
+            border-top-left-radius: 4px; color: var(--ink);
+        }
+        .ecobot-msg.user .ecobot-bubble {
+            background: var(--green); color: #fff;
+            border-top-right-radius: 4px;
+        }
+        .ecobot-chips {
+            display: flex; flex-wrap: wrap; gap: 0.5rem; margin-top: 0.35rem;
+        }
+        .ecobot-chip {
+            display: inline-flex; align-items: center; padding: 0.45rem 0.85rem;
+            background: white; border: 1px solid rgba(26,92,56,0.15); border-radius: 100px;
+            font-size: 0.76rem; color: var(--green); cursor: pointer;
+            transition: all 0.15s; font-family: 'DM Sans', sans-serif;
+        }
+        body.ar .ecobot-chip { font-family: 'Noto Naskh Arabic', serif; }
+        .ecobot-chip:hover { background: rgba(26,92,56,0.06); border-color: var(--green); }
+        .ecobot-typing { display: flex; align-items: center; gap: 0.3rem; padding: 0.5rem 0; }
+        .ecobot-dot {
+            width: 6px; height: 6px; border-radius: 50%; background: rgba(0,0,0,0.25);
+            animation: typingDot 1.2s ease infinite;
+        }
+        .ecobot-dot:nth-child(2) { animation-delay: 0.2s; }
+        .ecobot-dot:nth-child(3) { animation-delay: 0.4s; }
+        @keyframes typingDot { 0%,60%,100% { opacity:0.3; transform:translateY(0); } 30% { opacity:1; transform:translateY(-3px); } }
+        .ecobot-input-bar {
+            display: flex; align-items: center; gap: 0.6rem; padding: 0.85rem 1.1rem;
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-top: none;
+            border-radius: 0 0 14px 14px;
+        }
+        .ecobot-input {
+            flex: 1; border: 1px solid rgba(0,0,0,0.1); border-radius: 100px;
+            padding: 0.65rem 1rem; font-size: 0.84rem; font-family: 'DM Sans', sans-serif;
+            outline: none; background: var(--paper); transition: border-color 0.2s; min-height: 44px;
+        }
+        body.ar .ecobot-input { font-family: 'Noto Naskh Arabic', serif; }
+        .ecobot-input:focus { border-color: var(--green); }
+        .ecobot-input::placeholder { color: rgba(0,0,0,0.3); }
+        .ecobot-send {
+            width: 44px; height: 44px; border-radius: 50%; border: none; flex-shrink: 0;
+            background: var(--green); color: #fff; cursor: pointer;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1.15rem; transition: background 0.15s;
+        }
+        .ecobot-send:hover { background: var(--green-light); }
+        .ecobot-send:disabled { opacity: 0.5; cursor: not-allowed; }
+
         /* ═══ TABLET ≤1100px ═══ */
         @media (max-width: 1100px) {
             .two-col { grid-template-columns: 1fr; }
@@ -988,6 +1070,10 @@
             /* Pills — horizontal scroll */
             .pills { overflow-x: auto; flex-wrap: nowrap; -webkit-overflow-scrolling: touch; padding-bottom: 0.25rem; }
             .pill { white-space: nowrap; flex-shrink: 0; min-height: 44px; display: inline-flex; align-items: center; }
+
+            /* EcoBot */
+            .ecobot-wrap { height: calc(100vh - 110px); max-height: none; }
+            .ecobot-chip { font-size: 0.7rem; padding: 0.4rem 0.7rem; }
         }
 
         /* ═══ SMALL PHONE ≤480px ═══ */
@@ -1029,6 +1115,7 @@
             <div class="sb-label" data-en="Community" data-ar="المجتمع">Community</div>
             <button class="sb-item" data-sec="leaderboard" onclick="navigate('leaderboard')"><iconify-icon icon="solar:ranking-linear"></iconify-icon><span data-en="Leaderboard" data-ar="المتصدرون">Leaderboard</span></button>
             <button class="sb-item" data-sec="feed" onclick="navigate('feed')"><iconify-icon icon="solar:chat-round-line-linear"></iconify-icon><span data-en="Community Feed" data-ar="تغذية المجتمع">Community Feed</span></button>
+            <button class="sb-item" data-sec="ecobot" onclick="navigate('ecobot')"><iconify-icon icon="solar:stars-linear"></iconify-icon><span data-en="EcoBot" data-ar="إيكوبوت">EcoBot</span><span class="sb-badge" style="background:var(--green);color:#fff;font-size:0.52rem">AI</span></button>
             <button class="sb-item" data-sec="contact" onclick="navigate('contact')"><iconify-icon icon="solar:letter-linear"></iconify-icon><span data-en="Contact Us" data-ar="تواصل معنا">Contact Us</span></button>
         </nav>
         <div class="sb-user">
@@ -1884,6 +1971,36 @@
                 </div>
             </div>
 
+            <!-- ═══ ECOBOT ═══ -->
+            <div class="sec" id="sec-ecobot">
+                <div class="ecobot-wrap">
+                    <div class="ecobot-header">
+                        <div class="ecobot-hdr-av">E</div>
+                        <div class="ecobot-hdr-info">
+                            <div class="ecobot-hdr-name" data-en="EcoBot" data-ar="إيكوبوت">EcoBot</div>
+                            <div class="ecobot-hdr-status"><span class="ecobot-hdr-dot"></span><span data-en="Active" data-ar="نشط">Active</span></div>
+                        </div>
+                    </div>
+                    <div class="ecobot-messages" id="ecobot-messages">
+                        <div class="ecobot-msg bot">
+                            <div class="ecobot-msg-av">E</div>
+                            <div>
+                                <div class="ecobot-bubble" data-en="Hi! I'm EcoBot 🌿 Your personal climate guide for Qatar. Ask me anything about climate change, sustainability, volunteer opportunities, or how to make an impact!" data-ar="مرحباً! أنا إيكوبوت 🌿 مرشدك الشخصي للمناخ في قطر. اسألني أي شيء عن تغير المناخ، الاستدامة، فرص التطوع، أو كيف تصنع فرقاً!">Hi! I'm EcoBot 🌿 Your personal climate guide for Qatar. Ask me anything about climate change, sustainability, volunteer opportunities, or how to make an impact!</div>
+                                <div class="ecobot-chips" id="ecobot-chips">
+                                    <button class="ecobot-chip" onclick="sendEcobotChip(this)" data-en="What is Qatar doing about climate change? 🌍" data-ar="ماذا تفعل قطر بشأن تغير المناخ؟ 🌍">What is Qatar doing about climate change? 🌍</button>
+                                    <button class="ecobot-chip" onclick="sendEcobotChip(this)" data-en="How can I start volunteering? 🌱" data-ar="كيف أبدأ التطوع؟ 🌱">How can I start volunteering? 🌱</button>
+                                    <button class="ecobot-chip" onclick="sendEcobotChip(this)" data-en="Tell me about Qatar Vision 2030 ♻️" data-ar="أخبرني عن رؤية قطر ٢٠٣٠ ♻️">Tell me about Qatar Vision 2030 ♻️</button>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="ecobot-input-bar">
+                        <input class="ecobot-input" id="ecobot-input" type="text" placeholder="Ask EcoBot anything..." data-en-placeholder="Ask EcoBot anything..." data-ar-placeholder="اسأل إيكوبوت أي شيء..." onkeydown="if(event.key==='Enter')sendEcobotMsg()">
+                        <button class="ecobot-send" id="ecobot-send" onclick="sendEcobotMsg()"><iconify-icon icon="solar:plain-linear"></iconify-icon></button>
+                    </div>
+                </div>
+            </div>
+
             <!-- ═══ CONTACT ═══ -->
             <div class="sec" id="sec-contact">
                 <div class="sec-hero">
@@ -2183,6 +2300,7 @@ const titles = {
     feed: { en: 'Community <em style="font-style:italic;color:var(--green)">Feed.</em>', ar: 'تغذية <em style="color:var(--green)">المجتمع.</em>' },
     profile: { en: 'My <em style="font-style:italic;color:var(--green)">Profile.</em>', ar: '<em style="color:var(--green)">ملفي</em> الشخصي.' },
     ecoid: { en: 'Your <em style="font-style:italic;color:var(--green)">Eco ID.</em>', ar: 'بطاقتك <em style="color:var(--green)">البيئية.</em>' },
+    ecobot: { en: '<em style="font-style:italic;color:var(--green)">EcoBot</em> — AI Assistant.', ar: '<em style="color:var(--green)">إيكوبوت</em> — المساعد الذكي.' },
     contact: { en: 'Get in <em style="font-style:italic;color:var(--green)">Touch 🌿</em>', ar: 'تواصل <em style="color:var(--green)">معنا 🌿</em>' }
 };
 
@@ -2632,6 +2750,114 @@ function shareEcoId() {
             showDashToast(isArabic ? 'تم نسخ معلومات البطاقة! 🌿' : 'ID info copied to clipboard! 🌿');
         });
     }
+}
+
+// ECOBOT — AI CHAT
+const ECOBOT_SYSTEM = "You are EcoBot, a friendly AI assistant for EcoHub — Qatar's youth climate action platform. You help young Qataris learn about climate change, Qatar's sustainability efforts (Vision 2030, NECCS strategy, Al Kharsaah solar plant, Earthna, QNCC), volunteer opportunities, and how to make an environmental impact. Keep responses concise, friendly, and inspiring. Use occasional relevant emojis. Always encourage action and community involvement. If asked about opportunities on EcoHub, mention that users can find them in the Opportunities section.";
+let ecobotHistory = [];
+let ecobotBusy = false;
+
+function sendEcobotChip(el) {
+    const text = el.textContent.trim();
+    // Remove chips after first use
+    const chips = document.getElementById('ecobot-chips');
+    if (chips) chips.remove();
+    sendEcobotMessage(text);
+}
+
+function sendEcobotMsg() {
+    const input = document.getElementById('ecobot-input');
+    const text = input.value.trim();
+    if (!text || ecobotBusy) return;
+    input.value = '';
+    // Remove chips if still visible
+    const chips = document.getElementById('ecobot-chips');
+    if (chips) chips.remove();
+    sendEcobotMessage(text);
+}
+
+function appendEcobotMsg(role, text) {
+    const container = document.getElementById('ecobot-messages');
+    const isUser = role === 'user';
+    const initial = isUser ? (document.getElementById('sb-avatar')?.textContent?.trim() || 'U') : 'E';
+    const div = document.createElement('div');
+    div.className = 'ecobot-msg ' + (isUser ? 'user' : 'bot');
+    div.innerHTML = '<div class="ecobot-msg-av">' + initial + '</div><div><div class="ecobot-bubble">' + escapeHTML(text) + '</div></div>';
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+    return div;
+}
+
+function escapeHTML(str) {
+    const d = document.createElement('div');
+    d.textContent = str;
+    return d.innerHTML;
+}
+
+function showEcobotTyping() {
+    const container = document.getElementById('ecobot-messages');
+    const div = document.createElement('div');
+    div.className = 'ecobot-msg bot';
+    div.id = 'ecobot-typing';
+    div.innerHTML = '<div class="ecobot-msg-av">E</div><div><div class="ecobot-bubble"><div class="ecobot-typing"><span class="ecobot-dot"></span><span class="ecobot-dot"></span><span class="ecobot-dot"></span></div></div></div>';
+    container.appendChild(div);
+    container.scrollTop = container.scrollHeight;
+}
+
+function removeEcobotTyping() {
+    const el = document.getElementById('ecobot-typing');
+    if (el) el.remove();
+}
+
+async function sendEcobotMessage(text) {
+    if (ecobotBusy) return;
+    ecobotBusy = true;
+    const sendBtn = document.getElementById('ecobot-send');
+    sendBtn.disabled = true;
+
+    // Show user message
+    appendEcobotMsg('user', text);
+    ecobotHistory.push({ role: 'user', content: text });
+
+    // Show typing indicator
+    showEcobotTyping();
+
+    try {
+        const resp = await fetch('https://api.anthropic.com/v1/messages', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'x-api-key': 'sk-ant-api03-placeholder',
+                'anthropic-version': '2023-06-01',
+                'anthropic-dangerous-direct-browser-access': 'true'
+            },
+            body: JSON.stringify({
+                model: 'claude-sonnet-4-20250514',
+                max_tokens: 1000,
+                system: ECOBOT_SYSTEM,
+                messages: ecobotHistory
+            })
+        });
+
+        removeEcobotTyping();
+
+        if (!resp.ok) {
+            const errData = await resp.json().catch(() => ({}));
+            throw new Error(errData.error?.message || 'API request failed');
+        }
+
+        const data = await resp.json();
+        const reply = data.content?.[0]?.text || 'Sorry, I couldn\'t generate a response. Please try again.';
+        ecobotHistory.push({ role: 'assistant', content: reply });
+        appendEcobotMsg('assistant', reply);
+    } catch (e) {
+        removeEcobotTyping();
+        appendEcobotMsg('assistant', 'Sorry, I\'m having trouble connecting right now. Please check the API key configuration or try again later. 🔧');
+    }
+
+    ecobotBusy = false;
+    sendBtn.disabled = false;
+    document.getElementById('ecobot-input').focus();
 }
 
 // Close all modals on Escape key
