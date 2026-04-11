@@ -1097,7 +1097,7 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="sb-logo" onclick="navigate('home')" style="padding:1.25rem 1.5rem;display:flex;align-items:center;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.08)">
-            <img src="assets/Untitled.png" alt="EcoAwareness" style="height:32px;width:auto;max-width:180px;object-fit:contain;filter:brightness(0) invert(1)">
+            <img src="assets/Untitled.png" alt="EcoAwareness" style="height:32px;width:auto;max-width:180px;object-fit:contain;filter:brightness(0) invert(1)" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=\'font-family:Instrument Serif,serif;font-size:1.15rem;color:#fff;letter-spacing:-0.01em\'>EcoAwareness</span>')">
         </div>
         <nav class="sb-nav">
             <div class="sb-label" data-en="My Space" data-ar="مساحتي">My Space</div>
@@ -1868,7 +1868,7 @@
                     <div class="ecoid-card" id="ecoid-card">
                         <div class="ecoid-top">
                             <div class="ecoid-logo">
-                                <img src="assets/Untitled.png" alt="EcoAwareness" style="height:22px;width:auto;filter:brightness(0) invert(1)">
+                                <img src="assets/Untitled.png" alt="EcoAwareness" style="height:22px;width:auto;filter:brightness(0) invert(1)" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=\'font-family:Instrument Serif,serif;font-size:0.9rem;color:#fff;letter-spacing:-0.01em\'>EcoAwareness</span>')">
                             </div>
                             <span class="ecoid-verified"><iconify-icon icon="solar:verified-check-bold"></iconify-icon><span data-en="VERIFIED" data-ar="موثّق">VERIFIED</span></span>
                         </div>
@@ -2766,8 +2766,10 @@ function sendEcobotChip(el) {
 }
 
 function sendEcobotMsg() {
+    console.log('[EcoBot] sendEcobotMsg() called');
     const input = document.getElementById('ecobot-input');
     const text = input.value.trim();
+    console.log('[EcoBot] input text:', text, '| busy:', ecobotBusy);
     if (!text || ecobotBusy) return;
     input.value = '';
     // Remove chips if still visible
@@ -2811,7 +2813,19 @@ function removeEcobotTyping() {
 
 async function sendEcoBotMessage(userMessage) {
     const GEMINI_KEY = 'AIzaSyDJbZILIBpBge5kzGsJAoSkYcdiwiyQSBo';
+    console.log('[EcoBot] sendEcoBotMessage() — user:', userMessage);
     ecobotHistory.push({ role: 'user', content: userMessage });
+
+    const requestBody = {
+        system_instruction: {
+            parts: [{ text: "You are EcoBot, a friendly AI assistant for EcoHub — Qatar's youth climate action platform built by EcoAwareness QA. Help young Qataris learn about climate change, Qatar Vision 2030, sustainability efforts, volunteer opportunities, and how to make an environmental impact. Keep responses concise, friendly and inspiring. Use occasional emojis." }]
+        },
+        contents: ecobotHistory.map(m => ({
+            role: m.role === 'assistant' ? 'model' : 'user',
+            parts: [{ text: m.content }]
+        }))
+    };
+    console.log('[EcoBot] request body:', JSON.stringify(requestBody));
 
     try {
         const response = await fetch(
@@ -2819,29 +2833,25 @@ async function sendEcoBotMessage(userMessage) {
             {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    system_instruction: {
-                        parts: [{ text: "You are EcoBot, a friendly AI assistant for EcoHub — Qatar's youth climate action platform built by EcoAwareness QA. Help young Qataris learn about climate change, Qatar Vision 2030, sustainability efforts, volunteer opportunities, and how to make an environmental impact. Keep responses concise, friendly and inspiring. Use occasional emojis." }]
-                    },
-                    contents: ecobotHistory.map(m => ({
-                        role: m.role === 'assistant' ? 'model' : 'user',
-                        parts: [{ text: m.content }]
-                    }))
-                })
+                body: JSON.stringify(requestBody)
             }
         );
+        console.log('[EcoBot] HTTP status:', response.status);
         const data = await response.json();
+        console.log('[EcoBot] response data:', data);
         const botReply = data.candidates[0].content.parts[0].text;
+        console.log('[EcoBot] reply:', botReply);
         ecobotHistory.push({ role: 'assistant', content: botReply });
         return botReply;
     } catch (err) {
-        console.error('EcoBot error:', err);
+        console.error('[EcoBot] error:', err);
         return "Sorry, I'm having trouble connecting right now. Please try again in a moment! 🌿";
     }
 }
 
 async function sendEcobotMessage(text) {
-    if (ecobotBusy) return;
+    console.log('[EcoBot] sendEcobotMessage() — text:', text);
+    if (ecobotBusy) { console.log('[EcoBot] busy, skipping'); return; }
     ecobotBusy = true;
     const sendBtn = document.getElementById('ecobot-send');
     sendBtn.disabled = true;
@@ -2849,7 +2859,9 @@ async function sendEcobotMessage(text) {
     appendEcobotMsg('user', text);
     showEcobotTyping();
 
+    console.log('[EcoBot] calling API…');
     const reply = await sendEcoBotMessage(text);
+    console.log('[EcoBot] got reply, updating UI');
 
     removeEcobotTyping();
     appendEcobotMsg('assistant', reply);
@@ -3015,6 +3027,51 @@ function maybeSendOppNotification() {
     new Notification('New opportunity on EcoHub! 🌿', {
         body: 'Check the Opportunities section for new volunteer events.',
         icon: 'assets/Untitled.png'
+    });
+}
+
+// ─── FILTER: Opportunities pills + search ───────────────────────────────────
+function filterOppByPill(pill, cat) {
+    document.querySelectorAll('#opp-pills .pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    filterOpportunities();
+}
+
+function filterOpportunities() {
+    const q = (document.getElementById('opp-search')?.value || '').toLowerCase();
+    const activePill = document.querySelector('#opp-pills .pill.active');
+    const activeCat = activePill?.getAttribute('data-en') || 'All';
+    let any = false;
+    document.querySelectorAll('#opp-grid .opp-card').forEach(card => {
+        const cardCat = card.getAttribute('data-cat') || '';
+        const text = card.textContent.toLowerCase();
+        const catMatch = activeCat === 'All' || cardCat === activeCat;
+        const qMatch = !q || text.includes(q);
+        const show = catMatch && qMatch;
+        card.style.display = show ? '' : 'none';
+        if (show) any = true;
+    });
+    const nr = document.getElementById('opp-no-results');
+    if (nr) nr.style.display = any ? 'none' : 'grid';
+}
+
+// ─── FILTER: Network pills ───────────────────────────────────────────────────
+function filterNetByPill(pill, type) {
+    document.querySelectorAll('#net-pills .pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    document.querySelectorAll('#org-grid .org-card').forEach(card => {
+        const t = card.getAttribute('data-type') || '';
+        card.style.display = (type === 'All' || t === type) ? '' : 'none';
+    });
+}
+
+// ─── FILTER: Events pills ────────────────────────────────────────────────────
+function filterEvtByPill(pill, status) {
+    document.querySelectorAll('#evt-pills .pill').forEach(p => p.classList.remove('active'));
+    pill.classList.add('active');
+    document.querySelectorAll('#my-evt-list .my-evt').forEach(item => {
+        const s = item.getAttribute('data-status') || '';
+        item.style.display = (status === 'All' || s === status) ? '' : 'none';
     });
 }
 
