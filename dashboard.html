@@ -1029,6 +1029,7 @@
             <div class="sb-label" data-en="Community" data-ar="المجتمع">Community</div>
             <button class="sb-item" data-sec="leaderboard" onclick="navigate('leaderboard')"><iconify-icon icon="solar:ranking-linear"></iconify-icon><span data-en="Leaderboard" data-ar="المتصدرون">Leaderboard</span></button>
             <button class="sb-item" data-sec="feed" onclick="navigate('feed')"><iconify-icon icon="solar:chat-round-line-linear"></iconify-icon><span data-en="Community Feed" data-ar="تغذية المجتمع">Community Feed</span></button>
+            <button class="sb-item" data-sec="contact" onclick="navigate('contact')"><iconify-icon icon="solar:letter-linear"></iconify-icon><span data-en="Contact Us" data-ar="تواصل معنا">Contact Us</span></button>
         </nav>
         <div class="sb-user">
             <div class="sb-avatar" id="sb-avatar">M</div>
@@ -1538,6 +1539,19 @@
                         </div>
                     </div>
                 </div>
+
+                <!-- JOIN ECOAWARENESS BANNER -->
+                <div style="margin-top:1.75rem;background:var(--green);border-radius:16px;padding:2.25rem 2rem;position:relative;overflow:hidden;text-align:center;">
+                    <div style="position:absolute;inset:0;background:radial-gradient(ellipse 70% 80% at 50% 120%,rgba(168,224,99,0.18) 0%,transparent 60%);pointer-events:none"></div>
+                    <div style="position:absolute;inset:0;opacity:0.05;background-image:radial-gradient(circle,white 1px,transparent 1px);background-size:20px 20px;pointer-events:none"></div>
+                    <div style="position:relative;z-index:1">
+                        <div style="font-family:'Instrument Serif',serif;font-size:clamp(1.45rem,3vw,2.1rem);color:#fff;line-height:1.15;margin-bottom:0.5rem" data-en="Want to be part of the change? 🌿" data-ar="هل تريد أن تكون جزءاً من التغيير؟ 🌿">Want to be part of the change? 🌿</div>
+                        <div style="font-size:0.9rem;color:rgba(255,255,255,0.62);margin-bottom:1.5rem" data-en="Join EcoAwareness QA — Qatar's youth climate movement" data-ar="انضم إلى EcoAwareness QA — حركة الشباب المناخية في قطر">Join EcoAwareness QA — Qatar's youth climate movement</div>
+                        <button onclick="openApplyModal()" style="background:var(--lime);color:var(--ink);border:none;border-radius:100px;padding:0.8rem 2rem;font-size:1rem;font-weight:600;cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.2s;box-shadow:0 4px 16px rgba(0,0,0,0.18)" onmouseover="this.style.transform='translateY(-2px)';this.style.boxShadow='0 8px 24px rgba(0,0,0,0.22)'" onmouseout="this.style.transform='';this.style.boxShadow='0 4px 16px rgba(0,0,0,0.18)'">
+                            <span data-en="Apply Now →" data-ar="قدّم الآن ←">Apply Now →</span>
+                        </button>
+                    </div>
+                </div>
             </div>
 
             <!-- ═══ LEADERBOARD ═══ -->
@@ -1870,9 +1884,136 @@
                 </div>
             </div>
 
+            <!-- ═══ CONTACT ═══ -->
+            <div class="sec" id="sec-contact">
+                <div class="sec-hero">
+                    <h2><span data-en="Get in " data-ar="تواصل ">Get in </span><em data-en="Touch 🌿" data-ar="معنا 🌿">Touch 🌿</em></h2>
+                    <p data-en="Have a question? Want to collaborate? We'd love to hear from you." data-ar="لديك سؤال؟ تريد التعاون؟ يسعدنا سماعك.">Have a question? Want to collaborate? We'd love to hear from you.</p>
+                </div>
+
+                <div style="display:grid;grid-template-columns:1fr 280px;gap:1.25rem;align-items:start">
+                    <!-- FORM -->
+                    <div style="background:white;border:1px solid rgba(0,0,0,0.07);border-radius:14px;padding:1.5rem">
+                        <h3 style="font-family:'Instrument Serif',serif;font-size:1.1rem;margin-bottom:1.1rem" data-en="Send us a message" data-ar="أرسل لنا رسالة">Send us a message</h3>
+                        <div style="display:flex;flex-direction:column;gap:0.875rem">
+                            <div>
+                                <label style="font-size:0.75rem;font-weight:500;color:rgba(0,0,0,0.55);display:block;margin-bottom:0.35rem" data-en="Your Name" data-ar="اسمك">Your Name</label>
+                                <input id="ct-name" type="text" placeholder="Mohammed Al-Elfatih" data-placeholder-en="Mohammed Al-Elfatih" data-placeholder-ar="محمد الفتيح" style="width:100%;padding:0.7rem 0.9rem;border:1px solid rgba(0,0,0,0.12);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.855rem;outline:none;background:var(--paper);transition:border-color 0.2s" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='rgba(0,0,0,0.12)'">
+                            </div>
+                            <div>
+                                <label style="font-size:0.75rem;font-weight:500;color:rgba(0,0,0,0.55);display:block;margin-bottom:0.35rem" data-en="Subject" data-ar="الموضوع">Subject</label>
+                                <input id="ct-subject" type="text" placeholder="Collaboration, Question, Feedback..." data-placeholder-en="Collaboration, Question, Feedback..." data-placeholder-ar="تعاون، سؤال، ملاحظة..." style="width:100%;padding:0.7rem 0.9rem;border:1px solid rgba(0,0,0,0.12);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.855rem;outline:none;background:var(--paper);transition:border-color 0.2s" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='rgba(0,0,0,0.12)'">
+                            </div>
+                            <div>
+                                <label style="font-size:0.75rem;font-weight:500;color:rgba(0,0,0,0.55);display:block;margin-bottom:0.35rem" data-en="Message" data-ar="الرسالة">Message</label>
+                                <textarea id="ct-message" rows="5" placeholder="Write your message here..." data-placeholder-en="Write your message here..." data-placeholder-ar="اكتب رسالتك هنا..." style="width:100%;padding:0.7rem 0.9rem;border:1px solid rgba(0,0,0,0.12);border-radius:9px;font-family:'DM Sans',sans-serif;font-size:0.855rem;outline:none;background:var(--paper);resize:vertical;transition:border-color 0.2s" onfocus="this.style.borderColor='var(--green)'" onblur="this.style.borderColor='rgba(0,0,0,0.12)'"></textarea>
+                            </div>
+                            <button onclick="sendContactMessage()" style="background:var(--green);color:#fff;border:none;border-radius:10px;padding:0.75rem 1.5rem;font-size:0.855rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;display:flex;align-items:center;justify-content:center;gap:0.5rem;transition:all 0.2s;width:100%" onmouseover="this.style.background='var(--green-light)'" onmouseout="this.style.background='var(--green)'">
+                                <iconify-icon icon="solar:letter-linear"></iconify-icon>
+                                <span data-en="Send Message" data-ar="إرسال الرسالة">Send Message</span>
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- CONTACT CARDS -->
+                    <div style="display:flex;flex-direction:column;gap:0.75rem">
+                        <div style="background:white;border:1px solid rgba(0,0,0,0.07);border-radius:13px;padding:1.1rem 1.25rem;display:flex;align-items:center;gap:0.875rem">
+                            <div style="width:40px;height:40px;border-radius:10px;background:rgba(26,92,56,0.1);color:var(--green);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0">📧</div>
+                            <div>
+                                <div style="font-size:0.7rem;color:rgba(0,0,0,0.42);margin-bottom:0.15rem" data-en="Email" data-ar="البريد الإلكتروني">Email</div>
+                                <div style="font-size:0.82rem;font-weight:500">ecoawareness@gmail.com</div>
+                            </div>
+                        </div>
+                        <div style="background:white;border:1px solid rgba(0,0,0,0.07);border-radius:13px;padding:1.1rem 1.25rem;display:flex;align-items:center;gap:0.875rem">
+                            <div style="width:40px;height:40px;border-radius:10px;background:rgba(196,98,45,0.1);color:var(--rust);display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0">📸</div>
+                            <div>
+                                <div style="font-size:0.7rem;color:rgba(0,0,0,0.42);margin-bottom:0.15rem" data-en="Instagram" data-ar="إنستغرام">Instagram</div>
+                                <div style="font-size:0.82rem;font-weight:500">@ecoawareness.qa</div>
+                            </div>
+                        </div>
+                        <div style="background:white;border:1px solid rgba(0,0,0,0.07);border-radius:13px;padding:1.1rem 1.25rem;display:flex;align-items:center;gap:0.875rem">
+                            <div style="width:40px;height:40px;border-radius:10px;background:rgba(168,224,99,0.2);color:#4a7c20;display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0">🌍</div>
+                            <div>
+                                <div style="font-size:0.7rem;color:rgba(0,0,0,0.42);margin-bottom:0.15rem" data-en="Website" data-ar="الموقع الإلكتروني">Website</div>
+                                <div style="font-size:0.82rem;font-weight:500">eco-website-lemon.vercel.app</div>
+                            </div>
+                        </div>
+                        <div style="background:linear-gradient(135deg,var(--green),var(--green-light));border-radius:13px;padding:1.25rem;text-align:center;position:relative;overflow:hidden">
+                            <div style="position:absolute;inset:0;opacity:0.06;background-image:radial-gradient(circle,white 1px,transparent 1px);background-size:16px 16px;pointer-events:none"></div>
+                            <div style="position:relative;z-index:1">
+                                <div style="font-size:1.5rem;margin-bottom:0.4rem">🌿</div>
+                                <div style="font-family:'Instrument Serif',serif;font-size:1rem;color:#fff;margin-bottom:0.3rem">EcoAwareness QA</div>
+                                <div style="font-size:0.72rem;color:rgba(255,255,255,0.58)" data-en="Qatar's youth climate movement" data-ar="حركة الشباب المناخية في قطر">Qatar's youth climate movement</div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
         </div><!-- /scroll-area -->
     </div><!-- /main -->
 </div><!-- /app -->
+
+<!-- APPLY MODAL -->
+<div class="modal-overlay" id="apply-modal" onclick="if(event.target===this)closeGenericModal('apply-modal')">
+    <div class="modal" style="max-width:580px;overflow-y:auto;max-height:92vh" onclick="event.stopPropagation()">
+        <div class="modal-header">
+            <h2 data-en="Join the Movement 🌿" data-ar="انضم إلى الحركة 🌿">Join the Movement 🌿</h2>
+            <button class="modal-close" onclick="closeGenericModal('apply-modal')"><iconify-icon icon="solar:close-circle-linear"></iconify-icon></button>
+        </div>
+        <div id="apply-form-wrap" class="modal-body">
+            <div class="pe-form">
+                <div style="font-size:0.8rem;color:rgba(0,0,0,0.48)" data-en="EcoAwareness QA — Application Form" data-ar="EcoAwareness QA — نموذج التقديم">EcoAwareness QA — Application Form</div>
+                <div class="pe-row">
+                    <div class="pe-field">
+                        <label data-en="Full Name *" data-ar="الاسم الكامل *">Full Name *</label>
+                        <input id="ap-name" type="text">
+                    </div>
+                    <div class="pe-field">
+                        <label data-en="Age *" data-ar="العمر *">Age *</label>
+                        <input id="ap-age" type="number" min="13" max="30">
+                    </div>
+                </div>
+                <div class="pe-field">
+                    <label data-en="Education Level *" data-ar="المستوى التعليمي *">Education Level *</label>
+                    <select id="ap-edu">
+                        <option value="" disabled selected data-en="Select level..." data-ar="اختر المستوى...">Select level...</option>
+                        <option data-en="Middle School" data-ar="المرحلة المتوسطة">Middle School</option>
+                        <option data-en="High School" data-ar="المرحلة الثانوية">High School</option>
+                        <option data-en="University" data-ar="الجامعة">University</option>
+                        <option data-en="Graduate" data-ar="الدراسات العليا">Graduate</option>
+                        <option data-en="Working Professional" data-ar="محترف في العمل">Working Professional</option>
+                    </select>
+                </div>
+                <div class="pe-field">
+                    <label data-en="What are you good at? *" data-ar="ما الذي تتقنه؟ *">What are you good at? *</label>
+                    <textarea id="ap-good" rows="2"></textarea>
+                </div>
+                <div class="pe-field">
+                    <label data-en="What skills do you have? *" data-ar="ما هي مهاراتك؟ *">What skills do you have? *</label>
+                    <textarea id="ap-skills" rows="2" placeholder="Leadership, design, coding, public speaking..." data-placeholder-en="Leadership, design, coding, public speaking..." data-placeholder-ar="قيادة، تصميم، برمجة، خطابة..."></textarea>
+                </div>
+                <div class="pe-field">
+                    <label data-en="What change do you want to make? *" data-ar="ما التغيير الذي تريد إحداثه؟ *">What change do you want to make? *</label>
+                    <textarea id="ap-change" rows="3"></textarea>
+                </div>
+                <div class="pe-field">
+                    <label data-en="Why do you want to join EcoAwareness? *" data-ar="لماذا تريد الانضمام إلى EcoAwareness؟ *">Why do you want to join EcoAwareness? *</label>
+                    <textarea id="ap-why" rows="3"></textarea>
+                </div>
+                <button onclick="submitApplication()" class="modal-submit-btn">
+                    <span data-en="Submit Application 🌿" data-ar="إرسال الطلب 🌿">Submit Application 🌿</span>
+                </button>
+            </div>
+        </div>
+        <div id="apply-success" style="display:none;padding:2.5rem 1.5rem;text-align:center">
+            <div style="font-size:3rem;margin-bottom:0.75rem">🌿</div>
+            <div style="font-family:'Instrument Serif',serif;font-size:1.3rem;margin-bottom:0.4rem" data-en="Application sent!" data-ar="تم إرسال الطلب!">Application sent!</div>
+            <div style="font-size:0.875rem;color:rgba(0,0,0,0.48)" data-en="We'll be in touch soon 🌿" data-ar="سنتواصل معك قريباً 🌿">We'll be in touch soon 🌿</div>
+            <button onclick="closeGenericModal('apply-modal')" class="modal-submit-btn" style="margin-top:1.25rem;width:auto;padding:0.6rem 1.75rem" data-en="Done" data-ar="تم">Done</button>
+        </div>
+    </div>
+</div>
 
 <!-- INVITE MODAL -->
 <div class="modal-overlay" id="invite-modal" onclick="closeInviteModal(event)">
@@ -2041,7 +2182,8 @@ const titles = {
     leaderboard: { en: 'Community <em style="font-style:italic;color:var(--green)">Leaderboard.</em>', ar: '<em style="color:var(--green)">المتصدرون</em> في المجتمع.' },
     feed: { en: 'Community <em style="font-style:italic;color:var(--green)">Feed.</em>', ar: 'تغذية <em style="color:var(--green)">المجتمع.</em>' },
     profile: { en: 'My <em style="font-style:italic;color:var(--green)">Profile.</em>', ar: '<em style="color:var(--green)">ملفي</em> الشخصي.' },
-    ecoid: { en: 'Your <em style="font-style:italic;color:var(--green)">Eco ID.</em>', ar: 'بطاقتك <em style="color:var(--green)">البيئية.</em>' }
+    ecoid: { en: 'Your <em style="font-style:italic;color:var(--green)">Eco ID.</em>', ar: 'بطاقتك <em style="color:var(--green)">البيئية.</em>' },
+    contact: { en: 'Get in <em style="font-style:italic;color:var(--green)">Touch 🌿</em>', ar: 'تواصل <em style="color:var(--green)">معنا 🌿</em>' }
 };
 
 // LAZY LOADING — inject heavy section content on first visit
@@ -2498,6 +2640,60 @@ document.addEventListener('keydown', (e) => {
         document.querySelectorAll('.modal-overlay.open').forEach(m => m.classList.remove('open'));
     }
 });
+
+// APPLY MODAL
+function openApplyModal() {
+    document.getElementById('apply-form-wrap').style.display = 'flex';
+    document.getElementById('apply-success').style.display = 'none';
+    ['ap-name','ap-age','ap-good','ap-skills','ap-change','ap-why'].forEach(id => {
+        const el = document.getElementById(id); if (el) el.value = '';
+    });
+    const edu = document.getElementById('ap-edu'); if (edu) edu.selectedIndex = 0;
+    document.getElementById('apply-modal').classList.add('open');
+}
+
+function submitApplication() {
+    const name = document.getElementById('ap-name').value.trim();
+    const age = document.getElementById('ap-age').value.trim();
+    const edu = document.getElementById('ap-edu').value.trim();
+    const good = document.getElementById('ap-good').value.trim();
+    const skills = document.getElementById('ap-skills').value.trim();
+    const change = document.getElementById('ap-change').value.trim();
+    const why = document.getElementById('ap-why').value.trim();
+    if (!name || !age || !edu || !good || !skills || !change || !why) {
+        alert(isArabic ? 'يرجى ملء جميع الحقول.' : 'Please fill in all fields.');
+        return;
+    }
+    const subject = encodeURIComponent('New EcoAwareness Application — ' + name);
+    const body = encodeURIComponent(
+        'New Application — EcoAwareness QA\n' +
+        '=====================================\n' +
+        'Full Name: ' + name + '\n' +
+        'Age: ' + age + '\n' +
+        'Education Level: ' + edu + '\n\n' +
+        'What they are good at:\n' + good + '\n\n' +
+        'Skills:\n' + skills + '\n\n' +
+        'Change they want to make:\n' + change + '\n\n' +
+        'Why they want to join:\n' + why
+    );
+    window.location.href = 'mailto:ecoawareness@gmail.com?subject=' + subject + '&body=' + body;
+    document.getElementById('apply-form-wrap').style.display = 'none';
+    document.getElementById('apply-success').style.display = 'block';
+}
+
+// CONTACT FORM
+function sendContactMessage() {
+    const name = document.getElementById('ct-name').value.trim();
+    const subject = document.getElementById('ct-subject').value.trim();
+    const message = document.getElementById('ct-message').value.trim();
+    if (!name || !subject || !message) {
+        alert(isArabic ? 'يرجى ملء جميع الحقول.' : 'Please fill in all fields.');
+        return;
+    }
+    const mailSubject = encodeURIComponent('[EcoHub] ' + subject + ' — from ' + name);
+    const mailBody = encodeURIComponent('From: ' + name + '\n\n' + message);
+    window.location.href = 'mailto:ecoawareness@gmail.com?subject=' + mailSubject + '&body=' + mailBody;
+}
 
 init();
 </script>
