@@ -1096,8 +1096,7 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="sb-logo" onclick="navigate('home')">
-            <span class="sb-logo-dot"></span>
-            <span class="sb-logo-text" data-en="EcoHub" data-ar="EcoHub">EcoHub</span>
+            <img src="assets/Untitled.png" alt="EcoAwareness" style="height:36px;width:auto;filter:brightness(0) invert(1)">
         </div>
         <nav class="sb-nav">
             <div class="sb-label" data-en="My Space" data-ar="مساحتي">My Space</div>
@@ -1868,8 +1867,7 @@
                     <div class="ecoid-card" id="ecoid-card">
                         <div class="ecoid-top">
                             <div class="ecoid-logo">
-                                <span class="ecoid-logo-dot"></span>
-                                <span class="ecoid-logo-text">EcoHub</span>
+                                <img src="assets/Untitled.png" alt="EcoAwareness" style="height:22px;width:auto;filter:brightness(0) invert(1)">
                             </div>
                             <span class="ecoid-verified"><iconify-icon icon="solar:verified-check-bold"></iconify-icon><span data-en="VERIFIED" data-ar="موثّق">VERIFIED</span></span>
                         </div>
@@ -2237,17 +2235,32 @@ async function init() {
     document.getElementById('sb-name').textContent = fullName;
     document.getElementById('greeting-name').textContent = ' ' + firstName;
     document.getElementById('p-name').textContent = fullName;
-    document.getElementById('p-email').textContent = session.user.email;
+    // Email — set immediately; retry in 2s if it shows blank
+    const emailEl = document.getElementById('p-email');
+    if (session.user.email) {
+        emailEl.textContent = session.user.email;
+    } else {
+        emailEl.textContent = 'loading...';
+        setTimeout(async () => {
+            const { data: { session: s3 } } = await sb.auth.getSession();
+            if (s3?.user?.email) emailEl.textContent = s3.user.email;
+        }, 2000);
+    }
 
-    // Profile avatar — use uploaded image or initial
-    if (meta.avatar_url) {
+    // Profile avatar — check localStorage first, then metadata
+    const savedAvatar = localStorage.getItem('ecohub_avatar');
+    if (savedAvatar) {
+        setAvatarImage(savedAvatar);
+    } else if (meta.avatar_url) {
         setAvatarImage(meta.avatar_url);
     } else {
         const pAv = document.getElementById('p-avatar');
-        // Set initial but keep overlay
         const overlay = pAv.querySelector('.p-av-overlay');
-        pAv.childNodes[0].textContent = initial;
+        if (pAv.childNodes[0]) pAv.childNodes[0].textContent = initial;
     }
+
+    // Restore notification toggle state
+    restoreNotifToggle();
 
     // Bio & location from metadata
     if (meta.bio) document.getElementById('p-bio').textContent = meta.bio;
@@ -2609,45 +2622,31 @@ async function saveProfile() {
     }
 }
 
-async function uploadAvatar(input) {
+function uploadAvatar(input) {
     const file = input.files[0];
     if (!file) return;
 
-    // Validate file
     if (!file.type.startsWith('image/')) {
         showDashToast(isArabic ? 'يرجى اختيار صورة' : 'Please select an image');
         return;
     }
-    if (file.size > 2 * 1024 * 1024) {
-        showDashToast(isArabic ? 'الحد الأقصى 2 ميجابايت' : 'Max file size is 2MB');
+    if (file.size > 4 * 1024 * 1024) {
+        showDashToast(isArabic ? 'الحد الأقصى 4 ميجابايت' : 'Max file size is 4MB');
         return;
     }
 
-    try {
-        const { data: { session } } = await sb.auth.getSession();
-        if (!session) return;
-
-        const ext = file.name.split('.').pop();
-        const filePath = session.user.id + '/avatar.' + ext;
-
-        // Upload to Supabase Storage
-        const { error: upErr } = await sb.storage.from('avatars').upload(filePath, file, { upsert: true });
-        if (upErr) throw upErr;
-
-        // Get public URL
-        const { data: urlData } = sb.storage.from('avatars').getPublicUrl(filePath);
-        const avatarUrl = urlData.publicUrl + '?t=' + Date.now(); // cache bust
-
-        // Save URL to user metadata
-        await sb.auth.updateUser({ data: { avatar_url: avatarUrl } });
-
-        // Update all avatar elements
-        setAvatarImage(avatarUrl);
+    const reader = new FileReader();
+    reader.onload = function(e) {
+        const base64 = e.target.result;
+        try {
+            localStorage.setItem('ecohub_avatar', base64);
+        } catch (err) {
+            // localStorage full — still show in session
+        }
+        setAvatarImage(base64);
         showDashToast(isArabic ? 'تم تحديث الصورة' : 'Profile photo updated!');
-    } catch (e) {
-        showDashToast(isArabic ? 'خطأ في رفع الصورة' : 'Error uploading photo');
-    }
-    // Reset input so same file can be re-selected
+    };
+    reader.readAsDataURL(file);
     input.value = '';
 }
 
@@ -2823,21 +2822,22 @@ async function sendEcobotMessage(text) {
     showEcobotTyping();
 
     try {
-        const resp = await fetch('https://api.anthropic.com/v1/messages', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'x-api-key': 'sk-ant-api03-placeholder',
-                'anthropic-version': '2023-06-01',
-                'anthropic-dangerous-direct-browser-access': 'true'
-            },
-            body: JSON.stringify({
-                model: 'claude-sonnet-4-20250514',
-                max_tokens: 1000,
-                system: ECOBOT_SYSTEM,
-                messages: ecobotHistory
-            })
+        // Build conversation turns for Gemini (system prompt prepended to first user message)
+        const contents = ecobotHistory.map((m, i) => {
+            const role = m.role === 'user' ? 'user' : 'model';
+            let text = m.content;
+            if (i === 0 && m.role === 'user') text = ECOBOT_SYSTEM + '\n\n' + text;
+            return { role, parts: [{ text }] };
         });
+
+        const resp = await fetch(
+            'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=AIzaSyDJbZILIBpBge5kzGsJAoSkYcdiwiyQSBo',
+            {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ contents })
+            }
+        );
 
         removeEcobotTyping();
 
@@ -2847,12 +2847,12 @@ async function sendEcobotMessage(text) {
         }
 
         const data = await resp.json();
-        const reply = data.content?.[0]?.text || 'Sorry, I couldn\'t generate a response. Please try again.';
+        const reply = data.candidates?.[0]?.content?.parts?.[0]?.text || 'Sorry, I couldn\'t generate a response. Please try again.';
         ecobotHistory.push({ role: 'assistant', content: reply });
         appendEcobotMsg('assistant', reply);
     } catch (e) {
         removeEcobotTyping();
-        appendEcobotMsg('assistant', 'Sorry, I\'m having trouble connecting right now. Please check the API key configuration or try again later. 🔧');
+        appendEcobotMsg('assistant', 'Sorry, I\'m having trouble connecting right now. Please try again later. 🔧');
     }
 
     ecobotBusy = false;
@@ -2919,6 +2919,104 @@ function sendContactMessage() {
     const mailSubject = encodeURIComponent('[EcoHub] ' + subject + ' — from ' + name);
     const mailBody = encodeURIComponent('From: ' + name + '\n\n' + message);
     window.location.href = 'mailto:ecoawarenessme@gmail.com?subject=' + mailSubject + '&body=' + mailBody;
+}
+
+// NETWORK — Connect button toast
+function showConnectToast(btn) {
+    const orgName = btn.closest('.org-card')?.querySelector('.org-name')?.textContent?.trim() || 'this organisation';
+    const msg = isArabic
+        ? 'تم إرسال طلب التواصل إلى ' + orgName + ' ✓'
+        : 'Connection request sent to ' + orgName + ' ✓';
+    btn.textContent = isArabic ? 'تم الإرسال ✓' : 'Sent ✓';
+    btn.disabled = true;
+    btn.style.opacity = '0.7';
+    showDashToast(msg);
+}
+
+// OPPORTUNITIES — open detail modal from card
+function openOppModal(btn) {
+    const card = btn.closest('.opp-card');
+    if (!card) return;
+    const title = card.querySelector('.oc-title')?.textContent?.trim() || '';
+    const org = card.querySelector('.oc-org span')?.textContent?.trim() || '';
+    const tagEl = card.querySelector('.otag');
+    const tagText = tagEl ? tagEl.textContent.trim() : '';
+    const metaItems = [...card.querySelectorAll('.oc-meta-item')].map(m => m.textContent.trim());
+    const spots = card.querySelector('.prog-spots')?.textContent?.trim() || '';
+    const status = card.querySelector('.prog-status')?.textContent?.trim() || '';
+
+    const body = document.getElementById('opp-detail-body');
+    if (!body) return;
+    body.innerHTML = `
+        <div style="padding:0.25rem 0 0.75rem">
+            <div class="opp-detail-title">${title}</div>
+            <div class="opp-detail-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon>${org}</div>
+            <div class="opp-detail-meta">
+                ${metaItems.map(m => `<div class="opp-detail-meta-item"><iconify-icon icon="solar:info-circle-linear"></iconify-icon>${m}</div>`).join('')}
+                ${spots ? `<div class="opp-detail-meta-item"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>${spots} — ${status}</div>` : ''}
+            </div>
+            <button class="modal-submit-btn" onclick="registerForOpp('${title.replace(/'/g,"\\'")}')">
+                <span data-en="Register for this Event" data-ar="سجّل في هذه الفعالية">${isArabic ? 'سجّل في هذه الفعالية' : 'Register for this Event'}</span>
+            </button>
+        </div>`;
+    document.getElementById('opp-detail-modal').classList.add('open');
+}
+
+function registerForOpp(title) {
+    closeGenericModal('opp-detail-modal');
+    showDashToast(isArabic ? 'تم تسجيلك في ' + title + ' ✓' : 'Registered for ' + title + ' ✓');
+}
+
+// NOTIFICATIONS TOGGLE
+function setNotifToggleUI(on) {
+    const toggle = document.getElementById('notif-toggle');
+    const knob = document.getElementById('notif-knob');
+    if (!toggle || !knob) return;
+    toggle.style.background = on ? 'var(--green)' : 'rgba(0,0,0,0.18)';
+    knob.style.left = on ? '16px' : '2px';
+}
+
+function restoreNotifToggle() {
+    const on = localStorage.getItem('ecohub_notifications') === 'true';
+    setNotifToggleUI(on);
+}
+
+function toggleNotifications() {
+    const current = localStorage.getItem('ecohub_notifications') === 'true';
+    const next = !current;
+    localStorage.setItem('ecohub_notifications', next);
+    setNotifToggleUI(next);
+
+    if (next) {
+        // Request browser permission
+        if ('Notification' in window && Notification.permission !== 'granted') {
+            Notification.requestPermission().then(perm => {
+                if (perm === 'granted') {
+                    new Notification('EcoHub Notifications Enabled 🌿', {
+                        body: 'You\'ll be notified about new opportunities!',
+                        icon: 'assets/Untitled.png'
+                    });
+                }
+            });
+        } else if ('Notification' in window && Notification.permission === 'granted') {
+            new Notification('EcoHub Notifications Enabled 🌿', {
+                body: 'You\'ll be notified about new opportunities!',
+                icon: 'assets/Untitled.png'
+            });
+        }
+        showDashToast(isArabic ? 'ستصلك إشعارات عند توفر فرص جديدة!' : 'You\'ll be notified about new opportunities!');
+    } else {
+        showDashToast(isArabic ? 'تم إيقاف الإشعارات' : 'Notifications turned off');
+    }
+}
+
+function maybeSendOppNotification() {
+    if (localStorage.getItem('ecohub_notifications') !== 'true') return;
+    if (!('Notification' in window) || Notification.permission !== 'granted') return;
+    new Notification('New opportunity on EcoHub! 🌿', {
+        body: 'Check the Opportunities section for new volunteer events.',
+        icon: 'assets/Untitled.png'
+    });
 }
 
 init();
