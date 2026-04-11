@@ -2215,6 +2215,10 @@ const sb = window.supabase.createClient(
     'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xdmh4anNyeWF0cWdmdnRqYmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDYxMDAsImV4cCI6MjA4ODYyMjEwMH0.HrnrIq5bK3FhxmHaLxWPIG0nD-CI-3ReHCoO5RL1c3M'
 );
 
+// ECOBOT STATE
+let ecobotHistory = [];
+let ecobotBusy = false;
+
 // AUTH
 let currentUserId = '';
 
@@ -2754,8 +2758,6 @@ function shareEcoId() {
 
 // ECOBOT — AI CHAT
 const ECOBOT_SYSTEM = "You are EcoBot, a friendly AI assistant for EcoHub — Qatar's youth climate action platform. You help young Qataris learn about climate change, Qatar's sustainability efforts (Vision 2030, NECCS strategy, Al Kharsaah solar plant, Earthna, QNCC), volunteer opportunities, and how to make an environmental impact. Keep responses concise, friendly, and inspiring. Use occasional relevant emojis. Always encourage action and community involvement. If asked about opportunities on EcoHub, mention that users can find them in the Opportunities section.";
-let ecobotHistory = [];
-let ecobotBusy = false;
 
 function sendEcobotChip(el) {
     const text = el.textContent.trim();
