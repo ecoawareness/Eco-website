@@ -1088,6 +1088,7 @@
             .page-title { font-size: 1rem; }
         }
     </style>
+    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 </head>
 <body>
 
@@ -1868,7 +1869,7 @@
                     <div class="ecoid-card" id="ecoid-card">
                         <div class="ecoid-top">
                             <div class="ecoid-logo">
-                                <img src="assets/Untitled.png" alt="EcoAwareness" style="height:22px;width:auto;filter:brightness(0) invert(1)" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=\'font-family:Instrument Serif,serif;font-size:0.9rem;color:#fff;letter-spacing:-0.01em\'>EcoAwareness</span>')">
+                                <span style="font-family:'Instrument Serif',serif;font-size:1rem;color:#fff;letter-spacing:-0.01em">EcoAwareness</span>
                             </div>
                             <span class="ecoid-verified"><iconify-icon icon="solar:verified-check-bold"></iconify-icon><span data-en="VERIFIED" data-ar="موثّق">VERIFIED</span></span>
                         </div>
@@ -1878,6 +1879,10 @@
                             <div class="ecoid-role" data-en="EcoHub Member" data-ar="عضو EcoHub">EcoHub Member</div>
                             <div class="ecoid-qr" id="ecoid-qr"></div>
                             <div class="ecoid-member-id" id="ecoid-member-id">ECO-XXXXXXXX</div>
+                            <div style="display:flex;gap:0.5rem;margin-top:0.5rem">
+                                <button onclick="refreshEcoId()" style="display:inline-flex;align-items:center;gap:0.3rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:0.3rem 0.75rem;font-size:0.68rem;color:rgba(255,255,255,0.7);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.18s" onmouseover="this.style.background='rgba(168,224,99,0.18)';this.style.borderColor='rgba(168,224,99,0.35)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.borderColor='rgba(255,255,255,0.18)';this.style.color='rgba(255,255,255,0.7)'"><iconify-icon icon="solar:refresh-linear" style="font-size:0.8rem"></iconify-icon><span data-en="Refresh" data-ar="تحديث">Refresh</span></button>
+                                <button id="ecoid-copy-btn" onclick="copyEcoMemberId()" style="display:inline-flex;align-items:center;gap:0.3rem;background:rgba(255,255,255,0.1);border:1px solid rgba(255,255,255,0.18);border-radius:100px;padding:0.3rem 0.75rem;font-size:0.68rem;color:rgba(255,255,255,0.7);cursor:pointer;font-family:'DM Sans',sans-serif;transition:all 0.18s" onmouseover="this.style.background='rgba(168,224,99,0.18)';this.style.borderColor='rgba(168,224,99,0.35)';this.style.color='#fff'" onmouseout="this.style.background='rgba(255,255,255,0.1)';this.style.borderColor='rgba(255,255,255,0.18)';this.style.color='rgba(255,255,255,0.7)'"><iconify-icon icon="solar:copy-linear" style="font-size:0.8rem"></iconify-icon><span id="ecoid-copy-label" data-en="Copy ID" data-ar="نسخ">Copy ID</span></button>
+                            </div>
                         </div>
                         <div class="ecoid-bottom">
                             <div class="ecoid-valid"><span data-en="Valid until" data-ar="صالحة حتى">Valid until</span><br><strong id="ecoid-valid-time">—</strong></div>
@@ -2683,20 +2688,19 @@ function setAvatarImage(url) {
 // ECO ID
 let ecoIdQrInstance = null;
 let ecoIdTimerInterval = null;
+let _ecoIdUserId = '';
 
 function generateEcoMemberId(userId) {
     const hash = userId.replace(/-/g, '').substring(0, 8).toUpperCase();
     return 'ECO-' + hash;
 }
 
-function initEcoId(userId, fullName, initial) {
-    // Set avatar, name, member ID
-    document.getElementById('ecoid-avatar').textContent = initial;
-    document.getElementById('ecoid-name').textContent = fullName;
-    const memberId = generateEcoMemberId(userId);
-    document.getElementById('ecoid-member-id').textContent = memberId;
-
-    // Generate QR code from user ID
+function _generateQR(userId, attempt) {
+    if (typeof QRCode === 'undefined') {
+        if (attempt >= 5) return;
+        setTimeout(() => _generateQR(userId, attempt + 1), 500);
+        return;
+    }
     const qrContainer = document.getElementById('ecoid-qr');
     qrContainer.innerHTML = '';
     ecoIdQrInstance = new QRCode(qrContainer, {
@@ -2705,11 +2709,38 @@ function initEcoId(userId, fullName, initial) {
         colorDark: '#1a5c38', colorLight: '#ffffff',
         correctLevel: QRCode.CorrectLevel.M
     });
+}
 
-    // Set valid-until and start refresh
+function initEcoId(userId, fullName, initial) {
+    _ecoIdUserId = userId;
+    document.getElementById('ecoid-avatar').textContent = initial;
+    document.getElementById('ecoid-name').textContent = fullName;
+    const memberId = generateEcoMemberId(userId);
+    document.getElementById('ecoid-member-id').textContent = memberId;
+
+    _generateQR(userId, 0);
+
     updateEcoIdValidity();
     if (ecoIdTimerInterval) clearInterval(ecoIdTimerInterval);
-    ecoIdTimerInterval = setInterval(updateEcoIdValidity, 5 * 60 * 1000); // every 5 min
+    ecoIdTimerInterval = setInterval(updateEcoIdValidity, 5 * 60 * 1000);
+}
+
+function refreshEcoId() {
+    _generateQR(_ecoIdUserId, 0);
+    updateEcoIdValidity();
+    showDashToast(isArabic ? 'تم تحديث رمز QR ✓' : 'QR code refreshed ✓');
+}
+
+function copyEcoMemberId() {
+    const memberId = document.getElementById('ecoid-member-id')?.textContent || '';
+    navigator.clipboard.writeText(memberId).then(() => {
+        const btn = document.getElementById('ecoid-copy-btn');
+        const label = document.getElementById('ecoid-copy-label');
+        if (label) label.textContent = isArabic ? 'تم النسخ! ✓' : 'Copied! ✓';
+        setTimeout(() => {
+            if (label) label.textContent = isArabic ? 'نسخ' : 'Copy ID';
+        }, 2000);
+    });
 }
 
 function updateEcoIdValidity() {
@@ -3051,6 +3082,15 @@ function filterEvtByPill(pill, status) {
 }
 
 init();
+
+// LENIS SMOOTH SCROLL — applied to the fixed scroll-area container
+(function() {
+    const scrollEl = document.querySelector('.scroll-area');
+    if (!scrollEl || typeof Lenis === 'undefined') return;
+    const lenis = new Lenis({ wrapper: scrollEl, content: scrollEl, lerp: 0.1, smoothWheel: true });
+    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
+    requestAnimationFrame(raf);
+})();
 </script>
 </body>
 </html>
