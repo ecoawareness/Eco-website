@@ -2847,22 +2847,27 @@ async function sendEcobotMessage(text) {
     ecobotHistory.push({ role: 'user', parts: [{ text: text }] });
 
     try {
-        const GEMINI_KEY = 'AIzaSyAJqZu-XVsZ4HxpEiNoHoNNkiPayGAtRO0';
-        const response = await fetch(
-            'https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=' + GEMINI_KEY,
-            {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify({
-                    system_instruction: {
-                        parts: [{ text: "You are EcoBot, a friendly AI assistant for EcoHub — Qatar's youth climate action platform by EcoAwareness QA. Help young Qataris learn about climate change, Qatar Vision 2030, sustainability, volunteer opportunities, and environmental impact. Keep responses concise, friendly and inspiring. Use occasional emojis." }]
+        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer YOUR_NEW_KEY',
+                'HTTP-Referer': 'https://eco-website-lemon.vercel.app',
+                'X-Title': 'EcoHub'
+            },
+            body: JSON.stringify({
+                model: 'google/gemini-2.0-flash-exp:free',
+                messages: [
+                    {
+                        role: 'system',
+                        content: "You are EcoBot, a friendly AI assistant for EcoHub — Qatar's youth climate action platform by EcoAwareness QA. Help young Qataris learn about climate change, Qatar Vision 2030, sustainability, volunteer opportunities, and environmental impact. Keep responses concise, friendly and inspiring. Use occasional emojis."
                     },
-                    contents: ecobotHistory
-                })
-            }
-        );
+                    ...ecobotHistory.map(m => ({ role: m.role === 'model' ? 'assistant' : m.role, content: m.parts[0].text }))
+                ]
+            })
+        });
         const data = await response.json();
-        const reply = data?.candidates?.[0]?.content?.parts?.[0]?.text || "Sorry, I couldn't get a response. Try again! 🌿";
+        const reply = data?.choices?.[0]?.message?.content || "Sorry, I couldn't get a response. Try again! 🌿";
         ecobotHistory.push({ role: 'model', parts: [{ text: reply }] });
         removeEcobotTyping();
         appendEcobotMsg('assistant', reply);
