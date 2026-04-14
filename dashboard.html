@@ -1087,8 +1087,13 @@
             .sec { padding: 0.75rem; }
             .page-title { font-size: 1rem; }
         }
+        html.lenis, html.lenis body { height: auto; }
+        .lenis.lenis-smooth { scroll-behavior: auto !important; }
+        .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
+        .lenis.lenis-stopped { overflow: hidden; }
+        .lenis.lenis-scrolling iframe { pointer-events: none; }
     </style>
-    <script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
+    <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
 </head>
 <body>
 
@@ -3088,13 +3093,20 @@ function filterEvtByPill(pill, status) {
 
 init();
 
-// LENIS SMOOTH SCROLL — applied to the fixed scroll-area container
 (function() {
     const scrollEl = document.querySelector('.scroll-area');
     if (!scrollEl || typeof Lenis === 'undefined') return;
-    const lenis = new Lenis({ wrapper: scrollEl, content: scrollEl, lerp: 0.1, smoothWheel: true });
+    const lenis = new Lenis({
+        wrapper: scrollEl,
+        content: scrollEl,
+        lerp: 0.1,
+        smoothWheel: true,
+        syncTouch: true,
+        syncTouchLerp: 0.1,
+    });
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
+    window._lenis = lenis;
 })();
 </script>
 </body>
