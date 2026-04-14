@@ -3099,12 +3099,12 @@ init();
     const lenis = new Lenis({
         wrapper: scrollEl,
         content: scrollEl,
-        lerp: 0.075,
+        lerp: 0.06,
         smoothWheel: true,
         syncTouch: true,
-        syncTouchLerp: 0.075,
-        wheelMultiplier: 1.2,
-        touchMultiplier: 2,
+        syncTouchLerp: 0.06,
+        wheelMultiplier: 0.8,
+        touchMultiplier: 1.2,
     });
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
