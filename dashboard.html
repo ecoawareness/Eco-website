@@ -2861,7 +2861,7 @@ async function sendEcobotMessage(text) {
                 'X-Title': 'EcoHub'
             },
             body: JSON.stringify({
-                model: 'google/gemini-2.5-flash:free',
+                model: 'mistralai/mistral-7b-instruct:free',
                 messages: [
                     {
                         role: 'system',
@@ -2871,12 +2871,18 @@ async function sendEcobotMessage(text) {
                 ]
             })
         });
+        if (!response.ok) {
+            const errorText = await response.text();
+            console.error('OpenRouter error:', response.status, errorText);
+            throw new Error(`API error: ${response.status}`);
+        }
         const data = await response.json();
         const reply = data?.choices?.[0]?.message?.content || "Sorry, I couldn't get a response. Try again! 🌿";
         ecobotHistory.push({ role: 'model', parts: [{ text: reply }] });
         removeEcobotTyping();
         appendEcobotMsg('assistant', reply);
     } catch (err) {
+        console.error('EcoBot error:', err);
         removeEcobotTyping();
         appendEcobotMsg('assistant', "Sorry, I'm having trouble connecting. Please try again! 🌿");
     }
