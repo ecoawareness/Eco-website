@@ -313,7 +313,7 @@
             </div>
             
             <p class="text-xs font-light text-slate-500 text-center">
-                © 2023 EcoHub Sustainable Action. All rights reserved.
+                © 2025 EcoHub — EcoAwareness Qatar. All rights reserved.
             </p>
             
             <div class="flex items-center gap-6 text-xs font-light text-slate-500">
@@ -329,22 +329,39 @@
             const h1 = document.querySelector('h1');
             const subtitle = document.querySelector('h1 + p');
             const articles = document.querySelectorAll('article');
-            
+
             const elements = [h1, subtitle, ...articles].filter(Boolean);
-            
+
             // Set initial state
             elements.forEach(el => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(20px)';
                 el.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
             });
-            
+
             // Stagger animation
             elements.forEach((el, index) => {
                 setTimeout(() => {
                     el.style.opacity = '1';
                     el.style.transform = 'translateY(0)';
                 }, index * 100);
+            });
+
+            // "Coming Soon" for placeholder links inside cards
+            document.querySelectorAll('article a[href="#"]').forEach(a => {
+                a.addEventListener('click', e => {
+                    e.preventDefault();
+                    const toast = document.createElement('div');
+                    toast.textContent = 'Coming soon! 🚀';
+                    Object.assign(toast.style, {
+                        position:'fixed',bottom:'2rem',left:'50%',transform:'translateX(-50%)',
+                        background:'#1a5c38',color:'#fff',padding:'0.75rem 1.5rem',borderRadius:'100px',
+                        fontSize:'0.88rem',fontWeight:'500',zIndex:'9999',
+                        boxShadow:'0 4px 20px rgba(0,0,0,0.2)',animation:'fadeIn 0.2s ease'
+                    });
+                    document.body.appendChild(toast);
+                    setTimeout(() => toast.remove(), 2500);
+                });
             });
         });
     </script>

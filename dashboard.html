@@ -1138,7 +1138,8 @@
     <!-- SIDEBAR -->
     <aside class="sidebar">
         <div class="sb-logo" onclick="navigate('home')" style="padding:1.25rem 1.5rem;display:flex;align-items:center;cursor:pointer;border-bottom:1px solid rgba(255,255,255,0.08)">
-            <img src="assets/Untitled.png" alt="EcoAwareness" style="height:32px;width:auto;max-width:180px;object-fit:contain;filter:brightness(0) invert(1)" onerror="this.style.display='none';this.insertAdjacentHTML('afterend','<span style=\'font-family:Instrument Serif,serif;font-size:1.15rem;color:#fff;letter-spacing:-0.01em\'>EcoAwareness</span>')">
+            <span class="sb-logo-dot"></span>
+            <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:1.3rem;color:#fff;letter-spacing:-0.02em">EcoAwareness</span>
         </div>
         <nav class="sb-nav">
             <div class="sb-label" data-en="My Space" data-ar="مساحتي">My Space</div>
@@ -3001,48 +3002,16 @@ function sendContactMessage() {
 
 // NETWORK — Connect button toast
 function showConnectToast(btn) {
-    const orgName = btn.closest('.org-card')?.querySelector('.org-name')?.textContent?.trim() || 'this organisation';
-    const msg = isArabic
-        ? 'تم إرسال طلب التواصل إلى ' + orgName + ' ✓'
-        : 'Connection request sent to ' + orgName + ' ✓';
-    btn.textContent = isArabic ? 'تم الإرسال ✓' : 'Sent ✓';
-    btn.disabled = true;
-    btn.style.opacity = '0.7';
-    showDashToast(msg);
+    showDashToast(isArabic ? 'قريباً! هذه الميزة قيد التطوير 🚀' : 'Coming soon! This feature is under development 🚀');
 }
 
 // OPPORTUNITIES — open detail modal from card
 function openOppModal(btn) {
-    const card = btn.closest('.opp-card');
-    if (!card) return;
-    const title = card.querySelector('.oc-title')?.textContent?.trim() || '';
-    const org = card.querySelector('.oc-org span')?.textContent?.trim() || '';
-    const tagEl = card.querySelector('.otag');
-    const tagText = tagEl ? tagEl.textContent.trim() : '';
-    const metaItems = [...card.querySelectorAll('.oc-meta-item')].map(m => m.textContent.trim());
-    const spots = card.querySelector('.prog-spots')?.textContent?.trim() || '';
-    const status = card.querySelector('.prog-status')?.textContent?.trim() || '';
-
-    const body = document.getElementById('opp-detail-body');
-    if (!body) return;
-    body.innerHTML = `
-        <div style="padding:0.25rem 0 0.75rem">
-            <div class="opp-detail-title">${title}</div>
-            <div class="opp-detail-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon>${org}</div>
-            <div class="opp-detail-meta">
-                ${metaItems.map(m => `<div class="opp-detail-meta-item"><iconify-icon icon="solar:info-circle-linear"></iconify-icon>${m}</div>`).join('')}
-                ${spots ? `<div class="opp-detail-meta-item"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>${spots} — ${status}</div>` : ''}
-            </div>
-            <button class="modal-submit-btn" onclick="registerForOpp('${title.replace(/'/g,"\\'")}')">
-                <span data-en="Register for this Event" data-ar="سجّل في هذه الفعالية">${isArabic ? 'سجّل في هذه الفعالية' : 'Register for this Event'}</span>
-            </button>
-        </div>`;
-    document.getElementById('opp-detail-modal').classList.add('open');
+    showDashToast(isArabic ? 'قريباً! التسجيل في الفعاليات قيد التطوير 🚀' : 'Coming soon! Event registration is under development 🚀');
 }
 
 function registerForOpp(title) {
-    closeGenericModal('opp-detail-modal');
-    showDashToast(isArabic ? 'تم تسجيلك في ' + title + ' ✓' : 'Registered for ' + title + ' ✓');
+    showDashToast(isArabic ? 'قريباً! 🚀' : 'Coming soon! 🚀');
 }
 
 // NOTIFICATIONS TOGGLE
