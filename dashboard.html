@@ -9,7 +9,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
     <script defer src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script defer src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    <script defer src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/qrcodejs/1.0.0/qrcode.min.js"></script>
     <style>
         :root {
             --ink: #0a0a0a; --paper: #f5f0e8; --green: #1a5c38;
@@ -138,6 +138,10 @@
 
         /* SCROLL AREA */
         .scroll-area { flex: 1; overflow-y: auto; overflow-x: hidden; }
+        /* Smooth scroll on every inner scrollable container */
+        .sb-nav, .ecobot-messages, .modal, .chart-bars, .pills {
+            scroll-behavior: smooth;
+        }
 
         /* SECTIONS */
         .sec { display: none; padding: 1.75rem; max-width: 1080px; width: 100%; box-sizing: border-box; }
@@ -1163,7 +1167,7 @@
             <span class="sb-logo-dot"></span>
             <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:1.3rem;color:#fff;letter-spacing:-0.02em">EcoAwareness</span>
         </div>
-        <nav class="sb-nav">
+        <nav class="sb-nav" data-lenis-prevent>
             <div class="sb-label" data-en="My Space" data-ar="مساحتي">My Space</div>
             <button class="sb-item active" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:home-linear"></iconify-icon><span data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</span></button>
             <button class="sb-item" data-sec="profile" onclick="navigate('profile')"><iconify-icon icon="solar:user-linear"></iconify-icon><span data-en="My Profile" data-ar="ملفي الشخصي">My Profile</span></button>
@@ -2045,7 +2049,7 @@
                         </div>
                     </div>
                     <!-- Messages (shown after first message) -->
-                    <div class="ecobot-messages" id="ecobot-messages"></div>
+                    <div class="ecobot-messages" id="ecobot-messages" data-lenis-prevent></div>
                     <!-- Input — always at bottom -->
                     <div class="ecobot-input-area">
                         <div class="ecobot-input-box">
@@ -2135,7 +2139,7 @@
 
 <!-- APPLY MODAL -->
 <div class="modal-overlay" id="apply-modal" onclick="if(event.target===this)closeGenericModal('apply-modal')">
-    <div class="modal" style="max-width:580px;overflow-y:auto;max-height:92vh" onclick="event.stopPropagation()">
+    <div class="modal" style="max-width:580px;overflow-y:auto;max-height:92vh" data-lenis-prevent onclick="event.stopPropagation()">
         <div class="modal-header">
             <h2 data-en="Join the Movement 🌿" data-ar="انضم إلى الحركة 🌿">Join the Movement 🌿</h2>
             <button class="modal-close" onclick="closeGenericModal('apply-modal')"><iconify-icon icon="solar:close-circle-linear"></iconify-icon></button>
@@ -3129,7 +3133,9 @@ init();
 
 (function() {
     const scrollEl = document.querySelector('.scroll-area');
+    const bar = document.getElementById('scroll-progress');
     if (!scrollEl || typeof Lenis === 'undefined') return;
+
     const lenis = new Lenis({
         wrapper: scrollEl,
         content: scrollEl,
@@ -3140,21 +3146,17 @@ init();
         wheelMultiplier: 0.8,
         touchMultiplier: 1.2,
     });
+
+    // Wire scroll progress bar directly to Lenis
+    if (bar) {
+        lenis.on('scroll', ({ scroll, limit }) => {
+            bar.style.width = (limit > 0 ? (scroll / limit) * 100 : 0) + '%';
+        });
+    }
+
     function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
     requestAnimationFrame(raf);
     window._lenis = lenis;
-})();
-
-// ── SCROLL PROGRESS BAR ──────────────────────────────────
-(function() {
-    const scrollEl = document.querySelector('.scroll-area');
-    const bar = document.getElementById('scroll-progress');
-    if (!scrollEl || !bar) return;
-    scrollEl.addEventListener('scroll', function() {
-        const scrolled = scrollEl.scrollTop;
-        const total = scrollEl.scrollHeight - scrollEl.clientHeight;
-        bar.style.width = (total > 0 ? (scrolled / total) * 100 : 0) + '%';
-    }, { passive: true });
 })();
 </script>
 </body>
