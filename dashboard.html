@@ -146,7 +146,6 @@
         /* SECTIONS */
         .sec { display: none; padding: 1.75rem; max-width: 1080px; width: 100%; box-sizing: border-box; }
         .sec.active { display: block; animation: sectionIn 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
-        .sec.leaving { display: block; animation: sectionOut 0.22s cubic-bezier(0.4, 0, 1, 1) forwards; pointer-events: none; }
         .scroll-area > .sec { margin: 0 auto; }
         .sb-item { transition: background 0.25s ease, color 0.25s ease, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1); }
         .sb-item:hover { transform: translateX(2px); }
@@ -2187,42 +2186,27 @@ function lazyLoadSection(sec) {
     }
 }
 
-let _navBusy = false;
 function navigate(sec) {
     const next = document.getElementById('sec-' + sec);
     if (!next) return;
-    if (_navBusy) return;
-    const current = document.querySelector('.sec.active');
-    if (current === next) return;
 
-    // Smoothly scroll to top via Lenis if present
-    const scrollEl = document.querySelector('.scroll-area');
-    if (window._lenis) {
-        window._lenis.scrollTo(0, { duration: 0.6, easing: t => 1 - Math.pow(1 - t, 3) });
-    } else if (scrollEl) {
-        scrollEl.scrollTo({ top: 0, behavior: 'smooth' });
-    }
+    // Hide all sections, show target — force reflow so enter animation restarts
+    document.querySelectorAll('.sec').forEach(s => {
+        s.classList.remove('active', 'leaving');
+        s.style.display = 'none';
+    });
+    next.style.display = 'block';
+    void next.offsetWidth;
+    next.classList.add('active');
 
-    const reveal = () => {
-        document.querySelectorAll('.sec').forEach(s => {
-            s.classList.remove('active', 'leaving');
-            s.style.display = 'none';
-        });
-        next.style.display = 'block';
-        // force reflow so the animation restarts
-        void next.offsetWidth;
-        next.classList.add('active');
-        _navBusy = false;
-    };
-
-    if (current) {
-        _navBusy = true;
-        current.classList.remove('active');
-        current.classList.add('leaving');
-        setTimeout(reveal, 220);
-    } else {
-        reveal();
-    }
+    // Smoothly scroll to top
+    try {
+        if (window._lenis) {
+            window._lenis.scrollTo(0, { duration: 0.6 });
+        } else {
+            document.querySelector('.scroll-area')?.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+    } catch (e) { /* no-op */ }
 
     // Update sidebar active state
     document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('active'));
