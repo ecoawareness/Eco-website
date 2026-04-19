@@ -145,9 +145,14 @@
 
         /* SECTIONS */
         .sec { display: none; padding: 1.75rem; max-width: 1080px; width: 100%; box-sizing: border-box; }
-        .sec.active { display: block; animation: sectionIn 0.38s cubic-bezier(0.22, 1, 0.36, 1); }
+        .sec.active { display: block; animation: sectionIn 0.5s cubic-bezier(0.22, 1, 0.36, 1); }
+        .sec.leaving { display: block; animation: sectionOut 0.22s cubic-bezier(0.4, 0, 1, 1) forwards; pointer-events: none; }
         .scroll-area > .sec { margin: 0 auto; }
-        @keyframes sectionIn { from { opacity: 0; transform: translateY(18px); } to { opacity: 1; transform: none; } }
+        .sb-item { transition: background 0.25s ease, color 0.25s ease, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1); }
+        .sb-item:hover { transform: translateX(2px); }
+        body.ar .sb-item:hover { transform: translateX(-2px); }
+        @keyframes sectionIn { from { opacity: 0; transform: translateY(18px); filter: blur(4px); } to { opacity: 1; transform: none; filter: blur(0); } }
+        @keyframes sectionOut { from { opacity: 1; transform: none; filter: blur(0); } to { opacity: 0; transform: translateY(-8px); filter: blur(3px); } }
         @keyframes fadeIn { from { opacity: 0; transform: translateY(8px); } to { opacity: 1; transform: none; } }
         /* Scroll progress bar */
         #scroll-progress {
@@ -2182,19 +2187,42 @@ function lazyLoadSection(sec) {
     }
 }
 
+let _navBusy = false;
 function navigate(sec) {
     const next = document.getElementById('sec-' + sec);
     if (!next) return;
+    if (_navBusy) return;
+    const current = document.querySelector('.sec.active');
+    if (current === next) return;
 
-    // Hide all sections instantly
-    document.querySelectorAll('.sec').forEach(s => {
-        s.classList.remove('active');
-        s.style.display = 'none';
-    });
+    // Smoothly scroll to top via Lenis if present
+    const scrollEl = document.querySelector('.scroll-area');
+    if (window._lenis) {
+        window._lenis.scrollTo(0, { duration: 0.6, easing: t => 1 - Math.pow(1 - t, 3) });
+    } else if (scrollEl) {
+        scrollEl.scrollTo({ top: 0, behavior: 'smooth' });
+    }
 
-    // Show target section
-    next.style.display = 'block';
-    next.classList.add('active');
+    const reveal = () => {
+        document.querySelectorAll('.sec').forEach(s => {
+            s.classList.remove('active', 'leaving');
+            s.style.display = 'none';
+        });
+        next.style.display = 'block';
+        // force reflow so the animation restarts
+        void next.offsetWidth;
+        next.classList.add('active');
+        _navBusy = false;
+    };
+
+    if (current) {
+        _navBusy = true;
+        current.classList.remove('active');
+        current.classList.add('leaving');
+        setTimeout(reveal, 220);
+    } else {
+        reveal();
+    }
 
     // Update sidebar active state
     document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('active'));
@@ -2219,7 +2247,6 @@ function navigate(sec) {
         }
     }
 
-    document.querySelector('.scroll-area').scrollTo({ top: 0, behavior: 'smooth' });
     if (sec === 'home') animateStatNumbers();
 
     // Eco ID — show Qatar-only notice + ensure QR is rendered
@@ -2717,32 +2744,23 @@ async function sendEcobotMessage(text) {
     ecobotHistory.push({ role: 'user', parts: [{ text: text }] });
 
     try {
-        const response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        const response = await fetch('/api/chat', {
             method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer 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',
-                'HTTP-Referer': 'https://eco-website-lemon.vercel.app',
-                'X-Title': 'EcoHub'
-            },
+            headers: { 'Content-Type': 'application/json' },
             body: JSON.stringify({
-                model: 'meta-llama/llama-3.2-3b-instruct:free',
-                messages: [
-                    {
-                        role: 'system',
-                        content: "You are EcoBot, a friendly AI assistant for EcoHub — Qatar's youth climate action platform by EcoAwareness QA. Help young Qataris learn about climate change, Qatar Vision 2030, sustainability, volunteer opportunities, and environmental impact. Keep responses concise, friendly and inspiring. Use occasional emojis."
-                    },
-                    ...ecobotHistory.map(m => ({ role: m.role === 'model' ? 'assistant' : m.role, content: m.parts[0].text }))
-                ]
+                messages: ecobotHistory.map(m => ({
+                    role: m.role === 'model' ? 'assistant' : m.role,
+                    content: m.parts[0].text
+                }))
             })
         });
         if (!response.ok) {
             const errorText = await response.text();
-            console.error('OpenRouter error:', response.status, errorText);
+            console.error('Chat API error:', response.status, errorText);
             throw new Error(`API error: ${response.status}`);
         }
         const data = await response.json();
-        const reply = data?.choices?.[0]?.message?.content || "Sorry, I couldn't get a response. Try again! 🌿";
+        const reply = data?.reply || "Sorry, I couldn't get a response. Try again! 🌿";
         ecobotHistory.push({ role: 'model', parts: [{ text: reply }] });
         removeEcobotTyping();
         appendEcobotMsg('assistant', reply);
