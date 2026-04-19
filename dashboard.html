@@ -1897,7 +1897,7 @@
                             <div style="width:40px;height:40px;border-radius:10px;background:rgba(168,224,99,0.2);color:#4a7c20;display:flex;align-items:center;justify-content:center;font-size:1.15rem;flex-shrink:0">🌍</div>
                             <div>
                                 <div style="font-size:0.7rem;color:rgba(0,0,0,0.42);margin-bottom:0.15rem" data-en="Website" data-ar="الموقع الإلكتروني">Website</div>
-                                <div style="font-size:0.82rem;font-weight:500">eco-website-lemon.vercel.app</div>
+                                <div style="font-size:0.82rem;font-weight:500">eco-awareness-website-ennmgrn7z-mfhussni2008-gmailcoms-projects.vercel.app</div>
                             </div>
                         </div>
                         <div style="background:linear-gradient(135deg,var(--green),var(--green-light));border-radius:13px;padding:1.25rem;text-align:center;position:relative;overflow:hidden">
@@ -1987,7 +1987,7 @@
         <div class="modal-body">
             <div class="invite-label" data-en="Your unique invite link" data-ar="رابط الدعوة الخاص بك">Your unique invite link</div>
             <div class="invite-link-box">
-                <div class="invite-link-text" id="invite-link-text">https://eco-website-lemon.vercel.app/signup.html?ref=...</div>
+                <div class="invite-link-text" id="invite-link-text">https://eco-awareness-website-ennmgrn7z-mfhussni2008-gmailcoms-projects.vercel.app/signup.html?ref=...</div>
                 <button class="invite-copy-btn" id="invite-copy-btn" onclick="copyInviteLink()"><span data-en="Copy Link" data-ar="نسخ الرابط">Copy Link</span></button>
             </div>
             <div class="invite-divider"><span data-en="or share via" data-ar="أو شارك عبر">or share via</span></div>
@@ -2124,7 +2124,7 @@ async function init() {
 
     // Invite link
     currentUserId = session.user.id;
-    document.getElementById('invite-link-text').textContent = 'https://eco-website-lemon.vercel.app/signup.html?ref=' + currentUserId;
+    document.getElementById('invite-link-text').textContent = 'https://eco-awareness-website-ennmgrn7z-mfhussni2008-gmailcoms-projects.vercel.app/signup.html?ref=' + currentUserId;
 
     // Eco ID
     initEcoId(currentUserId, fullName, initial);
@@ -2348,7 +2348,7 @@ if (localStorage.getItem('hub_lang') === 'ar') { isArabic = true; applyLang(); }
 
 // INVITE MODAL
 function getInviteLink() {
-    return 'https://eco-website-lemon.vercel.app/signup.html?ref=' + currentUserId;
+    return 'https://eco-awareness-website-ennmgrn7z-mfhussni2008-gmailcoms-projects.vercel.app/signup.html?ref=' + currentUserId;
 }
 
 function openInviteModal() {
@@ -2593,7 +2593,7 @@ function _generateQR(userId, attempt) {
     qrContainer.innerHTML = '';
     try {
         ecoIdQrInstance = new QRCode(qrContainer, {
-            text: 'https://eco-website-lemon.vercel.app/verify?uid=' + (userId || 'guest'),
+            text: 'https://eco-awareness-website-ennmgrn7z-mfhussni2008-gmailcoms-projects.vercel.app/verify?uid=' + (userId || 'guest'),
             width: 140, height: 140,
             colorDark: '#1a5c38', colorLight: '#ffffff',
             correctLevel: QRCode.CorrectLevel.M
@@ -2671,7 +2671,7 @@ function shareEcoId() {
         : `🌿 I'm ${name} — a verified EcoHub member! My ID: ${memberId}`;
 
     if (navigator.share) {
-        navigator.share({ title: 'EcoHub Eco ID', text: text, url: 'https://eco-website-lemon.vercel.app' }).catch(() => {});
+        navigator.share({ title: 'EcoHub Eco ID', text: text, url: 'https://eco-awareness-website-ennmgrn7z-mfhussni2008-gmailcoms-projects.vercel.app' }).catch(() => {});
     } else {
         navigator.clipboard.writeText(text).then(() => {
             showDashToast(isArabic ? 'تم نسخ معلومات البطاقة! 🌿' : 'ID info copied to clipboard! 🌿');
