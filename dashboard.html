@@ -2738,16 +2738,18 @@ async function sendEcobotMessage(text) {
                 }))
             })
         });
+        const data = await response.json().catch(() => ({}));
         if (!response.ok) {
-            const errorText = await response.text();
-            console.error('Chat API error:', response.status, errorText);
-            throw new Error(`API error: ${response.status}`);
+            console.error('Chat API error:', response.status, data);
+            const msg = data?.error || `Request failed (${response.status}). Please try again in a moment. 🌿`;
+            removeEcobotTyping();
+            appendEcobotMsg('assistant', msg);
+        } else {
+            const reply = data?.reply || "Sorry, I couldn't get a response. Try again! 🌿";
+            ecobotHistory.push({ role: 'model', parts: [{ text: reply }] });
+            removeEcobotTyping();
+            appendEcobotMsg('assistant', reply);
         }
-        const data = await response.json();
-        const reply = data?.reply || "Sorry, I couldn't get a response. Try again! 🌿";
-        ecobotHistory.push({ role: 'model', parts: [{ text: reply }] });
-        removeEcobotTyping();
-        appendEcobotMsg('assistant', reply);
     } catch (err) {
         console.error('EcoBot error:', err);
         removeEcobotTyping();

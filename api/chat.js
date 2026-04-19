@@ -23,34 +23,49 @@ export default async function handler(req, res) {
         content: "You are EcoBot, a friendly AI assistant for EcoHub — Qatar's youth climate action platform by EcoAwareness QA. Help young Qataris learn about climate change, Qatar Vision 2030, sustainability, volunteer opportunities, and environmental impact. Keep responses concise, friendly and inspiring. Use occasional emojis."
     };
 
-    const payload = {
-        model: 'meta-llama/llama-3.3-70b-instruct:free',
-        messages: [systemPrompt, ...messages]
-    };
+    // Try each free model in order until one isn't rate-limited.
+    const models = [
+        'meta-llama/llama-3.2-3b-instruct:free',
+        'google/gemma-2-9b-it:free',
+        'mistralai/mistral-7b-instruct:free',
+        'meta-llama/llama-3.3-70b-instruct:free'
+    ];
 
-    try {
-        const upstream = await fetch('https://openrouter.ai/api/v1/chat/completions', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': `Bearer ${apiKey}`,
-                'HTTP-Referer': 'https://eco-awareness-website.vercel.app',
-                'X-Title': 'EcoHub'
-            },
-            body: JSON.stringify(payload)
-        });
+    let lastStatus = 0;
+    let lastBody = '';
+    for (const model of models) {
+        try {
+            const upstream = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${apiKey}`,
+                    'HTTP-Referer': 'https://eco-awareness-website.vercel.app',
+                    'X-Title': 'EcoHub'
+                },
+                body: JSON.stringify({ model, messages: [systemPrompt, ...messages] })
+            });
 
-        const text = await upstream.text();
-        if (!upstream.ok) {
-            console.error('OpenRouter error', upstream.status, text);
-            return res.status(502).json({ error: 'Upstream error', status: upstream.status });
+            const text = await upstream.text();
+            if (upstream.ok) {
+                const data = JSON.parse(text);
+                const reply = data?.choices?.[0]?.message?.content || '';
+                if (reply) return res.status(200).json({ reply, model });
+            }
+            lastStatus = upstream.status;
+            lastBody = text.slice(0, 300);
+            console.error(`OpenRouter ${model} -> ${upstream.status}: ${lastBody}`);
+            // Auth errors — no point trying other models.
+            if (upstream.status === 401 || upstream.status === 403) break;
+        } catch (err) {
+            console.error(`Fetch error for ${model}`, err);
+            lastStatus = 0;
+            lastBody = String(err);
         }
-
-        const data = JSON.parse(text);
-        const reply = data?.choices?.[0]?.message?.content || '';
-        return res.status(200).json({ reply });
-    } catch (err) {
-        console.error('EcoBot proxy error', err);
-        return res.status(500).json({ error: 'Proxy failed' });
     }
+    return res.status(502).json({
+        error: 'All free models are currently unavailable. Please try again in a minute.',
+        status: lastStatus,
+        detail: lastBody
+    });
 }
