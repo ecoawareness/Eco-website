@@ -34,7 +34,7 @@ export default async function handler(req, res) {
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': `Bearer ${apiKey}`,
-                'HTTP-Referer': 'https://eco-awareness-website-ennmgrn7z-mfhussni2008-gmailcoms-projects.vercel.app',
+                'HTTP-Referer': 'https://eco-awareness-website.vercel.app',
                 'X-Title': 'EcoHub'
             },
             body: JSON.stringify(payload)
