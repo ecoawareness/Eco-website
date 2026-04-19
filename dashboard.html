@@ -137,7 +137,7 @@
         .sb-backdrop { display: none; }
 
         /* SCROLL AREA */
-        .scroll-area { flex: 1; overflow-y: auto; overflow-x: hidden; }
+        .scroll-area { flex: 1; overflow-y: auto; overflow-x: hidden; scroll-behavior: smooth; }
         /* Smooth scroll on every inner scrollable container */
         .sb-nav, .ecobot-messages, .modal, .chart-bars, .pills {
             scroll-behavior: smooth;
@@ -2199,16 +2199,7 @@ function navigate(sec) {
     void next.offsetWidth;
     next.classList.add('active');
 
-    // Scroll to top and tell Lenis the content height changed
-    try {
-        if (window._lenis) {
-            window._lenis.scrollTo(0, { immediate: true });
-            // Allow the new section to paint before recalculating scroll limit
-            requestAnimationFrame(() => window._lenis.resize());
-        } else {
-            document.querySelector('.scroll-area')?.scrollTo({ top: 0, behavior: 'instant' });
-        }
-    } catch (e) { /* no-op */ }
+    document.querySelector('.scroll-area')?.scrollTo({ top: 0, behavior: 'instant' });
 
     // Update sidebar active state
     document.querySelectorAll('.sb-item').forEach(s => s.classList.remove('active'));
@@ -2941,29 +2932,16 @@ init();
 (function() {
     const scrollEl = document.querySelector('.scroll-area');
     const bar = document.getElementById('scroll-progress');
-    if (!scrollEl || typeof Lenis === 'undefined') return;
+    if (!scrollEl) return;
 
-    const lenis = new Lenis({
-        wrapper: scrollEl,
-        content: scrollEl,
-        lerp: 0.06,
-        smoothWheel: true,
-        syncTouch: true,
-        syncTouchLerp: 0.06,
-        wheelMultiplier: 0.8,
-        touchMultiplier: 1.2,
-    });
-
-    // Wire scroll progress bar directly to Lenis
-    if (bar) {
-        lenis.on('scroll', ({ scroll, limit }) => {
-            bar.style.width = (limit > 0 ? (scroll / limit) * 100 : 0) + '%';
-        });
+    function updateBar() {
+        if (!bar) return;
+        const limit = scrollEl.scrollHeight - scrollEl.clientHeight;
+        bar.style.width = (limit > 0 ? (scrollEl.scrollTop / limit) * 100 : 0) + '%';
     }
 
-    function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-    requestAnimationFrame(raf);
-    window._lenis = lenis;
+    scrollEl.addEventListener('scroll', updateBar, { passive: true });
+    window._lenis = null;
 })();
 </script>
 </body>
