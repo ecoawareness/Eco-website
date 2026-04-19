@@ -2199,12 +2199,14 @@ function navigate(sec) {
     void next.offsetWidth;
     next.classList.add('active');
 
-    // Smoothly scroll to top
+    // Scroll to top and tell Lenis the content height changed
     try {
         if (window._lenis) {
-            window._lenis.scrollTo(0, { duration: 0.6 });
+            window._lenis.scrollTo(0, { immediate: true });
+            // Allow the new section to paint before recalculating scroll limit
+            requestAnimationFrame(() => window._lenis.resize());
         } else {
-            document.querySelector('.scroll-area')?.scrollTo({ top: 0, behavior: 'smooth' });
+            document.querySelector('.scroll-area')?.scrollTo({ top: 0, behavior: 'instant' });
         }
     } catch (e) { /* no-op */ }
 
