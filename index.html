@@ -513,6 +513,17 @@
         }
         .reveal.visible { opacity: 1; transform: none; }
 
+        /* Directional reveals for Problem split */
+        .reveal-left {
+            opacity: 0; transform: translateX(-48px);
+            transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1);
+        }
+        .reveal-right {
+            opacity: 0; transform: translateX(48px);
+            transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1);
+        }
+        .reveal-left.visible, .reveal-right.visible { opacity: 1; transform: none; }
+
         /* Page transition */
         #page-transition {
             position: fixed; inset: 0; z-index: 9999;
@@ -593,11 +604,11 @@
         <div class="problem-split">
             <!-- LEFT: text + cards -->
             <div>
-                <div class="section-label reveal" data-en="The Problem" data-ar="المشكلة">The Problem</div>
-                <h2 class="problem-title reveal" style="transition-delay:0.1s">
+                <div class="section-label reveal-left" data-en="The Problem" data-ar="المشكلة">The Problem</div>
+                <h2 class="problem-title reveal-left" style="transition-delay:0.12s">
                     <span data-en="Qatar's environmental scene is<br><em>fragmented.</em>" data-ar="المشهد البيئي في قطر<br><em>مُجزَّأ.</em>">Qatar's environmental scene is<br><em>fragmented.</em></span>
                 </h2>
-                <div class="problem-grid reveal" style="transition-delay:0.2s">
+                <div class="problem-grid reveal-left" style="transition-delay:0.26s">
                     <div class="problem-card">
                         <div class="problem-icon">🔍</div>
                         <h3 data-en="Youth can't find where to act" data-ar="الشباب لا يجد مكانًا للعمل">Youth can't find where to act</h3>
@@ -619,7 +630,7 @@
                 </div>
             </div>
             <!-- RIGHT: photo -->
-            <div class="problem-photo reveal" style="transition-delay:0.25s">
+            <div class="problem-photo reveal-right" style="transition-delay:0.18s">
                 <img src="assets/DSC_3472.jpg" alt="Qatar youth presenting at climate event" loading="lazy">
             </div>
         </div>
@@ -791,7 +802,7 @@ const revealObserver = new IntersectionObserver(entries => {
         }
     });
 }, { threshold: 0.1 });
-document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
 
 // Hero reveals on page load
 document.querySelectorAll('.hero-content .reveal').forEach((el, i) => {
