@@ -213,6 +213,31 @@
             padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem);
             max-width: 1200px; margin: 0 auto;
         }
+        .problem-split {
+            display: grid;
+            grid-template-columns: 1fr 420px;
+            gap: 4rem;
+            align-items: center;
+        }
+        .problem-photo {
+            position: relative; border-radius: 20px; overflow: hidden;
+            height: 560px; flex-shrink: 0;
+        }
+        .problem-photo img {
+            width: 100%; height: 100%;
+            object-fit: cover; object-position: center top;
+            display: block;
+        }
+        .problem-photo::after {
+            content: '';
+            position: absolute; inset: 0;
+            background: linear-gradient(160deg, rgba(0,0,0,0) 40%, rgba(10,10,10,0.35) 100%);
+            border-radius: 20px;
+        }
+        @media (max-width: 900px) {
+            .problem-split { grid-template-columns: 1fr; }
+            .problem-photo { height: 300px; }
+        }
 
         .section-label {
             display: inline-flex; align-items: center; gap: 0.6rem;
@@ -228,7 +253,7 @@
         .problem-title {
             font-family: 'Instrument Serif', serif;
             font-size: clamp(2.5rem,5vw,4.5rem); line-height: 1.1;
-            max-width: 700px; margin-bottom: 4rem;
+            margin-bottom: 3rem;
         }
         body.ar .problem-title { font-family: 'Noto Naskh Arabic', serif; line-height: 1.35; }
         .problem-title em { font-style: italic; color: var(--rust); }
@@ -565,28 +590,37 @@
 <!-- PROBLEM -->
 <section id="problem" class="problem-outer">
     <div class="problem-section">
-        <div class="section-label reveal" data-en="The Problem" data-ar="المشكلة">The Problem</div>
-        <h2 class="problem-title reveal" style="transition-delay:0.1s">
-            <span data-en="Qatar's environmental scene is<br><em>fragmented.</em>" data-ar="المشهد البيئي في قطر<br><em>مُجزَّأ.</em>">Qatar's environmental scene is<br><em>fragmented.</em></span>
-        </h2>
-        <div class="problem-grid reveal" style="transition-delay:0.2s">
-            <div class="problem-card">
-                <div class="problem-icon">🔍</div>
-                <h3 data-en="Youth can't find where to act" data-ar="الشباب لا يجد مكانًا للعمل">Youth can't find where to act</h3>
-                <p data-en="Passionate students have no single place to discover volunteer drives, workshops, or environmental campaigns happening across Qatar."
-                   data-ar="لا يجد الطلاب المتحمسون مكانًا واحدًا لاكتشاف أعمال التطوع أو ورش العمل أو الحملات البيئية في قطر.">Passionate students have no single place to discover volunteer drives, workshops, or environmental campaigns happening across Qatar.</p>
+        <div class="problem-split">
+            <!-- LEFT: text + cards -->
+            <div>
+                <div class="section-label reveal" data-en="The Problem" data-ar="المشكلة">The Problem</div>
+                <h2 class="problem-title reveal" style="transition-delay:0.1s">
+                    <span data-en="Qatar's environmental scene is<br><em>fragmented.</em>" data-ar="المشهد البيئي في قطر<br><em>مُجزَّأ.</em>">Qatar's environmental scene is<br><em>fragmented.</em></span>
+                </h2>
+                <div class="problem-grid reveal" style="transition-delay:0.2s">
+                    <div class="problem-card">
+                        <div class="problem-icon">🔍</div>
+                        <h3 data-en="Youth can't find where to act" data-ar="الشباب لا يجد مكانًا للعمل">Youth can't find where to act</h3>
+                        <p data-en="Passionate students have no single place to discover volunteer drives, workshops, or environmental campaigns happening across Qatar."
+                           data-ar="لا يجد الطلاب المتحمسون مكانًا واحدًا لاكتشاف أعمال التطوع أو ورش العمل أو الحملات البيئية في قطر.">Passionate students have no single place to discover volunteer drives, workshops, or environmental campaigns happening across Qatar.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-icon">🏢</div>
+                        <h3 data-en="Organizations work in silos" data-ar="المنظمات تعمل بمعزل عن بعضها">Organizations work in silos</h3>
+                        <p data-en="NGOs, eco-businesses, and government bodies all work separately — no shared directory, no collaboration, no unified voice."
+                           data-ar="تعمل المنظمات غير الحكومية والشركات البيئية والجهات الحكومية بشكل منفصل، دون دليل مشترك أو تعاون أو صوت موحد.">NGOs, eco-businesses, and government bodies all work separately — no shared directory, no collaboration, no unified voice.</p>
+                    </div>
+                    <div class="problem-card">
+                        <div class="problem-icon">📊</div>
+                        <h3 data-en="Impact goes unmeasured" data-ar="الأثر يبقى غير مقاس">Impact goes unmeasured</h3>
+                        <p data-en="Hundreds of hours of climate action happen with no way to track, celebrate, or prove the scale of Qatar's youth movement."
+                           data-ar="تُنجز مئات الساعات من العمل المناخي دون أي طريقة لتتبع أثر حركة الشباب في قطر أو إثبات حجمها.">Hundreds of hours of climate action happen with no way to track, celebrate, or prove the scale of Qatar's youth movement.</p>
+                    </div>
+                </div>
             </div>
-            <div class="problem-card">
-                <div class="problem-icon">🏢</div>
-                <h3 data-en="Organizations work in silos" data-ar="المنظمات تعمل بمعزل عن بعضها">Organizations work in silos</h3>
-                <p data-en="NGOs, eco-businesses, and government bodies all work separately — no shared directory, no collaboration, no unified voice."
-                   data-ar="تعمل المنظمات غير الحكومية والشركات البيئية والجهات الحكومية بشكل منفصل، دون دليل مشترك أو تعاون أو صوت موحد.">NGOs, eco-businesses, and government bodies all work separately — no shared directory, no collaboration, no unified voice.</p>
-            </div>
-            <div class="problem-card">
-                <div class="problem-icon">📊</div>
-                <h3 data-en="Impact goes unmeasured" data-ar="الأثر يبقى غير مقاس">Impact goes unmeasured</h3>
-                <p data-en="Hundreds of hours of climate action happen with no way to track, celebrate, or prove the scale of Qatar's youth movement."
-                   data-ar="تُنجز مئات الساعات من العمل المناخي دون أي طريقة لتتبع أثر حركة الشباب في قطر أو إثبات حجمها.">Hundreds of hours of climate action happen with no way to track, celebrate, or prove the scale of Qatar's youth movement.</p>
+            <!-- RIGHT: photo -->
+            <div class="problem-photo reveal" style="transition-delay:0.25s">
+                <img src="assets/DSC_3472.jpg" alt="Qatar youth presenting at climate event" loading="lazy">
             </div>
         </div>
     </div>
