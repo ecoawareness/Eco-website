@@ -391,24 +391,48 @@
             border-radius: 50%; display: flex; align-items: center; justify-content: center;
             margin-bottom: 1.25rem; color: var(--lime); font-size: 1.4rem;
         }
+        @keyframes gateFadeUp {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        @keyframes bounceArrow {
+            0%, 100% { transform: translateY(0); }
+            50%       { transform: translateY(8px); }
+        }
         .gate-title {
             font-family: 'Instrument Serif', serif;
             font-size: 1.8rem; margin-bottom: 0.6rem;
+            animation: gateFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
+            animation-delay: 0.2s;
         }
         body.ar .gate-title { font-family: 'Noto Naskh Arabic', serif; font-size: 1.6rem; }
+        .gate-title .gate-num {
+            font-size: 2.5rem; font-weight: 800;
+            color: var(--green); display: inline-block;
+            line-height: 1;
+        }
         .gate-sub {
             font-size: 0.875rem; color: rgba(0,0,0,0.5);
             font-weight: 300; margin-bottom: 1.75rem;
             max-width: 320px; line-height: 1.65;
+            animation: gateFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
+            animation-delay: 0.35s;
         }
         .gate-btn {
             background: var(--green); color: #fff;
             padding: 0.85rem 2.2rem; border-radius: 100px;
             font-weight: 500; font-size: 0.95rem; text-decoration: none;
             transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem;
+            animation: gateFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
+            animation-delay: 0.5s;
         }
         .gate-btn:hover { background: var(--green-light); transform: translateY(-1px); }
-        .gate-signin { margin-top: 1rem; font-size: 0.8rem; color: rgba(0,0,0,0.4); }
+        .gate-bounce-arrow {
+            margin-top: 0.9rem; font-size: 1.5rem; color: var(--green);
+            animation: bounceArrow 1.2s ease-in-out infinite;
+            line-height: 1; user-select: none;
+        }
+        .gate-signin { margin-top: 0.6rem; font-size: 0.8rem; color: rgba(0,0,0,0.4); }
         .gate-signin a { color: var(--green); font-weight: 500; text-decoration: none; }
 
         /* ── CTA ── */
@@ -653,13 +677,14 @@
             <!-- Gate overlay -->
             <div class="opp-gate">
                 <div class="gate-icon"><iconify-icon icon="solar:lock-keyhole-linear"></iconify-icon></div>
-                <h3 class="gate-title" data-en="24 opportunities waiting" data-ar="٢٤ فرصة تنتظرك">24 opportunities waiting</h3>
+                <h3 class="gate-title"><span class="gate-num" data-en="24" data-ar="٢٤">24</span> <span data-en="opportunities waiting" data-ar="فرصة تنتظرك">opportunities waiting</span></h3>
                 <p class="gate-sub" data-en="Create a free account to unlock all opportunities and start tracking your impact."
                    data-ar="أنشئ حسابًا مجانيًا للوصول إلى جميع الفرص وتتبع أثرك.">Create a free account to unlock all opportunities and start tracking your impact.</p>
                 <a href="signup.html" class="gate-btn">
                     <span data-en="Join Free — 30 seconds" data-ar="انضم مجانًا — ٣٠ ثانية فقط">Join Free — 30 seconds</span>
                     <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
                 </a>
+                <div class="gate-bounce-arrow">↓</div>
                 <p class="gate-signin">
                     <span data-en="Already a member? " data-ar="لديك حساب؟ ">Already a member? </span><a href="signin.html" data-en="Sign in →" data-ar="سجّل الدخول →">Sign in →</a>
                 </p>
