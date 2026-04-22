@@ -506,23 +506,16 @@
             border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem; margin-top: 1rem;
         }
 
-        /* ── SCROLL REVEAL ── */
-        .reveal {
-            opacity: 0; transform: translateY(28px);
-            transition: opacity 0.75s cubic-bezier(0.25,1,0.5,1), transform 0.75s cubic-bezier(0.25,1,0.5,1);
-        }
-        .reveal.visible { opacity: 1; transform: none; }
-
-        /* Directional reveals for Problem split */
-        .reveal-left {
-            opacity: 0; transform: translateX(-48px);
-            transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1);
-        }
+        /* ── SCROLL REVEAL (unified fade-up) ── */
+        .reveal,
+        .reveal-left,
         .reveal-right {
-            opacity: 0; transform: translateX(48px);
-            transition: opacity 0.85s cubic-bezier(0.22,1,0.36,1), transform 0.85s cubic-bezier(0.22,1,0.36,1);
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 0.6s cubic-bezier(0.25,1,0.5,1), transform 0.6s cubic-bezier(0.25,1,0.5,1);
         }
-        .reveal-left.visible, .reveal-right.visible { opacity: 1; transform: none; }
+        .reveal.visible,
+        .reveal-left.visible,
+        .reveal-right.visible { opacity: 1; transform: none; }
 
         /* Page transition */
         #page-transition {
@@ -552,7 +545,7 @@
 <nav id="navbar">
     <a href="index.html" class="nav-logo">
         <span class="nav-logo-dot"></span>
-        <span data-en="EcoHub" data-ar="EcoHub">EcoHub</span>
+        <span data-en="EcoAwareness" data-ar="EcoAwareness" style="font-family: Georgia, serif; font-style: italic; font-weight: 600;">EcoAwareness</span>
     </a>
     <div class="nav-links" id="nav-links">
         <a href="dashboard.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
@@ -568,10 +561,6 @@
     <div class="hero-bg"></div>
     <div class="hero-watermark">بيئة</div>
     <div class="hero-content">
-        <div class="hero-eyebrow reveal">
-            <span style="width:6px;height:6px;background:var(--lime);border-radius:50%;display:inline-block;flex-shrink:0"></span>
-            <span data-en="Qatar's Climate Action Network" data-ar="شبكة العمل المناخي في قطر">Qatar's Climate Action Network</span>
-        </div>
         <h1 class="hero-title reveal" style="transition-delay:0.1s">
             <span data-en="Where Qatar's<br><em>climate generation</em><br>takes action." data-ar="حيث يتحرك<br><em>جيل المناخ في قطر</em><br>نحو الفعل.">Where Qatar's<br><em>climate generation</em><br>takes action.</span>
         </h1>
