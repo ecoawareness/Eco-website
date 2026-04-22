@@ -595,6 +595,76 @@
         .goal-bar-fill { height: 100%; background: var(--green); border-radius: 99px; }
         .goal-bar-label { font-size: 0.7rem; color: rgba(0,0,0,0.42); white-space: nowrap; }
 
+        /* ── OASIS JOURNEY (gamified My Impact) ── */
+        .oasis-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 16px;
+            padding: 1.5rem; margin-bottom: 1.5rem; overflow: hidden;
+        }
+        .oasis-head { display: flex; align-items: flex-start; justify-content: space-between; gap: 1rem; margin-bottom: 1.1rem; flex-wrap: wrap; }
+        .oasis-head h3 { font-family: 'Instrument Serif', serif; font-size: 1.25rem; line-height: 1.2; margin-bottom: 0.25rem; }
+        body.ar .oasis-head h3 { font-family: 'Noto Naskh Arabic', serif; }
+        .oasis-head .oasis-sub { font-size: 0.8rem; color: rgba(0,0,0,0.5); }
+        .oasis-stage-pill {
+            background: rgba(26,92,56,0.08); color: var(--green); font-size: 0.72rem; font-weight: 600;
+            letter-spacing: 0.06em; text-transform: uppercase; padding: 0.35rem 0.75rem; border-radius: 100px;
+            display: inline-flex; align-items: center; gap: 0.35rem; white-space: nowrap;
+        }
+        .oasis-scene-wrap {
+            position: relative; border-radius: 14px; overflow: hidden;
+            background: linear-gradient(to bottom, #f0d5a3 0%, #e8c98a 40%, #d9b373 75%, #c49e5f 100%);
+            aspect-ratio: 5 / 2; min-height: 220px;
+        }
+        .oasis-scene { width: 100%; height: 100%; display: block; }
+        .oasis-el {
+            opacity: 0; transform: translateY(8px) scale(0.92); transform-origin: center bottom;
+            transition: opacity 0.7s cubic-bezier(0.25,1,0.5,1), transform 0.7s cubic-bezier(0.25,1,0.5,1);
+        }
+        .oasis-el.unlocked { opacity: 1; transform: none; }
+        .oasis-el.bird { transform-origin: center center; }
+        .oasis-el.bird.unlocked { animation: oasisBirdFloat 6s ease-in-out infinite; }
+        @keyframes oasisBirdFloat {
+            0%, 100% { transform: translate(0,0); }
+            50% { transform: translate(6px,-4px); }
+        }
+        .oasis-milestones {
+            display: grid; grid-template-columns: repeat(5, 1fr); gap: 0.5rem;
+            margin-top: 1.1rem;
+        }
+        .oasis-ms {
+            background: var(--paper); border: 1px solid rgba(0,0,0,0.07); border-radius: 12px;
+            padding: 0.85rem 0.65rem; text-align: center; position: relative;
+            transition: all 0.3s; cursor: default;
+        }
+        .oasis-ms.done { background: rgba(26,92,56,0.06); border-color: rgba(26,92,56,0.18); }
+        .oasis-ms.current { background: var(--green); border-color: var(--green); box-shadow: 0 6px 18px rgba(26,92,56,0.22); }
+        .oasis-ms.current .oasis-ms-icon,
+        .oasis-ms.current .oasis-ms-hrs,
+        .oasis-ms.current .oasis-ms-label { color: #fff; }
+        .oasis-ms-icon { font-size: 1.5rem; line-height: 1; margin-bottom: 0.35rem; filter: grayscale(0.6); opacity: 0.55; }
+        .oasis-ms.done .oasis-ms-icon, .oasis-ms.current .oasis-ms-icon { filter: none; opacity: 1; }
+        .oasis-ms-hrs { font-family: 'Instrument Serif', serif; font-size: 1rem; line-height: 1; color: rgba(0,0,0,0.7); }
+        .oasis-ms-label { font-size: 0.65rem; color: rgba(0,0,0,0.5); margin-top: 0.2rem; line-height: 1.3; }
+        .oasis-ms-check {
+            position: absolute; top: -6px; right: -6px; width: 18px; height: 18px;
+            background: var(--green); color: #fff; border-radius: 50%; font-size: 0.55rem;
+            display: none; align-items: center; justify-content: center; border: 2px solid #fff;
+        }
+        .oasis-ms.done .oasis-ms-check { display: flex; }
+        body.ar .oasis-ms-check { right: auto; left: -6px; }
+        .oasis-next {
+            margin-top: 0.9rem; padding: 0.75rem 1rem; background: var(--paper);
+            border-radius: 10px; font-size: 0.8rem; color: rgba(0,0,0,0.65);
+            display: flex; align-items: center; gap: 0.6rem;
+        }
+        .oasis-next strong { color: var(--green); font-weight: 600; }
+        @media (max-width: 768px) {
+            .oasis-milestones { grid-template-columns: repeat(5, 1fr); gap: 0.35rem; }
+            .oasis-ms { padding: 0.6rem 0.3rem; }
+            .oasis-ms-icon { font-size: 1.2rem; }
+            .oasis-ms-hrs { font-size: 0.85rem; }
+            .oasis-ms-label { font-size: 0.58rem; }
+        }
+
         .timeline-card { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px; padding: 1.25rem; }
         .timeline-card h3 { font-family: 'Instrument Serif', serif; font-size: 1.1rem; margin-bottom: 1rem; }
         body.ar .timeline-card h3 { font-family: 'Noto Naskh Arabic', serif; }
@@ -1648,6 +1718,140 @@
                     </div>
                 </div>
 
+                <!-- ═══ OASIS JOURNEY (gamified) ═══ -->
+                <div class="oasis-card" id="oasis-card" data-hours="47" data-goal="100">
+                    <div class="oasis-head">
+                        <div>
+                            <h3 data-en="Your Qatari Oasis 🌿" data-ar="واحتك القطرية 🌿">Your Qatari Oasis 🌿</h3>
+                            <div class="oasis-sub" data-en="Every volunteer hour turns the desert greener — watch your impact grow." data-ar="كل ساعة تطوع تجعل الصحراء أكثر خضرة — شاهد أثرك ينمو.">Every volunteer hour turns the desert greener — watch your impact grow.</div>
+                        </div>
+                        <span class="oasis-stage-pill">
+                            🌳 <span id="oasis-stage-label" data-en="Stage 2 · Tree Grows" data-ar="المرحلة ٢ · نمو الشجرة">Stage 2 · Tree Grows</span>
+                        </span>
+                    </div>
+
+                    <div class="oasis-scene-wrap">
+                        <svg class="oasis-scene" viewBox="0 0 500 200" preserveAspectRatio="xMidYMid slice" xmlns="http://www.w3.org/2000/svg">
+                            <!-- Sky gradient (always visible) -->
+                            <defs>
+                                <linearGradient id="oasisSky" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#ffe1b0"/>
+                                    <stop offset="60%" stop-color="#f5c88a"/>
+                                    <stop offset="100%" stop-color="#e8b370"/>
+                                </linearGradient>
+                                <linearGradient id="oasisWater" x1="0" y1="0" x2="0" y2="1">
+                                    <stop offset="0%" stop-color="#5cc4d6"/>
+                                    <stop offset="100%" stop-color="#2a8fa3"/>
+                                </linearGradient>
+                                <radialGradient id="oasisSun" cx="0.5" cy="0.5" r="0.5">
+                                    <stop offset="0%" stop-color="#fff4c7"/>
+                                    <stop offset="60%" stop-color="#ffd772"/>
+                                    <stop offset="100%" stop-color="#ffd772" stop-opacity="0"/>
+                                </radialGradient>
+                            </defs>
+
+                            <rect x="0" y="0" width="500" height="200" fill="url(#oasisSky)"/>
+
+                            <!-- Sun -->
+                            <circle cx="410" cy="52" r="38" fill="url(#oasisSun)"/>
+                            <circle cx="410" cy="52" r="18" fill="#fff4c7" opacity="0.9"/>
+
+                            <!-- Distant dunes -->
+                            <path d="M 0 135 Q 80 115 160 130 T 320 125 T 500 135 L 500 200 L 0 200 Z" fill="#dba967" opacity="0.7"/>
+                            <!-- Mid dunes -->
+                            <path d="M 0 155 Q 100 140 200 155 T 400 152 T 500 155 L 500 200 L 0 200 Z" fill="#c49454"/>
+                            <!-- Foreground sand -->
+                            <path d="M 0 175 Q 120 165 250 175 T 500 175 L 500 200 L 0 200 Z" fill="#a87d42"/>
+
+                            <!-- STAGE 1 (10hrs): First seed / sprout -->
+                            <g class="oasis-el seed" data-min="10">
+                                <line x1="165" y1="172" x2="165" y2="162" stroke="#3a7a2e" stroke-width="1.5" stroke-linecap="round"/>
+                                <ellipse cx="162" cy="160" rx="3.5" ry="2" fill="#4d9638" transform="rotate(-25 162 160)"/>
+                                <ellipse cx="168" cy="160" rx="3.5" ry="2" fill="#4d9638" transform="rotate(25 168 160)"/>
+                            </g>
+
+                            <!-- STAGE 2 (25hrs): Ghaf tree grows -->
+                            <g class="oasis-el tree1" data-min="25">
+                                <rect x="162" y="140" width="4" height="32" fill="#5a3e1f" rx="1"/>
+                                <path d="M 164 142 L 158 132 M 164 145 L 170 135" stroke="#5a3e1f" stroke-width="1.4" stroke-linecap="round"/>
+                                <ellipse cx="164" cy="130" rx="22" ry="14" fill="#3d7a2e"/>
+                                <ellipse cx="152" cy="132" rx="12" ry="9" fill="#4d9638"/>
+                                <ellipse cx="176" cy="133" rx="12" ry="9" fill="#4d9638"/>
+                                <ellipse cx="164" cy="123" rx="14" ry="10" fill="#5fb13e"/>
+                            </g>
+
+                            <!-- STAGE 3 (50hrs): Second tree + first bird -->
+                            <g class="oasis-el tree2" data-min="50">
+                                <rect x="308" y="148" width="3.5" height="24" fill="#5a3e1f" rx="1"/>
+                                <ellipse cx="310" cy="140" rx="16" ry="10" fill="#3d7a2e"/>
+                                <ellipse cx="302" cy="141" rx="9" ry="7" fill="#4d9638"/>
+                                <ellipse cx="318" cy="142" rx="9" ry="7" fill="#4d9638"/>
+                                <ellipse cx="310" cy="135" rx="10" ry="8" fill="#5fb13e"/>
+                            </g>
+                            <g class="oasis-el bird bird1" data-min="50" transform="translate(250,60)">
+                                <path d="M 0 0 Q -5 -4 -10 0 M 0 0 Q 5 -4 10 0" stroke="#2a2a2a" stroke-width="1.8" fill="none" stroke-linecap="round"/>
+                            </g>
+
+                            <!-- STAGE 4 (75hrs): Water pool forming + 3rd tree -->
+                            <g class="oasis-el water" data-min="75">
+                                <ellipse cx="230" cy="180" rx="58" ry="7" fill="url(#oasisWater)"/>
+                                <ellipse cx="220" cy="178" rx="14" ry="1.5" fill="#fff" opacity="0.55"/>
+                                <ellipse cx="248" cy="181" rx="8" ry="1" fill="#fff" opacity="0.4"/>
+                            </g>
+                            <g class="oasis-el tree3" data-min="75">
+                                <rect x="105" y="150" width="3" height="22" fill="#5a3e1f" rx="1"/>
+                                <ellipse cx="106.5" cy="142" rx="13" ry="9" fill="#3d7a2e"/>
+                                <ellipse cx="100" cy="143" rx="7" ry="6" fill="#4d9638"/>
+                                <ellipse cx="113" cy="144" rx="7" ry="6" fill="#4d9638"/>
+                                <ellipse cx="106.5" cy="138" rx="8" ry="6" fill="#5fb13e"/>
+                            </g>
+                            <g class="oasis-el bird bird2" data-min="75" transform="translate(350,50)">
+                                <path d="M 0 0 Q -4 -3 -8 0 M 0 0 Q 4 -3 8 0" stroke="#2a2a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                            </g>
+
+                            <!-- STAGE 5 (100hrs): Full mangrove oasis — lush ground, multiple mangroves, many birds -->
+                            <g class="oasis-el mangroves" data-min="100">
+                                <!-- Lush green ground patch -->
+                                <path d="M 80 175 Q 200 168 320 175 T 440 175 L 440 195 L 80 195 Z" fill="#5a9c3e" opacity="0.55"/>
+                                <!-- Mangrove cluster left -->
+                                <rect x="55" y="152" width="2.5" height="20" fill="#4a2f18" rx="1"/>
+                                <ellipse cx="56" cy="145" rx="10" ry="8" fill="#2d6b1f"/>
+                                <ellipse cx="51" cy="147" rx="6" ry="5" fill="#3f8e2c"/>
+                                <!-- Mangrove cluster right -->
+                                <rect x="390" y="150" width="2.5" height="22" fill="#4a2f18" rx="1"/>
+                                <ellipse cx="391" cy="143" rx="11" ry="9" fill="#2d6b1f"/>
+                                <ellipse cx="397" cy="145" rx="6" ry="5" fill="#3f8e2c"/>
+                                <rect x="425" y="155" width="2" height="18" fill="#4a2f18" rx="1"/>
+                                <ellipse cx="426" cy="149" rx="8" ry="6" fill="#3f8e2c"/>
+                                <!-- Flowers / reed accents -->
+                                <circle cx="150" cy="178" r="1.8" fill="#ff8fa3"/>
+                                <circle cx="290" cy="180" r="1.8" fill="#ffd156"/>
+                                <circle cx="360" cy="178" r="1.8" fill="#ff8fa3"/>
+                            </g>
+                            <g class="oasis-el bird bird3" data-min="100" transform="translate(150,40)">
+                                <path d="M 0 0 Q -4 -3 -8 0 M 0 0 Q 4 -3 8 0" stroke="#2a2a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                            </g>
+                            <g class="oasis-el bird bird4" data-min="100" transform="translate(430,72)">
+                                <path d="M 0 0 Q -4 -3 -8 0 M 0 0 Q 4 -3 8 0" stroke="#2a2a2a" stroke-width="1.5" fill="none" stroke-linecap="round"/>
+                            </g>
+                        </svg>
+                    </div>
+
+                    <!-- Milestone trail -->
+                    <div class="oasis-milestones" id="oasis-milestones">
+                        <div class="oasis-ms" data-hrs="10"><div class="oasis-ms-check">✓</div><div class="oasis-ms-icon">🌱</div><div class="oasis-ms-hrs">10h</div><div class="oasis-ms-label" data-en="First seed" data-ar="أول بذرة">First seed</div></div>
+                        <div class="oasis-ms" data-hrs="25"><div class="oasis-ms-check">✓</div><div class="oasis-ms-icon">🌳</div><div class="oasis-ms-hrs">25h</div><div class="oasis-ms-label" data-en="Tree grows" data-ar="نمو الشجرة">Tree grows</div></div>
+                        <div class="oasis-ms" data-hrs="50"><div class="oasis-ms-check">✓</div><div class="oasis-ms-icon">🦅</div><div class="oasis-ms-hrs">50h</div><div class="oasis-ms-label" data-en="Bird arrives" data-ar="وصول الطائر">Bird arrives</div></div>
+                        <div class="oasis-ms" data-hrs="75"><div class="oasis-ms-check">✓</div><div class="oasis-ms-icon">💧</div><div class="oasis-ms-hrs">75h</div><div class="oasis-ms-label" data-en="Oasis forms" data-ar="تكوّن الواحة">Oasis forms</div></div>
+                        <div class="oasis-ms" data-hrs="100"><div class="oasis-ms-check">✓</div><div class="oasis-ms-icon">🏆</div><div class="oasis-ms-hrs">100h</div><div class="oasis-ms-label" data-en="Certificate" data-ar="الشهادة">Certificate</div></div>
+                    </div>
+
+                    <div class="oasis-next" id="oasis-next">
+                        <span style="font-size:1.1rem">🎯</span>
+                        <span><span data-en="Only " data-ar="فقط ">Only </span><strong><span id="oasis-next-hrs">3</span><span data-en=" more hours" data-ar=" ساعات أخرى"> more hours</span></strong><span data-en=" until your next milestone — " data-ar=" حتى إنجازك التالي — ">&nbsp;until your next milestone — </span><strong><span id="oasis-next-label" data-en="Bird arrives 🦅" data-ar="وصول الطائر 🦅">Bird arrives 🦅</span></strong></span>
+                    </div>
+                </div>
+
                 <div class="timeline-card">
                     <h3 data-en="Activity Timeline" data-ar="الجدول الزمني للنشاط">Activity Timeline</h3>
                     <div class="timeline">
@@ -2265,6 +2469,9 @@ async function init() {
     // Animate home stat numbers on first load
     requestAnimationFrame(() => animateStatNumbers());
 
+    // Prime Oasis milestone/label state (without animating scene — that fires on navigation)
+    renderOasis({ silent: true });
+
 }
 
 // LOGOUT
@@ -2350,6 +2557,7 @@ function navigate(sec) {
     }
 
     if (sec === 'home') animateStatNumbers();
+    if (sec === 'impact') renderOasis();
 
     // Eco ID — show Qatar-only notice + ensure QR is rendered
     if (sec === 'ecoid') {
@@ -2398,6 +2606,89 @@ function animateStatNumbers() {
         }
         requestAnimationFrame(tick);
     });
+}
+
+// ── OASIS JOURNEY (gamified My Impact) ──
+const OASIS_MILESTONES = [
+    { hrs: 10,  key: 'seed',      labelEn: 'First seed 🌱',     labelAr: 'أول بذرة 🌱' },
+    { hrs: 25,  key: 'tree',      labelEn: 'Tree grows 🌳',     labelAr: 'نمو الشجرة 🌳' },
+    { hrs: 50,  key: 'bird',      labelEn: 'Bird arrives 🦅',   labelAr: 'وصول الطائر 🦅' },
+    { hrs: 75,  key: 'oasis',     labelEn: 'Oasis forms 💧',    labelAr: 'تكوّن الواحة 💧' },
+    { hrs: 100, key: 'certificate', labelEn: 'Certificate 🏆',  labelAr: 'الشهادة 🏆' }
+];
+const OASIS_STAGE_LABELS_EN = ['Stage 0 · Bare desert','Stage 1 · First sprout','Stage 2 · Tree grows','Stage 3 · Bird arrives','Stage 4 · Oasis forming','Stage 5 · Mangrove oasis 🏆'];
+const OASIS_STAGE_LABELS_AR = ['المرحلة ٠ · صحراء قاحلة','المرحلة ١ · أول برعم','المرحلة ٢ · نمو الشجرة','المرحلة ٣ · وصول الطائر','المرحلة ٤ · تكوّن الواحة','المرحلة ٥ · واحة المانغروف 🏆'];
+
+let _oasisAnimated = false;
+function renderOasis(opts = {}) {
+    const card = document.getElementById('oasis-card');
+    if (!card) return;
+    const hours = parseFloat(card.dataset.hours || '0');
+    const silent = !!opts.silent;  // silent = only update labels/milestones, don't touch scene animation
+
+    // Determine which milestones are unlocked
+    let stageIdx = 0;
+    OASIS_MILESTONES.forEach((m, i) => { if (hours >= m.hrs) stageIdx = i + 1; });
+
+    // Unlock scene elements — stagger on first real visit, instant on re-visits
+    if (!silent) {
+        const els = card.querySelectorAll('.oasis-el');
+        els.forEach((el, i) => {
+            const min = parseFloat(el.dataset.min || '0');
+            const shouldUnlock = hours >= min;
+            if (shouldUnlock) {
+                if (_oasisAnimated) {
+                    el.classList.add('unlocked');
+                } else {
+                    setTimeout(() => el.classList.add('unlocked'), 200 + i * 90);
+                }
+            }
+        });
+        _oasisAnimated = true;
+    }
+
+    // Milestone trail state
+    card.querySelectorAll('.oasis-ms').forEach(ms => {
+        const h = parseFloat(ms.dataset.hrs || '0');
+        ms.classList.remove('done','current');
+        if (hours >= h) {
+            ms.classList.add('done');
+        } else if (!card.querySelector('.oasis-ms.current')) {
+            // The first not-yet-reached milestone is "current"
+            ms.classList.add('current');
+        }
+    });
+
+    // Stage pill
+    const stagePill = document.getElementById('oasis-stage-label');
+    if (stagePill) {
+        const en = OASIS_STAGE_LABELS_EN[stageIdx] || OASIS_STAGE_LABELS_EN[5];
+        const ar = OASIS_STAGE_LABELS_AR[stageIdx] || OASIS_STAGE_LABELS_AR[5];
+        stagePill.setAttribute('data-en', en);
+        stagePill.setAttribute('data-ar', ar);
+        stagePill.textContent = (typeof isArabic !== 'undefined' && isArabic) ? ar : en;
+    }
+
+    // Next milestone message
+    const next = OASIS_MILESTONES.find(m => hours < m.hrs);
+    const nextWrap = document.getElementById('oasis-next');
+    if (next && nextWrap) {
+        const hrsLeft = Math.max(1, Math.ceil(next.hrs - hours));
+        const hrsEl = document.getElementById('oasis-next-hrs');
+        const labelEl = document.getElementById('oasis-next-label');
+        if (hrsEl) hrsEl.textContent = hrsLeft;
+        if (labelEl) {
+            labelEl.setAttribute('data-en', next.labelEn);
+            labelEl.setAttribute('data-ar', next.labelAr);
+            labelEl.textContent = (typeof isArabic !== 'undefined' && isArabic) ? next.labelAr : next.labelEn;
+        }
+        nextWrap.style.display = '';
+    } else if (nextWrap) {
+        // All milestones complete — celebration message
+        nextWrap.innerHTML = (typeof isArabic !== 'undefined' && isArabic)
+            ? '<span style="font-size:1.1rem">🏆</span><span>لقد استعدت <strong>واحتك القطرية</strong>! شهادتك جاهزة 🌿</span>'
+            : '<span style="font-size:1.1rem">🏆</span><span>You\'ve restored your <strong>Qatari oasis</strong>! Your certificate is ready 🌿</span>';
+    }
 }
 
 // MOBILE SIDEBAR TOGGLE
