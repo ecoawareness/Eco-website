@@ -1172,6 +1172,11 @@
             <span style="font-family:'Instrument Serif',serif;font-style:italic;font-size:1.3rem;color:#fff;letter-spacing:-0.02em">EcoAwareness</span>
         </div>
         <nav class="sb-nav" data-lenis-prevent>
+            <div class="sb-label" data-en="Explore" data-ar="استكشف">Explore</div>
+            <button class="sb-item" data-sec="opportunities" onclick="navigate('opportunities')"><iconify-icon icon="solar:compass-linear"></iconify-icon><span data-en="Opportunities" data-ar="الفرص">Opportunities</span><span class="sb-badge">24</span></button>
+            <button class="sb-item" data-sec="network" onclick="navigate('network')"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon><span data-en="Network" data-ar="الشبكة">Network</span></button>
+            <button class="sb-item" data-sec="resources" onclick="navigate('resources')"><iconify-icon icon="solar:book-linear"></iconify-icon><span data-en="Resources" data-ar="الموارد">Resources</span></button>
+
             <div class="sb-label" data-en="My Space" data-ar="مساحتي">My Space</div>
             <button class="sb-item active" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:home-linear"></iconify-icon><span data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</span></button>
             <button class="sb-item" data-sec="profile" onclick="navigate('profile')"><iconify-icon icon="solar:user-linear"></iconify-icon><span data-en="My Profile" data-ar="ملفي الشخصي">My Profile</span></button>
@@ -1179,14 +1184,10 @@
             <button class="sb-item" data-sec="impact" onclick="navigate('impact')"><iconify-icon icon="solar:chart-linear"></iconify-icon><span data-en="My Impact" data-ar="أثري">My Impact</span></button>
             <button class="sb-item" data-sec="ecoid" onclick="navigate('ecoid')"><iconify-icon icon="solar:card-linear"></iconify-icon><span data-en="Eco ID" data-ar="بطاقة Eco">Eco ID</span></button>
 
-            <div class="sb-label" data-en="Explore" data-ar="استكشف">Explore</div>
-            <button class="sb-item" data-sec="opportunities" onclick="navigate('opportunities')"><iconify-icon icon="solar:compass-linear"></iconify-icon><span data-en="Opportunities" data-ar="الفرص">Opportunities</span><span class="sb-badge">24</span></button>
-            <button class="sb-item" data-sec="network" onclick="navigate('network')"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon><span data-en="Network" data-ar="الشبكة">Network</span></button>
-            <button class="sb-item" data-sec="resources" onclick="navigate('resources')"><iconify-icon icon="solar:book-linear"></iconify-icon><span data-en="Resources" data-ar="الموارد">Resources</span></button>
-
             <div class="sb-label" data-en="Community" data-ar="المجتمع">Community</div>
             <button class="sb-item" data-sec="ecobot" onclick="navigate('ecobot')"><iconify-icon icon="solar:stars-linear"></iconify-icon><span data-en="EcoBot" data-ar="إيكوبوت">EcoBot</span><span class="sb-badge" style="background:var(--green);color:#fff;font-size:0.52rem">AI</span></button>
             <button class="sb-item" data-sec="contact" onclick="navigate('contact')"><iconify-icon icon="solar:letter-linear"></iconify-icon><span data-en="Contact Us" data-ar="تواصل معنا">Contact Us</span></button>
+            <button class="sb-item" data-sec="faq" onclick="navigate('faq')"><iconify-icon icon="solar:question-circle-linear"></iconify-icon><span data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</span></button>
         </nav>
         <div class="sb-user">
             <div class="sb-avatar" id="sb-avatar">M</div>
@@ -1911,6 +1912,129 @@
                 </div>
             </div>
 
+            <!-- ═══ FAQ ═══ -->
+            <div class="sec" id="sec-faq">
+                <div class="sec-hero">
+                    <h2><span data-en="Frequently Asked " data-ar="الأسئلة ">Frequently Asked </span><em data-en="Questions." data-ar="الشائعة.">Questions.</em></h2>
+                    <p data-en="Everything you need to know about EcoAwareness." data-ar="كل ما تحتاج معرفته عن EcoAwareness.">Everything you need to know about EcoAwareness.</p>
+                </div>
+
+                <style>
+                    .faq-item { background: white; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px; margin-bottom: 0.75rem; overflow: hidden; }
+                    .faq-q { width: 100%; display: flex; align-items: center; justify-content: space-between; padding: 1.1rem 1.4rem; background: none; border: none; cursor: pointer; font-family: 'DM Sans', sans-serif; font-size: 0.92rem; font-weight: 500; color: var(--ink); text-align: left; gap: 1rem; transition: background 0.2s; }
+                    body.ar .faq-q { text-align: right; flex-direction: row-reverse; }
+                    .faq-q:hover { background: var(--paper); }
+                    .faq-q iconify-icon { font-size: 1.1rem; color: var(--green); flex-shrink: 0; transition: transform 0.3s; }
+                    .faq-item.open .faq-q iconify-icon { transform: rotate(45deg); }
+                    .faq-a { max-height: 0; overflow: hidden; transition: max-height 0.35s cubic-bezier(0.25,1,0.5,1), padding 0.25s; padding: 0 1.4rem; font-size: 0.855rem; color: rgba(0,0,0,0.55); line-height: 1.75; }
+                    .faq-item.open .faq-a { max-height: 400px; padding: 0 1.4rem 1.2rem; }
+                    .faq-category { font-size: 0.72rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase; color: var(--green); margin: 1.75rem 0 0.6rem; }
+                    .faq-category:first-child { margin-top: 0; }
+                </style>
+
+                <!-- Getting Started -->
+                <div class="faq-category" data-en="Getting Started" data-ar="البداية">Getting Started</div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span data-en="What is EcoAwareness?" data-ar="ما هو EcoAwareness؟">What is EcoAwareness?</span>
+                        <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
+                    </button>
+                    <div class="faq-a" data-en="EcoAwareness is Qatar's climate action platform connecting passionate youth with NGOs, eco-businesses, student clubs, and government bodies. We make it easy to discover opportunities, track your impact, and grow your environmental network." data-ar="EcoAwareness هي منصة العمل المناخي في قطر التي تربط الشباب المتحمس بالمنظمات غير الحكومية والشركات البيئية والأندية الطلابية والجهات الحكومية. نجعل اكتشاف الفرص وتتبع أثرك وتنمية شبكتك البيئية أمراً سهلاً.">EcoAwareness is Qatar's climate action platform connecting passionate youth with NGOs, eco-businesses, student clubs, and government bodies. We make it easy to discover opportunities, track your impact, and grow your environmental network.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span data-en="Who can join EcoAwareness?" data-ar="من يستطيع الانضمام إلى EcoAwareness؟">Who can join EcoAwareness?</span>
+                        <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
+                    </button>
+                    <div class="faq-a" data-en="EcoAwareness is open to all youth in Qatar aged 15–30 who are passionate about the environment, climate action, or sustainability. Whether you're a student, young professional, or activist — there's a place for you here." data-ar="EcoAwareness مفتوح لجميع الشباب في قطر من سن 15 إلى 30 عاماً ممن يهتمون بالبيئة والعمل المناخي أو الاستدامة. سواء كنت طالباً أو محترفاً شاباً أو ناشطاً — هناك مكان لك هنا.">EcoAwareness is open to all youth in Qatar aged 15–30 who are passionate about the environment, climate action, or sustainability. Whether you're a student, young professional, or activist — there's a place for you here.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span data-en="Is EcoAwareness free to use?" data-ar="هل استخدام EcoAwareness مجاني؟">Is EcoAwareness free to use?</span>
+                        <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
+                    </button>
+                    <div class="faq-a" data-en="Yes — completely free. EcoAwareness is a non-profit initiative dedicated to growing Qatar's climate generation. All features including Opportunities, your Eco ID, and EcoBot are available at no cost." data-ar="نعم — مجاني تماماً. EcoAwareness مبادرة غير ربحية مخصصة لتنمية جيل المناخ في قطر. جميع الميزات بما في ذلك الفرص وبطاقة Eco وEcoBot متاحة مجاناً.">Yes — completely free. EcoAwareness is a non-profit initiative dedicated to growing Qatar's climate generation. All features including Opportunities, your Eco ID, and EcoBot are available at no cost.</div>
+                </div>
+
+                <!-- Opportunities -->
+                <div class="faq-category" data-en="Opportunities" data-ar="الفرص">Opportunities</div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span data-en="How do I apply for an opportunity?" data-ar="كيف أتقدم لفرصة؟">How do I apply for an opportunity?</span>
+                        <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
+                    </button>
+                    <div class="faq-a" data-en="Browse the Opportunities section, find something that interests you, and click 'Apply Now'. You'll fill in a short form with your details. The hosting organisation will contact you directly — most applications get a response within 3–5 business days." data-ar="تصفح قسم الفرص، ابحث عن ما يناسبك، واضغط على 'قدّم الآن'. ستملأ نموذجاً قصيراً بتفاصيلك. ستتواصل معك المنظمة المستضيفة مباشرةً — معظم الطلبات تحصل على رد خلال 3-5 أيام عمل.">Browse the Opportunities section, find something that interests you, and click 'Apply Now'. You'll fill in a short form with your details. The hosting organisation will contact you directly — most applications get a response within 3–5 business days.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span data-en="Can I post an event or opportunity?" data-ar="هل يمكنني نشر فعالية أو فرصة؟">Can I post an event or opportunity?</span>
+                        <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
+                    </button>
+                    <div class="faq-a" data-en="Yes! Use the 'Post Event' button in the top bar. After a quick review by our team (usually within 24 hours), your event goes live for the entire EcoAwareness community to see." data-ar="نعم! استخدم زر 'انشر فعالية' في الشريط العلوي. بعد مراجعة سريعة من فريقنا (عادةً خلال 24 ساعة)، تظهر فعاليتك لمجتمع EcoAwareness بأكمله.">Yes! Use the 'Post Event' button in the top bar. After a quick review by our team (usually within 24 hours), your event goes live for the entire EcoAwareness community to see.</div>
+                </div>
+
+                <!-- Eco ID -->
+                <div class="faq-category" data-en="Eco ID" data-ar="بطاقة Eco">Eco ID</div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span data-en="What is the Eco ID?" data-ar="ما هي بطاقة Eco؟">What is the Eco ID?</span>
+                        <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
+                    </button>
+                    <div class="faq-a" data-en="Your Eco ID is a digital membership card that proves your involvement in Qatar's climate movement. It includes your name, role, member since date, and a unique QR code. You can share it digitally or show it at events — it's your green identity." data-ar="بطاقة Eco هي بطاقة عضوية رقمية تُثبت مشاركتك في الحركة المناخية في قطر. تتضمن اسمك ودورك وتاريخ انضمامك ورمز QR فريداً. يمكنك مشاركتها رقمياً أو عرضها في الفعاليات — إنها هويتك الخضراء.">Your Eco ID is a digital membership card that proves your involvement in Qatar's climate movement. It includes your name, role, member since date, and a unique QR code. You can share it digitally or show it at events — it's your green identity.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span data-en="Is the Eco ID officially recognised?" data-ar="هل بطاقة Eco معترف بها رسمياً؟">Is the Eco ID officially recognised?</span>
+                        <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
+                    </button>
+                    <div class="faq-a" data-en="The Eco ID is recognised by our partner organisations and serves as proof of your engagement in Qatar's environmental sector. Several partner NGOs and government bodies accept it as a credentialing document for volunteer programmes." data-ar="بطاقة Eco معترف بها من قِبل منظماتنا الشريكة وتُعدّ دليلاً على مشاركتك في القطاع البيئي في قطر. تقبلها عدة منظمات غير حكومية شريكة وجهات حكومية كوثيقة اعتماد لبرامج التطوع.">The Eco ID is recognised by our partner organisations and serves as proof of your engagement in Qatar's environmental sector. Several partner NGOs and government bodies accept it as a credentialing document for volunteer programmes.</div>
+                </div>
+
+                <!-- Account & Privacy -->
+                <div class="faq-category" data-en="Account & Privacy" data-ar="الحساب والخصوصية">Account & Privacy</div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span data-en="How do I update my profile?" data-ar="كيف أحدّث ملفي الشخصي؟">How do I update my profile?</span>
+                        <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
+                    </button>
+                    <div class="faq-a" data-en="Go to My Profile from the sidebar. You can update your display name, bio, skills, and interests at any time. Your Eco ID updates automatically to reflect any changes." data-ar="انتقل إلى 'ملفي الشخصي' من الشريط الجانبي. يمكنك تحديث اسمك وسيرتك الذاتية ومهاراتك واهتماماتك في أي وقت. تتحدث بطاقة Eco تلقائياً لتعكس أي تغييرات.">Go to My Profile from the sidebar. You can update your display name, bio, skills, and interests at any time. Your Eco ID updates automatically to reflect any changes.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span data-en="Is my personal data kept private?" data-ar="هل بياناتي الشخصية محمية؟">Is my personal data kept private?</span>
+                        <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
+                    </button>
+                    <div class="faq-a" data-en="Absolutely. EcoAwareness never sells or shares your personal data with third parties. Your information is only used to personalise your experience and facilitate connections with partner organisations you choose to engage with." data-ar="بالتأكيد. لا تبيع EcoAwareness بياناتك الشخصية ولا تشاركها مع أطراف ثالثة. تُستخدم معلوماتك فقط لتخصيص تجربتك وتيسير التواصل مع المنظمات الشريكة التي تختار التعامل معها.">Absolutely. EcoAwareness never sells or shares your personal data with third parties. Your information is only used to personalise your experience and facilitate connections with partner organisations you choose to engage with.</div>
+                </div>
+
+                <div class="faq-item">
+                    <button class="faq-q" onclick="toggleFaq(this)">
+                        <span data-en="How do I delete my account?" data-ar="كيف أحذف حسابي؟">How do I delete my account?</span>
+                        <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
+                    </button>
+                    <div class="faq-a" data-en="To delete your account, send us an email at ecoawarenessme@gmail.com with the subject 'Delete Account'. We'll process your request within 7 business days and permanently remove all your data from our systems." data-ar="لحذف حسابك، أرسل لنا بريداً إلكترونياً على ecoawarenessme@gmail.com بعنوان 'حذف الحساب'. سنعالج طلبك خلال 7 أيام عمل ونزيل جميع بياناتك من أنظمتنا نهائياً.">To delete your account, send us an email at ecoawarenessme@gmail.com with the subject 'Delete Account'. We'll process your request within 7 business days and permanently remove all your data from our systems.</div>
+                </div>
+
+                <div style="background:rgba(26,92,56,0.06);border:1px solid rgba(26,92,56,0.12);border-radius:14px;padding:1.4rem 1.6rem;margin-top:1.5rem;display:flex;align-items:center;gap:1rem">
+                    <span style="font-size:1.5rem">💬</span>
+                    <div>
+                        <div style="font-size:0.88rem;font-weight:500;margin-bottom:0.2rem" data-en="Still have questions?" data-ar="لا تزال لديك أسئلة؟">Still have questions?</div>
+                        <div style="font-size:0.8rem;color:rgba(0,0,0,0.5)" data-en="Reach out via the Contact Us page or email ecoawarenessme@gmail.com — we reply within 24 hours." data-ar="تواصل معنا عبر صفحة 'تواصل معنا' أو أرسل بريداً إلكترونياً إلى ecoawarenessme@gmail.com — نرد خلال 24 ساعة.">Reach out via the Contact Us page or email ecoawarenessme@gmail.com — we reply within 24 hours.</div>
+                    </div>
+                    <button onclick="navigate('contact')" style="margin-left:auto;flex-shrink:0;background:var(--green);color:#fff;border:none;border-radius:9px;padding:0.55rem 1.1rem;font-size:0.8rem;font-weight:500;cursor:pointer;font-family:'DM Sans',sans-serif;transition:background 0.2s" onmouseover="this.style.background='var(--green-light)'" onmouseout="this.style.background='var(--green)'" data-en="Contact Us" data-ar="تواصل معنا">Contact Us</button>
+                </div>
+
+            </div>
+
         </div><!-- /scroll-area -->
     </div><!-- /main -->
 </div><!-- /app -->
@@ -2164,7 +2288,8 @@ const titles = {
     profile: { en: 'My <em style="font-style:italic;color:var(--green)">Profile.</em>', ar: '<em style="color:var(--green)">ملفي</em> الشخصي.' },
     ecoid: { en: 'Your <em style="font-style:italic;color:var(--green)">Eco ID.</em>', ar: 'بطاقتك <em style="color:var(--green)">البيئية.</em>' },
     ecobot: { en: '<em style="font-style:italic;color:var(--green)">EcoBot</em> — AI Assistant.', ar: '<em style="color:var(--green)">إيكوبوت</em> — المساعد الذكي.' },
-    contact: { en: 'Get in <em style="font-style:italic;color:var(--green)">Touch 🌿</em>', ar: 'تواصل <em style="color:var(--green)">معنا 🌿</em>' }
+    contact: { en: 'Get in <em style="font-style:italic;color:var(--green)">Touch 🌿</em>', ar: 'تواصل <em style="color:var(--green)">معنا 🌿</em>' },
+    faq: { en: 'Frequently Asked <em style="font-style:italic;color:var(--green)">Questions.</em>', ar: '<em style="color:var(--green)">الأسئلة</em> الشائعة.' }
 };
 
 // LAZY LOADING — inject heavy section content on first visit
@@ -2281,6 +2406,15 @@ function toggleSidebar() {
     const bd = document.getElementById('sb-backdrop');
     sb.classList.toggle('sb-open');
     bd.classList.toggle('show');
+}
+
+// FAQ ACCORDION
+function toggleFaq(btn) {
+    const item = btn.closest('.faq-item');
+    const isOpen = item.classList.contains('open');
+    // Close all others in the same section
+    document.querySelectorAll('#sec-faq .faq-item.open').forEach(el => el.classList.remove('open'));
+    if (!isOpen) item.classList.add('open');
 }
 
 // PILLS
