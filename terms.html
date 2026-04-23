@@ -1,0 +1,440 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Terms of Use — EcoAwareness</title>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;700&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <style>
+        :root {
+            --ink: #0a0a0a;
+            --paper: #f5f0e8;
+            --green: #1a5c38;
+            --green-light: #2d7a4f;
+            --lime: #a8e063;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        body.ar { font-family: 'Noto Naskh Arabic', serif; direction: rtl; }
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 1000; opacity: 0.4;
+        }
+
+        #lang-toggle {
+            position: fixed; bottom: 2rem; right: 2rem; z-index: 950;
+            background: var(--ink); color: #fff; border: none; border-radius: 100px;
+            padding: 0.65rem 1.3rem; font-size: 0.82rem; font-weight: 500;
+            cursor: pointer; display: flex; align-items: center; gap: 0.5rem;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.25); transition: all 0.25s;
+            font-family: 'DM Sans', sans-serif;
+        }
+        #lang-toggle:hover { background: var(--green); transform: translateY(-2px); }
+        body.ar #lang-toggle { right: auto; left: 2rem; font-family: 'Noto Naskh Arabic', serif; }
+        .lang-dot { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; }
+
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+            padding: 1.25rem 2.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: background 0.4s;
+        }
+        nav.scrolled {
+            background: rgba(245,240,232,0.93); backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(0,0,0,0.07);
+        }
+        .nav-logo {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.4rem; color: var(--ink); text-decoration: none;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        body.ar .nav-logo { font-family: 'Noto Naskh Arabic', serif; }
+        .nav-logo-dot { width: 8px; height: 8px; background: var(--lime); border-radius: 50%; }
+        .nav-links { display: flex; align-items: center; gap: 2rem; }
+        .nav-links a {
+            font-size: 0.875rem; font-weight: 400; color: var(--ink);
+            text-decoration: none; opacity: 0.6; transition: opacity 0.2s;
+        }
+        .nav-links a:hover { opacity: 1; }
+        .nav-cta {
+            background: var(--green) !important; color: #fff !important;
+            opacity: 1 !important; padding: 0.6rem 1.4rem; border-radius: 100px;
+        }
+        @media (max-width: 760px) { .nav-links a:not(.nav-cta) { display: none; } nav { padding: 1rem 1.25rem; } }
+
+        .legal-hero {
+            padding: 10rem clamp(1.5rem, 6vw, 6rem) 4rem;
+            max-width: 900px; margin: 0 auto;
+        }
+        .legal-eyebrow {
+            font-size: 0.75rem; font-weight: 500;
+            color: var(--green);
+            letter-spacing: 0.25em; text-transform: uppercase;
+            margin-bottom: 1.25rem;
+        }
+        .legal-hero h1 {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: clamp(2.8rem, 6vw, 5rem);
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.5rem;
+        }
+        body.ar .legal-hero h1 { font-family: 'Noto Naskh Arabic', serif; line-height: 1.25; }
+        .legal-hero h1 em { font-style: italic; color: var(--green); }
+        body.ar .legal-hero h1 em { font-style: normal; }
+        .legal-updated {
+            font-size: 0.875rem;
+            color: rgba(10,10,10,0.5);
+            padding: 0.5rem 1rem;
+            background: rgba(26,92,56,0.06);
+            border-radius: 100px;
+            display: inline-block;
+        }
+
+        .legal-content {
+            max-width: 900px; margin: 0 auto;
+            padding: 0 clamp(1.5rem, 6vw, 6rem) 6rem;
+        }
+        .legal-content .lead {
+            font-size: 1.125rem;
+            line-height: 1.7;
+            color: rgba(10,10,10,0.7);
+            margin-bottom: 3rem;
+            font-weight: 300;
+            border-left: 3px solid var(--lime);
+            padding-left: 1.5rem;
+        }
+        body.ar .legal-content .lead { border-left: none; border-right: 3px solid var(--lime); padding-left: 0; padding-right: 1.5rem; }
+        .legal-content h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(1.6rem, 3vw, 2.2rem);
+            font-weight: 400;
+            color: var(--ink);
+            margin: 3rem 0 1rem;
+            letter-spacing: -0.01em;
+        }
+        body.ar .legal-content h2 { font-family: 'Noto Naskh Arabic', serif; }
+        .legal-content h2::before {
+            content: attr(data-num);
+            display: inline-block;
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.8rem;
+            font-weight: 500;
+            color: var(--green);
+            background: rgba(26,92,56,0.08);
+            padding: 0.25rem 0.6rem;
+            border-radius: 100px;
+            margin-right: 0.75rem;
+            vertical-align: middle;
+            letter-spacing: 0.1em;
+        }
+        body.ar .legal-content h2::before { margin-right: 0; margin-left: 0.75rem; font-family: 'Noto Naskh Arabic', serif; }
+        .legal-content p {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: rgba(10,10,10,0.7);
+            margin-bottom: 1rem;
+            font-weight: 300;
+        }
+        .legal-content ul {
+            padding-left: 1.5rem;
+            margin-bottom: 1rem;
+        }
+        body.ar .legal-content ul { padding-left: 0; padding-right: 1.5rem; }
+        .legal-content li {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: rgba(10,10,10,0.7);
+            margin-bottom: 0.5rem;
+            font-weight: 300;
+        }
+        .legal-content a { color: var(--green); }
+        .legal-content strong { color: var(--ink); font-weight: 500; }
+
+        footer {
+            background: var(--paper);
+            color: var(--ink);
+            position: relative;
+            overflow: hidden;
+            border-top: 1px solid rgba(10,10,10,0.06);
+        }
+        .footer-meta {
+            display: flex; justify-content: space-between;
+            padding: 2.5rem clamp(1.5rem, 6vw, 6rem) 0;
+            font-size: 0.8rem; color: rgba(10,10,10,0.45);
+            flex-wrap: wrap; gap: 1rem; position: relative; z-index: 2;
+        }
+        .footer-meta .meta-addr { display: flex; align-items: center; gap: 0.5rem; }
+        .footer-meta .meta-addr::before {
+            content: ''; width: 14px; height: 14px;
+            border: 1.5px solid currentColor; border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+        }
+        .footer-grid {
+            max-width: 1200px; margin: 0 auto;
+            padding: 4rem clamp(1.5rem, 6vw, 6rem) 2rem;
+            display: grid; grid-template-columns: 1.3fr 1fr 1fr 1fr;
+            gap: 3rem 2rem; position: relative; z-index: 2;
+        }
+        .footer-brand-block .footer-logo {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            font-family: Georgia, serif; font-style: italic; font-weight: 600;
+            font-size: 1.6rem; color: var(--ink); text-decoration: none;
+            margin-bottom: 1.25rem;
+        }
+        .footer-brand-block .footer-logo::before {
+            content: ''; width: 10px; height: 10px;
+            background: var(--lime); border-radius: 50%; display: inline-block;
+        }
+        body.ar .footer-brand-block .footer-logo { font-family: 'Noto Naskh Arabic', serif; font-style: normal; }
+        .footer-tagline { font-size: 0.95rem; line-height: 1.6; color: rgba(10,10,10,0.6); max-width: 280px; }
+        .footer-col h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.7rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.2em;
+            color: rgba(10,10,10,0.4); margin-bottom: 1.25rem;
+        }
+        body.ar .footer-col h4 { font-family: 'Noto Naskh Arabic', serif; letter-spacing: 0; }
+        .footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+        .footer-col a { font-size: 1rem; color: var(--ink); text-decoration: none; transition: color 0.2s; }
+        .footer-col a:hover { color: var(--green); }
+        .footer-watermark {
+            position: absolute; left: 0; right: 0; bottom: -2vw;
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(6rem, 22vw, 22rem);
+            font-style: italic; color: rgba(26,92,56,0.06);
+            text-align: center; line-height: 0.85;
+            pointer-events: none; white-space: nowrap;
+            z-index: 1; user-select: none;
+        }
+        body.ar .footer-watermark { font-family: 'Noto Naskh Arabic', serif; font-style: normal; }
+        .footer-bottom {
+            border-top: 1px solid rgba(10,10,10,0.08);
+            padding: 1.5rem clamp(1.5rem, 6vw, 6rem);
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.75rem; color: rgba(10,10,10,0.4);
+            flex-wrap: wrap; gap: 1rem; position: relative; z-index: 2;
+        }
+        .footer-socials { display: flex; gap: 1rem; }
+        .footer-socials a {
+            width: 32px; height: 32px; display: inline-flex;
+            align-items: center; justify-content: center;
+            border-radius: 50%; border: 1px solid rgba(10,10,10,0.12);
+            color: rgba(10,10,10,0.5); text-decoration: none;
+            transition: all 0.2s;
+        }
+        .footer-socials a:hover { border-color: var(--green); color: var(--green); }
+        @media (max-width: 900px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .footer-brand-block { grid-column: 1 / -1; }
+        }
+        @media (max-width: 560px) {
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-meta { flex-direction: column; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+    </style>
+</head>
+<body>
+
+<button id="lang-toggle" onclick="toggleLang()">
+    <span class="lang-dot"></span>
+    <span id="lang-label">العربية</span>
+</button>
+
+<nav id="navbar">
+    <a href="index.html" class="nav-logo">
+        <span class="nav-logo-dot"></span>
+        <span data-en="EcoAwareness" data-ar="EcoAwareness" style="font-family: Georgia, serif; font-style: italic; font-weight: 600;">EcoAwareness</span>
+    </a>
+    <div class="nav-links">
+        <a href="index.html" data-en="Home" data-ar="الرئيسية">Home</a>
+        <a href="about.html" data-en="About" data-ar="من نحن">About</a>
+        <a href="signin.html" data-en="Sign In" data-ar="تسجيل الدخول">Sign In</a>
+        <a href="signup.html" class="nav-cta" data-en="Join Free" data-ar="انضم مجانًا">Join Free</a>
+    </div>
+</nav>
+
+<section class="legal-hero">
+    <div class="legal-eyebrow" data-en="Legal" data-ar="قانوني">Legal</div>
+    <h1>
+        <span data-en="The ground rules," data-ar="القواعد الأساسية،">The ground rules,</span>
+        <em data-en="in plain English." data-ar="ببساطة.">in plain English.</em>
+    </h1>
+    <span class="legal-updated" data-en="Last updated: April 23, 2026" data-ar="آخر تحديث: 23 أبريل 2026">Last updated: April 23, 2026</span>
+</section>
+
+<section class="legal-content">
+    <p class="lead" data-en="By using EcoAwareness you're agreeing to these terms. They're short because we wrote them ourselves, for students. If anything is unclear, email us — we'll actually answer."
+       data-ar="باستخدام الوعي البيئي، فإنك توافق على هذه الشروط. إنها قصيرة لأننا كتبناها بأنفسنا، للطلاب. إذا كان أي شيء غير واضح، راسلنا — سنرد بالفعل.">
+        By using EcoAwareness you're agreeing to these terms. They're short because we wrote them ourselves, for students. If anything is unclear, email us — we'll actually answer.
+    </p>
+
+    <h2 data-num="01" data-en="Who can use EcoAwareness" data-ar="من يمكنه استخدام الوعي البيئي">Who can use EcoAwareness</h2>
+    <p data-en="Anyone interested in climate action in Qatar — students, schools, NGOs, and companies are all welcome. If you're under 13 we need a parent or guardian's permission before you create an account."
+       data-ar="أي شخص مهتم بالعمل المناخي في قطر — الطلاب والمدارس والمنظمات غير الحكومية والشركات مرحب بهم جميعًا. إذا كنت أقل من 13 عامًا، نحتاج إلى إذن أحد الوالدين أو الوصي قبل إنشاء حساب.">
+        Anyone interested in climate action in Qatar — students, schools, NGOs, and companies are all welcome. If you're under 13 we need a parent or guardian's permission before you create an account.
+    </p>
+
+    <h2 data-num="02" data-en="Your account" data-ar="حسابك">Your account</h2>
+    <p data-en="One account per person. Keep your password secret — if someone logs in as you, anything they do counts as you. Tell us immediately if you think your account was compromised."
+       data-ar="حساب واحد لكل شخص. احتفظ بكلمة المرور الخاصة بك سرية — إذا قام شخص ما بتسجيل الدخول كأنت، فإن أي شيء يفعله يُحسب كأنك. أخبرنا على الفور إذا كنت تعتقد أن حسابك قد تم اختراقه.">
+        One account per person. Keep your password secret — if someone logs in as you, anything they do counts as you. Tell us immediately if you think your account was compromised.
+    </p>
+
+    <h2 data-num="03" data-en="What you can do" data-ar="ما يمكنك فعله">What you can do</h2>
+    <ul>
+        <li data-en="Browse opportunities and sign up for ones you want to join" data-ar="تصفح الفرص والاشتراك في تلك التي تريد الانضمام إليها">Browse opportunities and sign up for ones you want to join</li>
+        <li data-en="Log verified volunteer hours backed by organizers" data-ar="تسجيل ساعات التطوع الموثقة المدعومة من قبل المنظمين">Log verified volunteer hours backed by organizers</li>
+        <li data-en="Share your Eco ID certificate with anyone you want" data-ar="مشاركة شهادة الهوية البيئية الخاصة بك مع أي شخص تريده">Share your Eco ID certificate with anyone you want</li>
+        <li data-en="Connect with other climate-minded students in your area" data-ar="تواصل مع طلاب آخرين مهتمين بالمناخ في منطقتك">Connect with other climate-minded students in your area</li>
+    </ul>
+
+    <h2 data-num="04" data-en="What you can't do" data-ar="ما لا يمكنك فعله">What you can't do</h2>
+    <ul>
+        <li data-en="Log hours for events you didn't actually attend" data-ar="تسجيل ساعات لفعاليات لم تحضرها بالفعل">Log hours for events you didn't actually attend</li>
+        <li data-en="Impersonate another person, organization, or school" data-ar="انتحال شخصية شخص أو منظمة أو مدرسة أخرى">Impersonate another person, organization, or school</li>
+        <li data-en="Use EcoAwareness to harass, discriminate against, or intimidate anyone" data-ar="استخدام الوعي البيئي لمضايقة أي شخص أو التمييز ضده أو تخويفه">Use EcoAwareness to harass, discriminate against, or intimidate anyone</li>
+        <li data-en="Scrape, copy, or resell platform data without permission" data-ar="استخراج أو نسخ أو إعادة بيع بيانات المنصة بدون إذن">Scrape, copy, or resell platform data without permission</li>
+        <li data-en="Try to break, exploit, or abuse the platform's security" data-ar="محاولة كسر أو استغلال أو إساءة استخدام أمان المنصة">Try to break, exploit, or abuse the platform's security</li>
+    </ul>
+    <p data-en="If you do any of these we'll warn you, and if it keeps happening we'll suspend or delete your account. Serious violations may be reported to your school or the appropriate authorities."
+       data-ar="إذا فعلت أيًا من هذه الأمور، فسنحذرك، وإذا استمر الأمر، فسنعلق حسابك أو نحذفه. قد يتم الإبلاغ عن الانتهاكات الجسيمة إلى مدرستك أو السلطات المختصة.">
+        If you do any of these we'll warn you, and if it keeps happening we'll suspend or delete your account. Serious violations may be reported to your school or the appropriate authorities.
+    </p>
+
+    <h2 data-num="05" data-en="Verified hours" data-ar="الساعات الموثقة">Verified hours</h2>
+    <p data-en="Hours become 'verified' only when an organizer confirms you were there. Unverified hours still appear on your profile but are clearly marked. Your Eco ID certificate only counts verified hours — that's what makes it worth something."
+       data-ar="تصبح الساعات 'موثقة' فقط عندما يؤكد المنظم أنك كنت هناك. لا تزال الساعات غير الموثقة تظهر في ملفك الشخصي ولكن يتم تمييزها بوضوح. لا تحتسب شهادة الهوية البيئية الخاصة بك سوى الساعات الموثقة — هذا ما يجعلها تستحق شيئًا.">
+        Hours become "verified" only when an organizer confirms you were there. Unverified hours still appear on your profile but are clearly marked. Your Eco ID certificate only counts verified hours — that's what makes it worth something.
+    </p>
+
+    <h2 data-num="06" data-en="Content you post" data-ar="المحتوى الذي تنشره">Content you post</h2>
+    <p data-en="Anything you write on the platform — profile bios, event reviews, comments — stays yours. You just give us permission to display it on EcoAwareness. We may remove content that violates these terms."
+       data-ar="أي شيء تكتبه على المنصة — السير الذاتية للملف الشخصي ومراجعات الفعاليات والتعليقات — يبقى ملكك. أنت فقط تمنحنا إذنًا لعرضه على الوعي البيئي. قد نزيل المحتوى الذي ينتهك هذه الشروط.">
+        Anything you write on the platform — profile bios, event reviews, comments — stays yours. You just give us permission to display it on EcoAwareness. We may remove content that violates these terms.
+    </p>
+
+    <h2 data-num="07" data-en="Our stuff" data-ar="أشياؤنا">Our stuff</h2>
+    <p data-en="The EcoAwareness name, logo, design, and code belong to us. You can screenshot, link to us, and talk about us — but don't copy our brand or clone the product."
+       data-ar="اسم الوعي البيئي وشعاره وتصميمه وكوده ملك لنا. يمكنك أخذ لقطة شاشة والربط بنا والتحدث عنا — لكن لا تنسخ علامتنا التجارية أو تستنسخ المنتج.">
+        The EcoAwareness name, logo, design, and code belong to us. You can screenshot, link to us, and talk about us — but don't copy our brand or clone the product.
+    </p>
+
+    <h2 data-num="08" data-en="Things break sometimes" data-ar="الأشياء تتعطل أحيانًا">Things break sometimes</h2>
+    <p data-en="We work hard to keep the platform running, but we can't promise zero downtime. We're not liable for lost opportunities caused by outages, bugs, or things outside our control. We'll always do our best to fix things fast and be transparent about what happened."
+       data-ar="نحن نعمل بجد للحفاظ على تشغيل المنصة، ولكن لا يمكننا أن نعد بعدم وجود وقت توقف. لسنا مسؤولين عن الفرص الضائعة الناجمة عن الانقطاعات أو الأخطاء أو الأشياء الخارجة عن سيطرتنا. سنبذل دائمًا قصارى جهدنا لإصلاح الأمور بسرعة ونكون شفافين بشأن ما حدث.">
+        We work hard to keep the platform running, but we can't promise zero downtime. We're not liable for lost opportunities caused by outages, bugs, or things outside our control. We'll always do our best to fix things fast and be transparent about what happened.
+    </p>
+
+    <h2 data-num="09" data-en="Changes to these terms" data-ar="التغييرات على هذه الشروط">Changes to these terms</h2>
+    <p data-en="If we change anything significant we'll email you and post a notice on the site at least 30 days before the change takes effect. If you don't agree with the change, you can close your account."
+       data-ar="إذا قمنا بتغيير أي شيء مهم، سنرسل لك بريدًا إلكترونيًا وننشر إشعارًا على الموقع قبل 30 يومًا على الأقل من دخول التغيير حيز التنفيذ. إذا كنت لا توافق على التغيير، يمكنك إغلاق حسابك.">
+        If we change anything significant we'll email you and post a notice on the site at least 30 days before the change takes effect. If you don't agree with the change, you can close your account.
+    </p>
+
+    <h2 data-num="10" data-en="Governing law" data-ar="القانون الحاكم">Governing law</h2>
+    <p data-en="These terms are governed by the laws of the State of Qatar. If there's a disagreement we can't work out together, it'll be resolved in the courts of Doha."
+       data-ar="تخضع هذه الشروط لقوانين دولة قطر. إذا كان هناك خلاف لا يمكننا حله معًا، فسيتم حله في محاكم الدوحة.">
+        These terms are governed by the laws of the State of Qatar. If there's a disagreement we can't work out together, it'll be resolved in the courts of Doha.
+    </p>
+
+    <h2 data-num="11" data-en="Questions?" data-ar="أسئلة؟">Questions?</h2>
+    <p data-en="Email us at <a href='mailto:hello@ecoawareness.qa'>hello@ecoawareness.qa</a>. We read every message."
+       data-ar="راسلنا على <a href='mailto:hello@ecoawareness.qa'>hello@ecoawareness.qa</a>. نحن نقرأ كل رسالة.">
+        Email us at <a href="mailto:hello@ecoawareness.qa">hello@ecoawareness.qa</a>. We read every message.
+    </p>
+</section>
+
+<footer>
+    <div class="footer-meta">
+        <div class="meta-addr" data-en="Education City, Doha, Qatar" data-ar="المدينة التعليمية، الدوحة، قطر">Education City, Doha, Qatar</div>
+        <div data-en="© 2026 EcoAwareness. All rights reserved." data-ar="© 2026 الوعي البيئي. جميع الحقوق محفوظة.">© 2026 EcoAwareness. All rights reserved.</div>
+    </div>
+    <div class="footer-grid">
+        <div class="footer-brand-block">
+            <a href="index.html" class="footer-logo" data-en="EcoAwareness" data-ar="EcoAwareness">EcoAwareness</a>
+            <p class="footer-tagline" data-en="Qatar's unified climate action platform. One profile, every opportunity. Track your impact with verified hours."
+               data-ar="منصة العمل المناخي الموحدة في قطر. ملف واحد، كل الفرص. تتبع أثرك بساعات موثقة.">
+                Qatar's unified climate action platform. One profile, every opportunity. Track your impact with verified hours.
+            </p>
+        </div>
+        <div class="footer-col">
+            <h4 data-en="Platform" data-ar="المنصة">Platform</h4>
+            <ul>
+                <li><a href="dashboard.html" data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</a></li>
+                <li><a href="dashboard.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a></li>
+                <li><a href="dashboard.html" data-en="Network" data-ar="الشبكة">Network</a></li>
+                <li><a href="dashboard.html" data-en="Resources" data-ar="الموارد">Resources</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 data-en="Features" data-ar="الميزات">Features</h4>
+            <ul>
+                <li><a href="dashboard.html" data-en="My Impact" data-ar="أثري">My Impact</a></li>
+                <li><a href="dashboard.html" data-en="Eco ID" data-ar="الهوية البيئية">Eco ID</a></li>
+                <li><a href="dashboard.html" data-en="My Events" data-ar="فعالياتي">My Events</a></li>
+                <li><a href="dashboard.html" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 data-en="Company" data-ar="الشركة">Company</h4>
+            <ul>
+                <li><a href="about.html" data-en="About Us" data-ar="من نحن">About Us</a></li>
+                <li><a href="privacy.html" data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</a></li>
+                <li><a href="terms.html" data-en="Terms of Use" data-ar="شروط الاستخدام">Terms of Use</a></li>
+                <li><a href="mailto:hello@ecoawareness.qa" data-en="Contact" data-ar="اتصل بنا">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-watermark" aria-hidden="true">EcoAwareness</div>
+    <div class="footer-bottom">
+        <div data-en="Built by youth, for the planet. 🌱" data-ar="بُني من الشباب، من أجل الكوكب. 🌱">Built by youth, for the planet. 🌱</div>
+        <div class="footer-socials">
+            <a href="#" aria-label="Instagram"><iconify-icon icon="solar:instagram-linear" width="16"></iconify-icon></a>
+            <a href="#" aria-label="LinkedIn"><iconify-icon icon="solar:link-circle-linear" width="16"></iconify-icon></a>
+            <a href="mailto:hello@ecoawareness.qa" aria-label="Email"><iconify-icon icon="solar:letter-linear" width="16"></iconify-icon></a>
+        </div>
+    </div>
+</footer>
+
+<script>
+    const navbar = document.getElementById('navbar');
+    window.addEventListener('scroll', () => {
+        navbar.classList.toggle('scrolled', window.scrollY > 40);
+    }, { passive: true });
+
+    let isArabic = localStorage.getItem('lang') === 'ar';
+    function applyLang() {
+        document.body.classList.toggle('ar', isArabic);
+        document.documentElement.lang = isArabic ? 'ar' : 'en';
+        document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+        document.querySelectorAll('[data-en]').forEach(el => {
+            const val = isArabic ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+            if (val) el.innerHTML = val;
+        });
+        document.getElementById('lang-label').textContent = isArabic ? 'English' : 'العربية';
+    }
+    function toggleLang() {
+        isArabic = !isArabic;
+        localStorage.setItem('lang', isArabic ? 'ar' : 'en');
+        applyLang();
+    }
+    applyLang();
+</script>
+</body>
+</html>

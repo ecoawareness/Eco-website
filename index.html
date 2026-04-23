@@ -486,24 +486,118 @@
         .cta-inner p { font-size: 1rem; color: rgba(255,255,255,0.6); font-weight: 300; margin-bottom: 3rem; line-height: 1.75; }
         .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
 
-        /* ── FOOTER ── */
-        footer { background: var(--ink); color: rgba(255,255,255,0.4); padding: 3rem clamp(1.5rem,6vw,6rem); }
-        .footer-inner {
-            max-width: 1200px; margin: 0 auto;
+        /* ── FOOTER (ConnectED-inspired) ── */
+        footer {
+            background: var(--paper);
+            color: var(--ink);
+            position: relative;
+            overflow: hidden;
+            margin-top: -1px; /* seal against CTA */
+        }
+        /* Curved top that scoops out of the green CTA */
+        .footer-curve {
+            background: var(--green);
+            height: clamp(60px, 10vw, 120px);
+            border-bottom-left-radius: 50% 100%;
+            border-bottom-right-radius: 50% 100%;
+            transform: scaleY(-1);
+            position: relative;
+            z-index: 1;
+        }
+        .footer-meta {
             display: flex; justify-content: space-between;
-            align-items: center; flex-wrap: wrap; gap: 1.5rem;
+            padding: 2.5rem clamp(1.5rem, 6vw, 6rem) 0;
+            font-size: 0.8rem;
+            color: rgba(10,10,10,0.45);
+            flex-wrap: wrap; gap: 1rem;
+            position: relative; z-index: 2;
         }
-        .footer-logo {
+        .footer-meta .meta-addr { display: flex; align-items: center; gap: 0.5rem; }
+        .footer-meta .meta-addr::before {
+            content: '';
+            width: 14px; height: 14px;
+            border: 1.5px solid currentColor; border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+        }
+        .footer-grid {
+            max-width: 1200px; margin: 0 auto;
+            padding: 4rem clamp(1.5rem, 6vw, 6rem) 2rem;
+            display: grid;
+            grid-template-columns: 1.3fr 1fr 1fr 1fr;
+            gap: 3rem 2rem;
+            position: relative; z-index: 2;
+        }
+        .footer-brand-block .footer-logo {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            font-family: Georgia, serif; font-style: italic; font-weight: 600;
+            font-size: 1.6rem; color: var(--ink); text-decoration: none;
+            margin-bottom: 1.25rem;
+        }
+        .footer-brand-block .footer-logo::before {
+            content: ''; width: 10px; height: 10px;
+            background: var(--lime); border-radius: 50%;
+            display: inline-block;
+        }
+        body.ar .footer-brand-block .footer-logo { font-family: 'Noto Naskh Arabic', serif; font-style: normal; }
+        .footer-tagline {
+            font-size: 0.95rem; line-height: 1.6;
+            color: rgba(10,10,10,0.6); max-width: 280px;
+        }
+        .footer-col h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.7rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.2em;
+            color: rgba(10,10,10,0.4);
+            margin-bottom: 1.25rem;
+        }
+        body.ar .footer-col h4 { font-family: 'Noto Naskh Arabic', serif; letter-spacing: 0; }
+        .footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+        .footer-col a {
+            font-size: 1rem; color: var(--ink); text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-col a:hover { color: var(--green); }
+        /* Massive watermark */
+        .footer-watermark {
+            position: absolute;
+            left: 0; right: 0; bottom: -2vw;
             font-family: 'Instrument Serif', serif;
-            font-size: 1.2rem; color: rgba(255,255,255,0.7); text-decoration: none;
+            font-size: clamp(6rem, 22vw, 22rem);
+            font-style: italic;
+            color: rgba(26,92,56,0.06);
+            text-align: center;
+            line-height: 0.85;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 1;
+            user-select: none;
         }
-        body.ar .footer-logo { font-family: 'Noto Naskh Arabic', serif; }
-        .footer-links { display: flex; gap: 2rem; flex-wrap: wrap; }
-        .footer-links a { font-size: 0.8rem; color: rgba(255,255,255,0.35); text-decoration: none; transition: color 0.2s; }
-        .footer-links a:hover { color: rgba(255,255,255,0.7); }
-        .footer-copy {
-            width: 100%; text-align: center; font-size: 0.75rem;
-            border-top: 1px solid rgba(255,255,255,0.06); padding-top: 2rem; margin-top: 1rem;
+        body.ar .footer-watermark { font-family: 'Noto Naskh Arabic', serif; font-style: normal; }
+        .footer-bottom {
+            border-top: 1px solid rgba(10,10,10,0.08);
+            padding: 1.5rem clamp(1.5rem, 6vw, 6rem);
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.75rem; color: rgba(10,10,10,0.4);
+            flex-wrap: wrap; gap: 1rem;
+            position: relative; z-index: 2;
+        }
+        .footer-socials { display: flex; gap: 1rem; }
+        .footer-socials a {
+            width: 32px; height: 32px; display: inline-flex;
+            align-items: center; justify-content: center;
+            border-radius: 50%; border: 1px solid rgba(10,10,10,0.12);
+            color: rgba(10,10,10,0.5); text-decoration: none;
+            transition: all 0.2s;
+        }
+        .footer-socials a:hover { border-color: var(--green); color: var(--green); }
+        @media (max-width: 900px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .footer-brand-block { grid-column: 1 / -1; }
+        }
+        @media (max-width: 560px) {
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-meta { flex-direction: column; }
+            .footer-bottom { flex-direction: column; text-align: center; }
         }
 
         /* ── SCROLL REVEAL (unified fade-up) ── */
@@ -550,7 +644,7 @@
     <div class="nav-links" id="nav-links">
         <a href="dashboard.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
         <a href="dashboard.html" data-en="Network" data-ar="الشبكة">Network</a>
-        <a href="dashboard.html" data-en="Resources" data-ar="الموارد">Resources</a>
+        <a href="about.html" data-en="About" data-ar="من نحن">About</a>
         <a href="signin.html" id="nav-signin" data-en="Sign In" data-ar="تسجيل الدخول">Sign In</a>
         <a href="signup.html" class="nav-cta" id="nav-join" data-en="Join Free" data-ar="انضم مجانًا">Join Free</a>
     </div>
@@ -748,16 +842,55 @@
 
 <!-- FOOTER -->
 <footer>
-    <div class="footer-inner">
-        <a href="index.html" class="footer-logo" data-en="EcoHub" data-ar="EcoHub">EcoHub</a>
-        <div class="footer-links">
-            <a href="dashboard.html" data-en="Directory" data-ar="الدليل">Directory</a>
-            <a href="dashboard.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
-            <a href="dashboard.html" data-en="Resources" data-ar="الموارد">Resources</a>
+    <div class="footer-curve"></div>
+    <div class="footer-meta">
+        <div class="meta-addr" data-en="Education City, Doha, Qatar" data-ar="المدينة التعليمية، الدوحة، قطر">Education City, Doha, Qatar</div>
+        <div data-en="© 2026 EcoAwareness. All rights reserved." data-ar="© 2026 الوعي البيئي. جميع الحقوق محفوظة.">© 2026 EcoAwareness. All rights reserved.</div>
+    </div>
+    <div class="footer-grid">
+        <div class="footer-brand-block">
+            <a href="index.html" class="footer-logo" data-en="EcoAwareness" data-ar="EcoAwareness">EcoAwareness</a>
+            <p class="footer-tagline" data-en="Qatar's unified climate action platform. One profile, every opportunity. Track your impact with verified hours."
+               data-ar="منصة العمل المناخي الموحدة في قطر. ملف واحد، كل الفرص. تتبع أثرك بساعات موثقة.">
+                Qatar's unified climate action platform. One profile, every opportunity. Track your impact with verified hours.
+            </p>
         </div>
-        <p class="footer-copy" data-en="© 2024 EcoHub — EcoAwareness Qatar. Built by youth, for the planet." data-ar="© 2024 EcoHub — الوعي البيئي قطر. بُني من الشباب، من أجل الكوكب.">
-            © 2024 EcoHub — EcoAwareness Qatar. Built by youth, for the planet.
-        </p>
+        <div class="footer-col">
+            <h4 data-en="Platform" data-ar="المنصة">Platform</h4>
+            <ul>
+                <li><a href="dashboard.html" data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</a></li>
+                <li><a href="dashboard.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a></li>
+                <li><a href="dashboard.html" data-en="Network" data-ar="الشبكة">Network</a></li>
+                <li><a href="dashboard.html" data-en="Resources" data-ar="الموارد">Resources</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 data-en="Features" data-ar="الميزات">Features</h4>
+            <ul>
+                <li><a href="dashboard.html" data-en="My Impact" data-ar="أثري">My Impact</a></li>
+                <li><a href="dashboard.html" data-en="Eco ID" data-ar="الهوية البيئية">Eco ID</a></li>
+                <li><a href="dashboard.html" data-en="My Events" data-ar="فعالياتي">My Events</a></li>
+                <li><a href="dashboard.html" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 data-en="Company" data-ar="الشركة">Company</h4>
+            <ul>
+                <li><a href="about.html" data-en="About Us" data-ar="من نحن">About Us</a></li>
+                <li><a href="privacy.html" data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</a></li>
+                <li><a href="terms.html" data-en="Terms of Use" data-ar="شروط الاستخدام">Terms of Use</a></li>
+                <li><a href="mailto:hello@ecoawareness.qa" data-en="Contact" data-ar="اتصل بنا">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-watermark" aria-hidden="true">EcoAwareness</div>
+    <div class="footer-bottom">
+        <div data-en="Built by youth, for the planet. 🌱" data-ar="بُني من الشباب، من أجل الكوكب. 🌱">Built by youth, for the planet. 🌱</div>
+        <div class="footer-socials">
+            <a href="#" aria-label="Instagram"><iconify-icon icon="solar:instagram-linear" width="16"></iconify-icon></a>
+            <a href="#" aria-label="LinkedIn"><iconify-icon icon="solar:link-circle-linear" width="16"></iconify-icon></a>
+            <a href="mailto:hello@ecoawareness.qa" aria-label="Email"><iconify-icon icon="solar:letter-linear" width="16"></iconify-icon></a>
+        </div>
     </div>
 </footer>
 
