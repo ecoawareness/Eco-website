@@ -1834,8 +1834,6 @@
                         <div class="ecobot-input-box">
                             <input class="ecobot-input" id="ecobot-input" type="text"
                                 placeholder="Ask EcoBot anything..."
-                                data-en-placeholder="Ask EcoBot anything..."
-                                data-ar-placeholder="اسأل إيكوبوت أي شيء..."
                                 onkeydown="if(event.key==='Enter')sendEcobotMsg()">
                             <button class="ecobot-send" id="ecobot-send" onclick="sendEcobotMsg()">
                                 <iconify-icon icon="solar:plain-linear"></iconify-icon>
@@ -2256,8 +2254,7 @@ async function init() {
     const greetEl = document.querySelector('#page-title em');
     if (greetEl) {
         const en = h < 12 ? 'Good morning,' : h < 17 ? 'Good afternoon,' : 'Good evening,';
-        const ar = h < 12 ? 'صباح الخير،' : h < 17 ? 'مساء الخير،' : 'مساء النور،';
-        greetEl.setAttribute('data-en', en); greetEl.setAttribute('data-ar', ar);
+        greetEl.setAttribute('data-en', en);
         greetEl.textContent = en;
     }
 
@@ -2451,9 +2448,7 @@ function renderOasis(opts = {}) {
     const stagePill = document.getElementById('oasis-stage-label');
     if (stagePill) {
         const en = OASIS_STAGE_LABELS_EN[stageIdx] || OASIS_STAGE_LABELS_EN[5];
-        const ar = OASIS_STAGE_LABELS_AR[stageIdx] || OASIS_STAGE_LABELS_AR[5];
         stagePill.setAttribute('data-en', en);
-        stagePill.setAttribute('data-ar', ar);
         stagePill.textContent = en;
     }
 
