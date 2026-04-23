@@ -183,26 +183,29 @@
         }
         .team-photo {
             max-width: 1400px; margin: 0 auto;
-            background: rgba(10,10,10,0.05);
             border-radius: 32px;
-            height: clamp(240px, 40vw, 480px);
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            gap: 0.75rem;
-            border: 1px dashed rgba(10,10,10,0.1);
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 16 / 9;
+            box-shadow: 0 24px 60px -20px rgba(10,10,10,0.25);
         }
-        .team-photo-icon { font-size: 2.5rem; }
-        .team-photo-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(1.5rem, 2.5vw, 2rem);
-            font-style: italic;
-            color: rgba(10,10,10,0.5);
+        .team-photo img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
         }
-        body.ar .team-photo-title { font-family: 'Noto Naskh Arabic', serif; font-style: normal; }
-        .team-photo-sub {
-            font-size: 0.875rem;
-            color: rgba(10,10,10,0.35);
+        .team-photo-caption {
+            position: absolute;
+            left: 2rem; bottom: 1.5rem;
+            color: #fff;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            background: rgba(10,10,10,0.35);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 0.9rem;
+            border-radius: 100px;
         }
+        body.ar .team-photo-caption { left: auto; right: 2rem; letter-spacing: 0; text-transform: none; }
 
         /* Our Story */
         .our-story {
@@ -244,39 +247,75 @@
             font-weight: 300;
         }
 
-        /* Founder cards */
-        .founders { display: flex; flex-direction: column; gap: 2rem; }
-        .founder-card {
+        /* Team block — full width section below story */
+        .team-section {
+            background: var(--paper);
+            padding: 0 clamp(1.5rem, 6vw, 6rem) 6rem;
+        }
+        .team-section-inner {
+            max-width: 1400px; margin: 0 auto;
+            padding-top: 4rem;
+            border-top: 1px solid rgba(10,10,10,0.08);
+        }
+        .team-eyebrow {
+            font-size: 0.75rem; font-weight: 500;
+            color: var(--green);
+            letter-spacing: 0.25em; text-transform: uppercase;
+            margin-bottom: 1.25rem;
+        }
+        .team-heading {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 3rem;
+            max-width: 720px;
+        }
+        body.ar .team-heading { font-family: 'Noto Naskh Arabic', serif; line-height: 1.3; }
+        .team-heading em { font-style: italic; color: var(--green); }
+        body.ar .team-heading em { font-style: normal; }
+
+        .team-grid {
             display: grid;
-            grid-template-columns: 140px 1fr;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem 3rem;
+        }
+        .team-card {
+            display: grid;
+            grid-template-columns: 160px 1fr;
             gap: 1.5rem;
             align-items: start;
         }
-        .founder-avatar {
-            width: 140px; height: 140px;
-            border-radius: 24px;
+        .team-avatar {
+            width: 160px; height: 200px;
+            border-radius: 20px;
+            overflow: hidden;
             background: rgba(10,10,10,0.05);
-            border: 1px dashed rgba(10,10,10,0.15);
-            display: flex; align-items: center; justify-content: center;
-            font-size: 0.72rem;
-            color: rgba(10,10,10,0.35);
             flex-shrink: 0;
+            position: relative;
         }
-        .founder-info h3 {
+        .team-avatar img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+            transition: transform 0.6s cubic-bezier(0.25,1,0.5,1);
+        }
+        .team-card:hover .team-avatar img { transform: scale(1.04); }
+        .team-info h3 {
             font-family: 'DM Sans', sans-serif;
-            font-size: 1.25rem;
+            font-size: 1.2rem;
             font-weight: 500;
             margin-bottom: 0.35rem;
         }
-        body.ar .founder-info h3 { font-family: 'Noto Naskh Arabic', serif; }
-        .founder-role {
+        body.ar .team-info h3 { font-family: 'Noto Naskh Arabic', serif; }
+        .team-role {
             color: var(--green);
-            font-size: 0.9rem;
+            font-size: 0.85rem;
             font-weight: 500;
             margin-bottom: 0.75rem;
         }
-        .founder-bio {
-            font-size: 0.95rem;
+        .team-bio {
+            font-size: 0.92rem;
             color: rgba(10,10,10,0.6);
             line-height: 1.6;
             font-weight: 300;
@@ -285,10 +324,11 @@
             .about-hero-inner { grid-template-columns: 1fr; gap: 2rem; }
             .about-hero-desc { max-width: 100%; margin-left: 0; }
             .our-story-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .team-grid { grid-template-columns: 1fr; gap: 2rem; }
         }
         @media (max-width: 520px) {
-            .founder-card { grid-template-columns: 1fr; }
-            .founder-avatar { width: 100%; height: 120px; }
+            .team-card { grid-template-columns: 1fr; }
+            .team-avatar { width: 100%; height: 240px; }
         }
 
         /* Values strip */
@@ -511,7 +551,7 @@
             </h1>
         </div>
         <div>
-            <div class="about-hero-num">02</div>
+            <div class="about-hero-num">04</div>
             <p class="about-hero-desc" data-en="Founded in Doha, Qatar. We're on a mission to make climate action accessible, verified, and rewarding for every student in the country."
                data-ar="تأسست في الدوحة، قطر. مهمتنا هي جعل العمل المناخي متاحًا وموثقًا ومُجزيًا لكل طالب في البلاد.">
                 Founded in Doha, Qatar. We're on a mission to make climate action accessible, verified, and rewarding for every student in the country.
@@ -521,18 +561,17 @@
 </section>
 <div class="about-scoop"></div>
 
-<!-- Team photo placeholder -->
+<!-- Team photo -->
 <section class="team-photo-wrap">
     <div class="team-photo reveal">
-        <div class="team-photo-icon">📸</div>
-        <div class="team-photo-title" data-en="Smile! We're camera shy…" data-ar="ابتسم! نحن نخجل من الكاميرا…">Smile! We're camera shy…</div>
-        <div class="team-photo-sub" data-en="Team photo coming soon ✨" data-ar="صورة الفريق قريبًا ✨">Team photo coming soon ✨</div>
+        <img src="DSC_5345.jpg" alt="EcoAwareness team & community">
+        <div class="team-photo-caption" data-en="The EcoAwareness community" data-ar="مجتمع الوعي البيئي">The EcoAwareness community</div>
     </div>
 </section>
 
 <!-- Our Story -->
 <section class="our-story">
-    <div class="our-story-grid">
+    <div class="our-story-grid" style="grid-template-columns: 1fr; max-width: 880px;">
         <div class="reveal">
             <div class="story-eyebrow" data-en="Our story" data-ar="قصتنا">Our story</div>
             <h2>
@@ -554,26 +593,73 @@
                 </p>
             </div>
         </div>
-        <div class="founders reveal">
-            <div class="founder-card">
-                <div class="founder-avatar" data-en="Coming soon" data-ar="قريبًا">Coming soon</div>
-                <div class="founder-info">
-                    <h3 data-en="Founder" data-ar="المؤسس">Founder</h3>
-                    <div class="founder-role" data-en="Co-Founder &amp; CEO" data-ar="شريك مؤسس والرئيس التنفيذي">Co-Founder &amp; CEO</div>
-                    <p class="founder-bio" data-en="Leading EcoAwareness's vision to unify climate action for students across Qatar."
-                       data-ar="يقود رؤية الوعي البيئي لتوحيد العمل المناخي للطلاب في جميع أنحاء قطر.">
-                        Leading EcoAwareness's vision to unify climate action for students across Qatar.
+    </div>
+</section>
+
+<!-- Team -->
+<section class="team-section">
+    <div class="team-section-inner">
+        <div class="reveal">
+            <div class="team-eyebrow" data-en="The team" data-ar="الفريق">The team</div>
+            <h2 class="team-heading">
+                <span data-en="Four students," data-ar="أربعة طلاب،">Four students,</span>
+                <em data-en="one mission.">one mission.</em>
+            </h2>
+        </div>
+        <div class="team-grid">
+            <div class="team-card reveal">
+                <div class="team-avatar">
+                    <img src="assets/elfatih.jpg" alt="Mohamed Elfatih"
+                         onerror="this.onerror=null;this.src='assets/DSC_2823.jpg';">
+                </div>
+                <div class="team-info">
+                    <h3 data-en="Mohamed Elfatih" data-ar="محمد الفاتح">Mohamed Elfatih</h3>
+                    <div class="team-role" data-en="Founder &amp; CEO" data-ar="المؤسس والرئيس التنفيذي">Founder &amp; CEO</div>
+                    <p class="team-bio" data-en="The one who believed first. Mohamed isn't the deepest specialist in any single lane — he's the person who sees how all of them fit together. He brought the team, holds the vision, and keeps the relentless belief that Qatari students deserve better than scattered WhatsApp groups and lost volunteer hours."
+                       data-ar="هو من آمن أولاً. محمد ليس المتخصص الأعمق في مجال واحد — إنه الشخص الذي يرى كيف تتناسب جميعها معًا. جمع الفريق، ويحمل الرؤية، ويحافظ على الإيمان الدؤوب بأن الطلاب القطريين يستحقون أفضل من مجموعات واتساب المتناثرة وساعات التطوع الضائعة.">
+                        The one who believed first. Mohamed isn't the deepest specialist in any single lane — he's the person who sees how all of them fit together. He brought the team, holds the vision, and keeps the relentless belief that Qatari students deserve better than scattered WhatsApp groups and lost volunteer hours.
                     </p>
                 </div>
             </div>
-            <div class="founder-card">
-                <div class="founder-avatar" data-en="Coming soon" data-ar="قريبًا">Coming soon</div>
-                <div class="founder-info">
-                    <h3 data-en="Co-Founder" data-ar="شريك مؤسس">Co-Founder</h3>
-                    <div class="founder-role" data-en="Co-Founder &amp; COO" data-ar="شريك مؤسس والرئيس التشغيلي">Co-Founder &amp; COO</div>
-                    <p class="founder-bio" data-en="Building the partnerships and operations that power the EcoAwareness ecosystem."
-                       data-ar="يبني الشراكات والعمليات التي تقود نظام الوعي البيئي.">
-                        Building the partnerships and operations that power the EcoAwareness ecosystem.
+
+            <div class="team-card reveal">
+                <div class="team-avatar">
+                    <img src="assets/Firas.jpeg" alt="Mohamed Firas">
+                </div>
+                <div class="team-info">
+                    <h3 data-en="Mohamed Firas" data-ar="محمد فراس">Mohamed Firas</h3>
+                    <div class="team-role" data-en="Head of Media &amp; Brand" data-ar="رئيس الإعلام والعلامة التجارية">Head of Media &amp; Brand</div>
+                    <p class="team-bio" data-en="Turns the platform into stories students actually want to share. Runs EcoAwareness's content, social, and the trend-watching that keeps us speaking the language of Qatar's youth instead of talking at them."
+                       data-ar="يحول المنصة إلى قصص يريد الطلاب مشاركتها فعلاً. يدير محتوى الوعي البيئي ووسائل التواصل الاجتماعي ومتابعة الاتجاهات التي تبقينا نتحدث بلغة شباب قطر بدلاً من مخاطبتهم من الأعلى.">
+                        Turns the platform into stories students actually want to share. Runs EcoAwareness's content, social, and the trend-watching that keeps us speaking the language of Qatar's youth instead of talking at them.
+                    </p>
+                </div>
+            </div>
+
+            <div class="team-card reveal">
+                <div class="team-avatar">
+                    <img src="assets/ahmed.jpg.jpeg" alt="Ahmed">
+                </div>
+                <div class="team-info">
+                    <h3 data-en="Ahmed" data-ar="أحمد">Ahmed</h3>
+                    <div class="team-role" data-en="Head of Tech" data-ar="رئيس التقنية">Head of Tech</div>
+                    <p class="team-bio" data-en="Ships the product. Every feature, every line of code, every late-night deploy that keeps EcoAwareness running is Ahmed's doing. If it works on your phone, it's because he stayed up making sure it does."
+                       data-ar="هو من يُنتج المنتج. كل ميزة، كل سطر من التعليمات البرمجية، كل نشر في وقت متأخر من الليل يجعل الوعي البيئي يعمل هو من فعل أحمد. إذا كان يعمل على هاتفك، فذلك لأنه سهر للتأكد من أنه يعمل.">
+                        Ships the product. Every feature, every line of code, every late-night deploy that keeps EcoAwareness running is Ahmed's doing. If it works on your phone, it's because he stayed up making sure it does.
+                    </p>
+                </div>
+            </div>
+
+            <div class="team-card reveal">
+                <div class="team-avatar">
+                    <img src="assets/mishal.jpg.jpeg" alt="Mohamed Mishal">
+                </div>
+                <div class="team-info">
+                    <h3 data-en="Mohamed Mishal" data-ar="محمد مشعل">Mohamed Mishal</h3>
+                    <div class="team-role" data-en="Head of Ideas" data-ar="رئيس الأفكار">Head of Ideas</div>
+                    <p class="team-bio" data-en="The one who walks in with the wild idea that turns out to be exactly right. Drives product direction and creative thinking — when a feature feels smart instead of obvious, there's a good chance Mishal said it first."
+                       data-ar="هو من يأتي بالفكرة الجريئة التي تتضح أنها الصواب بالضبط. يقود اتجاه المنتج والتفكير الإبداعي — عندما تبدو الميزة ذكية بدلاً من واضحة، فهناك احتمال كبير أن مشعل قالها أولاً.">
+                        The one who walks in with the wild idea that turns out to be exactly right. Drives product direction and creative thinking — when a feature feels smart instead of obvious, there's a good chance Mishal said it first.
                     </p>
                 </div>
             </div>
