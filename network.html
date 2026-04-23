@@ -365,56 +365,55 @@
             });
         });
     </script>
+<style>
+    #page-transition {
+        position: fixed; inset: 0; z-index: 9999;
+        background: #1a5c38;
+        display: flex; align-items: center; justify-content: center;
+        opacity: 1;
+        transition: opacity 550ms cubic-bezier(0.4, 0, 0.2, 1);
+        pointer-events: none;
+        will-change: opacity;
+    }
+    #transition-logo {
+        width: 4.5rem; height: 4.5rem;
+        transform: scale(0.92);
+        transition: transform 650ms cubic-bezier(0.25, 1, 0.5, 1);
+        will-change: transform;
+    }
+    #page-transition.leaving #transition-logo { transform: scale(1.08); }
+</style>
 <!-- Page Transition Overlay -->
-<div id="page-transition" style="position: fixed; inset: 0; z-index: 9999; background-color: white; display: flex; align-items: center; justify-content: center; opacity: 1; transition: all 400ms ease-out; pointer-events: none;">
-    <div id="transition-logo" style="width: 5rem; height: 5rem; display: flex; align-items: center; justify-content: center; transform: scale(1); transition: transform 500ms;">
-        <img src="assets/IMG.PNG" alt="EcoAwareness Logo" style="width: 100%; height: 100%; object-fit: contain;">
-    </div>
+<div id="page-transition">
+    <img id="transition-logo" src="assets/IMG.PNG" alt="EcoAwareness" style="width:100%;height:100%;object-fit:contain;">
 </div>
 
 <script>
     document.addEventListener('DOMContentLoaded', () => {
         const overlay = document.getElementById('page-transition');
         const logo = document.getElementById('transition-logo');
-        
-        // 1. On Page Load: Smoothly fade the overlay out
+        if (!overlay || !logo) return;
+
         requestAnimationFrame(() => {
             overlay.style.opacity = '0';
+            logo.style.transform = 'scale(1)';
         });
 
-        // 2. On Link Click: Intercept navigation
         document.querySelectorAll('a').forEach(link => {
             link.addEventListener('click', function(e) {
                 const targetUrl = this.getAttribute('href');
                 const targetAttr = this.getAttribute('target');
-
-                // Ignore empty links, anchor links, external links, or target="_blank"
-                if (!targetUrl || 
-                    targetUrl.startsWith('#') || 
-                    targetUrl.startsWith('mailto:') || 
-                    targetUrl.startsWith('tel:') || 
-                    targetAttr === '_blank' ||
-                    (this.hostname !== window.location.hostname && this.hostname !== '')) {
-                    return;
-                }
-
-                // Stop the instant jump
+                if (!targetUrl || targetUrl.startsWith('#') || targetUrl.startsWith('mailto:') || targetUrl.startsWith('tel:') || targetUrl.startsWith('javascript:') || targetAttr === '_blank' || (this.hostname && this.hostname !== window.location.hostname)) return;
                 e.preventDefault();
-                
-                // Fade the white overlay and scale the logo
+                overlay.classList.add('leaving');
                 overlay.style.opacity = '1';
-                logo.style.transform = 'scale(1.1)';
-
-                // Wait exactly 400ms, and then trigger the page load
-                setTimeout(() => {
-                    window.location.href = targetUrl;
-                }, 400);
+                setTimeout(() => { window.location.href = targetUrl; }, 450);
             });
         });
 
-        // Safari/iOS back button fix (BFCache)
         window.addEventListener('pageshow', (event) => {
             if (event.persisted) {
+                overlay.classList.remove('leaving');
                 overlay.style.opacity = '0';
                 logo.style.transform = 'scale(1)';
             }
