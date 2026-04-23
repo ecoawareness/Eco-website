@@ -3,202 +3,460 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Create Account — EcoHub</title>
-    
+    <title>Create Account — EcoAwareness</title>
+
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin="">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
-    
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@300;400;500;600;700&family=Instrument+Serif:ital@0;1&display=swap" rel="stylesheet">
+
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script src="https://unpkg.com/lucide@latest"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-    
+
     <style>
-        body { font-family: 'Inter', sans-serif; }
+        :root {
+            --green: #1a5c38;
+            --green-dark: #0d3a22;
+            --green-light: #247a4a;
+            --lime: #a8e063;
+            --ink: #111;
+            --paper: #f5f0e8;
+        }
+        * { box-sizing: border-box; }
+        html, body { margin: 0; padding: 0; }
+        body {
+            font-family: 'DM Sans', system-ui, sans-serif;
+            color: var(--ink);
+            background: #fff;
+            -webkit-font-smoothing: antialiased;
+        }
+        .serif { font-family: 'Instrument Serif', Georgia, serif; }
 
-        .input-field {
-            width: 100%;
-            padding: 0.875rem 1.25rem;
-            border-radius: 9999px;
-            border: 1px solid rgba(229,231,235,0.8);
-            background: white;
-            box-shadow: 0 1px 2px rgba(0,0,0,0.04);
-            font-size: 1rem;
-            transition: all 0.2s;
-            outline: none;
-            color: #111827;
-        }
-        .input-field::placeholder { color: #9ca3af; }
-        .input-field:focus {
-            border-color: #16a34a;
-            box-shadow: 0 0 0 3px rgba(22,163,74,0.12);
-        }
-        .input-field.error {
-            border-color: #ef4444;
-            box-shadow: 0 0 0 3px rgba(239,68,68,0.1);
-        }
+        /* ── SPLIT LAYOUT ── */
+        .auth-layout { display: flex; min-height: 100vh; background: var(--green-dark); }
 
-        /* Toast */
-        #toast {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%) translateY(20px);
-            opacity: 0;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            z-index: 9000;
+        /* LEFT — DARK BRAND PANEL */
+        .brand-panel {
+            flex: 1; min-width: 0; position: relative; overflow: hidden;
+            background:
+                radial-gradient(ellipse 80% 60% at 20% 110%, rgba(168,224,99,0.14) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 50% at 100% 0%, rgba(168,224,99,0.08) 0%, transparent 55%),
+                linear-gradient(160deg, #0b2d1c 0%, #071a11 60%, #04110a 100%);
+            color: #fff;
+            padding: 2.5rem 3rem 2.5rem;
+            display: flex; flex-direction: column; justify-content: space-between;
+        }
+        .brand-panel::before {
+            content: ''; position: absolute; inset: 0;
+            background-image:
+                linear-gradient(rgba(255,255,255,0.04) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255,255,255,0.04) 1px, transparent 1px);
+            background-size: 52px 52px;
+            mask-image: radial-gradient(ellipse 100% 80% at 50% 50%, black 40%, transparent 85%);
+            -webkit-mask-image: radial-gradient(ellipse 100% 80% at 50% 50%, black 40%, transparent 85%);
             pointer-events: none;
         }
-        #toast.show {
-            opacity: 1;
-            transform: translateX(-50%) translateY(0);
+        .brand-panel > * { position: relative; z-index: 1; }
+
+        .brand-logo {
+            display: inline-flex; align-items: center; gap: 0.55rem;
+            font-family: 'Instrument Serif', serif; font-style: italic; font-size: 1.4rem;
+            color: #fff; letter-spacing: -0.01em; text-decoration: none;
+        }
+        .brand-logo-dot {
+            width: 9px; height: 9px; background: var(--lime); border-radius: 50%;
+            box-shadow: 0 0 18px rgba(168,224,99,0.55);
         }
 
-        /* Button loading spinner */
+        .brand-eyebrow {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            font-size: 0.72rem; font-weight: 600; color: var(--lime);
+            letter-spacing: 0.16em; text-transform: uppercase;
+            margin-bottom: 1.4rem;
+        }
+        .brand-eyebrow::before { content: ''; width: 24px; height: 1px; background: var(--lime); }
+
+        .brand-headline {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(2.4rem, 4.2vw, 3.8rem);
+            line-height: 1.05; letter-spacing: -0.02em;
+            color: #fff; margin: 0 0 1.4rem; max-width: 520px;
+        }
+        .brand-headline em { font-style: italic; color: var(--lime); }
+
+        .brand-sub {
+            font-size: 1rem; line-height: 1.65; font-weight: 300;
+            color: rgba(255,255,255,0.64); max-width: 440px;
+        }
+
+        .brand-social {
+            display: flex; align-items: center; gap: 0.85rem;
+            margin-top: 2.2rem;
+        }
+        .brand-avatars { display: flex; }
+        .brand-avatar {
+            width: 38px; height: 38px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: #fff; font-weight: 600; font-size: 0.78rem;
+            border: 2.5px solid #071a11;
+            margin-left: -10px;
+        }
+        .brand-avatar:first-child { margin-left: 0; }
+        .brand-avatar.a1 { background: #c4622d; }
+        .brand-avatar.a2 { background: #4a7c20; }
+        .brand-avatar.a3 { background: var(--green-light); }
+        .brand-avatar.a4 { background: var(--lime); color: var(--green-dark); }
+        .brand-social-text {
+            font-size: 0.8rem; color: rgba(255,255,255,0.55);
+        }
+        .brand-social-text strong { color: #fff; font-weight: 600; }
+
+        .brand-footer {
+            font-size: 0.7rem; color: rgba(255,255,255,0.28);
+            letter-spacing: 0.04em;
+        }
+
+        /* RIGHT — WHITE FORM PANEL with curved left edge */
+        .form-panel {
+            flex: 1; min-width: 0; background: #fff;
+            border-radius: 40px 0 0 40px;
+            padding: 3rem clamp(1.5rem, 5vw, 4rem);
+            display: flex; align-items: center; justify-content: center;
+            position: relative;
+            overflow-y: auto;
+        }
+        .form-inner { width: 100%; max-width: 480px; }
+
+        .back-link {
+            position: absolute; top: 1.5rem; left: clamp(1.5rem, 5vw, 3rem);
+            display: inline-flex; align-items: center; gap: 0.35rem;
+            font-size: 0.82rem; color: rgba(0,0,0,0.5); text-decoration: none;
+            transition: color 0.2s;
+        }
+        .back-link:hover { color: var(--green); }
+
+        .form-eyebrow {
+            font-size: 0.72rem; font-weight: 600; color: var(--green);
+            letter-spacing: 0.16em; text-transform: uppercase;
+            margin-bottom: 0.85rem;
+        }
+        .form-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(2.2rem, 4vw, 2.9rem);
+            line-height: 1.1; letter-spacing: -0.02em;
+            margin: 0 0 0.55rem;
+        }
+        .form-title em { font-style: italic; color: var(--green); }
+        .form-subtitle {
+            font-size: 0.95rem; color: rgba(0,0,0,0.5); line-height: 1.55;
+            margin-bottom: 2rem; font-weight: 300;
+        }
+
+        /* ── INPUTS ── */
+        .field-group { margin-bottom: 1rem; }
+        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.75rem; }
+        .field-label {
+            display: block; font-size: 0.7rem; font-weight: 600;
+            color: rgba(0,0,0,0.55); letter-spacing: 0.08em;
+            text-transform: uppercase; margin: 0 0 0.45rem 0.25rem;
+        }
+        .input-field {
+            width: 100%;
+            padding: 0.85rem 1.1rem;
+            border-radius: 100px;
+            border: 1px solid rgba(0,0,0,0.1);
+            background: var(--paper);
+            font-size: 0.9rem;
+            font-family: 'DM Sans', sans-serif;
+            color: var(--ink);
+            transition: all 0.2s;
+            outline: none;
+        }
+        .input-field::placeholder { color: rgba(0,0,0,0.32); }
+        .input-field:focus {
+            border-color: var(--green);
+            background: #fff;
+            box-shadow: 0 0 0 3px rgba(26,92,56,0.1);
+        }
+        .input-field.error {
+            border-color: #d64545;
+            box-shadow: 0 0 0 3px rgba(214,69,69,0.08);
+        }
+        .input-wrap { position: relative; display: flex; align-items: center; }
+        .input-wrap .input-field { padding-right: 2.85rem; }
+        .eye-toggle {
+            position: absolute; right: 1rem; background: none; border: none;
+            color: rgba(0,0,0,0.32); cursor: pointer; padding: 4px;
+            transition: color 0.2s;
+        }
+        .eye-toggle:hover { color: var(--green); }
+
+        .field-error {
+            font-size: 0.72rem; color: #d64545; margin-top: 0.4rem;
+            margin-left: 1rem; display: none;
+        }
+        .field-error.visible { display: block; }
+
+        /* Password strength */
+        .strength-bars { display: none; margin-top: 0.55rem; padding: 0 0.5rem; }
+        .strength-bars.visible { display: block; }
+        .strength-bar-row { display: flex; gap: 4px; margin-bottom: 0.35rem; }
+        .strength-bar {
+            height: 3px; border-radius: 99px; flex: 1;
+            background: rgba(0,0,0,0.08); transition: background 0.3s;
+        }
+        .strength-text { font-size: 0.7rem; color: rgba(0,0,0,0.45); }
+
+        /* Terms */
+        .terms-row {
+            display: flex; align-items: flex-start; gap: 0.6rem;
+            margin: 1rem 0 1.25rem; font-size: 0.82rem;
+            color: rgba(0,0,0,0.6); line-height: 1.55;
+        }
+        .terms-row input[type="checkbox"] {
+            width: 18px; height: 18px; margin-top: 2px; flex-shrink: 0;
+            accent-color: var(--green); cursor: pointer;
+        }
+        .terms-row a {
+            color: var(--green); font-weight: 500; text-decoration: none;
+            border-bottom: 1px solid rgba(26,92,56,0.25);
+            transition: border-color 0.2s;
+        }
+        .terms-row a:hover { border-bottom-color: var(--green); }
+
+        /* Buttons */
+        .btn-primary {
+            width: 100%; display: inline-flex; align-items: center; justify-content: center;
+            gap: 0.5rem; background: var(--green); color: #fff;
+            padding: 0.95rem 1.5rem; border: none; border-radius: 100px;
+            font-family: 'DM Sans', sans-serif; font-size: 0.95rem; font-weight: 500;
+            cursor: pointer; transition: all 0.2s;
+            box-shadow: 0 4px 14px rgba(26,92,56,0.18);
+        }
+        .btn-primary:hover:not(:disabled) {
+            background: var(--green-light);
+            transform: translateY(-1px);
+            box-shadow: 0 6px 20px rgba(26,92,56,0.28);
+        }
+        .btn-primary:disabled { opacity: 0.6; cursor: not-allowed; }
+
         .btn-spinner {
-            display: inline-block;
-            width: 18px;
-            height: 18px;
-            border: 2px solid rgba(255,255,255,0.4);
-            border-top-color: white;
-            border-radius: 50%;
-            animation: spin 0.7s linear infinite;
-            vertical-align: middle;
-            margin-right: 8px;
+            display: inline-block; width: 16px; height: 16px;
+            border: 2px solid rgba(255,255,255,0.35); border-top-color: #fff;
+            border-radius: 50%; animation: spin 0.7s linear infinite;
         }
         @keyframes spin { to { transform: rotate(360deg); } }
 
-        /* Password strength bar */
-        .strength-bar {
-            height: 3px;
-            border-radius: 99px;
-            transition: all 0.3s ease;
+        .divider-row {
+            display: flex; align-items: center; gap: 0.9rem;
+            margin: 1.5rem 0; font-size: 0.74rem; color: rgba(0,0,0,0.35);
+        }
+        .divider-row::before,
+        .divider-row::after {
+            content: ''; flex: 1; height: 1px; background: rgba(0,0,0,0.08);
+        }
+
+        .btn-google {
+            width: 100%; display: inline-flex; align-items: center; justify-content: center;
+            gap: 0.65rem; background: #fff; color: var(--ink);
+            padding: 0.9rem 1.5rem; border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 100px; font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem; font-weight: 500; cursor: pointer;
+            transition: all 0.2s;
+        }
+        .btn-google:hover { background: var(--paper); border-color: rgba(0,0,0,0.18); }
+
+        .form-foot {
+            text-align: center; margin-top: 1.75rem;
+            font-size: 0.88rem; color: rgba(0,0,0,0.5);
+        }
+        .form-foot a { color: var(--green); font-weight: 600; text-decoration: none; }
+        .form-foot a:hover { text-decoration: underline; }
+
+        /* Toast */
+        #toast {
+            position: fixed; bottom: 2rem; left: 50%;
+            transform: translateX(-50%) translateY(20px); opacity: 0;
+            transition: all 0.3s cubic-bezier(0.34,1.56,0.64,1);
+            z-index: 9000; pointer-events: none;
+        }
+        #toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+        #toast-inner {
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            padding: 0.8rem 1.2rem; border-radius: 100px;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.18);
+            font-size: 0.85rem; font-weight: 500;
+        }
+        #toast-inner.ok { background: #0d3a22; color: #fff; }
+        #toast-inner.err { background: #fee; color: #a33; border: 1px solid #fbb; }
+
+        /* Responsive */
+        @media (max-width: 960px) {
+            .auth-layout { flex-direction: column; }
+            .brand-panel {
+                padding: 2rem 1.75rem 3rem;
+                min-height: auto;
+            }
+            .brand-headline { font-size: 2rem; margin-bottom: 0.9rem; }
+            .brand-sub { font-size: 0.9rem; }
+            .brand-social { margin-top: 1.5rem; }
+            .brand-footer { display: none; }
+            .form-panel {
+                border-radius: 32px 32px 0 0;
+                margin-top: -24px;
+                padding: 2.5rem 1.75rem 3rem;
+            }
+            .back-link { top: 1rem; left: 1.5rem; color: rgba(255,255,255,0.7); }
+            .back-link:hover { color: var(--lime); }
+        }
+        @media (max-width: 500px) {
+            .field-row { grid-template-columns: 1fr; gap: 0.6rem; }
+            .brand-headline { font-size: 1.75rem; }
+            .form-title { font-size: 1.9rem; }
+        }
+
+        /* Page transition */
+        #page-transition {
+            position: fixed; inset: 0; z-index: 9999;
+            background: var(--green-dark);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 1; transition: opacity 400ms ease-out; pointer-events: none;
         }
     </style>
 </head>
-<body class="bg-white text-gray-900 antialiased selection:bg-[#16a34a]/20 selection:text-[#16a34a]">
+<body>
 
-    <!-- Toast Notification -->
-    <div id="toast">
-        <div id="toast-inner" class="flex items-center gap-3 px-5 py-3.5 rounded-full shadow-lg text-sm font-medium">
-        </div>
-    </div>
+    <!-- Toast -->
+    <div id="toast"><div id="toast-inner"></div></div>
 
-    <div class="flex min-h-screen">
-        
-        <!-- LEFT: Form Panel -->
-        <div class="w-full lg:w-1/2 flex flex-col relative px-6 py-12 sm:px-12 lg:px-20 justify-center">
-            
-            <div class="absolute top-8 left-6 sm:left-12 lg:left-20">
-                <a href="index.html" class="flex items-center gap-2 text-base text-gray-500 hover:text-gray-900 transition-colors duration-200">
-                    <iconify-icon icon="solar:alt-arrow-left-linear" class="text-xl"></iconify-icon>
-                    Back to home
+    <div class="auth-layout">
+
+        <!-- LEFT — DARK BRAND PANEL -->
+        <aside class="brand-panel">
+            <div>
+                <a href="index.html" class="brand-logo">
+                    <span class="brand-logo-dot"></span>
+                    EcoAwareness
                 </a>
             </div>
 
-            <div class="w-full max-w-[440px] mx-auto mt-12 lg:mt-0">
-                
-                <div class="mb-10">
-                    <h1 class="text-3xl sm:text-4xl font-semibold tracking-tight text-gray-900 mb-3">Create Account</h1>
-                    <p class="text-lg text-gray-500 font-light">Join hundreds of youth across Qatar driving sustainable action.</p>
+            <div>
+                <div class="brand-eyebrow">Your climate journey starts here</div>
+                <h2 class="brand-headline">
+                    Join Qatar's <em>climate generation.</em>
+                </h2>
+                <p class="brand-sub">
+                    Opportunities, events, and a network of young Qataris building a greener future — matched to you, not mass-blasted to everyone.
+                </p>
+
+                <div class="brand-social">
+                    <div class="brand-avatars">
+                        <div class="brand-avatar a1">A</div>
+                        <div class="brand-avatar a2">M</div>
+                        <div class="brand-avatar a3">S</div>
+                        <div class="brand-avatar a4">J</div>
+                    </div>
+                    <div class="brand-social-text">
+                        Joined by <strong>2,500+</strong> climate actors already
+                    </div>
+                </div>
+            </div>
+
+            <div class="brand-footer">© 2025 EcoAwareness. All rights reserved.</div>
+        </aside>
+
+        <!-- RIGHT — FORM PANEL -->
+        <main class="form-panel">
+            <a href="index.html" class="back-link">
+                <iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon>
+                Back to home
+            </a>
+
+            <div class="form-inner">
+                <div class="form-eyebrow">Create Account</div>
+                <h1 class="form-title">Get <em>Started.</em></h1>
+                <p class="form-subtitle">Welcome to EcoAwareness — let's get you set up.</p>
+
+                <div class="field-row">
+                    <div class="field-group">
+                        <label class="field-label">First Name</label>
+                        <input id="firstName" type="text" class="input-field" placeholder="Mohammed" autocomplete="given-name">
+                        <p class="field-error" id="firstName-error"></p>
+                    </div>
+                    <div class="field-group">
+                        <label class="field-label">Last Name</label>
+                        <input id="lastName" type="text" class="input-field" placeholder="Al-Fatih" autocomplete="family-name">
+                        <p class="field-error" id="lastName-error"></p>
+                    </div>
                 </div>
 
-                <!-- Form -->
-                <div class="space-y-5">
-                    
-                    <div class="flex flex-col sm:flex-row gap-5">
-                        <div class="w-full">
-                            <label class="block text-sm font-medium text-gray-700 mb-1.5 ml-1">First Name</label>
-                            <input id="firstName" type="text" placeholder="First name" class="input-field">
-                            <p id="firstName-error" class="hidden mt-1.5 ml-1 text-xs text-red-500"></p>
-                        </div>
-                        <div class="w-full">
-                            <label class="block text-sm font-medium text-gray-700 mb-1.5 ml-1">Last Name</label>
-                            <input id="lastName" type="text" placeholder="Last name" class="input-field">
-                            <p id="lastName-error" class="hidden mt-1.5 ml-1 text-xs text-red-500"></p>
-                        </div>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1.5 ml-1">Email Address</label>
-                        <input id="email" type="email" placeholder="Enter your email address" class="input-field">
-                        <p id="email-error" class="hidden mt-1.5 ml-1 text-xs text-red-500"></p>
-                    </div>
-
-                    <div>
-                        <label class="block text-sm font-medium text-gray-700 mb-1.5 ml-1">Password</label>
-                        <div class="relative flex items-center">
-                            <input id="password" type="password" placeholder="Create a password (min 6 characters)" class="input-field pr-12">
-                            <button type="button" id="togglePassword" class="absolute right-4 text-gray-400 hover:text-gray-600 transition-colors p-1" aria-label="Toggle password visibility">
-                                <i data-lucide="eye" class="w-5 h-5" stroke-width="1.5"></i>
-                            </button>
-                        </div>
-                        <!-- Password strength indicator -->
-                        <div id="strength-bars" class="hidden mt-2.5 ml-1">
-                            <div class="flex gap-1.5 mb-1">
-                                <div class="strength-bar flex-1 bg-gray-200" id="bar1"></div>
-                                <div class="strength-bar flex-1 bg-gray-200" id="bar2"></div>
-                                <div class="strength-bar flex-1 bg-gray-200" id="bar3"></div>
-                                <div class="strength-bar flex-1 bg-gray-200" id="bar4"></div>
-                            </div>
-                            <p id="strength-text" class="text-xs text-gray-400"></p>
-                        </div>
-                        <p id="password-error" class="hidden mt-1.5 ml-1 text-xs text-red-500"></p>
-                    </div>
-
-                    <p class="text-sm text-gray-500 pt-1">
-                        By creating an account, you agree to our Terms of Service and Privacy Policy.
-                    </p>
-
-                    <button id="signupBtn" type="button" class="w-full bg-[#16a34a] hover:bg-[#15803d] text-white font-medium py-3.5 rounded-full transition-all duration-200 text-base shadow-sm hover:shadow mt-2">
-                        Create Account
-                    </button>
-
+                <div class="field-group">
+                    <label class="field-label">Email Address</label>
+                    <input id="email" type="email" class="input-field" placeholder="you@example.com" autocomplete="email">
+                    <p class="field-error" id="email-error"></p>
                 </div>
 
-                <div class="flex items-center my-8">
-                    <div class="flex-grow border-t border-gray-100"></div>
-                    <span class="px-4 text-sm text-gray-400">Or continue with</span>
-                    <div class="flex-grow border-t border-gray-100"></div>
+                <div class="field-group">
+                    <label class="field-label">Password</label>
+                    <div class="input-wrap">
+                        <input id="password" type="password" class="input-field" placeholder="At least 6 characters" autocomplete="new-password">
+                        <button type="button" id="togglePassword" class="eye-toggle" aria-label="Toggle password visibility">
+                            <iconify-icon icon="solar:eye-linear" style="font-size:1.15rem"></iconify-icon>
+                        </button>
+                    </div>
+                    <div class="strength-bars" id="strength-bars">
+                        <div class="strength-bar-row">
+                            <div class="strength-bar" id="bar1"></div>
+                            <div class="strength-bar" id="bar2"></div>
+                            <div class="strength-bar" id="bar3"></div>
+                            <div class="strength-bar" id="bar4"></div>
+                        </div>
+                        <div class="strength-text" id="strength-text"></div>
+                    </div>
+                    <p class="field-error" id="password-error"></p>
                 </div>
 
-                <button id="googleSignInBtn" type="button" class="w-full flex items-center justify-center gap-3 bg-white border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium py-3.5 rounded-full transition-all duration-200 text-base shadow-[0_1px_2px_rgba(0,0,0,0.04)] hover:shadow-sm cursor-pointer">
-                    <iconify-icon icon="logos:google-icon" class="text-xl"></iconify-icon>
+                <div class="field-group">
+                    <label class="field-label">Confirm Password</label>
+                    <div class="input-wrap">
+                        <input id="confirmPassword" type="password" class="input-field" placeholder="Re-enter your password" autocomplete="new-password">
+                        <button type="button" id="toggleConfirm" class="eye-toggle" aria-label="Toggle confirm password visibility">
+                            <iconify-icon icon="solar:eye-linear" style="font-size:1.15rem"></iconify-icon>
+                        </button>
+                    </div>
+                    <p class="field-error" id="confirmPassword-error"></p>
+                </div>
+
+                <label class="terms-row">
+                    <input type="checkbox" id="termsCheckbox" checked>
+                    <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</span>
+                </label>
+
+                <button id="signupBtn" type="button" class="btn-primary">
+                    Create Account
+                </button>
+
+                <div class="divider-row">Or continue with</div>
+
+                <button id="googleSignInBtn" type="button" class="btn-google">
+                    <iconify-icon icon="logos:google-icon" style="font-size:1.15rem"></iconify-icon>
                     Continue with Google
                 </button>
 
-                <p class="text-center mt-10 text-base text-gray-500">
-                    Already have an account? <a href="signin.html" class="text-[#16a34a] font-medium hover:text-[#15803d] transition-colors">Sign In</a>
+                <p class="form-foot">
+                    Already have an account? <a href="signin.html">Sign in</a>
                 </p>
-
             </div>
-        </div>
-
-        <!-- RIGHT: Image Panel -->
-        <div class="hidden lg:flex lg:w-1/2 relative bg-gray-900 overflow-hidden">
-            <img src="assets/education city.jpg" alt="Collaborate for Change" class="absolute inset-0 w-full h-full object-cover">
-            <div class="absolute inset-0 bg-gradient-to-t from-[#022c22]/90 via-[#022c22]/30 to-transparent"></div>
-            <div class="relative z-10 flex flex-col justify-end w-full p-16 pb-20">
-                <div class="max-w-xl">
-                    <h2 class="text-4xl font-semibold tracking-tight text-white mb-4">Your Impact Starts Here</h2>
-                    <p class="text-lg text-white/80 leading-relaxed font-light">Join Qatar's leading network discovering opportunities that shape our sustainable future.</p>
-                </div>
-            </div>
-        </div>
+        </main>
 
     </div>
 
     <!-- Page transition overlay -->
-    <div id="page-transition" style="position: fixed; inset: 0; z-index: 9999; background-color: #f5f0e8; display: flex; align-items: center; justify-content: center; opacity: 1; transition: all 400ms ease-out; pointer-events: none;">
-        <div id="transition-logo" style="width: 5rem; height: 5rem; display: flex; align-items: center; justify-content: center; transform: scale(1); transition: transform 500ms;">
-            <img src="assets/IMG.PNG" alt="EcoAwareness Logo" style="width: 100%; height: 100%; object-fit: contain;">
-        </div>
+    <div id="page-transition">
+        <img id="transition-logo" src="assets/IMG.PNG" alt="EcoAwareness"
+             style="width:5rem;height:5rem;object-fit:contain;transition:transform 500ms;">
     </div>
-
-    <script>
-        lucide.createIcons();
-    </script>
 
     <script>
         // ─── Supabase Init ───────────────────────────────────────────
@@ -210,39 +468,40 @@
         function showToast(message, type = 'success') {
             const toast = document.getElementById('toast');
             const inner = document.getElementById('toast-inner');
-            const isSuccess = type === 'success';
-            inner.className = `flex items-center gap-3 px-5 py-3.5 rounded-full shadow-lg text-sm font-medium ${isSuccess ? 'bg-[#022c22] text-white' : 'bg-red-50 text-red-700 border border-red-200'}`;
-            inner.innerHTML = `<iconify-icon icon="${isSuccess ? 'solar:check-circle-linear' : 'solar:danger-circle-linear'}" class="text-xl ${isSuccess ? 'text-[#4ade80]' : 'text-red-500'}"></iconify-icon>${message}`;
+            const isOk = type === 'success';
+            inner.className = isOk ? 'ok' : 'err';
+            inner.innerHTML = `<iconify-icon icon="${isOk ? 'solar:check-circle-linear' : 'solar:danger-circle-linear'}" style="font-size:1.15rem;color:${isOk ? '#a8e063' : '#d64545'}"></iconify-icon>${message}`;
             toast.classList.add('show');
             setTimeout(() => toast.classList.remove('show'), 4000);
         }
 
-        // ─── Field Validation ────────────────────────────────────────
-        function showError(fieldId, message) {
-            const field = document.getElementById(fieldId);
-            const error = document.getElementById(fieldId + '-error');
-            if (field) field.classList.add('error');
-            if (error) { error.textContent = message; error.classList.remove('hidden'); }
+        // ─── Validation helpers ──────────────────────────────────────
+        function showError(id, msg) {
+            const f = document.getElementById(id);
+            const e = document.getElementById(id + '-error');
+            if (f) f.classList.add('error');
+            if (e) { e.textContent = msg; e.classList.add('visible'); }
         }
-        function clearError(fieldId) {
-            const field = document.getElementById(fieldId);
-            const error = document.getElementById(fieldId + '-error');
-            if (field) field.classList.remove('error');
-            if (error) error.classList.add('hidden');
+        function clearError(id) {
+            const f = document.getElementById(id);
+            const e = document.getElementById(id + '-error');
+            if (f) f.classList.remove('error');
+            if (e) e.classList.remove('visible');
         }
         function clearAllErrors() {
-            ['firstName', 'lastName', 'email', 'password'].forEach(clearError);
+            ['firstName','lastName','email','password','confirmPassword'].forEach(clearError);
         }
 
-        // ─── Password Strength ───────────────────────────────────────
+        // ─── Password strength ───────────────────────────────────────
         const passwordInput = document.getElementById('password');
+        const confirmInput = document.getElementById('confirmPassword');
         const strengthBars = document.getElementById('strength-bars');
         const strengthText = document.getElementById('strength-text');
 
         passwordInput.addEventListener('input', () => {
             const val = passwordInput.value;
-            if (!val) { strengthBars.classList.add('hidden'); return; }
-            strengthBars.classList.remove('hidden');
+            if (!val) { strengthBars.classList.remove('visible'); return; }
+            strengthBars.classList.add('visible');
 
             let score = 0;
             if (val.length >= 6) score++;
@@ -250,27 +509,28 @@
             if (/[A-Z]/.test(val) && /[a-z]/.test(val)) score++;
             if (/[0-9!@#$%^&*]/.test(val)) score++;
 
-            const colors = ['bg-red-400', 'bg-orange-400', 'bg-yellow-400', 'bg-[#16a34a]'];
+            const colors = ['#d64545', '#e8a33e', '#d4b93e', '#1a5c38'];
             const labels = ['Weak', 'Fair', 'Good', 'Strong'];
-            const textColors = ['text-red-500', 'text-orange-500', 'text-yellow-600', 'text-[#16a34a]'];
 
             for (let i = 1; i <= 4; i++) {
                 const bar = document.getElementById('bar' + i);
-                bar.className = `strength-bar flex-1 ${i <= score ? colors[score - 1] : 'bg-gray-200'}`;
+                bar.style.background = i <= score ? colors[score - 1] : 'rgba(0,0,0,0.08)';
             }
-            strengthText.className = `text-xs ${textColors[score - 1]}`;
-            strengthText.textContent = labels[score - 1];
+            strengthText.style.color = score ? colors[score - 1] : 'rgba(0,0,0,0.45)';
+            strengthText.textContent = labels[score - 1] || '';
         });
 
-        // ─── Toggle Password Visibility ──────────────────────────────
-        document.getElementById('togglePassword').addEventListener('click', () => {
-            const isPassword = passwordInput.type === 'password';
-            passwordInput.type = isPassword ? 'text' : 'password';
-            document.getElementById('togglePassword').innerHTML = isPassword
-                ? '<i data-lucide="eye-off" class="w-5 h-5" stroke-width="1.5"></i>'
-                : '<i data-lucide="eye" class="w-5 h-5" stroke-width="1.5"></i>';
-            lucide.createIcons();
-        });
+        // ─── Toggle password visibility ──────────────────────────────
+        function wireToggle(toggleId, inputEl) {
+            document.getElementById(toggleId).addEventListener('click', () => {
+                const isPw = inputEl.type === 'password';
+                inputEl.type = isPw ? 'text' : 'password';
+                document.getElementById(toggleId).innerHTML =
+                    `<iconify-icon icon="${isPw ? 'solar:eye-closed-linear' : 'solar:eye-linear'}" style="font-size:1.15rem"></iconify-icon>`;
+            });
+        }
+        wireToggle('togglePassword', passwordInput);
+        wireToggle('toggleConfirm', confirmInput);
 
         // ─── Sign Up ─────────────────────────────────────────────────
         document.getElementById('signupBtn').addEventListener('click', async () => {
@@ -280,16 +540,20 @@
             const lastName = document.getElementById('lastName').value.trim();
             const email = document.getElementById('email').value.trim();
             const password = passwordInput.value;
+            const confirmPassword = confirmInput.value;
+            const termsOk = document.getElementById('termsCheckbox').checked;
 
             let valid = true;
             if (!firstName) { showError('firstName', 'First name is required'); valid = false; }
             if (!lastName) { showError('lastName', 'Last name is required'); valid = false; }
-            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('email', 'Please enter a valid email address'); valid = false; }
-            if (!password || password.length < 6) { showError('password', 'Password must be at least 6 characters'); valid = false; }
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('email', 'Please enter a valid email'); valid = false; }
+            if (!password || password.length < 6) { showError('password', 'At least 6 characters'); valid = false; }
+            if (password && confirmPassword !== password) { showError('confirmPassword', 'Passwords do not match'); valid = false; }
+            if (!termsOk) { showToast('Please agree to the Terms & Privacy Policy', 'error'); valid = false; }
             if (!valid) return;
 
             const btn = document.getElementById('signupBtn');
-            btn.innerHTML = '<span class="btn-spinner"></span> Creating account...';
+            btn.innerHTML = '<span class="btn-spinner"></span>&nbsp;Creating account…';
             btn.disabled = true;
 
             const { data, error } = await supabaseClient.auth.signUp({
@@ -313,21 +577,20 @@
                 return;
             }
 
-            // Check if email confirmation is required
             if (data.user && !data.session) {
-                showToast('Check your email to confirm your account! ✉️', 'success');
-                setTimeout(() => { window.location.href = 'signin.html'; }, 2500);
+                showToast('Check your email to confirm your account ✉️', 'success');
+                setTimeout(() => { window.location.href = 'signin.html'; }, 2200);
             } else {
-                showToast('Account created! Welcome to EcoHub 🌿', 'success');
-                setTimeout(() => { window.location.href = 'dashboard.html'; }, 1500);
+                showToast('Account created! Welcome 🌿', 'success');
+                setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
             }
         });
 
         // ─── Google OAuth ────────────────────────────────────────────
         document.getElementById('googleSignInBtn').addEventListener('click', async () => {
             const btn = document.getElementById('googleSignInBtn');
-            btn.innerHTML = '<iconify-icon icon="logos:google-icon" class="text-xl"></iconify-icon> Connecting to Google...';
-            btn.style.opacity = '0.6';
+            btn.innerHTML = '<span class="btn-spinner" style="border-top-color:#1a5c38;border-color:rgba(0,0,0,0.2)"></span>&nbsp;Connecting…';
+            btn.style.opacity = '0.7';
             btn.style.pointerEvents = 'none';
 
             const { error } = await supabaseClient.auth.signInWithOAuth({
@@ -337,13 +600,13 @@
 
             if (error) {
                 showToast(error.message, 'error');
-                btn.innerHTML = '<iconify-icon icon="logos:google-icon" class="text-xl"></iconify-icon> Continue with Google';
+                btn.innerHTML = '<iconify-icon icon="logos:google-icon" style="font-size:1.15rem"></iconify-icon>Continue with Google';
                 btn.style.opacity = '1';
                 btn.style.pointerEvents = 'auto';
             }
         });
 
-        // ─── Page Transition ─────────────────────────────────────────
+        // ─── Page transition ─────────────────────────────────────────
         document.addEventListener('DOMContentLoaded', () => {
             const overlay = document.getElementById('page-transition');
             const logo = document.getElementById('transition-logo');
