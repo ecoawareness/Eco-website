@@ -37,7 +37,7 @@ export default async function handler(req, res) {
             url: 'https://openrouter.ai/api/v1/chat/completions',
             key: process.env.OPENROUTER_API_KEY,
             extraHeaders: {
-                'HTTP-Referer': 'https://eco-awareness-website.vercel.app',
+                'HTTP-Referer': 'https://ecoawarenessqa.org',
                 'X-Title': 'EcoHub'
             },
             models: [
