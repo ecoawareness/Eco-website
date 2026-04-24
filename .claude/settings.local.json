@@ -1,0 +1,21 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(wc -l /c/Users/moham/Desktop/code/EcoHub/.claude/worktrees/inspiring-napier/*.html)",
+      "WebFetch(domain:www.connectedqa.com)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "Bash(git add *)",
+      "Bash(git commit -m ' *)",
+      "Bash(git push *)",
+      "Bash(git ls-tree *)",
+      "Bash(grep -iE \"\\\\.\\(jpg|jpeg|png|JPG|JPEG|PNG\\)$\")",
+      "Bash(grep -iE \"\\\\.\\(jpg|jpeg|png\\)$\")",
+      "Bash(git fetch *)",
+      "Bash(git pull *)",
+      "Bash(python -c ' *)",
+      "Bash(python \"C:/Users/moham/Desktop/code/EcoHub/.claude/worktrees/inspiring-napier/_strip_ar.py\")",
+      "Bash(python)",
+      "Bash(node -e ' *)"
+    ]
+  }
+}

@@ -496,13 +496,18 @@
         }
         /* Curved top that scoops out of the green CTA */
         .footer-curve {
+            display: block;
+            width: 100%;
+            height: clamp(48px, 7vw, 90px);
             background: var(--green);
-            height: clamp(60px, 10vw, 120px);
-            border-bottom-left-radius: 50% 100%;
-            border-bottom-right-radius: 50% 100%;
-            transform: scaleY(-1);
             position: relative;
             z-index: 1;
+            line-height: 0;
+        }
+        .footer-curve svg {
+            display: block;
+            width: 100%;
+            height: 100%;
         }
         .footer-meta {
             display: flex; justify-content: space-between;
@@ -902,7 +907,7 @@
 
 <!-- FOOTER -->
 <footer>
-    <div class="footer-curve"></div>
+    <div class="footer-curve" aria-hidden="true"><svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,90 C360,-10 1080,-10 1440,90 L1440,90 L0,90 Z" fill="var(--paper)"/></svg></div>
     <div class="footer-meta">
         <div class="meta-addr" data-en="Education City, Doha, Qatar" data-ar="المدينة التعليمية، الدوحة، قطر">Education City, Doha, Qatar</div>
         <div data-en="© 2026 EcoAwareness. All rights reserved." data-ar="© 2026 الوعي البيئي. جميع الحقوق محفوظة.">© 2026 EcoAwareness. All rights reserved.</div>
