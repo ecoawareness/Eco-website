@@ -140,6 +140,7 @@
         /* ── HERO ── */
         .hero {
             min-height: 100vh;
+            min-height: 100dvh;
             display: grid; grid-template-rows: 1fr auto;
             position: relative; overflow: hidden; background: var(--green);
         }
@@ -685,11 +686,13 @@
             .nav-toggle { display: flex; }
             .nav-links {
                 position: fixed; top: 0; right: 0;
-                width: min(320px, 85vw); height: 100vh;
+                width: min(320px, 85vw); height: 100vh; height: 100dvh;
                 background: var(--paper);
                 flex-direction: column; align-items: stretch; justify-content: flex-start;
-                padding: 5rem 2rem 2rem;
+                padding: 5rem 2rem max(2rem, env(safe-area-inset-bottom));
                 gap: 0.4rem;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
                 transform: translateX(100%);
                 transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
                 box-shadow: -8px 0 40px rgba(0,0,0,0.15);
@@ -708,7 +711,7 @@
             .hero-actions { width: 100%; }
             .hero-actions .btn-primary, .hero-actions .btn-ghost { flex: 1; justify-content: center; }
             body.ar #lang-toggle { left: 1rem; right: auto; }
-            #lang-toggle { bottom: 1.25rem; right: 1.25rem; padding: 0.55rem 1rem; font-size: 0.75rem; }
+            #lang-toggle { bottom: max(1.25rem, env(safe-area-inset-bottom)); right: 1.25rem; padding: 0.55rem 1rem; font-size: 0.75rem; }
             .problem-split { grid-template-columns: 1fr !important; gap: 2.5rem; }
             .problem-photo { height: 380px !important; }
         }
