@@ -1165,14 +1165,14 @@
         </div>
         <nav class="sb-nav" data-lenis-prevent>
             <div class="sb-label" data-en="Explore">Explore</div>
-            <button class="sb-item" data-sec="opportunities" onclick="navigate('opportunities')"><iconify-icon icon="solar:compass-linear"></iconify-icon><span data-en="Opportunities">Opportunities</span><span class="sb-badge">24</span></button>
+            <button class="sb-item" data-sec="opportunities" onclick="navigate('opportunities')"><iconify-icon icon="solar:compass-linear"></iconify-icon><span data-en="Opportunities">Opportunities</span><span class="sb-badge" id="sb-badge-opp" style="display:none">0</span></button>
             <button class="sb-item" data-sec="network" onclick="navigate('network')"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon><span data-en="Network">Network</span></button>
             <button class="sb-item" data-sec="resources" onclick="navigate('resources')"><iconify-icon icon="solar:book-linear"></iconify-icon><span data-en="Resources">Resources</span></button>
 
             <div class="sb-label" data-en="My Space">My Space</div>
             <button class="sb-item active" data-sec="home" onclick="navigate('home')"><iconify-icon icon="solar:home-linear"></iconify-icon><span data-en="Dashboard">Dashboard</span></button>
             <button class="sb-item" data-sec="profile" onclick="navigate('profile')"><iconify-icon icon="solar:user-linear"></iconify-icon><span data-en="My Profile">My Profile</span></button>
-            <button class="sb-item" data-sec="events" onclick="navigate('events')"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="My Events">My Events</span><span class="sb-badge">3</span></button>
+            <button class="sb-item" data-sec="events" onclick="navigate('events')"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="My Events">My Events</span><span class="sb-badge" id="sb-badge-events" style="display:none">0</span></button>
             <button class="sb-item" data-sec="impact" onclick="navigate('impact')"><iconify-icon icon="solar:chart-linear"></iconify-icon><span data-en="My Impact">My Impact</span></button>
             <button class="sb-item" data-sec="ecoid" onclick="navigate('ecoid')"><iconify-icon icon="solar:card-linear"></iconify-icon><span data-en="Eco ID">Eco ID</span></button>
 
@@ -1214,7 +1214,7 @@
                     <div class="stat-card a"><div class="stat-icon g"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon></div><div class="stat-num">0</div><div class="stat-label" data-en="Volunteer Hours">Volunteer Hours</div><div class="stat-trend"><span data-en="New account">New account</span></div></div>
                     <div class="stat-card b"><div class="stat-icon l"><iconify-icon icon="solar:leaf-linear"></iconify-icon></div><div class="stat-num">0</div><div class="stat-label" data-en="Events Attended">Events Attended</div><div class="stat-trend"><span data-en="New account">New account</span></div></div>
                     <div class="stat-card c"><div class="stat-icon r"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></div><div class="stat-num">0</div><div class="stat-label" data-en="Orgs Connected">Orgs Connected</div><div class="stat-trend"><span data-en="New account">New account</span></div></div>
-                    <div class="stat-card d"><div class="stat-icon s"><iconify-icon icon="solar:ranking-linear"></iconify-icon></div><div class="stat-num">—</div><div class="stat-label" data-en="Community Rank">Community Rank</div><div class="stat-trend"><span data-en="New account">New account</span></div></div>
+                    <div class="stat-card d" onclick="navigate('events')" style="cursor:pointer"><div class="stat-icon s"><iconify-icon icon="solar:bookmark-linear"></iconify-icon></div><div class="stat-num" id="stat-applications">0</div><div class="stat-label" data-en="My Applications">My Applications</div><div class="stat-trend"><span data-en="Tap to view your events">Tap to view your events</span></div></div>
                 </div>
 
                 <div class="two-col">
@@ -1236,7 +1236,7 @@
 
                 <div class="sh"><h2 class="sh-title" data-en="Quick Actions">Quick Actions</h2></div>
                 <div class="qa-grid">
-                    <div class="qa" onclick="navigate('opportunities')"><div class="qa-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:compass-linear"></iconify-icon></div><div class="qa-text"><h4 data-en="Browse Opportunities">Browse Opportunities</h4><p data-en="24 new events waiting for you">24 new events waiting for you</p></div></div>
+                    <div class="qa" onclick="navigate('opportunities')"><div class="qa-icon" style="background:rgba(26,92,56,0.1);color:var(--green)"><iconify-icon icon="solar:compass-linear"></iconify-icon></div><div class="qa-text"><h4 data-en="Browse Opportunities">Browse Opportunities</h4><p data-en="Volunteer events, workshops & more">Volunteer events, workshops & more</p></div></div>
                     <div class="qa" onclick="navigate('network')"><div class="qa-icon" style="background:rgba(196,98,45,0.1);color:var(--rust)"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></div><div class="qa-text"><h4 data-en="Explore the Network">Explore the Network</h4><p data-en="60+ orgs, clubs & government bodies">60+ orgs, clubs & government bodies</p></div></div>
                     <div class="qa" onclick="navigate('resources')"><div class="qa-icon" style="background:rgba(168,224,99,0.2);color:#4a7c20"><iconify-icon icon="solar:book-linear"></iconify-icon></div><div class="qa-text"><h4 data-en="Learn & Grow">Learn & Grow</h4><p data-en="Playbooks, guides & interviews">Playbooks, guides & interviews</p></div></div>
                     <div class="qa" onclick="openInviteModal()"><div class="qa-icon" style="background:rgba(0,0,0,0.05);color:rgba(0,0,0,0.45)"><iconify-icon icon="solar:share-linear"></iconify-icon></div><div class="qa-text"><h4 data-en="Invite a Friend">Invite a Friend</h4><p data-en="Grow the community together">Grow the community together</p></div></div>
@@ -1266,9 +1266,16 @@
                 </div>
 
                 <!-- ─── OUTSIDE OPPORTUNITIES ─── -->
-                <div class="sh" style="margin:2rem 0 0.85rem"><h2 class="sh-title" style="display:flex;align-items:center;gap:0.5rem"><span style="font-size:1.1em">🌍</span><span data-en="Outside Opportunities">Outside Opportunities</span></h2></div>
-                <p style="font-size:0.78rem;color:rgba(0,0,0,0.45);margin:-0.4rem 0 1rem" data-en="International programs, fellowships and global climate events. Note: Eco ID applies to Qatar opportunities only.">International programs, fellowships and global climate events. Note: Eco ID applies to Qatar opportunities only.</p>
-                <div class="opp-grid" id="opp-grid-outside">
+                <div class="sh" style="margin:2rem 0 0.85rem"><h2 class="sh-title" style="display:flex;align-items:center;gap:0.5rem"><span style="font-size:1.1em">🌍</span><span data-en="Outside Opportunities">Outside Opportunities</span><span style="font-size:0.6rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;background:rgba(196,98,45,0.12);color:var(--rust);padding:0.25rem 0.55rem;border-radius:100px;margin-left:0.4rem" data-en="Coming Soon">Coming Soon</span></h2></div>
+                <p style="font-size:0.78rem;color:rgba(0,0,0,0.45);margin:-0.4rem 0 1rem" data-en="International programs, fellowships and global climate events. Launching soon — we're partnering with global orgs to bring curated outside-Qatar opportunities here.">International programs, fellowships and global climate events. Launching soon — we're partnering with global orgs to bring curated outside-Qatar opportunities here.</p>
+                <div class="opp-grid" id="opp-grid-outside" style="position:relative">
+                    <div style="grid-column:1/-1;border:1px dashed rgba(0,0,0,0.18);border-radius:14px;padding:3rem 1.5rem;text-align:center;background:rgba(245,240,232,0.4)">
+                        <div style="font-size:2rem;margin-bottom:0.5rem">🌍</div>
+                        <h3 style="font-family:'Instrument Serif',serif;font-size:1.4rem;margin-bottom:0.5rem" data-en="Coming soon">Coming soon</h3>
+                        <p style="color:rgba(0,0,0,0.5);font-size:0.88rem;max-width:460px;margin:0 auto;line-height:1.55" data-en="We're curating fellowships, conferences and exchange programs from partners around the world. You'll see them here shortly.">We're curating fellowships, conferences and exchange programs from partners around the world. You'll see them here shortly.</p>
+                    </div>
+                </div>
+                <div class="opp-grid" id="opp-grid-outside-hidden" style="display:none">
                     <div class="opp-card" data-region="outside" data-cat="Education"><div class="oc-top"><span class="otag tedu"><iconify-icon icon="solar:graduation-cap-linear"></iconify-icon><span data-en="Education">Education</span></span><span class="oc-date" data-en="3 days ago">3 days ago</span></div><h3 class="oc-title" data-en="UN Climate Change Youth Fellowship">UN Climate Change Youth Fellowship</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="UNFCCC · Bonn, Germany">UNFCCC · Bonn, Germany</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Apply by Dec 30, 2026">Apply by Dec 30, 2026</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Hybrid · Bonn HQ">Hybrid · Bonn HQ</span></div></div><div class="prog-info"><span class="prog-spots" data-en="6-month program">6-month program</span><span class="prog-status" data-en="Open">Open</span></div><div class="prog-bar"><div class="prog-fill" style="width:35%;background:#3b82f6"></div></div><button class="oc-btn" onclick="openOppModal(this)"><span data-en="View & Apply">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
 
                     <div class="opp-card" data-region="outside" data-cat="Workshops"><div class="oc-top"><span class="otag twor"><iconify-icon icon="solar:presentation-graph-linear"></iconify-icon><span data-en="Conference">Conference</span></span><span class="oc-date" data-en="1 week ago">1 week ago</span></div><h3 class="oc-title" data-en="COP31 Youth Delegate Program">COP31 Youth Delegate Program</h3><div class="oc-org"><iconify-icon icon="solar:buildings-linear"></iconify-icon><span data-en="UNFCCC · Türkiye 2026">UNFCCC · Türkiye 2026</span></div><div class="oc-meta"><div class="oc-meta-item"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="Nov 09 – Nov 21, 2026">Nov 09 – Nov 21, 2026</span></div><div class="oc-meta-item"><iconify-icon icon="solar:map-point-linear"></iconify-icon><span data-en="Antalya, Türkiye">Antalya, Türkiye</span></div></div><div class="prog-info"><span class="prog-spots" data-en="Travel grant included">Travel grant included</span><span class="prog-status" data-en="High Demand">High Demand</span></div><div class="prog-bar"><div class="prog-fill" style="width:80%;background:#1a5c38"></div></div><button class="oc-btn" onclick="openOppModal(this)"><span data-en="View & Apply">View & Apply</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div>
@@ -1487,7 +1494,7 @@
                         <div class="p-stats">
                             <div class="p-stat"><div class="p-stat-num">0</div><div class="p-stat-label" data-en="Volunteer Hours">Volunteer Hours</div></div>
                             <div class="p-stat"><div class="p-stat-num">0</div><div class="p-stat-label" data-en="Events Attended">Events Attended</div></div>
-                            <div class="p-stat"><div class="p-stat-num">—</div><div class="p-stat-label" data-en="Community Rank">Community Rank</div></div>
+                            <div class="p-stat"><div class="p-stat-num" id="p-stat-applications">0</div><div class="p-stat-label" data-en="Applications">Applications</div></div>
                         </div>
                     </div>
                 </div>
@@ -2266,6 +2273,9 @@ async function init() {
     // Prime Oasis milestone/label state (without animating scene — that fires on navigation)
     renderOasis({ silent: true });
 
+    // Render My Events list + sidebar badges from localStorage
+    renderMyEvents();
+    refreshAllBadges();
 }
 
 // LOGOUT
@@ -2347,6 +2357,11 @@ function navigate(sec) {
 
     if (sec === 'home') animateStatNumbers();
     if (sec === 'impact') renderOasis();
+    if (sec === 'events') {
+        renderMyEvents();
+        setUnseenCount(0);
+        refreshAllBadges();
+    }
 
     // Eco ID — show Qatar-only notice + ensure QR is rendered
     if (sec === 'ecoid') {
@@ -2982,6 +2997,23 @@ function submitApplication() {
         'Change they want to make:\n' + change + '\n\n' +
         'Why they want to join:\n' + why
     );
+    // Save to My Events if we have an event context
+    if (_currentApplyEvent && _currentApplyEvent.title) {
+        const added = addMyEvent(_currentApplyEvent);
+        renderMyEvents();
+        refreshAllBadges();
+        if (added) {
+            showDashToast('Added to My Events 🌿');
+            // Browser notification if user opted in
+            if (localStorage.getItem('ecohub_notifications') === 'true' && 'Notification' in window && Notification.permission === 'granted') {
+                new Notification('Application sent — ' + _currentApplyEvent.title, {
+                    body: 'Track it under My Events.',
+                    icon: 'assets/Untitled.png'
+                });
+            }
+        }
+        _currentApplyEvent = null;
+    }
     window.location.href = 'mailto:ecoawarenessme@gmail.com?subject=' + subject + '&body=' + body;
     document.getElementById('apply-form-wrap').style.display = 'none';
     document.getElementById('apply-success').style.display = 'block';
@@ -3006,13 +3038,127 @@ function showConnectToast(btn) {
     showDashToast('Coming soon! This feature is under development 🚀');
 }
 
-// OPPORTUNITIES — open detail modal from card
+// OPPORTUNITIES — open application modal from card
+let _currentApplyEvent = null;
 function openOppModal(btn) {
-    showDashToast('Coming soon! Event registration is under development 🚀');
+    const card = btn.closest('.opp-card');
+    if (card) {
+        const title = card.querySelector('.oc-title')?.textContent.trim() || 'Event';
+        const orgEl = card.querySelector('.oc-org span');
+        const org = orgEl ? orgEl.textContent.trim() : '';
+        const dateEl = card.querySelector('.oc-meta-item span');
+        const date = dateEl ? dateEl.textContent.trim() : '';
+        _currentApplyEvent = { title, org, date };
+        // Inject context line at top of form so user sees what they're applying for
+        const wrap = document.getElementById('apply-form-wrap');
+        if (wrap) {
+            let ctx = document.getElementById('apply-event-ctx');
+            if (!ctx) {
+                ctx = document.createElement('div');
+                ctx.id = 'apply-event-ctx';
+                ctx.style.cssText = 'background:rgba(26,92,56,0.06);border:1px solid rgba(26,92,56,0.15);border-radius:10px;padding:0.7rem 0.9rem;margin-bottom:1rem;font-size:0.82rem;line-height:1.4;color:var(--green)';
+                wrap.querySelector('.pe-form')?.prepend(ctx);
+            }
+            ctx.innerHTML = '<strong>Applying to:</strong> ' + title + (org ? ' · <span style="opacity:0.75">' + org + '</span>' : '');
+        }
+    }
+    document.getElementById('apply-modal').classList.add('open');
 }
 
 function registerForOpp(title) {
     showDashToast('Coming soon! 🚀');
+}
+
+// MY EVENTS — localStorage helpers
+const MY_EVENTS_KEY = 'ecohub_my_events';
+const MY_EVENTS_UNSEEN = 'ecohub_my_events_unseen';
+function getMyEvents() {
+    try { return JSON.parse(localStorage.getItem(MY_EVENTS_KEY) || '[]'); } catch { return []; }
+}
+function saveMyEvents(arr) { localStorage.setItem(MY_EVENTS_KEY, JSON.stringify(arr)); }
+function getUnseenCount() { return parseInt(localStorage.getItem(MY_EVENTS_UNSEEN) || '0', 10); }
+function setUnseenCount(n) { localStorage.setItem(MY_EVENTS_UNSEEN, String(Math.max(0, n))); }
+
+function addMyEvent(evt) {
+    const arr = getMyEvents();
+    // Avoid duplicates by title
+    if (arr.some(e => e.title === evt.title)) return false;
+    arr.unshift({
+        title: evt.title,
+        org: evt.org || '',
+        date: evt.date || '',
+        appliedAt: new Date().toISOString(),
+        status: 'Upcoming'
+    });
+    saveMyEvents(arr);
+    setUnseenCount(getUnseenCount() + 1);
+    return true;
+}
+
+function renderMyEvents() {
+    const list = document.getElementById('my-evt-list');
+    if (!list) return;
+    const events = getMyEvents();
+    if (events.length === 0) {
+        list.innerHTML = '<div class="my-evt" style="border-style:dashed;justify-content:center;padding:3rem 1.5rem;"><div style="text-align:center"><div style="font-size:2rem;margin-bottom:0.5rem">🗓️</div><h3 style="font-family:\'Instrument Serif\',serif;font-size:1.2rem;margin-bottom:0.4rem" data-en="No registered events yet">No registered events yet</h3><p style="color:rgba(0,0,0,0.5);font-size:0.88rem" data-en="Your upcoming, completed, and cancelled events will appear here.">Your upcoming, completed, and cancelled events will appear here.</p></div></div>';
+        return;
+    }
+    list.innerHTML = events.map((e, i) => {
+        const safeTitle = e.title.replace(/"/g,'&quot;').replace(/</g,'&lt;');
+        const safeOrg = (e.org||'').replace(/</g,'&lt;');
+        const safeDate = (e.date||'').replace(/</g,'&lt;');
+        const statusColor = e.status === 'Completed' ? 'var(--green)' : e.status === 'Cancelled' ? 'var(--rust)' : '#3b82f6';
+        return '<div class="my-evt" data-status="' + e.status + '" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.25rem;border:1px solid rgba(0,0,0,0.08);border-radius:12px;margin-bottom:0.75rem;background:#fff">'
+            + '<div style="flex:1;min-width:0">'
+            + '<div style="font-family:\'Instrument Serif\',serif;font-size:1.15rem;margin-bottom:0.2rem">' + safeTitle + '</div>'
+            + (safeOrg ? '<div style="font-size:0.78rem;color:rgba(0,0,0,0.55);margin-bottom:0.15rem">' + safeOrg + '</div>' : '')
+            + (safeDate ? '<div style="font-size:0.72rem;color:rgba(0,0,0,0.4)">📅 ' + safeDate + '</div>' : '')
+            + '</div>'
+            + '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.5rem">'
+            + '<span style="font-size:0.65rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:' + statusColor + '1a;color:' + statusColor + ';padding:0.25rem 0.55rem;border-radius:100px">' + e.status + '</span>'
+            + '<button onclick="removeMyEvent(' + i + ')" style="font-size:0.7rem;color:rgba(196,98,45,0.85);background:none;border:none;cursor:pointer;text-decoration:underline;padding:0">Remove</button>'
+            + '</div>'
+            + '</div>';
+    }).join('');
+}
+
+function removeMyEvent(idx) {
+    const arr = getMyEvents();
+    arr.splice(idx, 1);
+    saveMyEvents(arr);
+    renderMyEvents();
+    refreshAllBadges();
+}
+
+function refreshAllBadges() {
+    const events = getMyEvents();
+    const unseen = getUnseenCount();
+    // My Events sidebar badge — shows unseen count
+    const evBadge = document.getElementById('sb-badge-events');
+    if (evBadge) {
+        if (unseen > 0) {
+            evBadge.textContent = unseen;
+            evBadge.style.display = '';
+        } else {
+            evBadge.style.display = 'none';
+        }
+    }
+    // Opportunities sidebar badge — shows count of available opportunities (excludes coming-soon outside)
+    const oppBadge = document.getElementById('sb-badge-opp');
+    if (oppBadge) {
+        const oppCount = document.querySelectorAll('#opp-grid .opp-card:not(.opp-no-results):not([style*="dashed"])').length;
+        if (oppCount > 0) {
+            oppBadge.textContent = oppCount;
+            oppBadge.style.display = '';
+        } else {
+            oppBadge.style.display = 'none';
+        }
+    }
+    // Stat card on home — count of applications
+    const statApps = document.getElementById('stat-applications');
+    if (statApps) statApps.textContent = events.length;
+    const pStatApps = document.getElementById('p-stat-applications');
+    if (pStatApps) pStatApps.textContent = events.length;
 }
 
 // NOTIFICATIONS TOGGLE
