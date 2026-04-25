@@ -54,257 +54,56 @@
         </div>
     </header>
 
-    <!-- Header & Filters -->
+    <!-- Header -->
     <section class="pt-20 pr-6 pb-12 pl-6">
         <div class="text-center max-w-3xl mr-auto ml-auto">
             <h1 class="text-4xl md:text-5xl font-semibold text-slate-900 tracking-tight">Meet the Network.</h1>
             <p class="mt-4 text-base md:text-lg font-light text-slate-500 max-w-2xl mx-auto">
-                The organizations, student clubs, and eco-businesses driving change in Qatar.
+                Real organizations, student clubs, and policy centers driving sustainability in Qatar. Tap any card to learn more or connect directly.
             </p>
-
-            <div class="mt-10 flex flex-wrap items-center justify-center gap-3">
-                <button class="bg-[#16a34a] text-white border border-[#16a34a] rounded-full px-6 py-2 text-sm font-medium shadow-sm transition-all">
-                    All
-                </button>
-                <button class="bg-white text-slate-600 border border-gray-200 rounded-full px-6 py-2 text-sm font-medium hover:border-slate-300 hover:text-slate-900 transition-all shadow-sm">
-                    NGOs
-                </button>
-                <button class="bg-white text-slate-600 border border-gray-200 rounded-full px-6 py-2 text-sm font-medium hover:border-slate-300 hover:text-slate-900 transition-all shadow-sm">
-                    Student Clubs
-                </button>
-                <button class="bg-white text-slate-600 border border-gray-200 rounded-full px-6 py-2 text-sm font-medium hover:border-slate-300 hover:text-slate-900 transition-all shadow-sm">
-                    Eco-Businesses
-                </button>
-            </div>
         </div>
     </section>
 
-    <!-- Cinematic Cards Grid -->
+    <!-- Cards Grid -->
     <main class="flex-grow max-w-7xl mx-auto w-full px-6 pb-24">
-        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            
-            <!-- Card 1 -->
-            <article class="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:shadow-[#16a34a]/5 transition-all duration-300 flex flex-col">
-                <div class="h-48 relative bg-slate-200 overflow-hidden">
-                    <video autoplay loop muted playsinline class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out">
-                        <source src="https://cdn.coverr.co/videos/coverr-drone-view-of-a-green-forest-2661/1080p.mp4" type="video/mp4">
-                    </video>
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent"></div>
-                </div>
-                
-                <div class="relative px-6 flex-grow flex flex-col">
-                    <div class="absolute -top-8 w-16 h-16 rounded-full border-4 border-white bg-slate-100 flex items-center justify-center shadow-sm">
-                        <span class="text-slate-900 font-semibold tracking-tighter text-lg">QE</span>
-                    </div>
-                    
-                    <div class="pt-10 flex-grow">
-                        <div class="flex items-center gap-1.5 mb-2">
-                            <h3 class="text-lg font-semibold tracking-tight text-slate-900">Qatar Eco Society</h3>
-                            <iconify-icon icon="solar:check-circle-linear" class="text-[#16a34a] text-lg" stroke-width="1.5"></iconify-icon>
-                        </div>
-                        <p class="text-sm font-light text-slate-500 line-clamp-2">
-                            Dedicated to preserving Qatar's coastal ecosystems through microplastic audits and community-driven cleanups.
-                        </p>
-                    </div>
-                </div>
+        <div id="org-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"></div>
 
-                <div class="mt-6 px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-white">
-                    <div class="flex items-center gap-3">
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:global-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:link-circle-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:camera-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                    </div>
-                    <a href="#" class="text-xs font-medium text-slate-600 hover:text-[#16a34a] transition-colors flex items-center gap-1 group/link">
-                        View 3 Projects <iconify-icon icon="solar:arrow-right-linear" class="text-sm group-hover/link:translate-x-0.5 transition-transform" stroke-width="1.5"></iconify-icon>
-                    </a>
+        <!-- Feature your org CTA -->
+        <div class="mt-16 max-w-3xl mx-auto bg-gradient-to-br from-[#1a5c38] to-[#2d7a4f] rounded-2xl p-8 md:p-10 text-white shadow-lg">
+            <div class="flex flex-col md:flex-row items-start md:items-center justify-between gap-6">
+                <div>
+                    <div class="text-xs font-medium tracking-[0.15em] uppercase opacity-70 mb-2">Run a sustainability org?</div>
+                    <h2 class="text-2xl md:text-3xl font-semibold tracking-tight mb-2">Get featured on the network.</h2>
+                    <p class="text-sm md:text-base opacity-85 max-w-xl leading-relaxed">Send us a quick intro about your org — what you do, where you're based, and how people can join — and we'll add you here.</p>
                 </div>
-            </article>
-
-            <!-- Card 2 -->
-            <article class="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:shadow-[#16a34a]/5 transition-all duration-300 flex flex-col">
-                <div class="h-48 relative bg-slate-200 overflow-hidden">
-                    <video autoplay loop muted playsinline class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out">
-                        <source src="https://cdn.coverr.co/videos/coverr-solar-panels-in-a-field-5244/1080p.mp4" type="video/mp4">
-                    </video>
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent"></div>
-                </div>
-                
-                <div class="relative px-6 flex-grow flex flex-col">
-                    <div class="absolute -top-8 w-16 h-16 rounded-full border-4 border-white bg-slate-100 flex items-center justify-center shadow-sm">
-                        <span class="text-slate-900 font-semibold tracking-tighter text-lg">QU</span>
-                    </div>
-                    
-                    <div class="pt-10 flex-grow">
-                        <div class="flex items-center gap-1.5 mb-2">
-                            <h3 class="text-lg font-semibold tracking-tight text-slate-900">QU Green Innovators</h3>
-                            <iconify-icon icon="solar:check-circle-linear" class="text-[#16a34a] text-lg" stroke-width="1.5"></iconify-icon>
-                        </div>
-                        <p class="text-sm font-light text-slate-500 line-clamp-2">
-                            Empowering university students to build renewable tech prototypes and advocate for sustainable campus policies.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="mt-6 px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-white">
-                    <div class="flex items-center gap-3">
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:global-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:link-circle-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:camera-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                    </div>
-                    <a href="#" class="text-xs font-medium text-slate-600 hover:text-[#16a34a] transition-colors flex items-center gap-1 group/link">
-                        View 1 Project <iconify-icon icon="solar:arrow-right-linear" class="text-sm group-hover/link:translate-x-0.5 transition-transform" stroke-width="1.5"></iconify-icon>
-                    </a>
-                </div>
-            </article>
-
-            <!-- Card 3 -->
-            <article class="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:shadow-[#16a34a]/5 transition-all duration-300 flex flex-col">
-                <div class="h-48 relative bg-slate-200 overflow-hidden">
-                    <video autoplay loop muted playsinline class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out">
-                        <source src="https://cdn.coverr.co/videos/coverr-waves-crashing-on-the-beach-4318/1080p.mp4" type="video/mp4">
-                    </video>
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent"></div>
-                </div>
-                
-                <div class="relative px-6 flex-grow flex flex-col">
-                    <div class="absolute -top-8 w-16 h-16 rounded-full border-4 border-white bg-slate-100 flex items-center justify-center shadow-sm">
-                        <span class="text-slate-900 font-semibold tracking-tighter text-lg">SS</span>
-                    </div>
-                    
-                    <div class="pt-10 flex-grow">
-                        <div class="flex items-center gap-1.5 mb-2">
-                            <h3 class="text-lg font-semibold tracking-tight text-slate-900">Sustainable Solutions QA</h3>
-                            <iconify-icon icon="solar:check-circle-linear" class="text-[#16a34a] text-lg" stroke-width="1.5"></iconify-icon>
-                        </div>
-                        <p class="text-sm font-light text-slate-500 line-clamp-2">
-                            Providing circular economy consulting and zero-waste operational frameworks for modern enterprises.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="mt-6 px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-white">
-                    <div class="flex items-center gap-3">
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:global-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:link-circle-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:camera-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                    </div>
-                    <a href="#" class="text-xs font-medium text-slate-600 hover:text-[#16a34a] transition-colors flex items-center gap-1 group/link">
-                        View 5 Projects <iconify-icon icon="solar:arrow-right-linear" class="text-sm group-hover/link:translate-x-0.5 transition-transform" stroke-width="1.5"></iconify-icon>
-                    </a>
-                </div>
-            </article>
-
-            <!-- Card 4 -->
-            <article class="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:shadow-[#16a34a]/5 transition-all duration-300 flex flex-col">
-                <div class="h-48 relative bg-slate-200 overflow-hidden">
-                    <video autoplay loop muted playsinline class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out">
-                        <source src="https://cdn.coverr.co/videos/coverr-planting-a-tree-5246/1080p.mp4" type="video/mp4">
-                    </video>
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent"></div>
-                </div>
-                
-                <div class="relative px-6 flex-grow flex flex-col">
-                    <div class="absolute -top-8 w-16 h-16 rounded-full border-4 border-white bg-slate-100 flex items-center justify-center shadow-sm">
-                        <span class="text-slate-900 font-semibold tracking-tighter text-lg">DY</span>
-                    </div>
-                    
-                    <div class="pt-10 flex-grow">
-                        <div class="flex items-center gap-1.5 mb-2">
-                            <h3 class="text-lg font-semibold tracking-tight text-slate-900">Doha Youth Environment</h3>
-                        </div>
-                        <p class="text-sm font-light text-slate-500 line-clamp-2">
-                            Organizing weekly beach cleanups, desert restoration, and tree planting campaigns across the country.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="mt-6 px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-white">
-                    <div class="flex items-center gap-3">
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:global-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:link-circle-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:camera-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                    </div>
-                    <a href="#" class="text-xs font-medium text-slate-600 hover:text-[#16a34a] transition-colors flex items-center gap-1 group/link">
-                        View 2 Projects <iconify-icon icon="solar:arrow-right-linear" class="text-sm group-hover/link:translate-x-0.5 transition-transform" stroke-width="1.5"></iconify-icon>
-                    </a>
-                </div>
-            </article>
-
-            <!-- Card 5 -->
-            <article class="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:shadow-[#16a34a]/5 transition-all duration-300 flex flex-col">
-                <div class="h-48 relative bg-slate-200 overflow-hidden">
-                    <video autoplay loop muted playsinline class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out">
-                        <source src="https://cdn.coverr.co/videos/coverr-nature-landscape-5208/1080p.mp4" type="video/mp4">
-                    </video>
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent"></div>
-                </div>
-                
-                <div class="relative px-6 flex-grow flex flex-col">
-                    <div class="absolute -top-8 w-16 h-16 rounded-full border-4 border-white bg-slate-100 flex items-center justify-center shadow-sm">
-                        <span class="text-slate-900 font-semibold tracking-tighter text-lg">GF</span>
-                    </div>
-                    
-                    <div class="pt-10 flex-grow">
-                        <div class="flex items-center gap-1.5 mb-2">
-                            <h3 class="text-lg font-semibold tracking-tight text-slate-900">Green Future Inc.</h3>
-                            <iconify-icon icon="solar:check-circle-linear" class="text-[#16a34a] text-lg" stroke-width="1.5"></iconify-icon>
-                        </div>
-                        <p class="text-sm font-light text-slate-500 line-clamp-2">
-                            Corporate sustainability training, ESG compliance workshops, and organizational restructuring for eco-efficiency.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="mt-6 px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-white">
-                    <div class="flex items-center gap-3">
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:global-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:link-circle-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:camera-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                    </div>
-                    <a href="#" class="text-xs font-medium text-slate-600 hover:text-[#16a34a] transition-colors flex items-center gap-1 group/link">
-                        View 4 Projects <iconify-icon icon="solar:arrow-right-linear" class="text-sm group-hover/link:translate-x-0.5 transition-transform" stroke-width="1.5"></iconify-icon>
-                    </a>
-                </div>
-            </article>
-
-            <!-- Card 6 -->
-            <article class="group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:shadow-[#16a34a]/5 transition-all duration-300 flex flex-col">
-                <div class="h-48 relative bg-slate-200 overflow-hidden">
-                    <video autoplay loop muted playsinline class="object-cover w-full h-full transform group-hover:scale-105 transition-transform duration-700 ease-out">
-                        <source src="https://cdn.coverr.co/videos/coverr-drone-view-of-a-green-forest-2661/1080p.mp4" type="video/mp4">
-                    </video>
-                    <div class="absolute inset-0 bg-gradient-to-t from-slate-900/60 via-slate-900/10 to-transparent"></div>
-                </div>
-                
-                <div class="relative px-6 flex-grow flex flex-col">
-                    <div class="absolute -top-8 w-16 h-16 rounded-full border-4 border-white bg-slate-100 flex items-center justify-center shadow-sm">
-                        <span class="text-slate-900 font-semibold tracking-tighter text-lg">EW</span>
-                    </div>
-                    
-                    <div class="pt-10 flex-grow">
-                        <div class="flex items-center gap-1.5 mb-2">
-                            <h3 class="text-lg font-semibold tracking-tight text-slate-900">EcoWarriors Campus</h3>
-                        </div>
-                        <p class="text-sm font-light text-slate-500 line-clamp-2">
-                            A student-led movement advocating for plastic-free campuses, vegan alternatives, and widespread recycling bins.
-                        </p>
-                    </div>
-                </div>
-
-                <div class="mt-6 px-6 py-4 border-t border-gray-100 flex items-center justify-between bg-white">
-                    <div class="flex items-center gap-3">
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:global-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:link-circle-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                        <a href="#" class="text-slate-400 hover:text-[#16a34a] transition-colors"><iconify-icon icon="solar:camera-linear" class="text-lg" stroke-width="1.5"></iconify-icon></a>
-                    </div>
-                    <a href="#" class="text-xs font-medium text-slate-600 hover:text-[#16a34a] transition-colors flex items-center gap-1 group/link">
-                        View 2 Projects <iconify-icon icon="solar:arrow-right-linear" class="text-sm group-hover/link:translate-x-0.5 transition-transform" stroke-width="1.5"></iconify-icon>
-                    </a>
-                </div>
-            </article>
-
+                <a href="mailto:ecoawarenessme@gmail.com?subject=Feature%20our%20org%20on%20EcoAwareness%20Network&body=Org%20name%3A%20%0AWebsite%2FInstagram%3A%20%0AWhat%20we%20do%3A%20%0AHow%20to%20get%20involved%3A%20" class="shrink-0 bg-white text-[#1a5c38] px-6 py-3 rounded-full text-sm font-semibold hover:bg-[#a8e063] hover:text-[#0d3a22] transition-all whitespace-nowrap inline-flex items-center gap-2">
+                    <iconify-icon icon="solar:letter-linear" class="text-base"></iconify-icon>
+                    Email us
+                </a>
+            </div>
         </div>
     </main>
+
+    <!-- Org Detail Modal -->
+    <div id="org-modal" class="fixed inset-0 z-[1000] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onclick="if(event.target===this)closeOrgModal()">
+        <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
+            <div id="org-modal-header" class="relative h-32 bg-gradient-to-br from-[#1a5c38] to-[#2d7a4f] rounded-t-2xl">
+                <button onclick="closeOrgModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur hover:bg-white/30 text-white flex items-center justify-center transition-colors">
+                    <iconify-icon icon="solar:close-circle-linear" class="text-xl"></iconify-icon>
+                </button>
+                <div id="org-modal-avatar" class="absolute -bottom-8 left-8 w-20 h-20 rounded-2xl border-4 border-white bg-white shadow-md flex items-center justify-center text-2xl font-bold"></div>
+            </div>
+            <div class="px-8 pt-12 pb-8">
+                <div id="org-modal-badge" class="inline-block text-[0.65rem] font-medium tracking-[0.12em] uppercase px-2.5 py-1 rounded-full mb-2"></div>
+                <h2 id="org-modal-name" class="text-2xl md:text-3xl font-semibold text-slate-900 tracking-tight mb-1"></h2>
+                <div id="org-modal-tagline" class="text-sm text-slate-500 mb-5"></div>
+                <p id="org-modal-desc" class="text-base text-slate-700 leading-relaxed mb-6"></p>
+                <div id="org-modal-highlights" class="space-y-2 mb-6"></div>
+                <div class="border-t border-slate-100 pt-5 flex flex-wrap gap-3" id="org-modal-actions"></div>
+                <div id="org-modal-disclaimer" class="text-xs text-slate-400 mt-4"></div>
+            </div>
+        </div>
+    </div>
 
     <!-- Footer -->
     <footer class="bg-white border-t border-gray-200 py-8 px-6 mt-auto">
@@ -327,44 +126,206 @@
     </footer>
 
     <script>
+        // ─── Real org data — populates the network page ───────────────────────
+        const ORGS = [
+            {
+                id: 'qkons',
+                name: 'QKONs',
+                initials: 'QK',
+                badge: 'Eco-Tech Startup',
+                badgeColor: 'bg-blue-100 text-blue-700',
+                gradient: 'from-blue-600 to-cyan-500',
+                tagline: 'Digital waste exchange · founded at HBKU',
+                short: 'Turns recycling into a digital commodities exchange — drop your sorted waste, scan a QR, earn QKONs tokens redeemable for eco-friendly rewards.',
+                full: 'QKONs is a Qatar-based circular economy platform that connects waste producers (residents, businesses) with recyclers and end-users. Sellers tag a bag with a QR code, the app routes them to the nearest community deposit bin via GPS, and the platform tokenises verified contributions into rewards. Founded by an academic team at Hamad Bin Khalifa University (a Qatar Foundation institution) including Dr. Tareq Al-Ansari and Sarah Namany.',
+                highlights: [
+                    'QR-tagged drop-offs verified at processing',
+                    'Built-in GPS routing to nearest community bin',
+                    'Token rewards redeemable for eco-friendly perks',
+                    'Live demos at the QF tent during Darb Al Saai'
+                ],
+                email: 'info@qkons.com',
+                website: 'https://qkons.com',
+                instagram: null
+            },
+            {
+                id: 'earthwise',
+                name: 'EarthWise',
+                initials: 'EW',
+                badge: 'Student Club · GU-Q',
+                badgeColor: 'bg-emerald-100 text-emerald-700',
+                gradient: 'from-emerald-600 to-green-500',
+                tagline: 'Georgetown University in Qatar',
+                short: 'GU-Q\'s student-led sustainability club — runs Sustainability Sessions, solar & desalination tours, and high-level climate panels.',
+                full: 'EarthWise is the student-led sustainability club at Georgetown University in Qatar. Founded in partnership with the GU-Q Office of Facilities Management and now under Student Affairs, the club runs solar panel tours of the Georgetown building, field visits to Qatar\'s desalination plants, and a recurring "Sustainability Sessions" educational series. Recent panels have covered ocean plastics, minimalism, and whether sustainability is achievable under market capitalism. Co-hosted the QSW 2025 Global Carbon Tax Debate with QKons and the Georgetown Debating Union.',
+                highlights: [
+                    'Sustainability Sessions speaker series',
+                    'Solar array & desalination plant field trips',
+                    'Co-host of the QSW 2025 Carbon Tax Debate',
+                    'Open to all GU-Q students'
+                ],
+                email: null,
+                website: null,
+                instagram: 'https://instagram.com/earthwise.guq'
+            },
+            {
+                id: 'cmu-sustainability',
+                name: 'CMU-Q Sustainability Initiative',
+                initials: 'CM',
+                badge: 'Academic · Education City',
+                badgeColor: 'bg-red-100 text-red-700',
+                gradient: 'from-red-600 to-orange-500',
+                tagline: 'Carnegie Mellon University in Qatar',
+                short: 'First university in MENA to earn the FEE EcoCampus Green Flag (2024). Focus: food equity, climate change, and campus waste.',
+                full: 'CMU-Q\'s sustainability initiative — the EcoCampus program — became the first in the MENA region to receive the FEE EcoCampus Green Flag designation in November 2024, after a multi-year journey starting September 2020. Championed by Dean Michael Trick and co-chaired by Jennifer Bruder (Associate Teaching Professor, Psychology) and Elissar El-Akra Hajjar (Director of Facilities), the initiative targets food equity, climate change, and campus waste, aligned with the UN SDGs.',
+                highlights: [
+                    'First MENA university with FEE EcoCampus Green Flag',
+                    'Three pillars: food equity · climate · waste',
+                    'Backed by Dean of CMU-Q & Director of Facilities',
+                    'Aligned to UN Sustainable Development Goals'
+                ],
+                email: 'sustainability@cmu.edu',
+                website: 'https://www.cmu.edu/qatar',
+                instagram: null
+            },
+            {
+                id: 'earthna',
+                name: 'Earthna',
+                initials: 'Ea',
+                badge: 'Policy Center · Qatar Foundation',
+                badgeColor: 'bg-green-100 text-green-800',
+                gradient: 'from-[#1a5c38] to-[#2d7a4f]',
+                tagline: 'Center for a Sustainable Future',
+                short: 'Qatar Foundation\'s policy & advocacy center for hot, arid environments — runs the Earthna Summit, the $1M Earthna Prize, and Eco-Schools Qatar.',
+                full: 'Earthna is the policy research and advocacy center for sustainability in hot and arid environments, established under Qatar Foundation. The org explicitly champions integrating modern technology with traditional, ancestral knowledge — its name encodes "our Earth" in both English and Arabic. Earthna runs the annual Earthna Summit (water, energy transition, food security, urbanism, climate finance), administers the $1M global Earthna Prize launched on Earth Day 2024, and is the national administrator of the Eco-Schools program in Qatar (under the global Foundation for Environmental Education).',
+                highlights: [
+                    'Runs the annual Earthna Summit (Mandarin Oriental, Doha)',
+                    'Administers the $1M Earthna Prize for ancestral-knowledge solutions',
+                    'National lead for Eco-Schools Qatar (FEE program)',
+                    'Specialised focus on hot/arid sustainability'
+                ],
+                email: 'info@earthna.qa',
+                website: 'https://earthna.qa',
+                instagram: null
+            }
+        ];
+
+        // ─── Render cards ─────────────────────────────────────────────────────
+        function renderOrgCards() {
+            const grid = document.getElementById('org-grid');
+            grid.innerHTML = ORGS.map((o, i) => `
+                <article data-org="${o.id}" class="org-card group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:shadow-[#16a34a]/10 transition-all duration-300 flex flex-col cursor-pointer text-left">
+                    <div class="h-32 relative bg-gradient-to-br ${o.gradient} overflow-hidden">
+                        <div class="absolute inset-0 opacity-20" style="background-image:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5) 0%, transparent 60%)"></div>
+                    </div>
+                    <div class="relative px-6 flex-grow flex flex-col">
+                        <div class="absolute -top-10 w-20 h-20 rounded-2xl border-4 border-white bg-white flex items-center justify-center shadow-md">
+                            <span class="text-slate-900 font-bold text-2xl tracking-tight">${o.initials}</span>
+                        </div>
+                        <div class="pt-12 flex-grow">
+                            <span class="inline-block text-[0.6rem] font-medium tracking-[0.12em] uppercase ${o.badgeColor} px-2 py-0.5 rounded-full mb-2">${o.badge}</span>
+                            <h3 class="text-xl font-semibold tracking-tight text-slate-900 mb-1">${o.name}</h3>
+                            <p class="text-xs text-slate-400 mb-3">${o.tagline}</p>
+                            <p class="text-sm text-slate-600 leading-relaxed line-clamp-3">${o.short}</p>
+                        </div>
+                    </div>
+                    <div class="mt-6 px-6 py-4 border-t border-gray-100 flex items-center justify-between">
+                        <div class="flex items-center gap-2 text-slate-400">
+                            ${o.email ? `<iconify-icon icon="solar:letter-linear" class="text-base" title="Email"></iconify-icon>` : ''}
+                            ${o.website ? `<iconify-icon icon="solar:global-linear" class="text-base" title="Website"></iconify-icon>` : ''}
+                            ${o.instagram ? `<iconify-icon icon="mdi:instagram" class="text-base" title="Instagram"></iconify-icon>` : ''}
+                        </div>
+                        <span class="text-xs font-medium text-[#16a34a] flex items-center gap-1 group-hover:gap-2 transition-all">
+                            Learn more <iconify-icon icon="solar:arrow-right-linear" class="text-sm"></iconify-icon>
+                        </span>
+                    </div>
+                </article>
+            `).join('');
+
+            // Wire click handlers
+            grid.querySelectorAll('.org-card').forEach(card => {
+                card.addEventListener('click', () => openOrgModal(card.dataset.org));
+            });
+
+            // Stagger fade-in
+            grid.querySelectorAll('.org-card').forEach((el, i) => {
+                el.style.opacity = '0';
+                el.style.transform = 'translateY(20px)';
+                el.style.transition = 'opacity 0.5s cubic-bezier(0.25,1,0.5,1), transform 0.5s cubic-bezier(0.25,1,0.5,1)';
+                setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 100 + i * 90);
+            });
+        }
+
+        // ─── Modal ────────────────────────────────────────────────────────────
+        function openOrgModal(id) {
+            const o = ORGS.find(x => x.id === id);
+            if (!o) return;
+            const modal = document.getElementById('org-modal');
+            document.getElementById('org-modal-header').className = `relative h-32 bg-gradient-to-br ${o.gradient} rounded-t-2xl`;
+            document.getElementById('org-modal-avatar').textContent = o.initials;
+            document.getElementById('org-modal-avatar').style.color = '#1a5c38';
+            const badge = document.getElementById('org-modal-badge');
+            badge.textContent = o.badge;
+            badge.className = `inline-block text-[0.65rem] font-medium tracking-[0.12em] uppercase px-2.5 py-1 rounded-full mb-2 ${o.badgeColor}`;
+            document.getElementById('org-modal-name').textContent = o.name;
+            document.getElementById('org-modal-tagline').textContent = o.tagline;
+            document.getElementById('org-modal-desc').textContent = o.full;
+
+            // Highlights
+            document.getElementById('org-modal-highlights').innerHTML = o.highlights.map(h =>
+                `<div class="flex items-start gap-2.5 text-sm text-slate-700"><iconify-icon icon="solar:check-circle-bold" class="text-[#16a34a] text-base mt-0.5 shrink-0"></iconify-icon><span>${h}</span></div>`
+            ).join('');
+
+            // Action buttons (priority: email > website > instagram, but show all available)
+            const actions = [];
+            if (o.email) actions.push({
+                label: 'Email', href: `mailto:${o.email}?subject=Hello%20from%20EcoAwareness%20Network`,
+                icon: 'solar:letter-bold', primary: true
+            });
+            if (o.website) actions.push({
+                label: 'Visit website', href: o.website, icon: 'solar:global-linear', primary: !o.email, target: '_blank'
+            });
+            if (o.instagram) actions.push({
+                label: 'DM on Instagram', href: o.instagram, icon: 'mdi:instagram', primary: !o.email && !o.website, target: '_blank'
+            });
+            document.getElementById('org-modal-actions').innerHTML = actions.map(a =>
+                `<a href="${a.href}"${a.target ? ` target="${a.target}" rel="noopener"` : ''} class="inline-flex items-center gap-2 px-5 py-2.5 rounded-full text-sm font-medium transition-all ${a.primary ? 'bg-[#1a5c38] text-white hover:bg-[#2d7a4f]' : 'bg-slate-100 text-slate-700 hover:bg-slate-200'}"><iconify-icon icon="${a.icon}" class="text-base"></iconify-icon>${a.label}</a>`
+            ).join('');
+
+            // Disclaimer when no contact channels
+            const dis = document.getElementById('org-modal-disclaimer');
+            if (actions.length === 0) {
+                dis.textContent = 'No public contact channel listed yet. Reach out via the parent institution or message us at ecoawarenessme@gmail.com to get connected.';
+            } else {
+                dis.textContent = '';
+            }
+
+            modal.classList.remove('hidden');
+            modal.classList.add('flex');
+            document.body.style.overflow = 'hidden';
+        }
+
+        function closeOrgModal() {
+            const modal = document.getElementById('org-modal');
+            modal.classList.add('hidden');
+            modal.classList.remove('flex');
+            document.body.style.overflow = '';
+        }
+
+        // Close modal on Escape
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeOrgModal(); });
+
+        // Animate header in + render cards
         document.addEventListener('DOMContentLoaded', () => {
             const h1 = document.querySelector('h1');
             const subtitle = document.querySelector('h1 + p');
-            const articles = document.querySelectorAll('article');
-
-            const elements = [h1, subtitle, ...articles].filter(Boolean);
-
-            // Set initial state
-            elements.forEach(el => {
+            [h1, subtitle].filter(Boolean).forEach((el, i) => {
                 el.style.opacity = '0';
                 el.style.transform = 'translateY(20px)';
                 el.style.transition = 'all 0.6s cubic-bezier(0.25, 1, 0.5, 1)';
+                setTimeout(() => { el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, i * 100);
             });
-
-            // Stagger animation
-            elements.forEach((el, index) => {
-                setTimeout(() => {
-                    el.style.opacity = '1';
-                    el.style.transform = 'translateY(0)';
-                }, index * 100);
-            });
-
-            // "Coming Soon" for placeholder links inside cards
-            document.querySelectorAll('article a[href="#"]').forEach(a => {
-                a.addEventListener('click', e => {
-                    e.preventDefault();
-                    const toast = document.createElement('div');
-                    toast.textContent = 'Coming soon! 🚀';
-                    Object.assign(toast.style, {
-                        position:'fixed',bottom:'2rem',left:'50%',transform:'translateX(-50%)',
-                        background:'#1a5c38',color:'#fff',padding:'0.75rem 1.5rem',borderRadius:'100px',
-                        fontSize:'0.88rem',fontWeight:'500',zIndex:'9999',
-                        boxShadow:'0 4px 20px rgba(0,0,0,0.2)',animation:'fadeIn 0.2s ease'
-                    });
-                    document.body.appendChild(toast);
-                    setTimeout(() => toast.remove(), 2500);
-                });
-            });
+            renderOrgCards();
         });
     </script>
 <style>

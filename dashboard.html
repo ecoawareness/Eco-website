@@ -1290,26 +1290,38 @@
             <div class="sec" id="sec-network">
                 <div class="sec-hero">
                     <h2><span data-en="Meet Qatar's ">Meet Qatar's </span><em data-en="green network.">green network.</em></h2>
-                    <p data-en="63 organizations, clubs & government bodies">63 organizations, clubs & government bodies</p>
+                    <p data-en="Real organizations driving sustainability in Qatar — tap any card to learn more or connect.">Real organizations driving sustainability in Qatar — tap any card to learn more or connect.</p>
                 </div>
-                <div class="pills" id="net-pills">
-                    <button class="pill active" onclick="filterNetByPill(this,'All')" data-en="All">All</button>
-                    <button class="pill" onclick="filterNetByPill(this,'NGOs')" data-en="NGOs">NGOs</button>
-                    <button class="pill" onclick="filterNetByPill(this,'Student Clubs')" data-en="Student Clubs">Student Clubs</button>
-                    <button class="pill" onclick="filterNetByPill(this,'Eco-Businesses')" data-en="Eco-Businesses">Eco-Businesses</button>
-                    <button class="pill" onclick="filterNetByPill(this,'Government')" data-en="Government">Government</button>
+                <div class="org-grid" id="org-grid"></div>
+                <div style="margin-top:2.5rem;background:linear-gradient(135deg,#1a5c38,#2d7a4f);border-radius:16px;padding:2rem;color:#fff;display:flex;flex-direction:column;gap:1rem">
+                    <div>
+                        <div style="font-size:0.65rem;font-weight:500;letter-spacing:0.15em;text-transform:uppercase;opacity:0.7;margin-bottom:0.5rem" data-en="Run a sustainability org?">Run a sustainability org?</div>
+                        <h3 style="font-family:'Instrument Serif',serif;font-size:1.7rem;line-height:1.1;margin-bottom:0.5rem" data-en="Get featured on the network.">Get featured on the network.</h3>
+                        <p style="font-size:0.88rem;opacity:0.85;line-height:1.5" data-en="Tell us what you do and how people can join — we'll add you here.">Tell us what you do and how people can join — we'll add you here.</p>
+                    </div>
+                    <a href="mailto:ecoawarenessme@gmail.com?subject=Feature%20our%20org%20on%20EcoAwareness%20Network&body=Org%20name%3A%20%0AWebsite%2FInstagram%3A%20%0AWhat%20we%20do%3A%20%0AHow%20to%20get%20involved%3A%20" style="align-self:flex-start;background:#fff;color:#1a5c38;text-decoration:none;padding:0.6rem 1.4rem;border-radius:100px;font-size:0.82rem;font-weight:600;display:inline-flex;align-items:center;gap:0.4rem">
+                        <iconify-icon icon="solar:letter-linear"></iconify-icon>
+                        <span data-en="Email us">Email us</span>
+                    </a>
                 </div>
-                <div class="net-stats">
-                    <div class="nsc"><div class="nsc-num">12</div><div class="nsc-label" data-en="NGOs">NGOs</div></div>
-                    <div class="nsc"><div class="nsc-num">28</div><div class="nsc-label" data-en="Eco-Businesses">Eco-Businesses</div></div>
-                    <div class="nsc"><div class="nsc-num">15</div><div class="nsc-label" data-en="Student Clubs">Student Clubs</div></div>
-                    <div class="nsc"><div class="nsc-num">8</div><div class="nsc-label" data-en="Government">Government</div></div>
-                </div>
-                <div class="org-grid" id="org-grid">
-                    <div class="org-card" data-type="NGOs"><div class="org-banner" style="background:linear-gradient(135deg,#1a5c38,#2d7a4f)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#1a5c38">QE</div></div><div class="org-hr"><div class="org-name" data-en="Qatar Eco Society">Qatar Eco Society</div><iconify-icon icon="solar:check-circle-linear" class="org-ver"></iconify-icon></div><div class="org-badge" data-en="NGO">NGO</div><p class="org-desc" data-en="Preserving Qatar's coastal ecosystems through microplastic audits and community-driven cleanups.">Preserving Qatar's coastal ecosystems through microplastic audits and community-driven cleanups.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="3 events">3 events</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>240+</span></div><button class="org-conn" onclick="showConnectToast(this)"><span data-en="Connect">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
-                    <div class="org-card" data-type="Student Clubs"><div class="org-banner" style="background:linear-gradient(135deg,#1e3a5f,#2d5986)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#1e3a5f">QU</div></div><div class="org-hr"><div class="org-name" data-en="QU Green Innovators">QU Green Innovators</div><iconify-icon icon="solar:check-circle-linear" class="org-ver"></iconify-icon></div><div class="org-badge" data-en="Student Club">Student Club</div><p class="org-desc" data-en="Building renewable tech prototypes and advocating for sustainable campus policies at Qatar University.">Building renewable tech prototypes and advocating for sustainable campus policies at Qatar University.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="1 event">1 event</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>85+</span></div><button class="org-conn" onclick="showConnectToast(this)"><span data-en="Connect">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
-                    <div class="org-card" data-type="Eco-Businesses"><div class="org-banner" style="background:linear-gradient(135deg,#c4622d,#e07a45)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#c4622d">GF</div></div><div class="org-hr"><div class="org-name" data-en="Green Future Inc.">Green Future Inc.</div><iconify-icon icon="solar:check-circle-linear" class="org-ver"></iconify-icon></div><div class="org-badge" data-en="Eco-Business">Eco-Business</div><p class="org-desc" data-en="Corporate sustainability training, ESG compliance workshops, and organizational restructuring for eco-efficiency.">Corporate sustainability training, ESG compliance workshops, and organizational restructuring for eco-efficiency.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="4 events">4 events</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>450+</span></div><button class="org-conn" onclick="showConnectToast(this)"><span data-en="Connect">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
-                    <div class="org-card" data-type="NGOs"><div class="org-banner" style="background:linear-gradient(135deg,#166534,#1a7a3e)"><div class="org-pattern"></div></div><div class="org-body"><div class="org-av-wrap"><div class="org-av" style="color:#166534">DY</div></div><div class="org-hr"><div class="org-name" data-en="Doha Youth Environment">Doha Youth Environment</div></div><div class="org-badge" data-en="NGO">NGO</div><p class="org-desc" data-en="Organizing weekly beach cleanups, desert restoration, and tree planting campaigns across Qatar.">Organizing weekly beach cleanups, desert restoration, and tree planting campaigns across Qatar.</p><div class="org-fr"><div class="org-stats"><span class="org-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon><span data-en="2 events">2 events</span></span><span class="org-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>180+</span></div><button class="org-conn" onclick="showConnectToast(this)"><span data-en="Connect">Connect</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button></div></div></div>
+
+                <!-- Org detail modal -->
+                <div class="modal-overlay" id="org-modal" onclick="if(event.target===this)closeGenericModal('org-modal')">
+                    <div class="modal" style="max-width:600px;overflow-y:auto;max-height:92vh" data-lenis-prevent onclick="event.stopPropagation()">
+                        <div id="org-modal-cover" style="height:110px;background:linear-gradient(135deg,#1a5c38,#2d7a4f);border-radius:16px 16px 0 0;position:relative;margin:-1px -1px 0">
+                            <button class="modal-close" onclick="closeGenericModal('org-modal')" style="position:absolute;top:0.75rem;right:0.75rem;background:rgba(255,255,255,0.2);color:#fff;backdrop-filter:blur(8px)"><iconify-icon icon="solar:close-circle-linear"></iconify-icon></button>
+                            <div id="org-modal-av" style="position:absolute;left:1.5rem;bottom:-30px;width:68px;height:68px;border-radius:14px;background:#fff;border:4px solid #fff;box-shadow:0 4px 12px rgba(0,0,0,0.1);display:flex;align-items:center;justify-content:center;font-weight:700;font-size:1.4rem;color:var(--green)"></div>
+                        </div>
+                        <div class="modal-body" style="padding:2.5rem 1.75rem 1.75rem">
+                            <div id="org-modal-badge" style="display:inline-block;font-size:0.62rem;font-weight:500;letter-spacing:0.12em;text-transform:uppercase;padding:0.3rem 0.65rem;border-radius:100px;margin-bottom:0.5rem"></div>
+                            <h2 id="org-modal-name" style="font-family:'Instrument Serif',serif;font-size:1.6rem;line-height:1.15;margin-bottom:0.25rem"></h2>
+                            <div id="org-modal-tag" style="font-size:0.78rem;color:rgba(0,0,0,0.5);margin-bottom:1rem"></div>
+                            <p id="org-modal-desc" style="font-size:0.92rem;line-height:1.6;color:rgba(0,0,0,0.75);margin-bottom:1.25rem"></p>
+                            <div id="org-modal-highlights" style="display:flex;flex-direction:column;gap:0.55rem;margin-bottom:1.5rem"></div>
+                            <div id="org-modal-actions" style="border-top:1px solid rgba(0,0,0,0.08);padding-top:1rem;display:flex;flex-wrap:wrap;gap:0.5rem"></div>
+                            <div id="org-modal-disclaimer" style="font-size:0.7rem;color:rgba(0,0,0,0.4);margin-top:0.75rem"></div>
+                        </div>
+                    </div>
                 </div>
             </div>
 
@@ -2276,6 +2288,9 @@ async function init() {
     // Render My Events list + sidebar badges from localStorage
     renderMyEvents();
     refreshAllBadges();
+
+    // Pre-render network orgs so the section is ready when user navigates
+    renderNetOrgs();
 }
 
 // LOGOUT
@@ -2362,6 +2377,7 @@ function navigate(sec) {
         setUnseenCount(0);
         refreshAllBadges();
     }
+    if (sec === 'network') renderNetOrgs();
 
     // Eco ID — show Qatar-only notice + ensure QR is rendered
     if (sec === 'ecoid') {
@@ -3033,9 +3049,101 @@ function sendContactMessage() {
     window.location.href = 'mailto:ecoawarenessme@gmail.com?subject=' + mailSubject + '&body=' + mailBody;
 }
 
-// NETWORK — Connect button toast
-function showConnectToast(btn) {
-    showDashToast('Coming soon! This feature is under development 🚀');
+// NETWORK — real org data + render + modal
+const NET_ORGS = [
+    {
+        id:'qkons', name:'QKONs', initials:'QK', badge:'Eco-Tech Startup', badgeBg:'rgba(59,130,246,0.12)', badgeColor:'#1d4ed8',
+        gradient:'linear-gradient(135deg,#2563eb,#06b6d4)', tagline:'Digital waste exchange · founded at HBKU',
+        short:'Turns recycling into a digital commodities exchange — drop sorted waste, scan a QR, earn QKONs tokens for eco-friendly rewards.',
+        full:'QKONs is a Qatar-based circular economy platform that connects waste producers with recyclers and end-users. Sellers tag a bag with a QR code, the app routes them to the nearest community deposit bin via GPS, and verified contributions become tokens. Founded by an academic team at Hamad Bin Khalifa University (Qatar Foundation), including Dr. Tareq Al-Ansari and Sarah Namany.',
+        highlights:['QR-tagged drop-offs verified at processing','GPS routing to nearest community bin','Token rewards for verified recycling','Demos at QF Darb Al Saai tent'],
+        email:'info@qkons.com', website:'https://qkons.com', instagram:null
+    },
+    {
+        id:'earthwise', name:'EarthWise', initials:'EW', badge:'Student Club · GU-Q', badgeBg:'rgba(26,92,56,0.12)', badgeColor:'#1a5c38',
+        gradient:'linear-gradient(135deg,#15803d,#22c55e)', tagline:'Georgetown University in Qatar',
+        short:'GU-Q\'s student-led sustainability club — Sustainability Sessions, solar & desalination tours, and high-level climate panels.',
+        full:'EarthWise is the student-led sustainability club at Georgetown University in Qatar. Founded with the GU-Q Office of Facilities Management and now under Student Affairs, the club runs solar panel tours, desalination plant visits, and a recurring "Sustainability Sessions" speaker series. Recent panels: ocean plastics, minimalism, and sustainability under market capitalism. Co-hosted the QSW 2025 Global Carbon Tax Debate.',
+        highlights:['Sustainability Sessions speaker series','Solar & desalination plant field trips','Co-host of QSW 2025 Carbon Tax Debate','Open to all GU-Q students'],
+        email:null, website:null, instagram:'https://instagram.com/earthwise.guq'
+    },
+    {
+        id:'cmu-sustainability', name:'CMU-Q Sustainability Initiative', initials:'CM', badge:'Academic · Education City', badgeBg:'rgba(220,38,38,0.1)', badgeColor:'#b91c1c',
+        gradient:'linear-gradient(135deg,#dc2626,#f59e0b)', tagline:'Carnegie Mellon University in Qatar',
+        short:'First university in MENA to earn the FEE EcoCampus Green Flag (2024). Focus: food equity, climate, and campus waste.',
+        full:'CMU-Q\'s EcoCampus initiative became the first in the MENA region to receive the FEE EcoCampus Green Flag in November 2024, after a multi-year journey starting in September 2020. Championed by Dean Michael Trick and co-chaired by Jennifer Bruder (Psychology) and Elissar El-Akra Hajjar (Director of Facilities), the program targets food equity, climate change, and campus waste, aligned with the UN SDGs.',
+        highlights:['First MENA uni with FEE EcoCampus Green Flag','Three pillars: food equity · climate · waste','Backed by Dean & Director of Facilities','Aligned to UN Sustainable Development Goals'],
+        email:'sustainability@cmu.edu', website:'https://www.cmu.edu/qatar', instagram:null
+    },
+    {
+        id:'earthna', name:'Earthna', initials:'Ea', badge:'Policy Center · Qatar Foundation', badgeBg:'rgba(34,197,94,0.12)', badgeColor:'#15803d',
+        gradient:'linear-gradient(135deg,#1a5c38,#2d7a4f)', tagline:'Center for a Sustainable Future',
+        short:'QF\'s policy & advocacy center for hot, arid environments — runs the Earthna Summit, the $1M Earthna Prize, and Eco-Schools Qatar.',
+        full:'Earthna is the policy research and advocacy center for sustainability in hot and arid environments, established under Qatar Foundation. Earthna explicitly champions integrating modern technology with traditional, ancestral knowledge. Programs include the annual Earthna Summit (water, energy transition, food security, urbanism, climate finance), the $1M global Earthna Prize launched on Earth Day 2024, and the national administration of the Eco-Schools program in Qatar (under FEE).',
+        highlights:['Annual Earthna Summit at Mandarin Oriental','$1M Earthna Prize for ancestral-knowledge solutions','National lead for Eco-Schools Qatar','Specialised focus on hot/arid sustainability'],
+        email:'info@earthna.qa', website:'https://earthna.qa', instagram:null
+    }
+];
+
+function renderNetOrgs() {
+    const grid = document.getElementById('org-grid');
+    if (!grid) return;
+    grid.innerHTML = NET_ORGS.map(o => {
+        const channels = [];
+        if (o.email) channels.push('<iconify-icon icon="solar:letter-linear" title="Email"></iconify-icon>');
+        if (o.website) channels.push('<iconify-icon icon="solar:global-linear" title="Website"></iconify-icon>');
+        if (o.instagram) channels.push('<iconify-icon icon="mdi:instagram" title="Instagram"></iconify-icon>');
+        return '<div class="org-card" data-org="'+o.id+'" style="cursor:pointer">'
+            + '<div class="org-banner" style="background:'+o.gradient+'"><div class="org-pattern"></div></div>'
+            + '<div class="org-body">'
+            + '<div class="org-av-wrap"><div class="org-av" style="color:'+o.badgeColor+'">'+o.initials+'</div></div>'
+            + '<div class="org-hr"><div class="org-name">'+o.name+'</div><iconify-icon icon="solar:check-circle-linear" class="org-ver"></iconify-icon></div>'
+            + '<div class="org-badge" style="background:'+o.badgeBg+';color:'+o.badgeColor+'">'+o.badge+'</div>'
+            + '<p class="org-desc">'+o.short+'</p>'
+            + '<div class="org-fr">'
+            + '<div class="org-stats" style="display:flex;gap:0.55rem;color:rgba(0,0,0,0.4);font-size:1rem">'+channels.join('')+'</div>'
+            + '<button class="org-conn"><span>Learn more</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon></button>'
+            + '</div>'
+            + '</div></div>';
+    }).join('');
+    grid.querySelectorAll('.org-card').forEach(card => {
+        card.addEventListener('click', () => openOrgModal(card.dataset.org));
+    });
+}
+
+function openOrgModal(id) {
+    const o = NET_ORGS.find(x => x.id === id);
+    if (!o) return;
+    document.getElementById('org-modal-cover').style.background = o.gradient;
+    const av = document.getElementById('org-modal-av');
+    av.textContent = o.initials;
+    av.style.color = o.badgeColor;
+    const badge = document.getElementById('org-modal-badge');
+    badge.textContent = o.badge;
+    badge.style.background = o.badgeBg;
+    badge.style.color = o.badgeColor;
+    document.getElementById('org-modal-name').textContent = o.name;
+    document.getElementById('org-modal-tag').textContent = o.tagline;
+    document.getElementById('org-modal-desc').textContent = o.full;
+    document.getElementById('org-modal-highlights').innerHTML = o.highlights.map(h =>
+        '<div style="display:flex;align-items:flex-start;gap:0.55rem;font-size:0.86rem;color:rgba(0,0,0,0.75)"><iconify-icon icon="solar:check-circle-bold" style="color:var(--green);font-size:1rem;margin-top:0.1rem;flex-shrink:0"></iconify-icon><span>'+h+'</span></div>'
+    ).join('');
+    const actions = [];
+    if (o.email) actions.push({label:'Email', href:'mailto:'+o.email+'?subject=Hello%20from%20EcoAwareness%20Network', icon:'solar:letter-bold', primary:true, target:''});
+    if (o.website) actions.push({label:'Visit website', href:o.website, icon:'solar:global-linear', primary:!o.email, target:'_blank'});
+    if (o.instagram) actions.push({label:'DM on Instagram', href:o.instagram, icon:'mdi:instagram', primary:!o.email && !o.website, target:'_blank'});
+    document.getElementById('org-modal-actions').innerHTML = actions.map(a => {
+        const styles = a.primary
+            ? 'background:var(--green);color:#fff'
+            : 'background:rgba(0,0,0,0.05);color:var(--ink)';
+        const tgt = a.target ? ' target="'+a.target+'" rel="noopener"' : '';
+        return '<a href="'+a.href+'"'+tgt+' style="text-decoration:none;display:inline-flex;align-items:center;gap:0.4rem;padding:0.55rem 1.1rem;border-radius:100px;font-size:0.82rem;font-weight:500;'+styles+'"><iconify-icon icon="'+a.icon+'"></iconify-icon>'+a.label+'</a>';
+    }).join('');
+    const dis = document.getElementById('org-modal-disclaimer');
+    dis.textContent = actions.length === 0
+        ? 'No public contact channel listed yet. Reach out via the parent institution, or email us at ecoawarenessme@gmail.com to get connected.'
+        : '';
+    document.getElementById('org-modal').classList.add('open');
 }
 
 // OPPORTUNITIES — open application modal from card
