@@ -519,12 +519,12 @@
             <button class="search-btn" data-en="Search" data-ar="بحث">Search</button>
         </div>
         <div class="filter-pills">
-            <button class="filter-pill active" data-en="All" data-ar="الكل">All</button>
-            <button class="filter-pill" data-en="Conservation" data-ar="الحفاظ على البيئة">Conservation</button>
-            <button class="filter-pill" data-en="Volunteering" data-ar="تطوع">Volunteering</button>
-            <button class="filter-pill" data-en="Workshops" data-ar="ورش العمل">Workshops</button>
-            <button class="filter-pill" data-en="Education" data-ar="تعليم">Education</button>
-            <button class="filter-pill" data-en="This Week" data-ar="هذا الأسبوع">This Week</button>
+            <button class="filter-pill active" data-filter="all" data-en="All" data-ar="الكل">All</button>
+            <button class="filter-pill" data-filter="conservation" data-en="Conservation" data-ar="الحفاظ على البيئة">Conservation</button>
+            <button class="filter-pill" data-filter="volunteering" data-en="Volunteering" data-ar="تطوع">Volunteering</button>
+            <button class="filter-pill" data-filter="workshop" data-en="Workshops" data-ar="ورش العمل">Workshops</button>
+            <button class="filter-pill" data-filter="education" data-en="Education" data-ar="تعليم">Education</button>
+            <button class="filter-pill" data-filter="urgent" data-en="Urgent" data-ar="عاجل">Urgent</button>
         </div>
     </div>
 </div>
@@ -623,7 +623,7 @@
         <div class="cards-grid">
 
             <!-- Card 1 -->
-            <div class="opp-card reveal" style="transition-delay:0.05s">
+            <div class="opp-card reveal" data-category="conservation" data-keywords="mangrove restoration drive qatar eco society al thakira al khor conservation" style="transition-delay:0.05s">
                 <div class="card-top">
                     <span class="card-tag tag-conservation">
                         <iconify-icon icon="solar:leaf-linear"></iconify-icon>
@@ -660,7 +660,7 @@
             </div>
 
             <!-- Card 2 -->
-            <div class="opp-card reveal" style="transition-delay:0.1s">
+            <div class="opp-card reveal" data-category="workshop" data-keywords="corporate sustainability basics green future remote zoom workshop" style="transition-delay:0.1s">
                 <div class="card-top">
                     <span class="card-tag tag-workshop">
                         <iconify-icon icon="solar:presentation-graph-linear"></iconify-icon>
@@ -697,7 +697,7 @@
             </div>
 
             <!-- Card 3 -->
-            <div class="opp-card reveal" style="transition-delay:0.15s">
+            <div class="opp-card reveal" data-category="volunteering" data-keywords="beach cleanup microplastics audit doha youth environment sealine mesaieed volunteering" style="transition-delay:0.15s">
                 <div class="card-top">
                     <span class="card-tag tag-volunteering">
                         <iconify-icon icon="solar:hand-heart-linear"></iconify-icon>
@@ -734,7 +734,7 @@
             </div>
 
             <!-- Card 4 — Urgent -->
-            <div class="opp-card reveal" style="transition-delay:0.2s">
+            <div class="opp-card reveal" data-category="education" data-urgent="true" data-keywords="solar energy campus tour qatar university qu research education" style="transition-delay:0.2s">
                 <span class="urgent-badge" data-en="1 Spot Left" data-ar="مقعد واحد متبقٍ">1 Spot Left</span>
                 <div class="card-top">
                     <span class="card-tag tag-education">
@@ -772,7 +772,7 @@
             </div>
 
             <!-- Card 5 -->
-            <div class="opp-card reveal" style="transition-delay:0.25s">
+            <div class="opp-card reveal" data-category="conservation" data-keywords="desert reforestation initiative ecoqatar foundation al shahaniya doha conservation" style="transition-delay:0.25s">
                 <div class="card-top">
                     <span class="card-tag tag-conservation">
                         <iconify-icon icon="solar:leaf-linear"></iconify-icon>
@@ -809,7 +809,7 @@
             </div>
 
             <!-- Card 6 -->
-            <div class="opp-card reveal" style="transition-delay:0.3s">
+            <div class="opp-card reveal" data-category="workshop" data-keywords="circular economy zero waste living qatar national library education city workshop" style="transition-delay:0.3s">
                 <div class="card-top">
                     <span class="card-tag tag-workshop">
                         <iconify-icon icon="solar:presentation-graph-linear"></iconify-icon>
@@ -847,14 +847,11 @@
 
         </div>
 
-        <!-- PAGINATION -->
-        <div class="pagination reveal">
-            <button class="page-btn" disabled><iconify-icon icon="solar:alt-arrow-left-linear"></iconify-icon></button>
-            <button class="page-btn active">1</button>
-            <button class="page-btn">2</button>
-            <button class="page-btn">3</button>
-            <span class="page-dots">···</span>
-            <button class="page-btn"><iconify-icon icon="solar:alt-arrow-right-linear"></iconify-icon></button>
+        <!-- NO RESULTS -->
+        <div id="no-results" style="display:none; text-align:center; padding:4rem 1rem; color:rgba(0,0,0,0.5);">
+            <iconify-icon icon="solar:magnifer-broken" style="font-size:2.5rem; color:rgba(0,0,0,0.2); display:block; margin:0 auto 1rem;"></iconify-icon>
+            <p style="font-family:'Instrument Serif',serif; font-size:1.4rem; color:var(--ink); margin-bottom:0.4rem;" data-en="No matches" data-ar="لا توجد نتائج">No matches</p>
+            <p style="font-size:0.9rem;" data-en="Try a different keyword or category." data-ar="جرّب كلمة مفتاحية أو فئة مختلفة.">Try a different keyword or category.</p>
         </div>
     </div>
 </div>
@@ -901,13 +898,55 @@ document.querySelectorAll('.opp-card').forEach(card => {
     });
 });
 
-// ── FILTER PILLS ─────────────────────────────────────────
-document.querySelectorAll('.filter-pill').forEach(pill => {
-    pill.addEventListener('click', () => {
-        document.querySelectorAll('.filter-pill').forEach(p => p.classList.remove('active'));
-        pill.classList.add('active');
+// ── SEARCH + FILTER ──────────────────────────────────────
+(function() {
+    const cards = Array.from(document.querySelectorAll('.opp-card'));
+    const pills = Array.from(document.querySelectorAll('.filter-pill'));
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn = document.querySelector('.search-btn');
+    const noResults = document.getElementById('no-results');
+    const countEl = document.querySelector('.results-count span[style*="var(--green)"]');
+
+    let activeFilter = 'all';
+
+    function applyFilters() {
+        const q = (searchInput?.value || '').trim().toLowerCase();
+        let visible = 0;
+        cards.forEach(card => {
+            const cat = card.dataset.category || '';
+            const urgent = card.dataset.urgent === 'true';
+            const kw = (card.dataset.keywords || '').toLowerCase();
+
+            const matchesFilter =
+                activeFilter === 'all' ||
+                (activeFilter === 'urgent' && urgent) ||
+                cat === activeFilter;
+
+            const matchesSearch = !q || kw.includes(q);
+
+            const show = matchesFilter && matchesSearch;
+            card.style.display = show ? '' : 'none';
+            if (show) visible++;
+        });
+        if (countEl) countEl.textContent = visible;
+        if (noResults) noResults.style.display = visible === 0 ? 'block' : 'none';
+    }
+
+    pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            pills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            activeFilter = pill.dataset.filter || 'all';
+            applyFilters();
+        });
     });
-});
+
+    if (searchInput) {
+        searchInput.addEventListener('input', applyFilters);
+        searchInput.addEventListener('keydown', e => { if (e.key === 'Enter') { e.preventDefault(); applyFilters(); } });
+    }
+    if (searchBtn) searchBtn.addEventListener('click', applyFilters);
+})();
 
 // ── BANNER CLOSE ─────────────────────────────────────────
 const bannerClose = document.getElementById('banner-close');

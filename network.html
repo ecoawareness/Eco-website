@@ -132,6 +132,8 @@
                 id: 'qkons',
                 name: 'QKONs',
                 initials: 'QK',
+                icon: 'solar:recive-square-bold',
+                iconColor: '#2563eb',
                 badge: 'Eco-Tech Startup',
                 badgeColor: 'bg-blue-100 text-blue-700',
                 gradient: 'from-blue-600 to-cyan-500',
@@ -152,6 +154,8 @@
                 id: 'earthwise',
                 name: 'EarthWise',
                 initials: 'EW',
+                icon: 'solar:globus-bold',
+                iconColor: '#059669',
                 badge: 'Student Club · GU-Q',
                 badgeColor: 'bg-emerald-100 text-emerald-700',
                 gradient: 'from-emerald-600 to-green-500',
@@ -172,6 +176,8 @@
                 id: 'cmu-sustainability',
                 name: 'CMU-Q Sustainability Initiative',
                 initials: 'CM',
+                icon: 'solar:graduation-bold',
+                iconColor: '#dc2626',
                 badge: 'Academic · Education City',
                 badgeColor: 'bg-red-100 text-red-700',
                 gradient: 'from-red-600 to-orange-500',
@@ -192,6 +198,8 @@
                 id: 'earthna',
                 name: 'Earthna',
                 initials: 'Ea',
+                icon: 'solar:leaf-bold',
+                iconColor: '#1a5c38',
                 badge: 'Policy Center · Qatar Foundation',
                 badgeColor: 'bg-green-100 text-green-800',
                 gradient: 'from-[#1a5c38] to-[#2d7a4f]',
@@ -220,7 +228,7 @@
                     </div>
                     <div class="relative px-6 flex-grow flex flex-col">
                         <div class="absolute -top-10 w-20 h-20 rounded-2xl border-4 border-white bg-white flex items-center justify-center shadow-md">
-                            <span class="text-slate-900 font-bold text-2xl tracking-tight">${o.initials}</span>
+                            <iconify-icon icon="${o.icon}" style="font-size:2.25rem; color:${o.iconColor};"></iconify-icon>
                         </div>
                         <div class="pt-12 flex-grow">
                             <span class="inline-block text-[0.6rem] font-medium tracking-[0.12em] uppercase ${o.badgeColor} px-2 py-0.5 rounded-full mb-2">${o.badge}</span>
@@ -262,8 +270,7 @@
             if (!o) return;
             const modal = document.getElementById('org-modal');
             document.getElementById('org-modal-header').className = `relative h-32 bg-gradient-to-br ${o.gradient} rounded-t-2xl`;
-            document.getElementById('org-modal-avatar').textContent = o.initials;
-            document.getElementById('org-modal-avatar').style.color = '#1a5c38';
+            document.getElementById('org-modal-avatar').innerHTML = `<iconify-icon icon="${o.icon}" style="font-size:2.5rem; color:${o.iconColor};"></iconify-icon>`;
             const badge = document.getElementById('org-modal-badge');
             badge.textContent = o.badge;
             badge.className = `inline-block text-[0.65rem] font-medium tracking-[0.12em] uppercase px-2.5 py-1 rounded-full mb-2 ${o.badgeColor}`;
