@@ -15,7 +15,11 @@
       "Bash(python -c ' *)",
       "Bash(python \"C:/Users/moham/Desktop/code/EcoHub/.claude/worktrees/inspiring-napier/_strip_ar.py\")",
       "Bash(python)",
-      "Bash(node -e ' *)"
+      "Bash(node -e ' *)",
+      "Bash(git -C \"C:\\\\Users\\\\moham\\\\Desktop\\\\code\\\\EcoHub\\\\.claude\\\\worktrees\\\\inspiring-napier\" status)",
+      "Bash(git -C \"C:\\\\Users\\\\moham\\\\Desktop\\\\code\\\\EcoHub\\\\.claude\\\\worktrees\\\\inspiring-napier\" log --oneline -5)",
+      "Bash(git -C \"C:\\\\Users\\\\moham\\\\Desktop\\\\code\\\\EcoHub\\\\.claude\\\\worktrees\\\\inspiring-napier\" add about.html index.html opportunities.html privacy.html terms.html .claude/settings.local.json)",
+      "Bash(git -C 'C:\\\\Users\\\\moham\\\\Desktop\\\\code\\\\EcoHub\\\\.claude\\\\worktrees\\\\inspiring-napier' commit -m ' *)"
     ]
   }
 }

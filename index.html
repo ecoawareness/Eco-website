@@ -49,31 +49,7 @@
         }
 
         /* ── LANGUAGE TOGGLE ── */
-        #lang-toggle {
-            position: fixed;
-            bottom: 2rem; right: 2rem;
-            z-index: 950;
-            background: var(--ink); color: #fff;
-            border: none; border-radius: 100px;
-            padding: 0.65rem 1.3rem;
-            font-size: 0.82rem; font-weight: 500;
-            cursor: pointer;
-            display: flex; align-items: center; gap: 0.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.25);
-            transition: all 0.25s;
-            letter-spacing: 0.04em;
-            font-family: 'DM Sans', sans-serif;
-        }
-        #lang-toggle:hover {
-            background: var(--green);
-            transform: translateY(-2px);
-            box-shadow: 0 8px 28px rgba(0,0,0,0.3);
-        }
-        body.ar #lang-toggle {
-            right: auto; left: 2rem;
-            font-family: 'Noto Naskh Arabic', serif;
-            letter-spacing: 0;
-        }
+        #lang-toggle { display: none; }
         .lang-dot { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; flex-shrink: 0; }
 
         /* ── NAV ── */
@@ -118,22 +94,32 @@
         }
         .nav-logo-text .nlt-eco { font-weight: 800; }
         .nav-logo-text .nlt-aware { font-weight: 600; opacity: 0.78; }
-        /* When nav is over the dark green hero, mark becomes white tile + green icon for max contrast */
+        /* When nav is over the dark green hero, flip everything to white */
         nav:not(.scrolled) .nav-logo-mark { background: #fff; }
         nav:not(.scrolled) .nav-logo-mark img { filter: none; }
         nav:not(.scrolled) .nav-logo { color: #fff; }
+        nav:not(.scrolled) .nav-links a { color: #fff; }
+        nav:not(.scrolled) .nav-toggle span { background: #fff; }
+        nav:not(.scrolled) .nav-cta {
+            background: rgba(255,255,255,0.15) !important;
+            color: #fff !important;
+            border: 1px solid rgba(255,255,255,0.35) !important;
+        }
+        nav:not(.scrolled) .nav-cta:hover {
+            background: rgba(255,255,255,0.28) !important;
+        }
         body.ar .nav-logo-text { font-family: 'Noto Naskh Arabic', serif; font-weight: 700; letter-spacing: 0; }
 
         .nav-links { display: flex; align-items: center; gap: 2rem; }
         .nav-links a {
             font-size: 0.875rem; font-weight: 400; color: var(--ink);
-            text-decoration: none; opacity: 0.6; transition: opacity 0.2s;
+            text-decoration: none; opacity: 0.7; transition: opacity 0.2s, color 0.3s;
         }
         .nav-links a:hover { opacity: 1; }
         .nav-cta {
             background: var(--green) !important; color: #fff !important;
             opacity: 1 !important; padding: 0.6rem 1.4rem; border-radius: 100px;
-            transition: background 0.2s !important;
+            transition: background 0.2s, border 0.2s !important;
         }
         .nav-cta:hover { background: var(--green-light) !important; }
 
@@ -682,6 +668,19 @@
         .nav-toggle.active span:nth-child(2) { opacity: 0; }
         .nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
+        /* ── NAV BACKDROP ── */
+        .nav-backdrop {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 902;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .nav-backdrop.show { opacity: 1; pointer-events: auto; }
+        @media (max-width: 860px) { .nav-backdrop { display: block; } }
+
         @media (max-width: 860px) {
             nav { padding: 1rem 1.25rem; }
             .nav-toggle { display: flex; }
@@ -740,8 +739,8 @@
         <span class="nav-logo-text"><span class="nlt-eco">Eco</span><span class="nlt-aware">Awareness</span></span>
     </a>
     <div class="nav-links" id="nav-links">
-        <a href="dashboard.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
-        <a href="dashboard.html" data-en="Network" data-ar="الشبكة">Network</a>
+        <a href="opportunities.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
+        <a href="network.html" data-en="Network" data-ar="الشبكة">Network</a>
         <a href="about.html" data-en="About" data-ar="من نحن">About</a>
         <a href="signin.html" id="nav-signin" data-en="Sign In" data-ar="تسجيل الدخول">Sign In</a>
         <a href="signup.html" class="nav-cta" id="nav-join" data-en="Join Free" data-ar="انضم مجانًا">Join Free</a>
@@ -958,9 +957,9 @@
             <h4 data-en="Platform" data-ar="المنصة">Platform</h4>
             <ul>
                 <li><a href="dashboard.html" data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</a></li>
-                <li><a href="dashboard.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a></li>
-                <li><a href="dashboard.html" data-en="Network" data-ar="الشبكة">Network</a></li>
-                <li><a href="dashboard.html" data-en="Resources" data-ar="الموارد">Resources</a></li>
+                <li><a href="opportunities.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a></li>
+                <li><a href="network.html" data-en="Network" data-ar="الشبكة">Network</a></li>
+                <li><a href="resources.html" data-en="Resources" data-ar="الموارد">Resources</a></li>
             </ul>
         </div>
         <div class="footer-col">
@@ -1168,16 +1167,30 @@ document.addEventListener('DOMContentLoaded', () => {
 (function() {
     const toggle = document.getElementById('nav-toggle');
     const links = document.getElementById('nav-links');
+    const backdrop = document.getElementById('nav-backdrop');
     if (!toggle || !links) return;
-    toggle.addEventListener('click', () => {
-        toggle.classList.toggle('active');
-        links.classList.toggle('open');
-    });
-    links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+
+    function openNav() {
+        toggle.classList.add('active');
+        links.classList.add('open');
+        if (backdrop) backdrop.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeNav() {
         toggle.classList.remove('active');
         links.classList.remove('open');
-    }));
+        if (backdrop) backdrop.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+
+    toggle.addEventListener('click', () => {
+        links.classList.contains('open') ? closeNav() : openNav();
+    });
+    if (backdrop) backdrop.addEventListener('click', closeNav);
+    links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
 })();
 </script>
+<div class="nav-backdrop" id="nav-backdrop"></div>
 </body>
 </html>

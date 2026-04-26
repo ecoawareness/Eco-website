@@ -37,16 +37,7 @@
         }
 
         /* Lang */
-        #lang-toggle {
-            position: fixed; bottom: 2rem; right: 2rem; z-index: 950;
-            background: var(--ink); color: #fff; border: none; border-radius: 100px;
-            padding: 0.65rem 1.3rem; font-size: 0.82rem; font-weight: 500;
-            cursor: pointer; display: flex; align-items: center; gap: 0.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.25); transition: all 0.25s;
-            font-family: 'DM Sans', sans-serif;
-        }
-        #lang-toggle:hover { background: var(--green); transform: translateY(-2px); }
-        body.ar #lang-toggle { right: auto; left: 2rem; font-family: 'Noto Naskh Arabic', serif; }
+        #lang-toggle { display: none; }
         .lang-dot { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; }
 
         /* NAV (always light bg) */
@@ -92,6 +83,19 @@
         .nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .nav-toggle.active span:nth-child(2) { opacity: 0; }
         .nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+        /* ── NAV BACKDROP ── */
+        .nav-backdrop {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 902;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .nav-backdrop.show { opacity: 1; pointer-events: auto; }
+        @media (max-width: 860px) { .nav-backdrop { display: block; } }
+
         @media (max-width: 860px) {
             nav { padding: 1rem 1.25rem; }
             .nav-toggle { display: flex; }
@@ -523,15 +527,28 @@
     (function() {
         const toggle = document.getElementById('nav-toggle');
         const links = document.getElementById('nav-links');
+        const backdrop = document.getElementById('nav-backdrop');
         if (!toggle || !links) return;
-        toggle.addEventListener('click', () => {
-            toggle.classList.toggle('active');
-            links.classList.toggle('open');
-        });
-        links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+
+        function openNav() {
+            toggle.classList.add('active');
+            links.classList.add('open');
+            if (backdrop) backdrop.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeNav() {
             toggle.classList.remove('active');
             links.classList.remove('open');
-        }));
+            if (backdrop) backdrop.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        toggle.addEventListener('click', () => {
+            links.classList.contains('open') ? closeNav() : openNav();
+        });
+        if (backdrop) backdrop.addEventListener('click', closeNav);
+        links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
     })();
 
     // ── PAGE TRANSITION ──
@@ -563,5 +580,6 @@
         });
     });
 </script>
+<div class="nav-backdrop" id="nav-backdrop"></div>
 </body>
 </html>
