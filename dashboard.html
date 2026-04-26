@@ -3221,12 +3221,20 @@ function renderMyEvents() {
         const safeTitle = e.title.replace(/"/g,'&quot;').replace(/</g,'&lt;');
         const safeOrg = (e.org||'').replace(/</g,'&lt;');
         const safeDate = (e.date||'').replace(/</g,'&lt;');
+        const safeUrl = (e.url||'').replace(/"/g,'&quot;');
         const statusColor = e.status === 'Completed' ? 'var(--green)' : e.status === 'Cancelled' ? 'var(--rust)' : '#3b82f6';
-        return '<div class="my-evt" data-status="' + e.status + '" style="display:flex;align-items:center;justify-content:space-between;gap:1rem;padding:1rem 1.25rem;border:1px solid rgba(0,0,0,0.08);border-radius:12px;margin-bottom:0.75rem;background:#fff">'
+        const intlBadge = e.external
+            ? '<span style="font-size:0.6rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;background:#ffedd5;color:#9a3412;padding:0.2rem 0.5rem;border-radius:100px;margin-left:0.5rem;vertical-align:middle">🌍 International</span>'
+            : '';
+        const reminderLink = (e.external && safeUrl)
+            ? '<a href="' + safeUrl + '" target="_blank" rel="noopener" style="display:inline-flex;align-items:center;gap:0.3rem;font-size:0.72rem;color:var(--green);text-decoration:none;margin-top:0.35rem;font-weight:500">🔔 <span>Open registration page</span></a>'
+            : '';
+        return '<div class="my-evt" data-status="' + e.status + '" style="display:flex;align-items:flex-start;justify-content:space-between;gap:1rem;padding:1rem 1.25rem;border:1px solid rgba(0,0,0,0.08);border-radius:12px;margin-bottom:0.75rem;background:#fff">'
             + '<div style="flex:1;min-width:0">'
-            + '<div style="font-family:\'Instrument Serif\',serif;font-size:1.15rem;margin-bottom:0.2rem">' + safeTitle + '</div>'
+            + '<div style="font-family:\'Instrument Serif\',serif;font-size:1.15rem;margin-bottom:0.2rem">' + safeTitle + intlBadge + '</div>'
             + (safeOrg ? '<div style="font-size:0.78rem;color:rgba(0,0,0,0.55);margin-bottom:0.15rem">' + safeOrg + '</div>' : '')
             + (safeDate ? '<div style="font-size:0.72rem;color:rgba(0,0,0,0.4)">📅 ' + safeDate + '</div>' : '')
+            + reminderLink
             + '</div>'
             + '<div style="display:flex;flex-direction:column;align-items:flex-end;gap:0.5rem">'
             + '<span style="font-size:0.65rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;background:' + statusColor + '1a;color:' + statusColor + ';padding:0.25rem 0.55rem;border-radius:100px">' + e.status + '</span>'

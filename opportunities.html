@@ -262,6 +262,36 @@
         .tag-workshop { background: #dbeafe; color: #1e40af; }
         .tag-volunteering { background: #fef3c7; color: #92400e; }
         .tag-education { background: #f3e8ff; color: #6b21a8; }
+        .tag-international { background: #ffedd5; color: #9a3412; }
+
+        /* International/outside card highlight */
+        .opp-card.outside {
+            border: 1.5px solid rgba(196,98,45,0.35);
+            background: linear-gradient(180deg, #fff 0%, #fff7ed 100%);
+        }
+        .outside-ribbon {
+            position: absolute; top: 1.25rem; right: 1.25rem;
+            background: var(--rust); color: #fff;
+            border-radius: 100px; padding: 0.25rem 0.7rem;
+            font-size: 0.65rem; font-weight: 600;
+            letter-spacing: 0.08em; text-transform: uppercase;
+            display: inline-flex; align-items: center; gap: 0.35rem;
+        }
+
+        /* Apply toast */
+        .apply-toast {
+            position: fixed; bottom: 1.5rem; left: 50%;
+            transform: translateX(-50%) translateY(20px);
+            background: var(--green); color: #fff;
+            padding: 0.85rem 1.5rem; border-radius: 100px;
+            font-size: 0.875rem; font-weight: 500;
+            box-shadow: 0 10px 30px rgba(0,0,0,0.2);
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s, transform 0.3s;
+            z-index: 9000;
+            display: flex; align-items: center; gap: 0.5rem;
+        }
+        .apply-toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
 
         .card-date { font-size: 0.72rem; color: rgba(0,0,0,0.35); }
 
@@ -611,7 +641,7 @@
         <div class="results-header reveal">
             <p class="results-count">
                 <span data-en="Showing" data-ar="عرض">Showing</span>
-                <span> </span><span style="color:var(--green)">6</span>
+                <span> </span><span style="color:var(--green)">7</span>
                 <span data-en=" active opportunities" data-ar=" فرصة نشطة"> active opportunities</span>
             </p>
             <button class="sort-btn">
@@ -621,6 +651,43 @@
         </div>
 
         <div class="cards-grid">
+
+            <!-- GYSS — Outside / International -->
+            <div class="opp-card outside reveal" data-category="education" data-keywords="gyss global youth summit sustainability istanbul turkey international outside climate leadership" style="transition-delay:0.02s">
+                <span class="outside-ribbon">
+                    <iconify-icon icon="solar:global-bold"></iconify-icon>
+                    <span data-en="International" data-ar="دولي">International</span>
+                </span>
+                <div class="card-top">
+                    <span class="card-tag tag-international">
+                        <iconify-icon icon="solar:planet-linear"></iconify-icon>
+                        <span data-en="Outside Qatar" data-ar="خارج قطر">Outside Qatar</span>
+                    </span>
+                    <span class="card-date" data-en="New" data-ar="جديد">New</span>
+                </div>
+                <h3 class="card-title" data-en="Global Youth Summit for Sustainability (GYSS)" data-ar="القمة العالمية للشباب من أجل الاستدامة">Global Youth Summit for Sustainability (GYSS)</h3>
+                <div class="card-org">
+                    <iconify-icon icon="solar:buildings-linear"></iconify-icon>
+                    <span data-en="YCDP · Istanbul, Turkey" data-ar="YCDP · إسطنبول، تركيا">YCDP · Istanbul, Turkey</span>
+                </div>
+                <div class="card-meta">
+                    <div class="card-meta-item" style="align-items:flex-start">
+                        <iconify-icon icon="solar:document-text-linear" style="margin-top:2px"></iconify-icon>
+                        <span data-en="International summit bringing youth leaders, innovators, and activists together to collaborate on climate action, sustainable development, and youth leadership through workshops, panels, and project showcases."
+                              data-ar="قمة دولية تجمع قادة الشباب والمبتكرين والناشطين للتعاون في العمل المناخي والتنمية المستدامة وقيادة الشباب من خلال ورش العمل والنقاشات وعرض المشاريع.">International summit bringing youth leaders, innovators, and activists together to collaborate on climate action, sustainable development, and youth leadership through workshops, panels, and project showcases.</span>
+                    </div>
+                    <div class="card-meta-item">
+                        <iconify-icon icon="solar:map-point-linear"></iconify-icon>
+                        <span data-en="Istanbul, Turkey" data-ar="إسطنبول، تركيا">Istanbul, Turkey</span>
+                    </div>
+                </div>
+                <button class="card-btn"
+                        style="background:var(--rust);color:#fff;border-color:var(--rust)"
+                        onclick="applyOutside(this, 'Global Youth Summit for Sustainability (GYSS)', 'YCDP · Istanbul, Turkey', 'Istanbul, Turkey', 'https://www.ycdp.ch/gyss-registration/')">
+                    <span data-en="Register & Add to My Events" data-ar="سجّل وأضف إلى فعالياتي">Register & Add to My Events</span>
+                    <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+                </button>
+            </div>
 
             <!-- Card 1 -->
             <div class="opp-card reveal" data-category="conservation" data-keywords="mangrove restoration drive qatar eco society al thakira al khor conservation" style="transition-delay:0.05s">
@@ -1037,5 +1104,89 @@ document.addEventListener('DOMContentLoaded', () => {
 });
 </script>
 <div class="nav-backdrop" id="nav-backdrop"></div>
+
+<!-- Apply toast -->
+<div class="apply-toast" id="apply-toast">
+    <iconify-icon icon="solar:check-circle-bold"></iconify-icon>
+    <span id="apply-toast-msg">Added to My Events 🌿</span>
+</div>
+
+<script>
+// ── ADD-TO-MY-EVENTS (mirrors dashboard.js localStorage schema) ──
+const MY_EVENTS_KEY = 'ecohub_my_events';
+const MY_EVENTS_UNSEEN = 'ecohub_my_events_unseen';
+
+function _getEvents() {
+    try { return JSON.parse(localStorage.getItem(MY_EVENTS_KEY) || '[]'); } catch { return []; }
+}
+function _saveEvents(arr) { localStorage.setItem(MY_EVENTS_KEY, JSON.stringify(arr)); }
+
+function _showToast(msg) {
+    const t = document.getElementById('apply-toast');
+    document.getElementById('apply-toast-msg').textContent = msg;
+    t.classList.add('show');
+    clearTimeout(window._toastTimer);
+    window._toastTimer = setTimeout(() => t.classList.remove('show'), 2800);
+}
+
+function applyOutside(btn, title, org, date, url) {
+    const arr = _getEvents();
+    const exists = arr.some(e => e.title === title);
+
+    if (!exists) {
+        arr.unshift({
+            title: title,
+            org: org,
+            date: date,
+            url: url,
+            external: true,
+            appliedAt: new Date().toISOString(),
+            status: 'Upcoming'
+        });
+        _saveEvents(arr);
+        const unseen = parseInt(localStorage.getItem(MY_EVENTS_UNSEEN) || '0', 10);
+        localStorage.setItem(MY_EVENTS_UNSEEN, String(unseen + 1));
+        _showToast('Added to My Events 🌿  Opening registration…');
+    } else {
+        _showToast('Already saved — opening registration…');
+    }
+
+    // Visual confirmation on the button itself (persistent reminder)
+    if (btn) {
+        btn.style.background = 'var(--green)';
+        btn.style.borderColor = 'var(--green)';
+        const span = btn.querySelector('span');
+        if (span) {
+            span.setAttribute('data-en', 'Saved — Open Registration');
+            span.setAttribute('data-ar', 'تم الحفظ — افتح التسجيل');
+            span.textContent = 'Saved — Open Registration';
+        }
+    }
+
+    // Open external registration in a new tab so the user keeps EcoHub open
+    setTimeout(() => window.open(url, '_blank', 'noopener'), 350);
+}
+
+// On load: if user already applied, mark the matching button as "Saved"
+document.addEventListener('DOMContentLoaded', () => {
+    const saved = _getEvents();
+    document.querySelectorAll('.opp-card.outside .card-btn[onclick^="applyOutside"]').forEach(btn => {
+        const m = btn.getAttribute('onclick').match(/applyOutside\(this,\s*'([^']+)'/);
+        if (!m) return;
+        if (saved.some(e => e.title === m[1])) {
+            btn.style.background = 'var(--green)';
+            btn.style.borderColor = 'var(--green)';
+            btn.style.color = '#fff';
+            const span = btn.querySelector('span');
+            if (span) {
+                span.setAttribute('data-en', 'Saved — Open Registration');
+                span.setAttribute('data-ar', 'تم الحفظ — افتح التسجيل');
+                span.textContent = 'Saved — Open Registration';
+            }
+        }
+    });
+});
+</script>
+
 </body>
 </html>
