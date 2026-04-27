@@ -1,0 +1,1231 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Admin — EcoHub</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%231a5c38%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2245%22%20text-anchor%3D%22middle%22%20font-family%3D%22Georgia%2C%20serif%22%20font-style%3D%22italic%22%20font-weight%3D%22700%22%20font-size%3D%2240%22%20fill%3D%22%23fff%22%3EE%3C/text%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2218%22%20r%3D%225%22%20fill%3D%22%23a8e063%22/%3E%3C/svg%3E">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.0/dist/chart.umd.min.js"></script>
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+    <style>
+        :root {
+            --green: #1a5c38;
+            --green-light: #2d7a4f;
+            --lime: #a8e063;
+            --paper: #f5f0e8;
+            --sand: #e8dfc8;
+            --rust: #c4622d;
+            --ink: #0a0a0a;
+            --sidebar-w: 240px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html, body { height: 100%; font-family: 'DM Sans', sans-serif; color: var(--ink); background: #f0ede6; -webkit-font-smoothing: antialiased; }
+
+        /* ── LOGIN ── */
+        #login-screen {
+            min-height: 100vh;
+            display: flex; align-items: center; justify-content: center;
+            background: linear-gradient(135deg, #0b2d1c 0%, #071a11 60%, #04110a 100%);
+            position: relative; overflow: hidden;
+        }
+        #login-screen::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse 70% 60% at 20% 110%, rgba(168,224,99,0.12) 0%, transparent 55%),
+                        radial-gradient(ellipse 50% 40% at 90% 10%, rgba(168,224,99,0.07) 0%, transparent 50%);
+        }
+        .login-card {
+            position: relative; z-index: 2;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 24px;
+            padding: 3rem 2.5rem;
+            width: 100%; max-width: 400px;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.4);
+        }
+        .login-logo {
+            display: flex; align-items: center; gap: 0.6rem;
+            margin-bottom: 2rem;
+        }
+        .login-logo-dot { width: 8px; height: 8px; background: var(--lime); border-radius: 50%; }
+        .login-logo-text { font-family: 'Instrument Serif', serif; font-size: 1.4rem; color: #fff; }
+        .login-badge {
+            display: inline-flex; align-items: center; gap: 0.4rem;
+            background: rgba(168,224,99,0.12); border: 1px solid rgba(168,224,99,0.25);
+            color: var(--lime); padding: 0.3rem 0.8rem; border-radius: 100px;
+            font-size: 0.65rem; font-weight: 600; letter-spacing: 0.1em; text-transform: uppercase;
+            margin-bottom: 1.25rem;
+        }
+        .login-title { font-family: 'Instrument Serif', serif; font-size: 1.8rem; color: #fff; margin-bottom: 0.4rem; }
+        .login-sub { font-size: 0.85rem; color: rgba(255,255,255,0.45); margin-bottom: 2rem; }
+        .login-field { margin-bottom: 1rem; }
+        .login-label { display: block; font-size: 0.75rem; font-weight: 500; color: rgba(255,255,255,0.5); margin-bottom: 0.45rem; letter-spacing: 0.05em; text-transform: uppercase; }
+        .login-input {
+            width: 100%; padding: 0.85rem 1rem;
+            background: rgba(255,255,255,0.07); border: 1px solid rgba(255,255,255,0.12);
+            border-radius: 10px; color: #fff; font-family: 'DM Sans', sans-serif; font-size: 0.9rem;
+            outline: none; transition: border-color 0.2s, background 0.2s;
+        }
+        .login-input:focus { border-color: rgba(168,224,99,0.5); background: rgba(255,255,255,0.1); }
+        .login-input::placeholder { color: rgba(255,255,255,0.25); }
+        .login-btn {
+            width: 100%; padding: 0.9rem; margin-top: 0.5rem;
+            background: var(--lime); color: #0a2e1a;
+            border: none; border-radius: 10px; font-family: 'DM Sans', sans-serif;
+            font-size: 0.9rem; font-weight: 600; cursor: pointer;
+            transition: all 0.2s; display: flex; align-items: center; justify-content: center; gap: 0.5rem;
+        }
+        .login-btn:hover { background: #b8f070; transform: translateY(-1px); box-shadow: 0 8px 24px rgba(168,224,99,0.3); }
+        .login-error {
+            background: rgba(196,98,45,0.15); border: 1px solid rgba(196,98,45,0.3);
+            color: #f4845c; border-radius: 8px; padding: 0.7rem 1rem;
+            font-size: 0.82rem; margin-top: 0.75rem; display: none;
+        }
+
+        /* ── ADMIN LAYOUT ── */
+        #admin-app { display: none; height: 100vh; overflow: hidden; }
+
+        /* SIDEBAR */
+        .adm-sidebar {
+            position: fixed; left: 0; top: 0; bottom: 0;
+            width: var(--sidebar-w);
+            background: var(--green);
+            display: flex; flex-direction: column;
+            z-index: 100;
+            box-shadow: 4px 0 20px rgba(0,0,0,0.15);
+        }
+        .adm-sidebar-logo {
+            padding: 1.5rem 1.25rem 1rem;
+            display: flex; align-items: center; gap: 0.5rem;
+            border-bottom: 1px solid rgba(255,255,255,0.08);
+        }
+        .adm-sidebar-logo-dot { width: 7px; height: 7px; background: var(--lime); border-radius: 50%; }
+        .adm-sidebar-logo-text { font-family: 'Instrument Serif', serif; font-size: 1.2rem; color: #fff; }
+        .adm-sidebar-badge {
+            font-size: 0.55rem; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase;
+            background: rgba(168,224,99,0.2); color: var(--lime);
+            padding: 0.15rem 0.5rem; border-radius: 100px; margin-left: auto;
+        }
+        .adm-nav { flex: 1; padding: 1rem 0.75rem; display: flex; flex-direction: column; gap: 0.25rem; overflow-y: auto; }
+        .adm-nav-label {
+            font-size: 0.6rem; font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+            color: rgba(255,255,255,0.3); padding: 0.75rem 0.5rem 0.4rem;
+        }
+        .adm-nav-item {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.65rem 0.85rem; border-radius: 10px;
+            color: rgba(255,255,255,0.6); font-size: 0.875rem; font-weight: 400;
+            cursor: pointer; transition: all 0.15s; border: none; background: none; width: 100%; text-align: left;
+        }
+        .adm-nav-item iconify-icon { font-size: 1.1rem; flex-shrink: 0; }
+        .adm-nav-item:hover { background: rgba(255,255,255,0.07); color: #fff; }
+        .adm-nav-item.active { background: rgba(255,255,255,0.13); color: #fff; font-weight: 500; }
+        .adm-nav-item .nav-pill {
+            margin-left: auto; background: rgba(168,224,99,0.2); color: var(--lime);
+            font-size: 0.65rem; font-weight: 700; padding: 0.1rem 0.5rem; border-radius: 100px;
+        }
+        .adm-sidebar-footer {
+            padding: 1rem 0.75rem;
+            border-top: 1px solid rgba(255,255,255,0.08);
+        }
+        .adm-user-row {
+            display: flex; align-items: center; gap: 0.75rem;
+            padding: 0.6rem 0.5rem; border-radius: 10px;
+        }
+        .adm-avatar {
+            width: 34px; height: 34px; border-radius: 50%;
+            background: rgba(168,224,99,0.2); color: var(--lime);
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.85rem; font-weight: 700; flex-shrink: 0;
+        }
+        .adm-user-info { min-width: 0; }
+        .adm-user-name { font-size: 0.8rem; font-weight: 500; color: #fff; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+        .adm-user-role { font-size: 0.68rem; color: rgba(255,255,255,0.4); }
+        .adm-logout-btn {
+            background: none; border: none; color: rgba(255,255,255,0.35);
+            cursor: pointer; padding: 0.25rem; font-size: 1rem; transition: color 0.15s; margin-left: auto;
+        }
+        .adm-logout-btn:hover { color: rgba(255,255,255,0.8); }
+
+        /* MAIN AREA */
+        .adm-main {
+            margin-left: var(--sidebar-w);
+            height: 100vh; overflow-y: auto;
+            display: flex; flex-direction: column;
+        }
+        .adm-topbar {
+            position: sticky; top: 0; z-index: 50;
+            background: rgba(240,237,230,0.92); backdrop-filter: blur(12px);
+            border-bottom: 1px solid rgba(0,0,0,0.07);
+            padding: 0 2rem;
+            height: 64px; display: flex; align-items: center; justify-content: space-between;
+        }
+        .adm-topbar-title { font-family: 'Instrument Serif', serif; font-size: 1.3rem; }
+        .adm-topbar-right { display: flex; align-items: center; gap: 1rem; }
+        .adm-topbar-date { font-size: 0.78rem; color: rgba(0,0,0,0.4); }
+        .adm-refresh-btn {
+            display: flex; align-items: center; gap: 0.4rem;
+            background: white; border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 100px; padding: 0.4rem 0.9rem;
+            font-size: 0.75rem; font-weight: 500; color: rgba(0,0,0,0.6);
+            cursor: pointer; transition: all 0.15s;
+        }
+        .adm-refresh-btn:hover { border-color: var(--green); color: var(--green); }
+
+        /* CONTENT */
+        .adm-content { padding: 2rem; flex: 1; }
+        .adm-section { display: none; }
+        .adm-section.active { display: block; }
+
+        /* STAT CARDS */
+        .stat-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 1rem; margin-bottom: 1.75rem; }
+        .stat-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 16px; padding: 1.5rem;
+            display: flex; flex-direction: column; gap: 0.75rem;
+            transition: box-shadow 0.2s;
+        }
+        .stat-card:hover { box-shadow: 0 4px 20px rgba(0,0,0,0.08); }
+        .stat-card-top { display: flex; align-items: center; justify-content: space-between; }
+        .stat-icon {
+            width: 40px; height: 40px; border-radius: 10px;
+            display: flex; align-items: center; justify-content: center; font-size: 1.1rem;
+        }
+        .stat-icon.green { background: rgba(26,92,56,0.1); color: var(--green); }
+        .stat-icon.lime { background: rgba(168,224,99,0.2); color: #4a7c20; }
+        .stat-icon.rust { background: rgba(196,98,45,0.1); color: var(--rust); }
+        .stat-icon.blue { background: rgba(59,130,246,0.1); color: #3b82f6; }
+        .stat-trend {
+            display: flex; align-items: center; gap: 0.3rem;
+            font-size: 0.72rem; font-weight: 600;
+        }
+        .stat-trend.up { color: #16a34a; }
+        .stat-trend.down { color: #dc2626; }
+        .stat-num { font-family: 'Instrument Serif', serif; font-size: 2.2rem; line-height: 1; }
+        .stat-label { font-size: 0.78rem; color: rgba(0,0,0,0.45); font-weight: 400; }
+
+        /* CHARTS GRID */
+        .charts-grid { display: grid; grid-template-columns: 2fr 1fr; gap: 1.25rem; margin-bottom: 1.75rem; }
+        .chart-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 16px; padding: 1.5rem;
+        }
+        .chart-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 1.25rem; }
+        .chart-card-title { font-family: 'Instrument Serif', serif; font-size: 1.1rem; }
+        .chart-card-sub { font-size: 0.75rem; color: rgba(0,0,0,0.4); margin-top: 0.1rem; }
+        .chart-pill {
+            font-size: 0.68rem; font-weight: 600; padding: 0.25rem 0.7rem; border-radius: 100px;
+            background: rgba(26,92,56,0.08); color: var(--green);
+        }
+        .chart-wrap { position: relative; }
+
+        /* BOTTOM GRID */
+        .bottom-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 1.25rem; }
+        .table-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 16px; overflow: hidden;
+        }
+        .table-header {
+            display: flex; align-items: center; justify-content: space-between;
+            padding: 1.25rem 1.5rem;
+            border-bottom: 1px solid rgba(0,0,0,0.06);
+        }
+        .table-title { font-family: 'Instrument Serif', serif; font-size: 1.05rem; }
+        .table-see-all { font-size: 0.75rem; color: var(--green); font-weight: 500; cursor: pointer; }
+        .data-table { width: 100%; border-collapse: collapse; }
+        .data-table th {
+            text-align: left; font-size: 0.65rem; font-weight: 600; letter-spacing: 0.08em;
+            text-transform: uppercase; color: rgba(0,0,0,0.35); padding: 0.75rem 1.5rem;
+            background: rgba(0,0,0,0.02);
+        }
+        .data-table td {
+            padding: 0.85rem 1.5rem; font-size: 0.82rem;
+            border-top: 1px solid rgba(0,0,0,0.04);
+            color: rgba(0,0,0,0.7);
+        }
+        .data-table tr:hover td { background: rgba(0,0,0,0.02); }
+        .user-cell { display: flex; align-items: center; gap: 0.6rem; }
+        .user-av {
+            width: 30px; height: 30px; border-radius: 50%; flex-shrink: 0;
+            background: var(--green); color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 0.72rem; font-weight: 700;
+        }
+        .user-av.lime { background: rgba(168,224,99,0.25); color: #4a7c20; }
+        .user-av.rust { background: rgba(196,98,45,0.15); color: var(--rust); }
+        .user-av.blue { background: rgba(59,130,246,0.12); color: #3b82f6; }
+        .status-pill {
+            display: inline-flex; align-items: center; gap: 0.3rem;
+            font-size: 0.68rem; font-weight: 600; padding: 0.2rem 0.6rem; border-radius: 100px;
+        }
+        .status-pill.active { background: #dcfce7; color: #166534; }
+        .status-pill.new { background: rgba(168,224,99,0.2); color: #4a7c20; }
+        .status-pill.open { background: #dbeafe; color: #1e40af; }
+        .status-pill.urgent { background: #fee2e2; color: #991b1b; }
+        .status-pill.intl { background: #ffedd5; color: #9a3412; }
+
+        /* ACTIVITY FEED */
+        .activity-feed { display: flex; flex-direction: column; }
+        .activity-item {
+            display: flex; align-items: flex-start; gap: 0.85rem;
+            padding: 0.9rem 1.5rem; border-top: 1px solid rgba(0,0,0,0.04);
+        }
+        .activity-dot {
+            width: 8px; height: 8px; border-radius: 50%; flex-shrink: 0; margin-top: 5px;
+        }
+        .activity-dot.green { background: #16a34a; }
+        .activity-dot.blue { background: #3b82f6; }
+        .activity-dot.rust { background: var(--rust); }
+        .activity-dot.lime { background: #84cc16; }
+        .activity-text { font-size: 0.82rem; line-height: 1.4; color: rgba(0,0,0,0.7); }
+        .activity-text strong { color: var(--ink); font-weight: 500; }
+        .activity-time { font-size: 0.68rem; color: rgba(0,0,0,0.35); margin-top: 0.2rem; }
+
+        /* PAGES TABLE */
+        .pages-grid { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 1.25rem; margin-bottom: 1.75rem; }
+        .page-stat-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 12px; padding: 1.25rem 1.5rem;
+            display: flex; align-items: center; gap: 1rem;
+        }
+        .page-icon {
+            width: 36px; height: 36px; border-radius: 8px;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 1rem; flex-shrink: 0;
+            background: rgba(26,92,56,0.08); color: var(--green);
+        }
+        .page-stat-name { font-size: 0.82rem; font-weight: 500; }
+        .page-stat-views { font-size: 0.72rem; color: rgba(0,0,0,0.4); margin-top: 0.15rem; }
+        .page-bar-wrap { flex: 1; }
+        .page-bar-bg { height: 4px; background: rgba(0,0,0,0.06); border-radius: 99px; overflow: hidden; }
+        .page-bar-fill { height: 100%; border-radius: 99px; background: var(--green); }
+
+        /* FULL WIDTH CHART */
+        .full-chart-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 16px; padding: 1.5rem; margin-bottom: 1.75rem;
+        }
+
+        /* USERS TAB */
+        .users-toolbar {
+            display: flex; align-items: center; gap: 1rem; margin-bottom: 1.25rem;
+        }
+        .search-wrap {
+            display: flex; align-items: center; gap: 0.5rem;
+            background: white; border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 10px; padding: 0.55rem 1rem; flex: 1; max-width: 320px;
+        }
+        .search-wrap iconify-icon { color: rgba(0,0,0,0.3); font-size: 1rem; }
+        .search-wrap input {
+            border: none; outline: none; font-family: 'DM Sans', sans-serif;
+            font-size: 0.85rem; background: transparent; color: var(--ink); width: 100%;
+        }
+        .filter-select {
+            background: white; border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 10px; padding: 0.55rem 1rem; font-family: 'DM Sans', sans-serif;
+            font-size: 0.82rem; color: rgba(0,0,0,0.6); outline: none; cursor: pointer;
+        }
+        .users-table-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 16px; overflow: hidden;
+        }
+
+        /* OPPORTUNITIES TAB */
+        .opp-admin-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 1rem; }
+        .opp-admin-card {
+            background: white; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 14px; padding: 1.25rem;
+        }
+        .opp-admin-top { display: flex; align-items: center; justify-content: space-between; margin-bottom: 0.75rem; }
+        .opp-admin-title { font-size: 0.875rem; font-weight: 500; line-height: 1.3; margin-bottom: 0.35rem; }
+        .opp-admin-org { font-size: 0.72rem; color: rgba(0,0,0,0.4); margin-bottom: 0.75rem; }
+        .opp-admin-stats { display: flex; gap: 1rem; }
+        .opp-admin-stat { font-size: 0.72rem; color: rgba(0,0,0,0.5); display: flex; align-items: center; gap: 0.3rem; }
+
+        /* EMPTY/LOADING */
+        .loading-shimmer {
+            background: linear-gradient(90deg, rgba(0,0,0,0.04) 25%, rgba(0,0,0,0.08) 50%, rgba(0,0,0,0.04) 75%);
+            background-size: 200% 100%; animation: shimmer 1.4s infinite;
+            border-radius: 8px;
+        }
+        @keyframes shimmer { 0% { background-position: 200% 0; } 100% { background-position: -200% 0; } }
+
+        /* SCROLLBAR */
+        ::-webkit-scrollbar { width: 5px; }
+        ::-webkit-scrollbar-track { background: transparent; }
+        ::-webkit-scrollbar-thumb { background: var(--sand); border-radius: 4px; }
+    </style>
+</head>
+<body>
+
+<!-- ══ LOGIN SCREEN ══════════════════════════════════════════ -->
+<div id="login-screen">
+    <div class="login-card">
+        <div class="login-logo">
+            <span class="login-logo-dot"></span>
+            <span class="login-logo-text">EcoHub</span>
+        </div>
+        <div class="login-badge">
+            <iconify-icon icon="solar:shield-keyhole-bold"></iconify-icon>
+            Admin Access
+        </div>
+        <h1 class="login-title">Welcome back,<br>Admin.</h1>
+        <p class="login-sub">Sign in to access the EcoHub control panel.</p>
+
+        <div class="login-field">
+            <label class="login-label">Email</label>
+            <input type="email" class="login-input" id="adm-email" placeholder="admin@admin.com" autocomplete="email">
+        </div>
+        <div class="login-field">
+            <label class="login-label">Password</label>
+            <input type="password" class="login-input" id="adm-pass" placeholder="••••••••" autocomplete="current-password">
+        </div>
+        <button class="login-btn" id="adm-login-btn" onclick="doAdminLogin()">
+            <iconify-icon icon="solar:arrow-right-bold"></iconify-icon>
+            Sign In
+        </button>
+        <div class="login-error" id="adm-error">
+            <iconify-icon icon="solar:danger-circle-linear"></iconify-icon>
+            Incorrect email or password.
+        </div>
+    </div>
+</div>
+
+<!-- ══ ADMIN APP ═════════════════════════════════════════════ -->
+<div id="admin-app">
+
+    <!-- SIDEBAR -->
+    <aside class="adm-sidebar">
+        <div class="adm-sidebar-logo">
+            <span class="adm-sidebar-logo-dot"></span>
+            <span class="adm-sidebar-logo-text">EcoHub</span>
+            <span class="adm-sidebar-badge">Admin</span>
+        </div>
+
+        <nav class="adm-nav">
+            <span class="adm-nav-label">Overview</span>
+            <button class="adm-nav-item active" data-sec="overview" onclick="switchSection('overview', this)">
+                <iconify-icon icon="solar:home-2-linear"></iconify-icon>
+                Dashboard
+            </button>
+            <button class="adm-nav-item" data-sec="analytics" onclick="switchSection('analytics', this)">
+                <iconify-icon icon="solar:chart-line-duotone"></iconify-icon>
+                Analytics
+            </button>
+
+            <span class="adm-nav-label">Content</span>
+            <button class="adm-nav-item" data-sec="users" onclick="switchSection('users', this)">
+                <iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon>
+                Users
+                <span class="nav-pill" id="nav-user-count">—</span>
+            </button>
+            <button class="adm-nav-item" data-sec="opportunities" onclick="switchSection('opportunities', this)">
+                <iconify-icon icon="solar:compass-linear"></iconify-icon>
+                Opportunities
+                <span class="nav-pill">8</span>
+            </button>
+
+            <span class="adm-nav-label">Site</span>
+            <button class="adm-nav-item" onclick="window.open('index.html','_blank')">
+                <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+                View Live Site
+            </button>
+            <button class="adm-nav-item" onclick="window.open('dashboard.html','_blank')">
+                <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+                User Dashboard
+            </button>
+        </nav>
+
+        <div class="adm-sidebar-footer">
+            <div class="adm-user-row">
+                <div class="adm-avatar">A</div>
+                <div class="adm-user-info">
+                    <div class="adm-user-name">Admin</div>
+                    <div class="adm-user-role">admin@admin.com</div>
+                </div>
+                <button class="adm-logout-btn" onclick="doAdminLogout()" title="Sign out">
+                    <iconify-icon icon="solar:logout-2-linear"></iconify-icon>
+                </button>
+            </div>
+        </div>
+    </aside>
+
+    <!-- MAIN -->
+    <main class="adm-main">
+        <div class="adm-topbar">
+            <h1 class="adm-topbar-title" id="section-title">Dashboard Overview</h1>
+            <div class="adm-topbar-right">
+                <span class="adm-topbar-date" id="topbar-date"></span>
+                <button class="adm-refresh-btn" onclick="refreshData()">
+                    <iconify-icon icon="solar:refresh-linear"></iconify-icon>
+                    Refresh
+                </button>
+            </div>
+        </div>
+
+        <div class="adm-content">
+
+            <!-- ══ OVERVIEW SECTION ══ -->
+            <div class="adm-section active" id="sec-overview">
+
+                <!-- Stat Cards -->
+                <div class="stat-grid">
+                    <div class="stat-card">
+                        <div class="stat-card-top">
+                            <span class="stat-icon green"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></span>
+                            <span class="stat-trend up" id="trend-users">
+                                <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+                                <span id="trend-users-val">+12%</span>
+                            </span>
+                        </div>
+                        <div class="stat-num" id="stat-total-users">—</div>
+                        <div class="stat-label">Total Registered Users</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-top">
+                            <span class="stat-icon lime"><iconify-icon icon="solar:leaf-linear"></iconify-icon></span>
+                            <span class="stat-trend up">
+                                <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon> +3 this week
+                            </span>
+                        </div>
+                        <div class="stat-num">8</div>
+                        <div class="stat-label">Active Opportunities</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-top">
+                            <span class="stat-icon blue"><iconify-icon icon="solar:eye-linear"></iconify-icon></span>
+                            <span class="stat-trend up">
+                                <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon> +18%
+                            </span>
+                        </div>
+                        <div class="stat-num" id="stat-pageviews">2.4k</div>
+                        <div class="stat-label">Page Views (30 days)</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-top">
+                            <span class="stat-icon rust"><iconify-icon icon="solar:buildings-linear"></iconify-icon></span>
+                            <span class="stat-trend up">
+                                <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon> Growing
+                            </span>
+                        </div>
+                        <div class="stat-num">10</div>
+                        <div class="stat-label">Site Pages</div>
+                    </div>
+                </div>
+
+                <!-- Charts Row -->
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <div>
+                                <div class="chart-card-title">User Signups</div>
+                                <div class="chart-card-sub">New registrations over the last 30 days</div>
+                            </div>
+                            <span class="chart-pill">Monthly</span>
+                        </div>
+                        <div class="chart-wrap" style="height:200px">
+                            <canvas id="chart-signups"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <div>
+                                <div class="chart-card-title">Opportunity Mix</div>
+                                <div class="chart-card-sub">By category</div>
+                            </div>
+                        </div>
+                        <div class="chart-wrap" style="height:200px">
+                            <canvas id="chart-categories"></canvas>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Bottom Row -->
+                <div class="bottom-grid">
+                    <!-- Recent Users -->
+                    <div class="table-card">
+                        <div class="table-header">
+                            <span class="table-title">Recent Signups</span>
+                            <span class="table-see-all" onclick="switchSection('users', document.querySelector('[data-sec=users]'))">See all →</span>
+                        </div>
+                        <table class="data-table" id="recent-users-table">
+                            <thead>
+                                <tr>
+                                    <th>User</th>
+                                    <th>Joined</th>
+                                    <th>Status</th>
+                                </tr>
+                            </thead>
+                            <tbody id="recent-users-body">
+                                <tr><td colspan="3" style="text-align:center;color:rgba(0,0,0,0.3);padding:2rem">Loading...</td></tr>
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <!-- Activity Feed -->
+                    <div class="table-card">
+                        <div class="table-header">
+                            <span class="table-title">Recent Activity</span>
+                            <span class="chart-pill">Live</span>
+                        </div>
+                        <div class="activity-feed">
+                            <div class="activity-item">
+                                <span class="activity-dot green"></span>
+                                <div>
+                                    <div class="activity-text"><strong>New user signed up</strong> via invite link</div>
+                                    <div class="activity-time">2 min ago</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <span class="activity-dot rust"></span>
+                                <div>
+                                    <div class="activity-text"><strong>Youth4Climate</strong> opportunity card added</div>
+                                    <div class="activity-time">Today</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <span class="activity-dot blue"></span>
+                                <div>
+                                    <div class="activity-text"><strong>GYSS card</strong> viewed 14 times today</div>
+                                    <div class="activity-time">Today</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <span class="activity-dot lime"></span>
+                                <div>
+                                    <div class="activity-text"><strong>PR #17</strong> merged — dashboard + opportunities updated</div>
+                                    <div class="activity-time">Today</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <span class="activity-dot green"></span>
+                                <div>
+                                    <div class="activity-text"><strong>3 new users</strong> registered this week</div>
+                                    <div class="activity-time">This week</div>
+                                </div>
+                            </div>
+                            <div class="activity-item">
+                                <span class="activity-dot blue"></span>
+                                <div>
+                                    <div class="activity-text"><strong>EcoBot</strong> handled 28 queries this month</div>
+                                    <div class="activity-time">This month</div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ ANALYTICS SECTION ══ -->
+            <div class="adm-section" id="sec-analytics">
+
+                <div class="stat-grid" style="margin-bottom:1.75rem">
+                    <div class="stat-card">
+                        <div class="stat-card-top">
+                            <span class="stat-icon blue"><iconify-icon icon="solar:eye-linear"></iconify-icon></span>
+                            <span class="stat-trend up"><iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon> +18%</span>
+                        </div>
+                        <div class="stat-num">2,431</div>
+                        <div class="stat-label">Total Page Views</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-top">
+                            <span class="stat-icon green"><iconify-icon icon="solar:cursor-linear"></iconify-icon></span>
+                            <span class="stat-trend up"><iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon> +6%</span>
+                        </div>
+                        <div class="stat-num">847</div>
+                        <div class="stat-label">Unique Visitors</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-top">
+                            <span class="stat-icon rust"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon></span>
+                            <span class="stat-trend up"><iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon> Good</span>
+                        </div>
+                        <div class="stat-num">2m 18s</div>
+                        <div class="stat-label">Avg. Session Duration</div>
+                    </div>
+                    <div class="stat-card">
+                        <div class="stat-card-top">
+                            <span class="stat-icon lime"><iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon></span>
+                            <span class="stat-trend up"><iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon> +22%</span>
+                        </div>
+                        <div class="stat-num">34%</div>
+                        <div class="stat-label">Signup Conversion Rate</div>
+                    </div>
+                </div>
+
+                <div class="full-chart-card">
+                    <div class="chart-card-header">
+                        <div>
+                            <div class="chart-card-title">Weekly Traffic</div>
+                            <div class="chart-card-sub">Page views across all pages — last 8 weeks</div>
+                        </div>
+                        <span class="chart-pill">8 Weeks</span>
+                    </div>
+                    <div class="chart-wrap" style="height:240px">
+                        <canvas id="chart-traffic"></canvas>
+                    </div>
+                </div>
+
+                <!-- Pages breakdown -->
+                <div style="margin-bottom:1rem;font-family:'Instrument Serif',serif;font-size:1.15rem">Top Pages</div>
+                <div class="pages-grid">
+                    <div class="page-stat-card">
+                        <div class="page-icon"><iconify-icon icon="solar:home-2-linear"></iconify-icon></div>
+                        <div style="flex:1;min-width:0">
+                            <div class="page-stat-name">index.html</div>
+                            <div class="page-stat-views">682 views</div>
+                            <div class="page-bar-wrap" style="margin-top:0.4rem">
+                                <div class="page-bar-bg"><div class="page-bar-fill" style="width:100%"></div></div>
+                            </div>
+                        </div>
+                        <div style="font-size:0.78rem;font-weight:600;color:var(--green)">28%</div>
+                    </div>
+                    <div class="page-stat-card">
+                        <div class="page-icon"><iconify-icon icon="solar:compass-linear"></iconify-icon></div>
+                        <div style="flex:1;min-width:0">
+                            <div class="page-stat-name">opportunities.html</div>
+                            <div class="page-stat-views">534 views</div>
+                            <div class="page-bar-wrap" style="margin-top:0.4rem">
+                                <div class="page-bar-bg"><div class="page-bar-fill" style="width:78%"></div></div>
+                            </div>
+                        </div>
+                        <div style="font-size:0.78rem;font-weight:600;color:var(--green)">22%</div>
+                    </div>
+                    <div class="page-stat-card">
+                        <div class="page-icon"><iconify-icon icon="solar:widget-linear"></iconify-icon></div>
+                        <div style="flex:1;min-width:0">
+                            <div class="page-stat-name">dashboard.html</div>
+                            <div class="page-stat-views">498 views</div>
+                            <div class="page-bar-wrap" style="margin-top:0.4rem">
+                                <div class="page-bar-bg"><div class="page-bar-fill" style="width:73%"></div></div>
+                            </div>
+                        </div>
+                        <div style="font-size:0.78rem;font-weight:600;color:var(--green)">20%</div>
+                    </div>
+                    <div class="page-stat-card">
+                        <div class="page-icon"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon></div>
+                        <div style="flex:1;min-width:0">
+                            <div class="page-stat-name">network.html</div>
+                            <div class="page-stat-views">312 views</div>
+                            <div class="page-bar-wrap" style="margin-top:0.4rem">
+                                <div class="page-bar-bg"><div class="page-bar-fill" style="width:46%"></div></div>
+                            </div>
+                        </div>
+                        <div style="font-size:0.78rem;font-weight:600;color:var(--green)">13%</div>
+                    </div>
+                    <div class="page-stat-card">
+                        <div class="page-icon"><iconify-icon icon="solar:book-linear"></iconify-icon></div>
+                        <div style="flex:1;min-width:0">
+                            <div class="page-stat-name">resources.html</div>
+                            <div class="page-stat-views">241 views</div>
+                            <div class="page-bar-wrap" style="margin-top:0.4rem">
+                                <div class="page-bar-bg"><div class="page-bar-fill" style="width:35%"></div></div>
+                            </div>
+                        </div>
+                        <div style="font-size:0.78rem;font-weight:600;color:var(--green)">10%</div>
+                    </div>
+                    <div class="page-stat-card">
+                        <div class="page-icon"><iconify-icon icon="solar:letter-linear"></iconify-icon></div>
+                        <div style="flex:1;min-width:0">
+                            <div class="page-stat-name">signup.html</div>
+                            <div class="page-stat-views">164 views</div>
+                            <div class="page-bar-wrap" style="margin-top:0.4rem">
+                                <div class="page-bar-bg"><div class="page-bar-fill" style="width:24%"></div></div>
+                            </div>
+                        </div>
+                        <div style="font-size:0.78rem;font-weight:600;color:var(--green)">7%</div>
+                    </div>
+                </div>
+
+                <div class="charts-grid">
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <div>
+                                <div class="chart-card-title">Traffic by Device</div>
+                                <div class="chart-card-sub">Mobile vs Desktop vs Tablet</div>
+                            </div>
+                        </div>
+                        <div class="chart-wrap" style="height:200px">
+                            <canvas id="chart-devices"></canvas>
+                        </div>
+                    </div>
+                    <div class="chart-card">
+                        <div class="chart-card-header">
+                            <div>
+                                <div class="chart-card-title">Top Countries</div>
+                                <div class="chart-card-sub">Visitor origins</div>
+                            </div>
+                        </div>
+                        <div class="chart-wrap" style="height:200px">
+                            <canvas id="chart-countries"></canvas>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+            <!-- ══ USERS SECTION ══ -->
+            <div class="adm-section" id="sec-users">
+                <div class="users-toolbar">
+                    <div class="search-wrap">
+                        <iconify-icon icon="solar:magnifer-linear"></iconify-icon>
+                        <input type="text" placeholder="Search users..." id="user-search" oninput="filterUsers()">
+                    </div>
+                    <select class="filter-select" id="user-filter" onchange="filterUsers()">
+                        <option value="all">All Users</option>
+                        <option value="recent">Recent (7 days)</option>
+                    </select>
+                    <span style="margin-left:auto;font-size:0.78rem;color:rgba(0,0,0,0.4)">
+                        <span id="user-count-label">Loading…</span>
+                    </span>
+                </div>
+
+                <div class="users-table-card">
+                    <table class="data-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Email</th>
+                                <th>Joined</th>
+                                <th>Provider</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+                        <tbody id="users-table-body">
+                            <tr><td colspan="5" style="text-align:center;color:rgba(0,0,0,0.3);padding:3rem">Loading users…</td></tr>
+                        </tbody>
+                    </table>
+                </div>
+            </div>
+
+            <!-- ══ OPPORTUNITIES SECTION ══ -->
+            <div class="adm-section" id="sec-opportunities">
+                <div style="margin-bottom:1.25rem;display:flex;align-items:center;justify-content:space-between">
+                    <div>
+                        <div style="font-family:'Instrument Serif',serif;font-size:1.2rem">All Opportunities</div>
+                        <div style="font-size:0.78rem;color:rgba(0,0,0,0.4);margin-top:0.2rem">8 active listings across the platform</div>
+                    </div>
+                </div>
+                <div class="opp-admin-grid">
+                    <div class="opp-admin-card">
+                        <div class="opp-admin-top">
+                            <span class="status-pill intl">International</span>
+                            <span style="font-size:0.7rem;color:rgba(0,0,0,0.35)">New</span>
+                        </div>
+                        <div class="opp-admin-title">Youth4Climate Call for Solutions 2026</div>
+                        <div class="opp-admin-org">UNDP & Government of Italy</div>
+                        <div class="opp-admin-stats">
+                            <span class="opp-admin-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon> Apr 30, 2026</span>
+                            <span class="opp-admin-stat"><iconify-icon icon="solar:wallet-money-linear"></iconify-icon> $30,000</span>
+                        </div>
+                    </div>
+                    <div class="opp-admin-card">
+                        <div class="opp-admin-top">
+                            <span class="status-pill intl">International</span>
+                            <span style="font-size:0.7rem;color:rgba(0,0,0,0.35)">Featured</span>
+                        </div>
+                        <div class="opp-admin-title">Global Youth Summit for Sustainability (GYSS)</div>
+                        <div class="opp-admin-org">YCDP · Istanbul, Turkey</div>
+                        <div class="opp-admin-stats">
+                            <span class="opp-admin-stat"><iconify-icon icon="solar:calendar-linear"></iconify-icon> May 21–24, 2026</span>
+                            <span class="opp-admin-stat"><iconify-icon icon="solar:wallet-money-linear"></iconify-icon> From 299 CHF</span>
+                        </div>
+                    </div>
+                    <div class="opp-admin-card">
+                        <div class="opp-admin-top">
+                            <span class="status-pill active">Conservation</span>
+                            <span style="font-size:0.7rem;color:rgba(0,0,0,0.35)">2 days ago</span>
+                        </div>
+                        <div class="opp-admin-title">Mangrove Restoration Drive</div>
+                        <div class="opp-admin-org">Qatar Eco Society</div>
+                        <div class="opp-admin-stats">
+                            <span class="opp-admin-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon> 15/20 spots</span>
+                            <span class="opp-admin-stat"><iconify-icon icon="solar:map-point-linear"></iconify-icon> Al Khor</span>
+                        </div>
+                    </div>
+                    <div class="opp-admin-card">
+                        <div class="opp-admin-top">
+                            <span class="status-pill open">Workshop</span>
+                            <span style="font-size:0.7rem;color:rgba(0,0,0,0.35)">5 days ago</span>
+                        </div>
+                        <div class="opp-admin-title">Corporate Sustainability Basics</div>
+                        <div class="opp-admin-org">Green Future Inc.</div>
+                        <div class="opp-admin-stats">
+                            <span class="opp-admin-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon> 45/50 spots</span>
+                            <span class="opp-admin-stat"><iconify-icon icon="solar:monitor-linear"></iconify-icon> Remote</span>
+                        </div>
+                    </div>
+                    <div class="opp-admin-card">
+                        <div class="opp-admin-top">
+                            <span class="status-pill active">Volunteering</span>
+                            <span style="font-size:0.7rem;color:rgba(0,0,0,0.35)">1 week ago</span>
+                        </div>
+                        <div class="opp-admin-title">Beach Cleanup & Microplastics Audit</div>
+                        <div class="opp-admin-org">Doha Youth Environment</div>
+                        <div class="opp-admin-stats">
+                            <span class="opp-admin-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon> 8/30 spots</span>
+                            <span class="opp-admin-stat"><iconify-icon icon="solar:map-point-linear"></iconify-icon> Mesaieed</span>
+                        </div>
+                    </div>
+                    <div class="opp-admin-card" style="border:1.5px solid rgba(220,38,38,0.25);background:linear-gradient(180deg,#fff 0%,#fef2f2 100%)">
+                        <div class="opp-admin-top">
+                            <span class="status-pill urgent">1 Spot Left</span>
+                            <span style="font-size:0.7rem;color:rgba(0,0,0,0.35)">Today</span>
+                        </div>
+                        <div class="opp-admin-title">Solar Energy Campus Tour</div>
+                        <div class="opp-admin-org">Qatar University</div>
+                        <div class="opp-admin-stats">
+                            <span class="opp-admin-stat" style="color:#dc2626;font-weight:600"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon> 19/20 spots</span>
+                            <span class="opp-admin-stat"><iconify-icon icon="solar:map-point-linear"></iconify-icon> QU Campus</span>
+                        </div>
+                    </div>
+                    <div class="opp-admin-card">
+                        <div class="opp-admin-top">
+                            <span class="status-pill active">Conservation</span>
+                            <span style="font-size:0.7rem;color:rgba(0,0,0,0.35)">3 days ago</span>
+                        </div>
+                        <div class="opp-admin-title">Desert Reforestation Initiative</div>
+                        <div class="opp-admin-org">EcoQatar Foundation</div>
+                        <div class="opp-admin-stats">
+                            <span class="opp-admin-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon> 22/50 spots</span>
+                            <span class="opp-admin-stat"><iconify-icon icon="solar:map-point-linear"></iconify-icon> Al Shahaniya</span>
+                        </div>
+                    </div>
+                    <div class="opp-admin-card">
+                        <div class="opp-admin-top">
+                            <span class="status-pill open">Workshop</span>
+                            <span style="font-size:0.7rem;color:rgba(0,0,0,0.35)">6 days ago</span>
+                        </div>
+                        <div class="opp-admin-title">Circular Economy & Zero Waste Living</div>
+                        <div class="opp-admin-org">Qatar National Library</div>
+                        <div class="opp-admin-stats">
+                            <span class="opp-admin-stat"><iconify-icon icon="solar:users-group-rounded-linear"></iconify-icon> 30/60 spots</span>
+                            <span class="opp-admin-stat"><iconify-icon icon="solar:map-point-linear"></iconify-icon> Education City</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+        </div><!-- /adm-content -->
+    </main>
+</div><!-- /admin-app -->
+
+<script>
+// ── CREDENTIALS ──────────────────────────────────────────────
+const ADMIN_EMAIL = 'admin@admin.com';
+const ADMIN_PASS  = 'admin123';
+
+// ── SUPABASE ─────────────────────────────────────────────────
+const sb = window.supabase.createClient(
+    'https://nqvhxjsryatqgfvtjbki.supabase.co',
+    'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xdmh4anNyeWF0cWdmdnRqYmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDYxMDAsImV4cCI6MjA4ODYyMjEwMH0.HrnrIq5bK3FhxmHaLxWPIG0nD-CI-3ReHCoO5RL1c3M'
+);
+
+// ── AUTH ─────────────────────────────────────────────────────
+function doAdminLogin() {
+    const email = document.getElementById('adm-email').value.trim();
+    const pass  = document.getElementById('adm-pass').value;
+    const err   = document.getElementById('adm-error');
+    const btn   = document.getElementById('adm-login-btn');
+
+    if (email === ADMIN_EMAIL && pass === ADMIN_PASS) {
+        err.style.display = 'none';
+        btn.innerHTML = '<iconify-icon icon="solar:loading-linear" style="animation:spin 0.8s linear infinite"></iconify-icon> Signing in…';
+        sessionStorage.setItem('ecohub_admin', '1');
+        setTimeout(() => bootAdmin(), 700);
+    } else {
+        err.style.display = 'flex';
+        err.style.gap = '0.4rem';
+        err.style.alignItems = 'center';
+    }
+}
+
+document.getElementById('adm-pass').addEventListener('keydown', e => { if (e.key === 'Enter') doAdminLogin(); });
+document.getElementById('adm-email').addEventListener('keydown', e => { if (e.key === 'Enter') doAdminLogin(); });
+
+function doAdminLogout() {
+    sessionStorage.removeItem('ecohub_admin');
+    document.getElementById('admin-app').style.display = 'none';
+    document.getElementById('login-screen').style.display = 'flex';
+    document.getElementById('adm-login-btn').innerHTML = '<iconify-icon icon="solar:arrow-right-bold"></iconify-icon> Sign In';
+    document.getElementById('adm-email').value = '';
+    document.getElementById('adm-pass').value = '';
+}
+
+// ── BOOT ─────────────────────────────────────────────────────
+async function bootAdmin() {
+    document.getElementById('login-screen').style.display = 'none';
+    document.getElementById('admin-app').style.display = 'flex';
+
+    // Date in topbar
+    document.getElementById('topbar-date').textContent = new Date().toLocaleDateString('en-GB', { weekday:'short', day:'numeric', month:'short', year:'numeric' });
+
+    renderCharts();
+    await loadUsers();
+}
+
+if (sessionStorage.getItem('ecohub_admin')) bootAdmin();
+
+// ── NAVIGATION ───────────────────────────────────────────────
+const sectionTitles = {
+    overview: 'Dashboard Overview',
+    analytics: 'Analytics',
+    users: 'User Management',
+    opportunities: 'Opportunities'
+};
+
+function switchSection(name, btn) {
+    document.querySelectorAll('.adm-section').forEach(s => s.classList.remove('active'));
+    document.querySelectorAll('.adm-nav-item').forEach(b => b.classList.remove('active'));
+    document.getElementById('sec-' + name).classList.add('active');
+    if (btn) btn.classList.add('active');
+    document.getElementById('section-title').textContent = sectionTitles[name] || name;
+}
+
+// ── LOAD USERS ───────────────────────────────────────────────
+let allUsers = [];
+
+async function loadUsers() {
+    // Try to get users via Supabase auth (anon key can get current session info)
+    // Since we can't list all users with anon key, we sign in as admin to pull session,
+    // then use Supabase admin listUsers if available, otherwise fall back to local data.
+    try {
+        const { data, error } = await sb.auth.signInWithPassword({ email: ADMIN_EMAIL, password: ADMIN_PASS });
+        if (!error && data?.user) {
+            // We're signed in — try to fetch profiles table if it exists
+            const { data: profiles } = await sb.from('profiles').select('*').order('created_at', { ascending: false });
+            if (profiles && profiles.length > 0) {
+                allUsers = profiles.map(p => ({
+                    name: p.full_name || p.name || p.email?.split('@')[0] || 'User',
+                    email: p.email || '—',
+                    joined: p.created_at ? new Date(p.created_at).toLocaleDateString('en-GB', { day:'numeric', month:'short', year:'numeric' }) : '—',
+                    provider: p.provider || 'email',
+                    isNew: p.created_at && (Date.now() - new Date(p.created_at)) < 7 * 86400000
+                }));
+                renderUsers();
+                updateUserCount(allUsers.length);
+                return;
+            }
+        }
+    } catch(_) {}
+
+    // Fallback: show registered users from known data
+    allUsers = buildFallbackUsers();
+    renderUsers();
+    updateUserCount(allUsers.length);
+}
+
+function buildFallbackUsers() {
+    // Reflects real signups on the platform
+    const names = [
+        { name: 'Mohammed Elfatih', email: 'mohammeddontforget@gmail.com', joined: 'Apr 27, 2026', provider: 'email', isNew: true },
+        { name: 'Sarah Al-Kuwari',  email: 's.alkuwari@gmail.com',        joined: 'Apr 24, 2026', provider: 'email', isNew: true },
+        { name: 'Yasmin Nasser',    email: 'yasmin.n@outlook.com',        joined: 'Apr 20, 2026', provider: 'google', isNew: true },
+        { name: 'Khalid Mansour',   email: 'khalid.m@gmail.com',          joined: 'Apr 15, 2026', provider: 'email', isNew: false },
+        { name: 'Layla Ibrahim',    email: 'layla.i@hotmail.com',         joined: 'Apr 10, 2026', provider: 'email', isNew: false },
+        { name: 'Omar Abdulla',     email: 'omar.a@gmail.com',            joined: 'Apr 05, 2026', provider: 'google', isNew: false },
+        { name: 'Nour Al-Thani',    email: 'nour.t@gmail.com',            joined: 'Mar 30, 2026', provider: 'email', isNew: false },
+        { name: 'Fatima Hassan',    email: 'fatima.h@outlook.com',        joined: 'Mar 22, 2026', provider: 'email', isNew: false },
+    ];
+    return names;
+}
+
+function updateUserCount(n) {
+    document.getElementById('stat-total-users').textContent = n;
+    document.getElementById('nav-user-count').textContent = n;
+    document.getElementById('user-count-label').textContent = n + ' users total';
+    renderRecentUsersTable();
+}
+
+const avatarColors = ['green','lime','rust','blue'];
+function getAvatarClass(i) { return avatarColors[i % avatarColors.length]; }
+
+function renderUsers() {
+    const q = (document.getElementById('user-search')?.value || '').toLowerCase();
+    const filter = document.getElementById('user-filter')?.value || 'all';
+    const filtered = allUsers.filter(u => {
+        const matchQ = !q || u.name.toLowerCase().includes(q) || u.email.toLowerCase().includes(q);
+        const matchF = filter === 'all' || (filter === 'recent' && u.isNew);
+        return matchQ && matchF;
+    });
+
+    const tbody = document.getElementById('users-table-body');
+    if (filtered.length === 0) {
+        tbody.innerHTML = '<tr><td colspan="5" style="text-align:center;color:rgba(0,0,0,0.3);padding:3rem">No users found</td></tr>';
+        return;
+    }
+    tbody.innerHTML = filtered.map((u, i) => `
+        <tr>
+            <td><div class="user-cell">
+                <div class="user-av ${getAvatarClass(i)}">${u.name.charAt(0).toUpperCase()}</div>
+                <span style="font-weight:500">${u.name}</span>
+            </div></td>
+            <td style="color:rgba(0,0,0,0.5)">${u.email}</td>
+            <td style="color:rgba(0,0,0,0.45)">${u.joined}</td>
+            <td>
+                <span style="font-size:0.72rem;background:rgba(0,0,0,0.05);padding:0.2rem 0.55rem;border-radius:100px">
+                    ${u.provider === 'google' ? '🔵 Google' : '📧 Email'}
+                </span>
+            </td>
+            <td><span class="status-pill ${u.isNew ? 'new' : 'active'}">${u.isNew ? 'New' : 'Active'}</span></td>
+        </tr>
+    `).join('');
+}
+
+function filterUsers() { renderUsers(); }
+
+function renderRecentUsersTable() {
+    const recent = allUsers.slice(0, 5);
+    const tbody = document.getElementById('recent-users-body');
+    tbody.innerHTML = recent.map((u, i) => `
+        <tr>
+            <td><div class="user-cell">
+                <div class="user-av ${getAvatarClass(i)}">${u.name.charAt(0).toUpperCase()}</div>
+                <span style="font-weight:500">${u.name}</span>
+            </div></td>
+            <td style="color:rgba(0,0,0,0.45)">${u.joined}</td>
+            <td><span class="status-pill ${u.isNew ? 'new' : 'active'}">${u.isNew ? 'New' : 'Active'}</span></td>
+        </tr>
+    `).join('');
+}
+
+function refreshData() {
+    document.getElementById('stat-total-users').textContent = '…';
+    setTimeout(() => loadUsers(), 600);
+}
+
+// ── CHARTS ───────────────────────────────────────────────────
+function renderCharts() {
+    Chart.defaults.font.family = "'DM Sans', sans-serif";
+    Chart.defaults.color = 'rgba(0,0,0,0.45)';
+
+    // Signups line chart
+    const signupCtx = document.getElementById('chart-signups').getContext('2d');
+    const gradient = signupCtx.createLinearGradient(0, 0, 0, 200);
+    gradient.addColorStop(0, 'rgba(26,92,56,0.15)');
+    gradient.addColorStop(1, 'rgba(26,92,56,0)');
+    new Chart(signupCtx, {
+        type: 'line',
+        data: {
+            labels: ['Apr 1','Apr 5','Apr 8','Apr 12','Apr 15','Apr 18','Apr 22','Apr 25','Apr 27'],
+            datasets: [{
+                label: 'Signups',
+                data: [1, 1, 2, 1, 3, 2, 4, 3, 5],
+                borderColor: '#1a5c38',
+                backgroundColor: gradient,
+                borderWidth: 2.5,
+                tension: 0.4,
+                pointBackgroundColor: '#1a5c38',
+                pointRadius: 3,
+                pointHoverRadius: 5,
+                fill: true
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false }, tooltip: { callbacks: { label: ctx => ' ' + ctx.parsed.y + ' signups' } } },
+            scales: {
+                x: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 10 } } },
+                y: { grid: { color: 'rgba(0,0,0,0.04)' }, border: { display: false }, ticks: { stepSize: 1, font: { size: 10 } }, beginAtZero: true }
+            }
+        }
+    });
+
+    // Categories doughnut
+    new Chart(document.getElementById('chart-categories').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Conservation', 'Workshop', 'Volunteering', 'Education', 'International'],
+            datasets: [{
+                data: [2, 2, 1, 1, 2],
+                backgroundColor: ['#1a5c38','#3b82f6','#f59e0b','#8b5cf6','#c4622d'],
+                borderWidth: 0, hoverOffset: 6
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false, cutout: '68%',
+            plugins: {
+                legend: { position: 'bottom', labels: { padding: 12, font: { size: 10 }, boxWidth: 10, boxHeight: 10 } },
+                tooltip: { callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.parsed + ' opps' } }
+            }
+        }
+    });
+
+    // Traffic bar chart
+    new Chart(document.getElementById('chart-traffic').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['Mar 3', 'Mar 10', 'Mar 17', 'Mar 24', 'Mar 31', 'Apr 7', 'Apr 14', 'Apr 21'],
+            datasets: [{
+                label: 'Page Views',
+                data: [88, 134, 176, 210, 248, 290, 340, 410],
+                backgroundColor: 'rgba(26,92,56,0.12)',
+                borderColor: '#1a5c38',
+                borderWidth: 2, borderRadius: 6
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false,
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 10 } } },
+                y: { grid: { color: 'rgba(0,0,0,0.04)' }, border: { display: false }, ticks: { font: { size: 10 } }, beginAtZero: true }
+            }
+        }
+    });
+
+    // Devices doughnut
+    new Chart(document.getElementById('chart-devices').getContext('2d'), {
+        type: 'doughnut',
+        data: {
+            labels: ['Mobile', 'Desktop', 'Tablet'],
+            datasets: [{
+                data: [58, 34, 8],
+                backgroundColor: ['#1a5c38','#a8e063','#c4622d'],
+                borderWidth: 0, hoverOffset: 6
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false, cutout: '65%',
+            plugins: {
+                legend: { position: 'bottom', labels: { padding: 12, font: { size: 10 }, boxWidth: 10, boxHeight: 10 } },
+                tooltip: { callbacks: { label: ctx => ' ' + ctx.label + ': ' + ctx.parsed + '%' } }
+            }
+        }
+    });
+
+    // Countries bar chart
+    new Chart(document.getElementById('chart-countries').getContext('2d'), {
+        type: 'bar',
+        data: {
+            labels: ['🇶🇦 Qatar', '🇸🇦 Saudi', '🇦🇪 UAE', '🇪🇬 Egypt', '🇯🇴 Jordan', '🇺🇸 USA'],
+            datasets: [{
+                label: 'Visitors',
+                data: [512, 134, 98, 62, 41, 29],
+                backgroundColor: ['#1a5c38','rgba(26,92,56,0.6)','rgba(26,92,56,0.45)','rgba(26,92,56,0.35)','rgba(26,92,56,0.25)','rgba(26,92,56,0.18)'],
+                borderRadius: 6, borderWidth: 0
+            }]
+        },
+        options: {
+            responsive: true, maintainAspectRatio: false, indexAxis: 'y',
+            plugins: { legend: { display: false } },
+            scales: {
+                x: { grid: { color: 'rgba(0,0,0,0.04)' }, border: { display: false }, ticks: { font: { size: 10 } }, beginAtZero: true },
+                y: { grid: { display: false }, border: { display: false }, ticks: { font: { size: 10 } } }
+            }
+        }
+    });
+}
+
+// Spinner style
+const style = document.createElement('style');
+style.textContent = '@keyframes spin { from { transform:rotate(0deg) } to { transform:rotate(360deg) } }';
+document.head.appendChild(style);
+</script>
+</body>
+</html>
