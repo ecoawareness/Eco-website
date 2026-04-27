@@ -946,10 +946,30 @@ let signupBuckets = []; // for chart
 const ACTIVE_WINDOW_MS = 30 * 86400000; // 30 days
 
 async function loadUsers() {
-    const { data: profiles, error } = await sb
-        .from('profiles')
-        .select('id, email, full_name, created_at, last_sign_in_at')
-        .order('created_at', { ascending: false });
+    // Fetch from server-side admin API (uses Supabase service role under the
+    // hood). No profiles table required — sources straight from auth.users.
+    const { data: { session } } = await sb.auth.getSession();
+    const token = session?.access_token;
+    if (!token) {
+        showSetupNeeded('Not signed in');
+        return;
+    }
+    let profiles, error;
+    try {
+        const r = await fetch('/api/admin/data', {
+            headers: { 'Authorization': 'Bearer ' + token }
+        });
+        const j = await r.json().catch(() => ({}));
+        if (!r.ok) {
+            error = { message: j.error || ('HTTP ' + r.status) };
+        } else {
+            profiles = j.profiles || [];
+            // Match descending order by created_at
+            profiles.sort((a, b) => new Date(b.created_at) - new Date(a.created_at));
+        }
+    } catch (e) {
+        error = { message: 'Network error: ' + e.message };
+    }
 
     if (error) {
         showSetupNeeded(error.message);
