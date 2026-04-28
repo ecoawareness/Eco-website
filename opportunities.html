@@ -500,6 +500,7 @@
         <a href="opportunities.html" class="active" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
         <a href="network.html" data-en="Network" data-ar="الشبكة">Network</a>
         <a href="resources.html" data-en="Resources" data-ar="الموارد">Resources</a>
+        <a href="faq.html" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a>
         <a href="signin.html" data-en="Sign In" data-ar="تسجيل الدخول">Sign In</a>
         <a href="signup.html" class="nav-cta" data-en="Join Free" data-ar="انضم مجانًا">Join Free</a>
     </div>
@@ -770,7 +771,8 @@
                     </div>
                     <div class="progress-bar"><div class="progress-fill" style="width:75%;background:#1a5c38"></div></div>
                 </div>
-                <button class="card-btn">
+                <button class="card-btn"
+                        onclick="applyInternal(this, 'Mangrove Restoration Drive', 'Qatar Eco Society', 'Sat, Oct 24 • 7:00 – 11:00 AM', 'Al Thakira Mangroves, Al Khor')">
                     <span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span>
                     <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
                 </button>
@@ -807,7 +809,8 @@
                     </div>
                     <div class="progress-bar"><div class="progress-fill" style="width:90%;background:#3b82f6"></div></div>
                 </div>
-                <button class="card-btn">
+                <button class="card-btn"
+                        onclick="applyInternal(this, 'Corporate Sustainability Basics', 'Green Future Inc.', 'Wed, Nov 02 • 4:00 – 6:00 PM', 'Remote (Zoom)')">
                     <span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span>
                     <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
                 </button>
@@ -844,7 +847,8 @@
                     </div>
                     <div class="progress-bar"><div class="progress-fill" style="width:26%;background:#f59e0b"></div></div>
                 </div>
-                <button class="card-btn">
+                <button class="card-btn"
+                        onclick="applyInternal(this, 'Beach Cleanup & Microplastics Audit', 'Doha Youth Environment', 'Fri, Nov 15 • 6:00 – 9:00 AM', 'Sealine Beach, Mesaieed')">
                     <span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span>
                     <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
                 </button>
@@ -882,7 +886,8 @@
                     </div>
                     <div class="progress-bar"><div class="progress-fill" style="width:95%;background:#ef4444"></div></div>
                 </div>
-                <button class="card-btn">
+                <button class="card-btn"
+                        onclick="applyInternal(this, 'Solar Energy Campus Tour', 'Qatar University', 'Mon, Nov 20 • 10:00 AM – 12:00 PM', 'QU Research Complex')">
                     <span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span>
                     <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
                 </button>
@@ -919,7 +924,8 @@
                     </div>
                     <div class="progress-bar"><div class="progress-fill" style="width:44%;background:#1a5c38"></div></div>
                 </div>
-                <button class="card-btn">
+                <button class="card-btn"
+                        onclick="applyInternal(this, 'Desert Reforestation Initiative', 'EcoQatar Foundation', 'Sat, Dec 07 • 6:30 – 10:00 AM', 'Al Shahaniya, Doha')">
                     <span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span>
                     <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
                 </button>
@@ -956,7 +962,8 @@
                     </div>
                     <div class="progress-bar"><div class="progress-fill" style="width:50%;background:#3b82f6"></div></div>
                 </div>
-                <button class="card-btn">
+                <button class="card-btn"
+                        onclick="applyInternal(this, 'Circular Economy & Zero Waste Living', 'Qatar National Library', 'Thu, Nov 28 • 5:00 – 7:30 PM', 'Qatar National Library, Education City')">
                     <span data-en="View & Apply" data-ar="عرض والتقديم">View & Apply</span>
                     <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
                 </button>
@@ -1215,6 +1222,41 @@ function applyOutside(btn, title, org, date, url) {
 
     // Open external registration in a new tab so the user keeps EcoHub open
     setTimeout(() => window.open(url, '_blank', 'noopener'), 350);
+}
+
+function applyInternal(btn, title, org, date, location) {
+    const arr = _getEvents();
+    const exists = arr.some(e => e.title === title);
+
+    if (!exists) {
+        arr.unshift({
+            title: title,
+            org: org,
+            date: date,
+            location: location,
+            external: false,
+            appliedAt: new Date().toISOString(),
+            status: 'Upcoming'
+        });
+        _saveEvents(arr);
+        const unseen = parseInt(localStorage.getItem(MY_EVENTS_UNSEEN) || '0', 10);
+        localStorage.setItem(MY_EVENTS_UNSEEN, String(unseen + 1));
+        _showToast('Saved to My Events 🌿  See you there!');
+    } else {
+        _showToast('Already saved to My Events 🌿');
+    }
+
+    if (btn) {
+        btn.style.background = 'var(--green)';
+        btn.style.borderColor = 'var(--green)';
+        btn.style.color = '#fff';
+        const span = btn.querySelector('span');
+        if (span) {
+            span.setAttribute('data-en', 'Saved to My Events');
+            span.setAttribute('data-ar', 'محفوظ في فعالياتي');
+            span.textContent = 'Saved to My Events';
+        }
+    }
 }
 
 // On load: if user already applied, mark the matching button as "Saved"
