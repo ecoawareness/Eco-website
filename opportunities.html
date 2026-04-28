@@ -1220,8 +1220,8 @@ function applyOutside(btn, title, org, date, url) {
         }
     }
 
-    // Open external registration in a new tab so the user keeps EcoHub open
-    setTimeout(() => window.open(url, '_blank', 'noopener'), 350);
+    // Open external registration in a new tab — called synchronously to avoid popup blockers
+    window.open(url, '_blank', 'noopener');
 }
 
 function applyInternal(btn, title, org, date, location) {
@@ -1278,6 +1278,50 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 });
+</script>
+
+<script>
+// ── SEARCH & FILTER ──
+(function () {
+    const searchInput = document.querySelector('.search-input');
+    const searchBtn   = document.querySelector('.search-btn');
+    const pills       = document.querySelectorAll('.filter-pill');
+    const cards       = document.querySelectorAll('.opp-card');
+    const countEl     = document.querySelector('.results-count span[style]');
+
+    function filterCards() {
+        const query  = (searchInput ? searchInput.value : '').toLowerCase().trim();
+        const active = document.querySelector('.filter-pill.active');
+        const cat    = active ? active.getAttribute('data-filter') : 'all';
+
+        let visible = 0;
+        cards.forEach(card => {
+            const kw    = (card.getAttribute('data-keywords') || '').toLowerCase();
+            const cardCat = (card.getAttribute('data-category') || '').toLowerCase();
+            const title = (card.querySelector('[class*="title"]')?.textContent || '').toLowerCase();
+
+            const matchSearch = !query || kw.includes(query) || title.includes(query);
+            const matchCat    = cat === 'all' || cardCat === cat || kw.includes(cat);
+
+            const show = matchSearch && matchCat;
+            card.style.display = show ? '' : 'none';
+            if (show) visible++;
+        });
+
+        if (countEl) countEl.textContent = visible;
+    }
+
+    if (searchInput) searchInput.addEventListener('input', filterCards);
+    if (searchBtn)   searchBtn.addEventListener('click', filterCards);
+
+    pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            pills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            filterCards();
+        });
+    });
+})();
 </script>
 
 </body>
