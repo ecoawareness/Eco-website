@@ -193,6 +193,19 @@
             margin-left: 1rem; display: none;
         }
         .field-error.visible { display: block; }
+        .confirm-help {
+            display: none; margin-top: 0.7rem; padding: 0.85rem 1rem;
+            border: 1px solid rgba(26,92,56,0.14); border-radius: 14px;
+            background: rgba(26,92,56,0.06); color: rgba(0,0,0,0.64);
+            font-size: 0.82rem; line-height: 1.5;
+        }
+        .confirm-help.show { display: block; }
+        .confirm-help button {
+            margin-top: 0.55rem; border: 1px solid rgba(26,92,56,0.22);
+            border-radius: 999px; background: white; color: var(--green);
+            padding: 0.55rem 0.8rem; font: 500 0.78rem 'DM Sans', sans-serif;
+            cursor: pointer;
+        }
 
         .btn-primary {
             width: 100%; display: inline-flex; align-items: center; justify-content: center;
@@ -370,6 +383,11 @@
                 <button id="signinBtn" type="button" class="btn-primary">
                     Sign In
                 </button>
+                <div class="confirm-help" id="confirmHelp">
+                    Your email is not confirmed yet. Check your inbox/spam folder, or resend the confirmation email.
+                    <br>
+                    <button type="button" id="resendSigninConfirmBtn">Resend confirmation email</button>
+                </div>
 
                 <div class="divider-row">Or continue with</div>
 
@@ -427,6 +445,24 @@
                 `<iconify-icon icon="${isPw ? 'solar:eye-closed-linear' : 'solar:eye-linear'}" style="font-size:1.15rem"></iconify-icon>`;
         });
 
+        async function resendSigninConfirmation() {
+            const email = document.getElementById('email').value.trim();
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('email', 'Enter your email address first'); return; }
+            const btn = document.getElementById('resendSigninConfirmBtn');
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+            const { error } = await supabaseClient.auth.resend({
+                type: 'signup',
+                email,
+                options: { emailRedirectTo: window.location.origin + '/dashboard.html' }
+            });
+            btn.disabled = false;
+            btn.textContent = 'Resend confirmation email';
+            if (error) showToast(error.message, 'error');
+            else showToast('Confirmation email sent again. Check your inbox and spam folder.', 'success');
+        }
+        document.getElementById('resendSigninConfirmBtn').addEventListener('click', resendSigninConfirmation);
+
         document.getElementById('signinBtn').addEventListener('click', async () => {
             clearError('email'); clearError('password');
             const email = document.getElementById('email').value.trim();
@@ -450,6 +486,7 @@
                     showToast('Incorrect email or password', 'error');
                 } else if (error.message.toLowerCase().includes('confirm')) {
                     showToast('Please confirm your email first', 'error');
+                    document.getElementById('confirmHelp').classList.add('show');
                 } else { showToast(error.message, 'error'); }
                 return;
             }

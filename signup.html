@@ -220,6 +220,19 @@
             font-size: 0.78rem; color: rgba(0,0,0,0.66); cursor: pointer;
         }
         .interest-chip input { accent-color: var(--green); }
+        .confirm-panel {
+            display: none; margin-top: 1rem; padding: 1rem;
+            border: 1px solid rgba(26,92,56,0.14); border-radius: 16px;
+            background: rgba(26,92,56,0.06); color: rgba(0,0,0,0.68);
+            font-size: 0.86rem; line-height: 1.55;
+        }
+        .confirm-panel.show { display: block; }
+        .confirm-actions { display: flex; gap: 0.65rem; flex-wrap: wrap; margin-top: 0.85rem; }
+        .confirm-btn {
+            border: 1px solid rgba(26,92,56,0.22); border-radius: 999px;
+            background: #fff; color: var(--green); padding: 0.62rem 0.9rem;
+            font: 500 0.8rem 'DM Sans', sans-serif; cursor: pointer;
+        }
 
         /* Terms */
         .terms-row {
@@ -470,6 +483,15 @@
                     Create Account
                 </button>
 
+                <div class="confirm-panel" id="confirmPanel">
+                    <strong>Confirm your email</strong>
+                    <p id="confirmPanelText">We sent a confirmation link to your email. Open it to activate your account.</p>
+                    <div class="confirm-actions">
+                        <button class="confirm-btn" type="button" id="resendConfirmBtn">Resend confirmation email</button>
+                        <a class="confirm-btn" href="signin.html" style="text-decoration:none">Go to sign in</a>
+                    </div>
+                </div>
+
                 <div class="divider-row">Or continue with</div>
 
                 <button id="googleSignInBtn" type="button" class="btn-google">
@@ -565,6 +587,30 @@
         wireToggle('togglePassword', passwordInput);
         wireToggle('toggleConfirm', confirmInput);
 
+        let pendingConfirmationEmail = '';
+        function showConfirmationPanel(email) {
+            pendingConfirmationEmail = email;
+            document.getElementById('confirmPanelText').textContent = 'We sent a confirmation link to ' + email + '. If you do not see it, check spam/junk or resend it below.';
+            document.getElementById('confirmPanel').classList.add('show');
+        }
+
+        document.getElementById('resendConfirmBtn').addEventListener('click', async () => {
+            const email = pendingConfirmationEmail || document.getElementById('email').value.trim();
+            if (!email || !/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) { showError('email', 'Enter your email first'); return; }
+            const btn = document.getElementById('resendConfirmBtn');
+            btn.disabled = true;
+            btn.textContent = 'Sending...';
+            const { error } = await supabaseClient.auth.resend({
+                type: 'signup',
+                email,
+                options: { emailRedirectTo: window.location.origin + '/dashboard.html' }
+            });
+            btn.disabled = false;
+            btn.textContent = 'Resend confirmation email';
+            if (error) showToast(error.message, 'error');
+            else showToast('Confirmation email sent again. Check your inbox and spam folder.', 'success');
+        });
+
         // ─── Sign Up ─────────────────────────────────────────────────
         document.getElementById('signupBtn').addEventListener('click', async () => {
             clearAllErrors();
@@ -594,6 +640,7 @@
                 email,
                 password,
                 options: {
+                    emailRedirectTo: window.location.origin + '/dashboard.html',
                     data: { first_name: firstName, last_name: lastName, full_name: `${firstName} ${lastName}`, interests, role: 'member' }
                 }
             });
@@ -612,8 +659,8 @@
             }
 
             if (data.user && !data.session) {
-                showToast('Check your email to confirm your account ✉️', 'success');
-                setTimeout(() => { window.location.href = 'signin.html'; }, 2200);
+                showConfirmationPanel(email);
+                showToast('Check your email for the confirmation link', 'success');
             } else {
                 showToast('Account created! Welcome 🌿', 'success');
                 setTimeout(() => { window.location.href = 'dashboard.html'; }, 1200);
