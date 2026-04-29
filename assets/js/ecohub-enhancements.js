@@ -40,6 +40,89 @@
         });
     }
 
+    function installSmoothPageTransition() {
+        const overlay = document.getElementById('page-transition');
+        const logo = document.getElementById('transition-logo');
+        if (!overlay || !logo || overlay.dataset.ecohubSmooth === 'true') return;
+        overlay.dataset.ecohubSmooth = 'true';
+
+        const style = document.createElement('style');
+        style.textContent = `
+            #page-transition {
+                opacity: 1 !important;
+                visibility: visible;
+                background:
+                    radial-gradient(circle at 50% 46%, rgba(168,224,99,0.12), transparent 34%),
+                    #0d3a22 !important;
+                transition: opacity 480ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s linear 480ms !important;
+            }
+            #page-transition.ecohub-hidden {
+                opacity: 0 !important;
+                visibility: hidden;
+            }
+            #page-transition.ecohub-leaving {
+                opacity: 1 !important;
+                visibility: visible;
+                transition: opacity 360ms cubic-bezier(0.22, 1, 0.36, 1), visibility 0s !important;
+            }
+            #transition-logo {
+                width: clamp(68px, 8vw, 96px) !important;
+                height: clamp(68px, 8vw, 96px) !important;
+                object-fit: contain !important;
+                transform: translateY(6px) scale(0.94);
+                opacity: 0;
+                filter: drop-shadow(0 18px 32px rgba(0,0,0,0.22));
+                transition:
+                    transform 620ms cubic-bezier(0.22, 1, 0.36, 1),
+                    opacity 360ms ease !important;
+            }
+            #page-transition.ecohub-ready #transition-logo {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            #page-transition.ecohub-leaving #transition-logo,
+            #page-transition.leaving #transition-logo {
+                transform: translateY(-2px) scale(1.08) !important;
+                opacity: 1;
+            }
+            @media (prefers-reduced-motion: reduce) {
+                #page-transition, #transition-logo { transition: none !important; }
+            }
+        `;
+        document.head.appendChild(style);
+
+        const hide = () => {
+            overlay.classList.remove('leaving', 'ecohub-leaving');
+            overlay.classList.add('ecohub-ready');
+            requestAnimationFrame(() => overlay.classList.add('ecohub-hidden'));
+        };
+
+        if (logo.decode) logo.decode().catch(() => {}).finally(hide);
+        else if (logo.complete) hide();
+        else logo.addEventListener('load', hide, { once: true });
+        setTimeout(hide, 900);
+
+        document.addEventListener('click', event => {
+            const link = event.target.closest('a');
+            if (!link || event.defaultPrevented || event.button !== 0 || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+            const url = link.getAttribute('href');
+            const target = link.getAttribute('target');
+            if (!url || url.startsWith('#') || url.startsWith('mailto:') || url.startsWith('tel:') || url.startsWith('javascript:') || target === '_blank') return;
+            if (link.hostname && link.hostname !== window.location.hostname) return;
+
+            event.preventDefault();
+            event.stopImmediatePropagation();
+            overlay.classList.remove('ecohub-hidden');
+            overlay.classList.add('ecohub-ready', 'ecohub-leaving');
+            setTimeout(() => { window.location.href = link.href; }, 320);
+        }, true);
+
+        window.addEventListener('pageshow', () => {
+            overlay.classList.remove('leaving', 'ecohub-leaving');
+            overlay.classList.add('ecohub-ready', 'ecohub-hidden');
+        });
+    }
+
     async function getSession() {
         const sb = getSupabase();
         if (!sb) return null;
@@ -198,6 +281,7 @@
 
     async function bootEnhancements() {
         optimizeMedia();
+        installSmoothPageTransition();
         wrapEventStorage();
         enhancePostEvent();
         enhanceProfileSave();
