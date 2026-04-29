@@ -2857,7 +2857,7 @@ function _generateQR(userId, attempt) {
     qrContainer.innerHTML = '';
     try {
         ecoIdQrInstance = new QRCode(qrContainer, {
-            text: 'https://ecoawarenessqa.org/verify?uid=' + (userId || 'guest'),
+            text: 'https://ecoawarenessqa.org/portfolio.html?uid=' + (userId || 'guest'),
             width: 140, height: 140,
             colorDark: '#1a5c38', colorLight: '#ffffff',
             correctLevel: QRCode.CorrectLevel.M
@@ -3458,5 +3458,6 @@ init();
     window._lenis = null;
 })();
 </script>
+<script src="assets/js/ecohub-enhancements.js"></script>
 </body>
 </html>

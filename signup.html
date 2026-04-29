@@ -210,6 +210,17 @@
         }
         .strength-text { font-size: 0.7rem; color: rgba(0,0,0,0.45); }
 
+        .interest-grid {
+            display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0.5rem;
+        }
+        .interest-chip {
+            display: flex; align-items: center; gap: 0.45rem;
+            border: 1px solid rgba(0,0,0,0.1); border-radius: 12px;
+            background: var(--paper); padding: 0.65rem 0.75rem;
+            font-size: 0.78rem; color: rgba(0,0,0,0.66); cursor: pointer;
+        }
+        .interest-chip input { accent-color: var(--green); }
+
         /* Terms */
         .terms-row {
             display: flex; align-items: flex-start; gap: 0.6rem;
@@ -440,6 +451,16 @@
                     <p class="field-error" id="confirmPassword-error"></p>
                 </div>
 
+                <div class="field-group">
+                    <label class="field-label">Climate Interests</label>
+                    <div class="interest-grid">
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Volunteering" checked>Volunteering</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Recycling">Recycling</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Biodiversity">Biodiversity</label>
+                        <label class="interest-chip"><input type="checkbox" name="interests" value="Climate education">Education</label>
+                    </div>
+                </div>
+
                 <label class="terms-row">
                     <input type="checkbox" id="termsCheckbox" checked>
                     <span>I agree to the <a href="#">Terms of Service</a> and <a href="#">Privacy Policy</a>.</span>
@@ -554,6 +575,7 @@
             const password = passwordInput.value;
             const confirmPassword = confirmInput.value;
             const termsOk = document.getElementById('termsCheckbox').checked;
+            const interests = Array.from(document.querySelectorAll('input[name="interests"]:checked')).map(i => i.value);
 
             let valid = true;
             if (!firstName) { showError('firstName', 'First name is required'); valid = false; }
@@ -572,7 +594,7 @@
                 email,
                 password,
                 options: {
-                    data: { first_name: firstName, last_name: lastName, full_name: `${firstName} ${lastName}` }
+                    data: { first_name: firstName, last_name: lastName, full_name: `${firstName} ${lastName}`, interests, role: 'member' }
                 }
             });
 
@@ -649,5 +671,6 @@
             });
         });
     </script>
+<script src="assets/js/ecohub-enhancements.js"></script>
 </body>
 </html>
