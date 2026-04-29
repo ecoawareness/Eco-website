@@ -69,8 +69,8 @@
                 width: clamp(68px, 8vw, 96px) !important;
                 height: clamp(68px, 8vw, 96px) !important;
                 object-fit: contain !important;
-                transform: translateY(6px) scale(0.94);
-                opacity: 0;
+                transform: translateY(0) scale(1);
+                opacity: 1;
                 filter: drop-shadow(0 18px 32px rgba(0,0,0,0.22));
                 transition:
                     transform 620ms cubic-bezier(0.22, 1, 0.36, 1),
