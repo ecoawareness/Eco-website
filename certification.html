@@ -1,0 +1,988 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Eco-Merchant Certification — EcoAwareness</title>
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%231a5c38%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2245%22%20text-anchor%3D%22middle%22%20font-family%3D%22Georgia%2C%20serif%22%20font-style%3D%22italic%22%20font-weight%3D%22700%22%20font-size%3D%2240%22%20fill%3D%22%23fff%22%3EE%3C/text%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2218%22%20r%3D%225%22%20fill%3D%22%23a8e063%22/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="assets/IMG.PNG">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;700&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <style>
+        :root {
+            --ink: #0a0a0a;
+            --paper: #f5f0e8;
+            --green: #1a5c38;
+            --green-light: #2d7a4f;
+            --lime: #a8e063;
+            --sand: #e8dfc8;
+            --rust: #c4622d;
+            --bronze: #cd7f32;
+            --silver: #aaaaaa;
+            --gold: #f5c518;
+            --badge-green: #2ecc71;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        body.ar { font-family: 'Noto Naskh Arabic', serif; direction: rtl; }
+
+        /* Grain */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 1000; opacity: 0.4;
+        }
+
+        /* NAV (matches about.html) */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+            padding: 1.25rem 2.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: background 0.4s;
+        }
+        nav.over-dark .nav-logo,
+        nav.over-dark .nav-links a { color: #fff; }
+        nav.over-dark .nav-cta { background: #fff !important; color: var(--green) !important; }
+        nav.scrolled {
+            background: rgba(245,240,232,0.93);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(0,0,0,0.07);
+        }
+        nav.scrolled.over-dark { background: transparent; backdrop-filter: none; border-bottom: none; }
+        nav:not(.over-dark).scrolled .nav-logo,
+        nav:not(.over-dark).scrolled .nav-links a { color: var(--ink); }
+        nav:not(.over-dark).scrolled .nav-cta { background: var(--green) !important; color: #fff !important; }
+        .nav-logo {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.4rem; color: var(--ink); text-decoration: none;
+            display: flex; align-items: center; gap: 0.5rem;
+            transition: color 0.3s;
+        }
+        .nav-logo-dot { width: 8px; height: 8px; background: var(--lime); border-radius: 50%; }
+        .nav-links { display: flex; align-items: center; gap: 2rem; }
+        .nav-links a {
+            font-size: 0.875rem; font-weight: 400; color: var(--ink);
+            text-decoration: none; opacity: 0.85; transition: opacity 0.2s, color 0.3s;
+        }
+        .nav-links a:hover { opacity: 1; }
+        .nav-cta {
+            background: var(--green) !important; color: #fff !important;
+            opacity: 1 !important; padding: 0.6rem 1.4rem; border-radius: 100px;
+            transition: all 0.2s !important;
+        }
+        .nav-toggle {
+            display: none; background: transparent; border: 0; cursor: pointer;
+            padding: 0.5rem; width: 42px; height: 42px;
+            flex-direction: column; justify-content: center; gap: 5px;
+            position: relative; z-index: 900;
+        }
+        .nav-toggle span {
+            display: block; width: 22px; height: 2px; background: var(--ink);
+            border-radius: 2px; transition: transform 0.3s, opacity 0.3s, background 0.3s;
+        }
+        nav.over-dark .nav-toggle span { background: #fff; }
+        nav:not(.over-dark).scrolled .nav-toggle span { background: var(--ink); }
+        .nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.active span:nth-child(2) { opacity: 0; }
+        .nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        @media (max-width: 860px) {
+            nav { padding: 1rem 1.25rem; }
+            .nav-toggle { display: flex; }
+            .nav-links {
+                position: fixed; top: 0; right: 0;
+                width: min(320px, 85vw); height: 100vh; height: 100dvh; overflow-y: auto;
+                background: var(--paper);
+                flex-direction: column; align-items: stretch; justify-content: flex-start;
+                padding: 5rem 2rem max(2rem, env(safe-area-inset-bottom));
+                gap: 0.4rem;
+                transform: translateX(100%);
+                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -8px 0 40px rgba(0,0,0,0.15);
+                z-index: 890;
+            }
+            .nav-links.open { transform: translateX(0); }
+            .nav-links a { padding: 0.85rem 0; font-size: 1rem; opacity: 1 !important; color: var(--ink) !important; border-bottom: 1px solid rgba(0,0,0,0.06); }
+            .nav-links a.nav-cta { margin-top: 1rem; text-align: center; border-bottom: 0; padding: 0.8rem 1.4rem; background: var(--green) !important; color: #fff !important; }
+        }
+
+        /* Page transition */
+        #page-transition {
+            position: fixed; inset: 0; z-index: 9999;
+            background: var(--green);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 1;
+            transition: opacity 550ms cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+        }
+        #transition-logo {
+            width: 4.5rem; height: 4.5rem;
+            transform: scale(0.92);
+            transition: transform 650ms cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        #page-transition.leaving #transition-logo { transform: scale(1.08); }
+
+        /* HERO */
+        .cert-hero {
+            background: var(--green);
+            color: #fff;
+            position: relative;
+            padding: 9rem clamp(1.5rem, 6vw, 6rem) 5rem;
+            overflow: hidden;
+        }
+        .cert-hero-bg {
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 20% 30%, rgba(168,224,99,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 60% at 85% 80%, rgba(196,98,45,0.12) 0%, transparent 55%);
+            pointer-events: none;
+        }
+        .cert-hero-inner {
+            max-width: 1200px; margin: 0 auto;
+            position: relative; z-index: 2;
+        }
+        .cert-eyebrow {
+            font-size: 0.75rem; font-weight: 500;
+            color: var(--lime);
+            letter-spacing: 0.25em; text-transform: uppercase;
+            margin-bottom: 1.5rem;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+        }
+        .cert-eyebrow::before {
+            content:''; width:6px; height:6px; border-radius:50%; background: var(--lime);
+        }
+        .cert-hero h1 {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: clamp(2.6rem, 6vw, 5rem);
+            line-height: 1.05;
+            letter-spacing: -0.02em;
+            margin-bottom: 1.25rem;
+            max-width: 18ch;
+        }
+        .cert-hero h1 em {
+            font-style: italic;
+            color: var(--lime);
+        }
+        .cert-hero-sub {
+            font-size: clamp(1rem, 1.4vw, 1.2rem);
+            color: rgba(255,255,255,0.78);
+            max-width: 620px;
+            line-height: 1.6;
+            font-weight: 300;
+        }
+
+        /* STATS BAR */
+        .stats-bar {
+            background: rgba(255,255,255,0.06);
+            border: 1px solid rgba(168,224,99,0.18);
+            border-radius: 20px;
+            margin-top: 3rem;
+            padding: 1.75rem 2rem;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 2rem;
+            backdrop-filter: blur(10px);
+        }
+        .stat-item {
+            display: flex; align-items: flex-start; gap: 1rem;
+        }
+        .stat-num {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(2.25rem, 4vw, 3rem);
+            color: var(--lime);
+            line-height: 1;
+            flex-shrink: 0;
+        }
+        .stat-text {
+            color: rgba(255,255,255,0.85);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        .stat-source {
+            display: block;
+            margin-top: 0.4rem;
+            font-size: 0.72rem;
+            letter-spacing: 0.12em;
+            text-transform: uppercase;
+            color: rgba(168,224,99,0.7);
+        }
+        @media (max-width:760px) {
+            .stats-bar { grid-template-columns: 1fr; gap: 1.5rem; padding: 1.5rem; }
+        }
+
+        /* TIERS */
+        .tiers-section {
+            padding: 6rem clamp(1.5rem, 6vw, 6rem) 5rem;
+            max-width: 1300px; margin: 0 auto;
+        }
+        .section-eyebrow {
+            font-size: 0.72rem; font-weight: 500;
+            color: var(--green);
+            letter-spacing: 0.2em; text-transform: uppercase;
+            margin-bottom: 0.9rem;
+        }
+        .section-title {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(2rem, 4vw, 3.25rem);
+            line-height: 1.08;
+            letter-spacing: -0.015em;
+            margin-bottom: 0.75rem;
+            max-width: 24ch;
+        }
+        .section-title em { font-style: italic; color: var(--green); }
+        .section-lede {
+            color: rgba(10,10,10,0.65);
+            font-size: 1.02rem;
+            max-width: 60ch;
+            margin-bottom: 3rem;
+            line-height: 1.6;
+        }
+        .tiers-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.75rem;
+        }
+        @media (max-width: 980px) { .tiers-grid { grid-template-columns: 1fr; max-width: 480px; margin: 0 auto; } }
+
+        .tier-card {
+            background: #fff;
+            border-radius: 24px;
+            padding: 2.25rem 2rem 2rem;
+            position: relative;
+            border: 1px solid rgba(0,0,0,0.06);
+            box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+            transition: transform 0.35s cubic-bezier(0.25,1,0.5,1), box-shadow 0.35s;
+            display: flex; flex-direction: column;
+            overflow: hidden;
+        }
+        .tier-card::before {
+            content: ''; position: absolute; top: 0; left: 0; right: 0;
+            height: 6px; background: var(--tier-color, var(--green));
+        }
+        .tier-card:hover { transform: translateY(-6px); box-shadow: 0 18px 50px rgba(0,0,0,0.10); }
+        .tier-card.recommended {
+            border: 2px solid var(--gold);
+            box-shadow: 0 8px 36px rgba(245,197,24,0.18);
+        }
+        .tier-flag {
+            position: absolute; top: 1.1rem; right: 1.1rem;
+            background: var(--gold); color: #1a1500;
+            font-size: 0.65rem; font-weight: 600;
+            letter-spacing: 0.1em; text-transform: uppercase;
+            padding: 0.3rem 0.65rem; border-radius: 100px;
+        }
+        .tier-name {
+            font-family: 'Instrument Serif', serif;
+            font-size: 2rem; font-weight: 400;
+            color: var(--tier-color);
+            margin-bottom: 0.25rem;
+            letter-spacing: -0.01em;
+        }
+        .tier-name em { font-style: italic; }
+        .tier-price {
+            font-size: 1.35rem;
+            color: var(--ink);
+            font-weight: 500;
+            margin-bottom: 0.15rem;
+        }
+        .tier-price-note {
+            font-size: 0.78rem;
+            color: rgba(0,0,0,0.5);
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            margin-bottom: 1.5rem;
+        }
+        .tier-divider {
+            height: 1px; background: rgba(0,0,0,0.07);
+            margin: 0 0 1.4rem;
+        }
+        .tier-list {
+            list-style: none; padding: 0; margin: 0 0 2rem;
+            display: flex; flex-direction: column; gap: 0.85rem;
+            flex: 1;
+        }
+        .tier-list li {
+            display: flex; gap: 0.75rem; align-items: flex-start;
+            font-size: 0.93rem;
+            color: rgba(10,10,10,0.78);
+            line-height: 1.5;
+        }
+        .tier-check {
+            flex-shrink: 0;
+            width: 22px; height: 22px;
+            border-radius: 50%;
+            background: var(--green);
+            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            margin-top: 1px;
+        }
+        .tier-check iconify-icon { font-size: 13px; }
+
+        .tier-cta {
+            display: inline-flex; align-items: center; justify-content: center;
+            gap: 0.5rem;
+            width: 100%;
+            background: var(--ink);
+            color: #fff;
+            text-decoration: none;
+            padding: 0.85rem 1.4rem;
+            border-radius: 100px;
+            font-size: 0.9rem; font-weight: 500;
+            transition: background 0.2s, transform 0.2s;
+            cursor: pointer; border: 0;
+            font-family: inherit;
+        }
+        .tier-cta:hover { background: var(--green); transform: translateY(-1px); }
+        .tier-card.gold .tier-cta { background: var(--green); }
+        .tier-card.gold .tier-cta:hover { background: var(--green-light); }
+
+        /* HOW IT WORKS */
+        .how-section {
+            background: var(--sand);
+            padding: 6rem clamp(1.5rem, 6vw, 6rem);
+            position: relative;
+        }
+        .how-inner { max-width: 1200px; margin: 0 auto; }
+        .steps-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 1.5rem;
+            margin-top: 3rem;
+        }
+        @media (max-width: 860px) { .steps-grid { grid-template-columns: 1fr; } }
+        .step-card {
+            background: var(--paper);
+            border-radius: 22px;
+            padding: 2.25rem 1.85rem;
+            border: 1px solid rgba(0,0,0,0.05);
+            position: relative;
+        }
+        .step-num {
+            font-family: 'Instrument Serif', serif;
+            font-size: 3.5rem; line-height: 1;
+            color: var(--green);
+            margin-bottom: 1rem;
+            display: block;
+        }
+        .step-card h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.65rem; font-weight: 400;
+            margin-bottom: 0.6rem;
+            letter-spacing: -0.01em;
+        }
+        .step-card p { color: rgba(10,10,10,0.65); font-size: 0.93rem; line-height: 1.6; }
+
+        /* APPLY CTA */
+        .apply-cta-wrap {
+            padding: 5rem clamp(1.5rem, 6vw, 6rem);
+            text-align: center;
+        }
+        .apply-cta-inner {
+            background: var(--green);
+            color: #fff;
+            border-radius: 28px;
+            padding: clamp(2.5rem, 5vw, 4.5rem) clamp(1.5rem, 5vw, 4rem);
+            max-width: 1100px; margin: 0 auto;
+            position: relative; overflow: hidden;
+        }
+        .apply-cta-inner::before {
+            content: ''; position: absolute; inset: 0;
+            background: radial-gradient(ellipse 70% 60% at 70% 40%, rgba(168,224,99,0.15), transparent 65%);
+            pointer-events: none;
+        }
+        .apply-cta-inner h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(2rem, 4vw, 3rem);
+            margin-bottom: 1rem;
+            position: relative;
+        }
+        .apply-cta-inner h2 em { font-style: italic; color: var(--lime); }
+        .apply-cta-inner p {
+            color: rgba(255,255,255,0.78);
+            max-width: 50ch;
+            margin: 0 auto 2rem;
+            font-size: 1rem; line-height: 1.6;
+            position: relative;
+        }
+        .apply-btn {
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            background: var(--lime); color: var(--green);
+            border: 0; cursor: pointer;
+            padding: 1rem 2rem;
+            border-radius: 100px;
+            font-family: inherit;
+            font-size: 1rem; font-weight: 500;
+            transition: transform 0.2s, box-shadow 0.2s;
+            position: relative;
+            text-decoration: none;
+        }
+        .apply-btn:hover { transform: translateY(-2px); box-shadow: 0 10px 30px rgba(168,224,99,0.35); }
+
+        /* MODAL */
+        .modal-backdrop {
+            position: fixed; inset: 0; z-index: 9000;
+            background: rgba(10,10,10,0.55);
+            backdrop-filter: blur(6px);
+            display: flex; align-items: center; justify-content: center;
+            padding: 1.5rem;
+            opacity: 0; pointer-events: none;
+            transition: opacity 0.3s;
+        }
+        .modal-backdrop.show { opacity: 1; pointer-events: auto; }
+        .modal {
+            background: var(--paper);
+            border-radius: 24px;
+            max-width: 540px; width: 100%;
+            max-height: 90vh; overflow-y: auto;
+            padding: 2.5rem 2rem 2rem;
+            position: relative;
+            transform: translateY(20px) scale(0.98);
+            transition: transform 0.3s cubic-bezier(0.25,1,0.5,1);
+        }
+        .modal-backdrop.show .modal { transform: translateY(0) scale(1); }
+        .modal-close {
+            position: absolute; top: 1rem; right: 1rem;
+            background: rgba(0,0,0,0.05); border: 0; cursor: pointer;
+            width: 36px; height: 36px; border-radius: 50%;
+            display: flex; align-items: center; justify-content: center;
+            color: var(--ink); transition: background 0.2s;
+        }
+        .modal-close:hover { background: rgba(0,0,0,0.1); }
+        .modal h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.9rem; font-weight: 400;
+            margin-bottom: 0.4rem;
+            letter-spacing: -0.01em;
+        }
+        .modal-sub { color: rgba(10,10,10,0.6); font-size: 0.92rem; margin-bottom: 1.5rem; }
+
+        .form-grid { display: grid; gap: 1rem; }
+        .form-row { display: grid; gap: 0.4rem; }
+        .form-row label {
+            font-size: 0.78rem; font-weight: 500;
+            color: rgba(10,10,10,0.7);
+            letter-spacing: 0.06em; text-transform: uppercase;
+        }
+        .form-row input,
+        .form-row select,
+        .form-row textarea {
+            width: 100%;
+            background: #fff;
+            border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 12px;
+            padding: 0.75rem 0.95rem;
+            font-size: 0.95rem;
+            font-family: inherit;
+            color: var(--ink);
+            transition: border 0.2s, box-shadow 0.2s;
+        }
+        .form-row input:focus,
+        .form-row select:focus,
+        .form-row textarea:focus {
+            outline: none;
+            border-color: var(--green);
+            box-shadow: 0 0 0 3px rgba(26,92,56,0.12);
+        }
+        .form-row textarea { min-height: 100px; resize: vertical; }
+        .form-submit {
+            margin-top: 0.5rem;
+            background: var(--green); color: #fff;
+            border: 0; cursor: pointer;
+            padding: 0.95rem 1.4rem;
+            border-radius: 100px;
+            font-family: inherit;
+            font-size: 0.95rem; font-weight: 500;
+            transition: background 0.2s, transform 0.2s;
+        }
+        .form-submit:hover { background: var(--green-light); transform: translateY(-1px); }
+
+        .form-success {
+            display: none;
+            text-align: center;
+            padding: 1.5rem 0.5rem;
+        }
+        .form-success.show { display: block; }
+        .form-success-icon {
+            width: 64px; height: 64px; margin: 0 auto 1.25rem;
+            border-radius: 50%;
+            background: var(--badge-green);
+            color: #fff;
+            display: flex; align-items: center; justify-content: center;
+            font-size: 36px;
+        }
+        .form-success h4 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.6rem; font-weight: 400;
+            margin-bottom: 0.5rem;
+        }
+        .form-success p { color: rgba(10,10,10,0.65); font-size: 0.95rem; line-height: 1.55; }
+
+        /* FOOTER (matches about.html) */
+        footer {
+            background: var(--green);
+            color: rgba(255,255,255,0.85);
+            padding: 4rem clamp(1.5rem, 6vw, 6rem) 2rem;
+            margin-top: 4rem;
+            position: relative;
+        }
+        .footer-grid {
+            max-width: 1300px; margin: 0 auto;
+            display: grid; grid-template-columns: 1.5fr repeat(3, 1fr);
+            gap: 2.5rem;
+        }
+        @media (max-width: 860px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+        @media (max-width: 520px) { .footer-grid { grid-template-columns: 1fr; } }
+        .footer-logo {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.6rem; color: #fff; text-decoration: none;
+            display: inline-block; margin-bottom: 0.8rem;
+        }
+        .footer-tagline { font-size: 0.9rem; line-height: 1.6; color: rgba(255,255,255,0.6); max-width: 32ch; }
+        .footer-col h4 {
+            font-size: 0.72rem; font-weight: 500;
+            letter-spacing: 0.18em; text-transform: uppercase;
+            color: rgba(255,255,255,0.55);
+            margin-bottom: 1rem;
+        }
+        .footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.6rem; }
+        .footer-col a {
+            font-size: 0.92rem; color: rgba(255,255,255,0.85); text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-col a:hover { color: var(--lime); }
+        .footer-bottom {
+            max-width: 1300px; margin: 3rem auto 0;
+            padding-top: 1.5rem;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: flex; flex-wrap: wrap; gap: 1rem;
+            justify-content: space-between;
+            font-size: 0.82rem; color: rgba(255,255,255,0.55);
+        }
+
+        /* Reveal */
+        .reveal { opacity: 0; transform: translateY(28px); transition: opacity 0.7s, transform 0.7s; }
+        .reveal.visible { opacity: 1; transform: none; }
+
+        @media (max-width: 700px) {
+            .cert-hero { padding: 7rem 1.25rem 4rem; }
+            .tiers-section { padding: 4rem 1.25rem; }
+            .how-section { padding: 4rem 1.25rem; }
+            .apply-cta-wrap { padding: 3rem 1.25rem; }
+            .modal { padding: 2rem 1.25rem 1.5rem; }
+        }
+    </style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav id="navbar" class="over-dark">
+    <a href="index.html" class="nav-logo">
+        <span class="nav-logo-dot"></span>
+        <span style="font-family: Georgia, serif; font-style: italic; font-weight: 600;">EcoAwareness</span>
+    </a>
+    <div class="nav-links" id="nav-links">
+        <a href="index.html" data-en="Home" data-ar="الرئيسية">Home</a>
+        <a href="signin.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
+        <a href="certification.html" data-en="Certification" data-ar="الاعتماد" style="opacity:1;">Certification</a>
+        <a href="about.html" data-en="About" data-ar="من نحن">About</a>
+        <a href="faq.html" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a>
+        <a href="signin.html" data-en="Sign In" data-ar="تسجيل الدخول">Sign In</a>
+        <a href="signup.html" class="nav-cta" data-en="Join Free" data-ar="انضم مجانًا">Join Free</a>
+    </div>
+    <button id="nav-toggle" class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- HERO -->
+<section class="cert-hero">
+    <div class="cert-hero-bg"></div>
+    <div class="cert-hero-inner">
+        <div class="cert-eyebrow" data-en="Eco-Merchant Program" data-ar="برنامج التاجر البيئي">Eco-Merchant Program</div>
+        <h1>
+            <span data-en="Eco-Merchant" data-ar="اعتماد">Eco-Merchant</span>
+            <em data-en="Certification." data-ar="التاجر البيئي.">Certification.</em>
+        </h1>
+        <p class="cert-hero-sub" data-en="Qatar's first verified sustainability standard for businesses."
+           data-ar="أول معيار استدامة معتمد للشركات في قطر.">
+            Qatar's first verified sustainability standard for businesses.
+        </p>
+
+        <div class="stats-bar">
+            <div class="stat-item">
+                <div class="stat-num">57%</div>
+                <div>
+                    <div class="stat-text" data-en="of Qatari consumers actively seek sustainable products."
+                                            data-ar="من المستهلكين القطريين يبحثون فعلياً عن منتجات مستدامة.">
+                        of Qatari consumers actively seek sustainable products.
+                    </div>
+                    <span class="stat-source">— PwC Qatar</span>
+                </div>
+            </div>
+            <div class="stat-item">
+                <div class="stat-num">31%</div>
+                <div>
+                    <div class="stat-text" data-en="willing to pay a premium for eco-certified goods."
+                                            data-ar="على استعداد لدفع علاوة سعرية مقابل سلع معتمدة بيئياً.">
+                        willing to pay a premium for eco-certified goods.
+                    </div>
+                    <span class="stat-source">— PwC Qatar</span>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- TIERS -->
+<section class="tiers-section">
+    <div class="reveal">
+        <div class="section-eyebrow" data-en="Choose your tier" data-ar="اختر فئتك">Choose your tier</div>
+        <h2 class="section-title">
+            <span data-en="Three levels." data-ar="ثلاث فئات.">Three levels.</span>
+            <em data-en="One trusted standard." data-ar="معيار موثوق واحد.">One trusted standard.</em>
+        </h2>
+        <p class="section-lede" data-en="Every tier is independently reviewed against Qatar's emerging sustainability benchmarks. Pick the level that matches where your business is today — upgrade as you grow."
+           data-ar="تتم مراجعة كل فئة بشكل مستقل وفقًا لمعايير الاستدامة الناشئة في قطر. اختر المستوى الذي يناسب نشاطك التجاري اليوم — وارتقِ كلما نموت.">
+            Every tier is independently reviewed against Qatar's emerging sustainability benchmarks. Pick the level that matches where your business is today — upgrade as you grow.
+        </p>
+    </div>
+
+    <div class="tiers-grid">
+        <!-- Bronze -->
+        <article class="tier-card bronze reveal" style="--tier-color: var(--bronze)">
+            <div class="tier-name" data-en="Bronze" data-ar="برونزي">Bronze</div>
+            <div class="tier-price">QAR 500</div>
+            <div class="tier-price-note" data-en="per year" data-ar="سنوياً">per year</div>
+            <div class="tier-divider"></div>
+            <ul class="tier-list">
+                <li><span class="tier-check"><iconify-icon icon="solar:check-read-bold"></iconify-icon></span><span data-en="Eco-friendly packaging required" data-ar="تغليف صديق للبيئة مطلوب">Eco-friendly packaging required</span></li>
+                <li><span class="tier-check"><iconify-icon icon="solar:check-read-bold"></iconify-icon></span><span data-en="Documented sustainability policy" data-ar="سياسة استدامة موثقة">Documented sustainability policy</span></li>
+                <li><span class="tier-check"><iconify-icon icon="solar:check-read-bold"></iconify-icon></span><span data-en="EcoHub directory listing" data-ar="إدراج في دليل EcoHub">EcoHub directory listing</span></li>
+            </ul>
+            <button class="tier-cta" data-tier="Bronze" onclick="openApply('Bronze')">
+                <span data-en="Apply for Bronze" data-ar="قدّم للبرونزي">Apply for Bronze</span>
+                <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+            </button>
+        </article>
+
+        <!-- Silver -->
+        <article class="tier-card silver reveal" style="--tier-color: var(--silver)">
+            <div class="tier-name" data-en="Silver" data-ar="فضي">Silver</div>
+            <div class="tier-price">QAR 1,200</div>
+            <div class="tier-price-note" data-en="per year" data-ar="سنوياً">per year</div>
+            <div class="tier-divider"></div>
+            <ul class="tier-list">
+                <li><span class="tier-check"><iconify-icon icon="solar:check-read-bold"></iconify-icon></span><span data-en="Everything in Bronze" data-ar="كل ما في البرونزي">Everything in Bronze</span></li>
+                <li><span class="tier-check"><iconify-icon icon="solar:check-read-bold"></iconify-icon></span><span data-en="Local sourcing or carbon tracking" data-ar="مصادر محلية أو تتبع الكربون">Local sourcing or carbon tracking</span></li>
+                <li><span class="tier-check"><iconify-icon icon="solar:check-read-bold"></iconify-icon></span><span data-en="Featured placement in Network" data-ar="ظهور مميز في الشبكة">Featured placement in Network</span></li>
+            </ul>
+            <button class="tier-cta" data-tier="Silver" onclick="openApply('Silver')">
+                <span data-en="Apply for Silver" data-ar="قدّم للفضي">Apply for Silver</span>
+                <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+            </button>
+        </article>
+
+        <!-- Gold -->
+        <article class="tier-card gold recommended reveal" style="--tier-color: var(--gold)">
+            <span class="tier-flag" data-en="Most Trusted" data-ar="الأكثر موثوقية">Most Trusted</span>
+            <div class="tier-name" data-en="Gold" data-ar="ذهبي">Gold</div>
+            <div class="tier-price">QAR 2,000</div>
+            <div class="tier-price-note" data-en="per year" data-ar="سنوياً">per year</div>
+            <div class="tier-divider"></div>
+            <ul class="tier-list">
+                <li><span class="tier-check"><iconify-icon icon="solar:check-read-bold"></iconify-icon></span><span data-en="Everything in Silver" data-ar="كل ما في الفضي">Everything in Silver</span></li>
+                <li><span class="tier-check"><iconify-icon icon="solar:check-read-bold"></iconify-icon></span><span data-en="Third-party verified impact report" data-ar="تقرير أثر تم التحقق منه من طرف ثالث">Third-party verified impact report</span></li>
+                <li><span class="tier-check"><iconify-icon icon="solar:check-read-bold"></iconify-icon></span><span data-en="Premium Eco-Certified badge" data-ar="شارة الاعتماد البيئي المميزة">Premium Eco-Certified badge</span></li>
+            </ul>
+            <button class="tier-cta" data-tier="Gold" onclick="openApply('Gold')">
+                <span data-en="Apply for Gold" data-ar="قدّم للذهبي">Apply for Gold</span>
+                <iconify-icon icon="solar:arrow-right-up-linear"></iconify-icon>
+            </button>
+        </article>
+    </div>
+</section>
+
+<!-- HOW IT WORKS -->
+<section class="how-section">
+    <div class="how-inner">
+        <div class="reveal">
+            <div class="section-eyebrow" data-en="How it works" data-ar="آلية العمل">How it works</div>
+            <h2 class="section-title">
+                <span data-en="Three steps." data-ar="ثلاث خطوات.">Three steps.</span>
+                <em data-en="One certification." data-ar="اعتماد واحد.">One certification.</em>
+            </h2>
+        </div>
+
+        <div class="steps-grid">
+            <div class="step-card reveal">
+                <span class="step-num">01</span>
+                <h3 data-en="Apply" data-ar="قدّم الطلب">Apply</h3>
+                <p data-en="Submit your business details and choose a tier. Takes about 5 minutes."
+                   data-ar="أرسل تفاصيل نشاطك التجاري واختر فئة. تستغرق العملية حوالي 5 دقائق.">
+                    Submit your business details and choose a tier. Takes about 5 minutes.
+                </p>
+            </div>
+            <div class="step-card reveal">
+                <span class="step-num">02</span>
+                <h3 data-en="Verify" data-ar="التحقق">Verify</h3>
+                <p data-en="Our review team confirms your sustainability claims against the tier requirements."
+                   data-ar="يتحقق فريق المراجعة لدينا من ادعاءات الاستدامة الخاصة بك وفقًا لمتطلبات الفئة.">
+                    Our review team confirms your sustainability claims against the tier requirements.
+                </p>
+            </div>
+            <div class="step-card reveal">
+                <span class="step-num">03</span>
+                <h3 data-en="Get Certified" data-ar="احصل على الاعتماد">Get Certified</h3>
+                <p data-en="Receive your verified Eco-Certified badge and a public listing in our merchant directory."
+                   data-ar="احصل على شارة الاعتماد البيئي وإدراج عام في دليل التجار لدينا.">
+                    Receive your verified Eco-Certified badge and a public listing in our merchant directory.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- APPLY CTA -->
+<section class="apply-cta-wrap">
+    <div class="apply-cta-inner reveal">
+        <h2>
+            <span data-en="Ready to lead" data-ar="هل أنت مستعد لقيادة">Ready to lead</span>
+            <em data-en="Qatar's eco economy?" data-ar="الاقتصاد البيئي في قطر؟">Qatar's eco economy?</em>
+        </h2>
+        <p data-en="Apply today and join the first wave of EcoHub-certified businesses. Verification takes 3 business days."
+           data-ar="قدّم طلبك اليوم وانضم إلى الموجة الأولى من الشركات المعتمدة من EcoHub. تستغرق المراجعة 3 أيام عمل.">
+            Apply today and join the first wave of EcoHub-certified businesses. Verification takes 3 business days.
+        </p>
+        <button class="apply-btn" onclick="openApply('')">
+            <iconify-icon icon="solar:document-add-linear"></iconify-icon>
+            <span data-en="Apply for Certification" data-ar="قدّم طلب الاعتماد">Apply for Certification</span>
+        </button>
+    </div>
+</section>
+
+<!-- MODAL -->
+<div class="modal-backdrop" id="apply-modal" role="dialog" aria-modal="true">
+    <div class="modal">
+        <button class="modal-close" onclick="closeApply()" aria-label="Close">
+            <iconify-icon icon="solar:close-circle-linear" width="22"></iconify-icon>
+        </button>
+
+        <div id="form-view">
+            <h3 data-en="Apply for Certification" data-ar="قدّم طلب الاعتماد">Apply for Certification</h3>
+            <p class="modal-sub" data-en="We'll review your submission and respond within 3 business days."
+               data-ar="سنراجع طلبك ونرد خلال 3 أيام عمل.">
+                We'll review your submission and respond within 3 business days.
+            </p>
+            <form class="form-grid" id="apply-form" novalidate>
+                <div class="form-row">
+                    <label data-en="Business Name" data-ar="اسم الشركة">Business Name</label>
+                    <input type="text" name="business" required>
+                </div>
+                <div class="form-row">
+                    <label data-en="Contact Email" data-ar="البريد الإلكتروني">Contact Email</label>
+                    <input type="email" name="email" required>
+                </div>
+                <div class="form-row">
+                    <label data-en="Phone" data-ar="الهاتف">Phone</label>
+                    <input type="tel" name="phone" required>
+                </div>
+                <div class="form-row">
+                    <label data-en="Website (optional)" data-ar="الموقع الإلكتروني (اختياري)">Website (optional)</label>
+                    <input type="url" name="website" placeholder="https://">
+                </div>
+                <div class="form-row">
+                    <label data-en="Tier" data-ar="الفئة">Tier</label>
+                    <select name="tier" id="tier-select" required>
+                        <option value="">— Select a tier —</option>
+                        <option value="Bronze">Bronze — QAR 500/year</option>
+                        <option value="Silver">Silver — QAR 1,200/year</option>
+                        <option value="Gold">Gold — QAR 2,000/year</option>
+                    </select>
+                </div>
+                <div class="form-row">
+                    <label data-en="Sustainability description" data-ar="وصف ممارسات الاستدامة">Sustainability description</label>
+                    <textarea name="description" placeholder="Tell us about your sustainability practices…" required></textarea>
+                </div>
+                <button type="submit" class="form-submit" data-en="Submit Application" data-ar="إرسال الطلب">Submit Application</button>
+            </form>
+        </div>
+
+        <div class="form-success" id="form-success">
+            <div class="form-success-icon"><iconify-icon icon="solar:check-read-bold"></iconify-icon></div>
+            <h4 data-en="Thank you!" data-ar="شكراً لك!">Thank you!</h4>
+            <p data-en="We'll be in touch within 3 business days."
+               data-ar="سنتواصل معك خلال 3 أيام عمل.">
+                We'll be in touch within 3 business days.
+            </p>
+        </div>
+    </div>
+</div>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-grid">
+        <div>
+            <a href="index.html" class="footer-logo">EcoAwareness</a>
+            <p class="footer-tagline" data-en="Qatar's unified climate action platform. One profile, every opportunity."
+               data-ar="منصة العمل المناخي الموحدة في قطر. ملف واحد، كل الفرص.">
+                Qatar's unified climate action platform. One profile, every opportunity.
+            </p>
+        </div>
+        <div class="footer-col">
+            <h4 data-en="Platform" data-ar="المنصة">Platform</h4>
+            <ul>
+                <li><a href="dashboard.html" data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</a></li>
+                <li><a href="signin.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a></li>
+                <li><a href="signin.html" data-en="Network" data-ar="الشبكة">Network</a></li>
+                <li><a href="certification.html" data-en="Certification" data-ar="الاعتماد">Certification</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 data-en="Merchants" data-ar="التجار">Merchants</h4>
+            <ul>
+                <li><a href="merchants/green-basket.html" data-en="Green Basket Qatar" data-ar="جرين باسكت قطر">Green Basket Qatar</a></li>
+                <li><a href="certification.html#tiers" data-en="Tiers" data-ar="الفئات">Tiers</a></li>
+                <li><a href="certification.html#how" data-en="How it works" data-ar="آلية العمل">How it works</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 data-en="Company" data-ar="الشركة">Company</h4>
+            <ul>
+                <li><a href="about.html" data-en="About Us" data-ar="من نحن">About Us</a></li>
+                <li><a href="faq.html" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a></li>
+                <li><a href="privacy.html" data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</a></li>
+                <li><a href="mailto:hello@ecoawareness.qa" data-en="Contact" data-ar="اتصل بنا">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-bottom">
+        <div data-en="© 2026 EcoAwareness. All rights reserved." data-ar="© 2026 الوعي البيئي. جميع الحقوق محفوظة.">© 2026 EcoAwareness. All rights reserved.</div>
+        <div data-en="Built by youth, for the planet. 🌱" data-ar="بُني من الشباب، من أجل الكوكب. 🌱">Built by youth, for the planet. 🌱</div>
+    </div>
+</footer>
+
+<!-- Page transition -->
+<div id="page-transition">
+    <img id="transition-logo" src="assets/IMG.PNG" alt="EcoAwareness">
+</div>
+
+<script>
+    // Nav scroll state
+    const navbar = document.getElementById('navbar');
+    const heroEl = document.querySelector('.cert-hero');
+    function syncNav() {
+        const heroBottom = heroEl.getBoundingClientRect().bottom;
+        navbar.classList.toggle('scrolled', window.scrollY > 40);
+        navbar.classList.toggle('over-dark', heroBottom > 80);
+    }
+    window.addEventListener('scroll', syncNav, { passive: true });
+    syncNav();
+
+    // Reveal
+    const observer = new IntersectionObserver(entries => {
+        entries.forEach(e => {
+            if (e.isIntersecting) { e.target.classList.add('visible'); observer.unobserve(e.target); }
+        });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    // Lang
+    let isArabic = localStorage.getItem('lang') === 'ar';
+    function applyLang() {
+        document.body.classList.toggle('ar', isArabic);
+        document.documentElement.lang = isArabic ? 'ar' : 'en';
+        document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+        document.querySelectorAll('[data-en]').forEach(el => {
+            const val = isArabic ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+            if (val) el.innerHTML = val;
+        });
+    }
+    applyLang();
+
+    // Mobile nav
+    (function() {
+        const toggle = document.getElementById('nav-toggle');
+        const links = document.getElementById('nav-links');
+        if (!toggle || !links) return;
+        toggle.addEventListener('click', () => {
+            toggle.classList.toggle('active');
+            links.classList.toggle('open');
+            document.body.style.overflow = links.classList.contains('open') ? 'hidden' : '';
+        });
+        links.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+            toggle.classList.remove('active');
+            links.classList.remove('open');
+            document.body.style.overflow = '';
+        }));
+    })();
+
+    // Modal logic
+    const modal = document.getElementById('apply-modal');
+    const formView = document.getElementById('form-view');
+    const successView = document.getElementById('form-success');
+    const tierSelect = document.getElementById('tier-select');
+
+    function openApply(tier) {
+        formView.style.display = '';
+        successView.classList.remove('show');
+        document.getElementById('apply-form').reset();
+        if (tier) tierSelect.value = tier;
+        modal.classList.add('show');
+        document.body.style.overflow = 'hidden';
+    }
+    function closeApply() {
+        modal.classList.remove('show');
+        document.body.style.overflow = '';
+    }
+    modal.addEventListener('click', e => { if (e.target === modal) closeApply(); });
+    document.addEventListener('keydown', e => { if (e.key === 'Escape' && modal.classList.contains('show')) closeApply(); });
+
+    document.getElementById('apply-form').addEventListener('submit', e => {
+        e.preventDefault();
+        formView.style.display = 'none';
+        successView.classList.add('show');
+        applyLang(); // ensure success copy is translated
+    });
+
+    // Page transition
+    document.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.getElementById('page-transition');
+        const logo = document.getElementById('transition-logo');
+        if (!overlay || !logo) return;
+        requestAnimationFrame(() => {
+            overlay.style.opacity = '0';
+            logo.style.transform = 'scale(1)';
+        });
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const url = this.getAttribute('href');
+                const tgt = this.getAttribute('target');
+                if (!url || url.startsWith('#') || url.startsWith('mailto:') || url.startsWith('tel:') || url.startsWith('javascript:') || tgt === '_blank' || (this.hostname && this.hostname !== window.location.hostname)) return;
+                e.preventDefault();
+                overlay.classList.add('leaving');
+                overlay.style.opacity = '1';
+                setTimeout(() => { window.location.href = url; }, 450);
+            });
+        });
+        window.addEventListener('pageshow', e => {
+            if (e.persisted) {
+                overlay.classList.remove('leaving');
+                overlay.style.opacity = '0';
+                logo.style.transform = 'scale(1)';
+            }
+        });
+    });
+</script>
+</body>
+</html>
