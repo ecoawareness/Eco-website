@@ -198,8 +198,9 @@
         .hero-title {
             font-family: var(--font-display); font-weight: 400;
             font-size: clamp(2.8rem,6.2vw,5.6rem); line-height: 1.04;
-            letter-spacing: -0.02em;
+            letter-spacing: -0.02em; text-wrap: pretty;
         }
+        .section-h2, .opp-h2, .featured-h3 { text-wrap: pretty; }
         .hero-title em { font-style: italic; color: var(--lime); }
 
         .hero-sub {
@@ -281,6 +282,13 @@
         .live-dot-pulse {
             width: 6px; height: 6px; border-radius: 100%;
             background: var(--lime); box-shadow: 0 0 8px var(--lime);
+        }
+        @keyframes pulseDot {
+            0%, 100% { box-shadow: 0 0 6px var(--lime); opacity: 1; }
+            50%      { box-shadow: 0 0 14px var(--lime); opacity: 0.7; }
+        }
+        .live-dot-pulse, .featured-badge-dot {
+            animation: pulseDot 1.8s ease-in-out infinite;
         }
         .live-dot-label {
             font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
@@ -718,8 +726,15 @@
         /* ── RESPONSIVE ───────────────────────────────── */
         @media (max-width: 1024px) {
             .hero-grid { grid-template-columns: 1fr; }
-            .hero-collage { display: none; }
             .hero-copy { max-width: 700px; }
+            .hero-collage {
+                max-width: 420px; width: 100%;
+                justify-self: center; margin-top: 24px;
+            }
+        }
+        @media (max-width: 560px) {
+            .hero-collage { max-width: 320px; }
+            .collage-chip { left: -2%; }
         }
         @media (max-width: 860px) {
             .nav-links {
@@ -821,7 +836,7 @@
         </div>
 
         <!-- Right: photo collage -->
-        <div class="hero-collage" aria-hidden="true">
+        <div class="hero-collage">
             <!-- Decorative blocks -->
             <div class="collage-lime-block"></div>
             <div class="collage-outline"></div>
@@ -1095,7 +1110,7 @@
                         <div class="card-cover-art" style="background:var(--ink)">
                             <svg viewBox="0 0 300 150" preserveAspectRatio="none" style="opacity:0.16">
                                 <defs><pattern id="g1" width="18" height="18" patternUnits="userSpaceOnUse">
-                                    <path d="M0 18 L18 18 M18 0 L18 18" stroke="var(--lime)" stroke-width="0.8" fill="none"/>
+                                    <path d="M0 18 L18 18 M18 0 L18 18" stroke="#a8e063" stroke-width="0.8" fill="none"/>
                                 </pattern></defs>
                                 <rect width="300" height="150" fill="url(#g1)"/>
                             </svg>
@@ -1122,11 +1137,11 @@
                     <div class="card-cover">
                         <div class="card-cover-art" style="background:var(--lime)">
                             <svg viewBox="0 0 300 150" preserveAspectRatio="none" style="opacity:0.55">
-                                <circle cx="-10" cy="170" r="28" fill="none" stroke="var(--green-dark)" stroke-width="1.2" opacity="0.47"/>
-                                <circle cx="-10" cy="170" r="56" fill="none" stroke="var(--green-dark)" stroke-width="1.2" opacity="0.39"/>
-                                <circle cx="-10" cy="170" r="88" fill="none" stroke="var(--green-dark)" stroke-width="1.2" opacity="0.31"/>
-                                <circle cx="-10" cy="170" r="122" fill="none" stroke="var(--green-dark)" stroke-width="1.2" opacity="0.23"/>
-                                <circle cx="-10" cy="170" r="158" fill="none" stroke="var(--green-dark)" stroke-width="1.2" opacity="0.15"/>
+                                <circle cx="-10" cy="170" r="28" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.47"/>
+                                <circle cx="-10" cy="170" r="56" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.39"/>
+                                <circle cx="-10" cy="170" r="88" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.31"/>
+                                <circle cx="-10" cy="170" r="122" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.23"/>
+                                <circle cx="-10" cy="170" r="158" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.15"/>
                             </svg>
                             <iconify-icon icon="ph:coin-vertical-fill" width="64" style="color:var(--green-dark)"></iconify-icon>
                         </div>
@@ -1150,12 +1165,12 @@
                     <div class="card-cover">
                         <div class="card-cover-art" style="background:var(--green)">
                             <svg viewBox="0 0 300 150" preserveAspectRatio="none" style="opacity:0.35">
-                                <path d="M0 20 Q 75 8 150 20 T 300 20" fill="none" stroke="var(--lime)" stroke-width="1"/>
-                                <path d="M0 40 Q 75 28 150 40 T 300 40" fill="none" stroke="var(--lime)" stroke-width="1"/>
-                                <path d="M0 60 Q 75 48 150 60 T 300 60" fill="none" stroke="var(--lime)" stroke-width="1"/>
-                                <path d="M0 80 Q 75 68 150 80 T 300 80" fill="none" stroke="var(--lime)" stroke-width="1"/>
-                                <path d="M0 100 Q 75 88 150 100 T 300 100" fill="none" stroke="var(--lime)" stroke-width="1"/>
-                                <path d="M0 120 Q 75 108 150 120 T 300 120" fill="none" stroke="var(--lime)" stroke-width="1"/>
+                                <path d="M0 20 Q 75 8 150 20 T 300 20" fill="none" stroke="#a8e063" stroke-width="1"/>
+                                <path d="M0 40 Q 75 28 150 40 T 300 40" fill="none" stroke="#a8e063" stroke-width="1"/>
+                                <path d="M0 60 Q 75 48 150 60 T 300 60" fill="none" stroke="#a8e063" stroke-width="1"/>
+                                <path d="M0 80 Q 75 68 150 80 T 300 80" fill="none" stroke="#a8e063" stroke-width="1"/>
+                                <path d="M0 100 Q 75 88 150 100 T 300 100" fill="none" stroke="#a8e063" stroke-width="1"/>
+                                <path d="M0 120 Q 75 108 150 120 T 300 120" fill="none" stroke="#a8e063" stroke-width="1"/>
                             </svg>
                             <iconify-icon icon="ph:leaf-fill" width="64" style="color:var(--lime)"></iconify-icon>
                         </div>
@@ -1210,17 +1225,17 @@
                             <svg viewBox="0 0 300 150" preserveAspectRatio="none">
                                 <defs>
                                     <radialGradient id="sg" cx="20%" cy="120%" r="80%">
-                                        <stop offset="0%" stop-color="var(--lime)" stop-opacity="0.55"/>
-                                        <stop offset="60%" stop-color="var(--lime)" stop-opacity="0"/>
+                                        <stop offset="0%" stop-color="#a8e063" stop-opacity="0.55"/>
+                                        <stop offset="60%" stop-color="#a8e063" stop-opacity="0"/>
                                     </radialGradient>
                                 </defs>
                                 <rect width="300" height="150" fill="url(#sg)"/>
-                                <line x1="0" y1="40" x2="300" y2="40" stroke="var(--lime)" stroke-width="0.6" opacity="0.18"/>
-                                <line x1="0" y1="70" x2="300" y2="70" stroke="var(--lime)" stroke-width="0.6" opacity="0.18"/>
-                                <line x1="0" y1="100" x2="300" y2="100" stroke="var(--lime)" stroke-width="0.6" opacity="0.18"/>
-                                <line x1="0" y1="130" x2="300" y2="130" stroke="var(--lime)" stroke-width="0.6" opacity="0.18"/>
+                                <line x1="0" y1="40" x2="300" y2="40" stroke="#a8e063" stroke-width="0.6" opacity="0.18"/>
+                                <line x1="0" y1="70" x2="300" y2="70" stroke="#a8e063" stroke-width="0.6" opacity="0.18"/>
+                                <line x1="0" y1="100" x2="300" y2="100" stroke="#a8e063" stroke-width="0.6" opacity="0.18"/>
+                                <line x1="0" y1="130" x2="300" y2="130" stroke="#a8e063" stroke-width="0.6" opacity="0.18"/>
                             </svg>
-                            <iconify-icon icon="ph:sun-horizon-fill" width="64" style="color:var(--lime)"></iconify-icon>
+                            <iconify-icon icon="ph:sun-horizon-fill" width="64" style="color:#a8e063"></iconify-icon>
                         </div>
                     </div>
                     <div class="card-body">
@@ -1287,7 +1302,7 @@
 <footer>
     <!-- SVG scoop curve -->
     <svg class="footer-scoop" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,80 C480,0 960,0 1440,80 L1440,0 L0,0 Z" fill="var(--green)"/>
+        <path d="M0,80 C480,0 960,0 1440,80 L1440,0 L0,0 Z" fill="#1a5c38"/>
     </svg>
 
     <div class="footer-body">
@@ -1356,7 +1371,7 @@ requestAnimationFrame(raf);
 
 // ── NAV SCROLL STATE ─────────────────────────────
 window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
+    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
 });
 
 // ── SCROLL REVEAL ────────────────────────────────
@@ -1376,6 +1391,7 @@ document.querySelectorAll('.hero-copy .reveal').forEach((el, i) => {
 });
 
 // ── OPPORTUNITIES FILTER ─────────────────────────
+window.__ecoLocked = true; // flipped to false by auth check if signed in
 (function() {
     const pills    = document.querySelectorAll('.filter-pill');
     const cards    = document.querySelectorAll('#opp-card-grid .opp-card');
@@ -1384,21 +1400,36 @@ document.querySelectorAll('.hero-copy .reveal').forEach((el, i) => {
     const lockCta  = document.getElementById('opp-lock-cta');
 
     function applyFilter(filter) {
+        const locked = window.__ecoLocked;
+
         // Toggle featured banner
         if (banner) banner.style.display = filter === 'all' ? 'grid' : 'none';
 
-        // Show/hide cards
-        let visCount = 0;
+        // First hide all, then collect matches
+        const matching = [];
         cards.forEach(card => {
             const match = filter === 'all' || card.dataset.cat === filter;
-            card.style.display = match ? 'flex' : 'none';
-            if (match) visCount++;
+            if (match) matching.push(card);
+            card.style.display = 'none';
         });
 
-        // Lock overlay: always show for guests
-        const locked = true; // becomes false after auth check below
-        if (lockOver) lockOver.style.display = locked ? 'block' : 'none';
-        if (lockCta)  lockCta.style.display  = locked ? 'block' : 'none';
+        // Show first N (locked → 3, unlocked → all)
+        const limit = locked ? 3 : matching.length;
+        matching.slice(0, limit).forEach(c => c.style.display = 'flex');
+
+        // Lock overlay only when there are MORE cards being hidden
+        const moreCount = matching.length - 3;
+        const showLock  = locked && moreCount > 0;
+        if (lockOver) lockOver.style.display = showLock ? 'block' : 'none';
+        if (lockCta) {
+            lockCta.style.display = showLock ? 'block' : 'none';
+            const btnLabel = lockCta.querySelector('.btn span[data-en]');
+            if (btnLabel && showLock) {
+                btnLabel.textContent = `Unlock ${moreCount} more opportunities`;
+                btnLabel.setAttribute('data-en', `Unlock ${moreCount} more opportunities`);
+                btnLabel.setAttribute('data-ar', `افتح ${moreCount} فرص إضافية`);
+            }
+        }
     }
 
     pills.forEach(pill => {
@@ -1409,6 +1440,7 @@ document.querySelectorAll('.hero-copy .reveal').forEach((el, i) => {
         });
     });
 
+    window.__ecoApplyFilter = applyFilter;
     applyFilter('all');
 })();
 
@@ -1475,14 +1507,10 @@ if (localStorage.getItem('hub_lang') === 'ar') { isArabic = true; applyLanguage(
                 joinEl.innerHTML = isArabic ? 'انتقل إلى لوحة التحكم →' : 'Go to Dashboard →';
             }
 
-            // Remove lock overlay
-            const lockOver = document.getElementById('opp-lock-overlay');
-            const lockCta  = document.getElementById('opp-lock-cta');
-            if (lockOver) lockOver.style.display = 'none';
-            if (lockCta)  lockCta.style.display  = 'none';
-
-            // Show all 6 cards
-            document.querySelectorAll('#opp-card-grid .opp-card').forEach(c => c.style.display = 'flex');
+            // Unlock opportunities & re-render
+            window.__ecoLocked = false;
+            const activePill = document.querySelector('.filter-pill.active');
+            if (window.__ecoApplyFilter) window.__ecoApplyFilter(activePill ? activePill.dataset.filter : 'all');
 
             // Redirect signup links → dashboard
             document.querySelectorAll('a[href="signup.html"]').forEach(a => {
