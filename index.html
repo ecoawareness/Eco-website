@@ -91,8 +91,19 @@
         }
         nav.scrolled { background: rgba(245,240,232,0.93); }
 
-        .nav-logo-link { display: flex; align-items: center; text-decoration: none; }
-        .nav-logo-link img { height: 36px; width: auto; display: block; }
+        .nav-logo-link { display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--ink); }
+        .nav-logo-mark {
+            width: 36px; height: 36px; border-radius: 9px;
+            background: var(--green); display: flex; align-items: center;
+            justify-content: center; flex-shrink: 0;
+        }
+        .nav-logo-mark img { width: 72%; height: 72%; object-fit: contain; filter: brightness(0) invert(1); }
+        .nav-wordmark {
+            font-family: var(--font-logo); letter-spacing: -0.025em;
+            font-size: 1.2rem; line-height: 1; white-space: nowrap;
+        }
+        .nav-wordmark .eco { font-weight: 800; }
+        .nav-wordmark .aware { font-weight: 600; opacity: 0.78; }
 
         .nav-links {
             display: flex; align-items: center; gap: 28px;
@@ -761,7 +772,8 @@
 <!-- NAV -->
 <nav id="navbar">
     <a href="index.html" class="nav-logo-link">
-        <img src="assets/logos/ecoawareness-logo.png" alt="EcoAwareness">
+        <span class="nav-logo-mark"><img src="assets/IMG.PNG" alt=""></span>
+        <span class="nav-wordmark"><span class="eco">Eco</span><span class="aware">Awareness</span></span>
     </a>
     <div class="nav-links" id="nav-links">
         <a href="index.html" class="active" data-en="Home" data-ar="الرئيسية">Home</a>
