@@ -1,794 +1,752 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoAwareness — Environmental Opportunities in Qatar</title>
+    <title>EcoAwareness — Qatar's Youth Climate Platform</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%231a5c38%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2245%22%20text-anchor%3D%22middle%22%20font-family%3D%22Georgia%2C%20serif%22%20font-style%3D%22italic%22%20font-weight%3D%22700%22%20font-size%3D%2240%22%20fill%3D%22%23fff%22%3EE%3C/text%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2218%22%20r%3D%225%22%20fill%3D%22%23a8e063%22/%3E%3C/svg%3E">
     <link rel="apple-touch-icon" href="assets/IMG.PNG">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
     <script src="https://cdn.tailwindcss.com"></script>
     <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
     <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <style>
+        /* ── TOKENS ──────────────────────────────────── */
         :root {
-            --ink: #0a0a0a;
-            --paper: #f5f0e8;
-            --green: #1a5c38;
-            --green-light: #2d7a4f;
-            --lime: #a8e063;
-            --sand: #e8dfc8;
-            --rust: #c4622d;
+            --ink:        #0a0a0a;
+            --ink-2:      rgba(10,10,10,0.7);
+            --ink-3:      rgba(10,10,10,0.5);
+            --ink-4:      rgba(10,10,10,0.35);
+            --paper:      #f5f0e8;
+            --sand:       #e8dfc8;
+            --green:      #1a5c38;
+            --green-light:#2d7a4f;
+            --green-dark: #0d3a22;
+            --lime:       #a8e063;
+            --rust:       #c4622d;
+
+            --font-display:'Instrument Serif', Georgia, serif;
+            --font-body:   'DM Sans', system-ui, sans-serif;
+            --font-logo:   'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+            --font-arabic: 'Noto Naskh Arabic', serif;
+            --font-mono:   ui-monospace, 'SF Mono', Menlo, monospace;
+
+            --ease-out:   cubic-bezier(0.25,1,0.5,1);
+            --ease-spring:cubic-bezier(0.22,1,0.36,1);
         }
 
-        * { box-sizing: border-box; margin: 0; padding: 0; }
+        /* ── RESET ────────────────────────────────────── */
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
         html { scroll-behavior: auto; }
-
         body {
             background: var(--paper);
             color: var(--ink);
-            font-family: 'DM Sans', sans-serif;
+            font-family: var(--font-body);
             overflow-x: hidden;
+            -webkit-font-smoothing: antialiased;
         }
-        body.ar {
-            font-family: 'Noto Naskh Arabic', serif;
-            direction: rtl;
-        }
+        body.ar { font-family: var(--font-arabic); direction: rtl; }
 
-        /* Grain texture */
+        /* ── GRAIN OVERLAY ────────────────────────────── */
         body::before {
             content: '';
             position: fixed; inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 1000; opacity: 0.4;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 9999; opacity: 0.04;
+            mix-blend-mode: multiply;
         }
 
-        /* ── LANGUAGE TOGGLE ── */
-        #lang-toggle { display: none; }
+        /* ── LANGUAGE TOGGLE ──────────────────────────── */
+        #lang-toggle {
+            position: fixed; bottom: max(1.5rem, env(safe-area-inset-bottom));
+            right: 1.5rem; z-index: 800;
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            padding: 0.5rem 1rem; border-radius: 100px;
+            background: rgba(245,240,232,0.9); backdrop-filter: blur(10px);
+            border: 1px solid rgba(0,0,0,0.1);
+            font-family: var(--font-body); font-size: 0.78rem; font-weight: 500;
+            color: var(--ink); cursor: pointer;
+            transition: all 200ms var(--ease-out);
+        }
+        #lang-toggle:hover { background: var(--sand); }
         .lang-dot { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; flex-shrink: 0; }
 
-        /* ── NAV ── */
+        /* ── NAV ─────────────────────────────────────── */
         nav {
-            position: fixed; top: 0; left: 0; right: 0; z-index: 900;
-            padding: 1.25rem 2.5rem;
+            position: fixed; top: 14px; left: 50%;
+            transform: translateX(-50%);
+            width: min(1180px, calc(100% - 28px));
+            z-index: 100;
             display: flex; align-items: center; justify-content: space-between;
-            transition: background 0.4s, border-color 0.4s;
+            padding: 10px 16px; border-radius: 100px;
+            background: rgba(245,240,232,0.55);
+            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
+            border: 1px solid rgba(0,0,0,0.06);
+            transition: background 300ms var(--ease-out);
         }
-        nav.scrolled {
-            background: rgba(245,240,232,0.93);
-            backdrop-filter: blur(14px);
-            border-bottom: 1px solid rgba(0,0,0,0.07);
-        }
-        .nav-logo {
-            color: var(--ink); text-decoration: none;
-            display: inline-flex; align-items: center; gap: 0.55rem;
-            transition: color 0.3s;
-        }
-        .nav-logo-mark {
-            width: 38px; height: 38px;
-            background: var(--green);
-            border-radius: 9px;
-            display: inline-flex; align-items: center; justify-content: center;
-            flex-shrink: 0;
-            transition: background 0.3s, transform 0.25s ease;
-        }
-        .nav-logo:hover .nav-logo-mark { transform: scale(1.04); }
-        .nav-logo-mark img {
-            width: 74%; height: 74%;
-            object-fit: contain;
-            filter: brightness(0) invert(1);
-        }
-        .nav-logo-text {
-            font-family: 'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-            font-weight: 800;
-            font-size: 1.3rem;
-            letter-spacing: -0.025em;
-            line-height: 1;
-            white-space: nowrap;
-            color: currentColor;
-        }
-        .nav-logo-text .nlt-eco { font-weight: 800; }
-        .nav-logo-text .nlt-aware { font-weight: 600; opacity: 0.78; }
-        /* When nav is over the dark green hero, flip everything to white */
-        nav:not(.scrolled) .nav-logo-mark { background: #fff; }
-        nav:not(.scrolled) .nav-logo-mark img { filter: none; }
-        nav:not(.scrolled) .nav-logo { color: #fff; }
-        nav:not(.scrolled) .nav-links a { color: #fff; }
-        nav:not(.scrolled) .nav-toggle span { background: #fff; }
-        nav:not(.scrolled) .nav-cta {
-            background: rgba(255,255,255,0.15) !important;
-            color: #fff !important;
-            border: 1px solid rgba(255,255,255,0.35) !important;
-        }
-        nav:not(.scrolled) .nav-cta:hover {
-            background: rgba(255,255,255,0.28) !important;
-        }
-        body.ar .nav-logo-text { font-family: 'Noto Naskh Arabic', serif; font-weight: 700; letter-spacing: 0; }
+        nav.scrolled { background: rgba(245,240,232,0.93); }
 
-        .nav-links { display: flex; align-items: center; gap: 2rem; }
+        .nav-logo-link { display: flex; align-items: center; text-decoration: none; }
+        .nav-logo-link img { height: 36px; width: auto; display: block; }
+
+        .nav-links {
+            display: flex; align-items: center; gap: 28px;
+        }
         .nav-links a {
-            font-size: 0.875rem; font-weight: 400; color: var(--ink);
-            text-decoration: none; opacity: 0.7; transition: opacity 0.2s, color 0.3s;
+            font-size: 13px; font-weight: 400; color: var(--ink-2);
+            text-decoration: none; transition: color 200ms;
         }
-        .nav-links a:hover { opacity: 1; }
+        .nav-links a:hover, .nav-links a.active { color: var(--ink); font-weight: 500; }
+
         .nav-cta {
-            background: var(--green) !important; color: #fff !important;
-            opacity: 1 !important; padding: 0.6rem 1.4rem; border-radius: 100px;
-            transition: background 0.2s, border 0.2s !important;
-        }
-        .nav-cta:hover { background: var(--green-light) !important; }
-
-        /* ── HERO ── */
-        .hero {
-            min-height: 100vh;
-            min-height: 100dvh;
-            display: grid; grid-template-rows: 1fr auto;
-            position: relative; overflow: hidden; background: var(--green);
-        }
-        .hero-bg {
-            position: absolute; inset: 0;
-            background:
-                radial-gradient(ellipse 80% 60% at 60% 40%, rgba(168,224,99,0.15) 0%, transparent 60%),
-                radial-gradient(ellipse 40% 40% at 10% 80%, rgba(196,98,45,0.1) 0%, transparent 50%),
-                var(--green);
-        }
-        .hero-watermark {
-            position: absolute; top: 50%; right: -3%;
-            transform: translateY(-50%);
-            font-family: 'Noto Naskh Arabic', serif;
-            font-size: clamp(8rem,18vw,18rem);
-            color: rgba(255,255,255,0.035); line-height: 1;
-            pointer-events: none; user-select: none; white-space: nowrap;
-            transition: opacity 0.5s;
-        }
-        body.ar .hero-watermark {
-            right: auto; left: -3%;
-            font-family: 'Instrument Serif', serif;
-            font-style: italic;
-        }
-
-        .hero-content {
-            display: flex; flex-direction: column; justify-content: center;
-            padding: clamp(7rem,10vw,10rem) clamp(1.5rem,6vw,6rem) 4rem;
-            position: relative; z-index: 2;
-            max-width: 1200px; margin: 0 auto; width: 100%;
-        }
-
-        .hero-eyebrow {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            background: rgba(168,224,99,0.12);
-            border: 1px solid rgba(168,224,99,0.28);
-            color: var(--lime); padding: 0.4rem 1rem; border-radius: 100px;
-            font-size: 0.72rem; font-weight: 500;
-            letter-spacing: 0.1em; text-transform: uppercase;
-            margin-bottom: 2rem; width: fit-content;
-        }
-        body.ar .hero-eyebrow { letter-spacing: 0; font-size: 0.85rem; }
-
-        .hero-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(3.5rem,8vw,7.5rem); line-height: 1.0;
-            color: #fff; margin-bottom: 2rem;
-        }
-        body.ar .hero-title {
-            font-family: 'Noto Naskh Arabic', serif;
-            font-size: clamp(2.8rem,6vw,6rem); line-height: 1.3;
-        }
-        .hero-title em { font-style: italic; color: var(--lime); }
-        body.ar .hero-title em { font-style: normal; }
-
-        .hero-subtitle {
-            font-size: clamp(1rem,1.5vw,1.2rem); color: rgba(255,255,255,0.7);
-            max-width: 520px; line-height: 1.75; margin-bottom: 3rem; font-weight: 300;
-        }
-        body.ar .hero-subtitle { font-size: clamp(1rem,1.4vw,1.15rem); }
-
-        .hero-actions { display: flex; gap: 1rem; flex-wrap: wrap; }
-
-        .btn-primary {
-            background: var(--lime); color: var(--ink);
-            padding: 0.9rem 2rem; border-radius: 100px;
-            font-weight: 500; font-size: 0.95rem; text-decoration: none;
-            transition: all 0.2s; display: inline-flex; align-items: center; gap: 0.5rem;
-        }
-        .btn-primary:hover { background: #bef078; transform: translateY(-1px); }
-
-        .btn-ghost {
-            background: transparent; color: rgba(255,255,255,0.8);
-            padding: 0.9rem 2rem; border-radius: 100px;
-            border: 1px solid rgba(255,255,255,0.25);
-            font-size: 0.95rem; text-decoration: none; transition: all 0.2s;
-        }
-        .btn-ghost:hover { border-color: rgba(255,255,255,0.6); color: #fff; }
-
-        .hero-stats {
-            background: rgba(0,0,0,0.2);
-            border-top: 1px solid rgba(255,255,255,0.08);
-            padding: 1.75rem clamp(1.5rem,6vw,6rem);
-            display: flex; gap: 3rem;
-            position: relative; z-index: 2; flex-wrap: wrap;
-        }
-        .stat-item { display: flex; flex-direction: column; gap: 0.2rem; }
-        .stat-num {
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.9rem; color: var(--lime); line-height: 1;
-        }
-        .stat-label {
-            font-size: 0.68rem; color: rgba(255,255,255,0.4);
-            text-transform: uppercase; letter-spacing: 0.12em;
-        }
-        body.ar .stat-label { letter-spacing: 0; font-size: 0.8rem; }
-
-        /* ── PROBLEM ── */
-        .problem-outer { background: var(--paper); }
-        .problem-section {
-            padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem);
-            max-width: 1200px; margin: 0 auto;
-        }
-        .problem-split {
-            display: grid;
-            grid-template-columns: 1fr 420px;
-            gap: 4rem;
-            align-items: center;
-        }
-        .problem-photo {
-            position: relative; border-radius: 20px; overflow: hidden;
-            height: 560px; flex-shrink: 0;
-        }
-        .problem-photo img {
-            width: 100%; height: 100%;
-            object-fit: cover; object-position: center top;
-            display: block;
-        }
-        .problem-photo::after {
-            content: '';
-            position: absolute; inset: 0;
-            background: linear-gradient(160deg, rgba(0,0,0,0) 40%, rgba(10,10,10,0.35) 100%);
-            border-radius: 20px;
-        }
-        @media (max-width: 900px) {
-            .problem-split { grid-template-columns: 1fr; }
-            .problem-photo { height: 300px; }
-        }
-
-        .section-label {
-            display: inline-flex; align-items: center; gap: 0.6rem;
-            font-size: 0.7rem; font-weight: 500;
-            letter-spacing: 0.15em; text-transform: uppercase;
-            color: var(--rust); margin-bottom: 1.5rem;
-        }
-        body.ar .section-label { letter-spacing: 0; font-size: 0.85rem; flex-direction: row-reverse; }
-        .section-label::before { content: ''; width: 24px; height: 1px; background: currentColor; }
-        body.ar .section-label::before { display: none; }
-        body.ar .section-label::after { content: ''; width: 24px; height: 1px; background: currentColor; }
-
-        .problem-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(2.5rem,5vw,4.5rem); line-height: 1.1;
-            margin-bottom: 3rem;
-        }
-        body.ar .problem-title { font-family: 'Noto Naskh Arabic', serif; line-height: 1.35; }
-        .problem-title em { font-style: italic; color: var(--rust); }
-        body.ar .problem-title em { font-style: normal; }
-
-        .problem-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-            gap: 1.5px;
-            background: rgba(0,0,0,0.08);
-            border: 1.5px solid rgba(0,0,0,0.08);
-            border-radius: 16px; overflow: hidden;
-        }
-        .problem-card { background: var(--paper); padding: 2.5rem; transition: background 0.3s; }
-        .problem-card:hover { background: var(--sand); }
-        .problem-icon {
-            width: 44px; height: 44px; background: var(--sand);
-            border-radius: 10px; display: flex; align-items: center;
-            justify-content: center; margin-bottom: 1.5rem; font-size: 1.3rem;
-        }
-        .problem-card h3 {
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.35rem; margin-bottom: 0.75rem; line-height: 1.2;
-        }
-        body.ar .problem-card h3 { font-family: 'Noto Naskh Arabic', serif; line-height: 1.4; }
-        .problem-card p { font-size: 0.875rem; color: rgba(0,0,0,0.55); line-height: 1.75; font-weight: 300; }
-
-        /* ── SOLUTION ── */
-        .solution-section {
-            background: var(--ink);
-            padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem);
-        }
-        .solution-inner { max-width: 1200px; margin: 0 auto; }
-        .solution-section .section-label { color: var(--lime); }
-
-        .solution-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(2.5rem,5vw,4.5rem); color: #fff;
-            line-height: 1.1; max-width: 700px; margin-bottom: 4rem;
-        }
-        body.ar .solution-title { font-family: 'Noto Naskh Arabic', serif; line-height: 1.35; }
-        .solution-title em { font-style: italic; color: var(--lime); }
-        body.ar .solution-title em { font-style: normal; }
-
-        .solution-pillars {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px,1fr));
-            gap: 1.5rem;
-        }
-        .pillar-card {
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            border-radius: 16px; padding: 2.5rem;
-            transition: all 0.3s; position: relative; overflow: hidden;
-            min-height: 320px;
-            background-size: cover;
-            background-position: center;
-        }
-        .pillar-card:hover {
-            border-color: rgba(168,224,99,0.2);
-            transform: translateY(-2px);
-        }
-        .pillar-number {
-            font-family: 'Instrument Serif', serif;
-            font-size: 4rem; color: rgba(255,255,255,0.05);
-            position: absolute; top: 1rem; right: 1.5rem; line-height: 1;
-        }
-        body.ar .pillar-number { right: auto; left: 1.5rem; }
-        .pillar-tag {
-            display: inline-block;
-            background: rgba(168,224,99,0.12); color: var(--lime);
-            border: 1px solid rgba(168,224,99,0.2);
-            padding: 0.3rem 0.8rem; border-radius: 100px;
-            font-size: 0.68rem; font-weight: 500;
-            letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 1.5rem;
-        }
-        body.ar .pillar-tag { letter-spacing: 0; font-size: 0.82rem; }
-        .pillar-card h3 {
-            font-family: 'Instrument Serif', serif;
-            font-size: 1.6rem; color: #fff; margin-bottom: 0.75rem; line-height: 1.2;
-        }
-        body.ar .pillar-card h3 { font-family: 'Noto Naskh Arabic', serif; line-height: 1.4; }
-        .pillar-card p { font-size: 0.875rem; color: rgba(255,255,255,0.5); line-height: 1.75; font-weight: 300; }
-
-        /* ── PARTNERS ── */
-        .partners-section {
-            background: var(--sand);
-            padding: 4rem clamp(1.5rem,6vw,6rem);
-            border-top: 1px solid rgba(0,0,0,0.06);
-            border-bottom: 1px solid rgba(0,0,0,0.06);
-        }
-        .partners-inner { max-width: 1200px; margin: 0 auto; text-align: center; }
-        .partners-label {
-            font-size: 0.7rem; font-weight: 500;
-            letter-spacing: 0.15em; text-transform: uppercase;
-            color: rgba(0,0,0,0.35); margin-bottom: 2rem;
-        }
-        body.ar .partners-label { letter-spacing: 0; font-size: 0.82rem; }
-        .partners-row {
-            display: flex; flex-wrap: wrap;
-            justify-content: center; gap: 2rem 3.5rem; align-items: center;
-        }
-        .partner-name {
-            font-size: 0.82rem; font-weight: 500;
-            letter-spacing: 0.12em; text-transform: uppercase;
-            color: rgba(0,0,0,0.28); transition: color 0.2s; cursor: default;
-        }
-        .partner-name:hover { color: var(--green); }
-
-        /* ── GATED OPPORTUNITIES ── */
-        .opp-section { background: var(--paper); padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem); }
-        .opp-inner { max-width: 1200px; margin: 0 auto; }
-        .opp-header {
-            display: flex; align-items: flex-end; justify-content: space-between;
-            margin-bottom: 3rem; flex-wrap: wrap; gap: 1.5rem;
-        }
-        .opp-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(2rem,4vw,3.5rem); line-height: 1.15;
-        }
-        body.ar .opp-title { font-family: 'Noto Naskh Arabic', serif; line-height: 1.4; }
-        .opp-title em { font-style: italic; color: var(--green); }
-        body.ar .opp-title em { font-style: normal; }
-
-        .opp-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px,1fr));
-            gap: 1.25rem; position: relative;
-            min-height: 430px;
-            align-items: stretch;
-        }
-        .opp-grid::before {
-            content: '';
-            position: absolute; inset: -2rem -1.5rem;
-            background:
-                radial-gradient(ellipse 44% 38% at 50% 48%, rgba(168,224,99,0.12), transparent 66%),
-                linear-gradient(to bottom, rgba(245,240,232,0.1), rgba(245,240,232,0.9));
-            pointer-events: none;
-            z-index: 1;
-        }
-        .opp-card-preview {
-            background: white; border: 1px solid rgba(0,0,0,0.08);
-            border-radius: 18px; padding: 1.75rem;
-            filter: blur(3.5px); user-select: none; pointer-events: none; opacity: 0.44;
-            min-height: 260px;
-            box-shadow: 0 18px 50px rgba(0,0,0,0.08);
-            transform: translateY(18px) scale(0.98);
-            position: relative; overflow: hidden;
-        }
-        .opp-card-preview:nth-child(2) { transform: translateY(-4px) scale(1.02); opacity: 0.5; }
-        .opp-card-preview:nth-child(3) { transform: translateY(28px) scale(0.98); }
-        .opp-card-preview::after {
-            content: '';
-            position: absolute; inset: 0;
-            border-radius: inherit;
-            background: rgba(245,240,232,0.2);
-            pointer-events: none;
-        }
-        .opp-tag {
-            display: inline-block; padding: 0.25rem 0.75rem;
-            border-radius: 100px; font-size: 0.7rem; font-weight: 500; margin-bottom: 1rem;
-        }
-        .tag-green { background: #dcfce7; color: #166534; }
-        .tag-blue { background: #dbeafe; color: #1e40af; }
-        .tag-amber { background: #fef3c7; color: #92400e; }
-        .opp-card-preview h4 { font-size: 1.05rem; font-weight: 500; margin-bottom: 0.5rem; line-height: 1.3; }
-        .opp-card-preview p { font-size: 0.82rem; color: rgba(0,0,0,0.5); line-height: 1.6; margin-bottom: 1.25rem; }
-        .opp-meta {
-            font-size: 0.75rem; color: rgba(0,0,0,0.4);
-            display: flex; flex-direction: column; gap: 0.4rem;
-            padding-top: 1rem; border-top: 1px solid rgba(0,0,0,0.06);
-        }
-
-        .opp-gate {
-            position: absolute; inset: -2rem -1.5rem;
-            display: flex; flex-direction: column;
-            align-items: center; justify-content: center;
-            text-align: center; padding: clamp(2rem,5vw,4rem) 1.5rem;
-            background:
-                radial-gradient(ellipse 55% 48% at 50% 45%, rgba(245,240,232,0.97) 0%, rgba(245,240,232,0.82) 46%, rgba(245,240,232,0.32) 78%, rgba(245,240,232,0) 100%),
-                linear-gradient(90deg, rgba(245,240,232,0.92), rgba(245,240,232,0.52) 34%, rgba(245,240,232,0.52) 66%, rgba(245,240,232,0.92));
-            border-radius: 24px;
-            z-index: 2;
-        }
-        .gate-icon {
-            width: 74px; height: 44px;
-            background: linear-gradient(135deg, var(--green), #0f462a);
-            border: 1px solid rgba(168,224,99,0.35);
-            border-radius: 999px; display: flex; align-items: center; justify-content: center;
-            margin-bottom: 1.6rem; color: var(--lime); font-size: 1.55rem;
-            box-shadow: 0 16px 40px rgba(26,92,56,0.22), inset 0 1px 0 rgba(255,255,255,0.14);
-            animation: gatePulse 1.8s cubic-bezier(0.22,1,0.36,1) 0.2s 1 both;
-        }
-        @keyframes gateFadeUp {
-            from { opacity: 0; transform: translateY(14px); }
-            to   { opacity: 1; transform: translateY(0); }
-        }
-        @keyframes gatePulse {
-            0% { transform: scale(0.92); opacity: 0; }
-            58% { transform: scale(1.04); opacity: 1; }
-            100% { transform: scale(1); opacity: 1; }
-        }
-        .gate-title {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(2rem,5vw,4rem); margin-bottom: 0.95rem;
-            line-height: 1.05;
-            animation: gateFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
-            animation-delay: 0.2s;
-        }
-        body.ar .gate-title { font-family: 'Noto Naskh Arabic', serif; line-height: 1.35; }
-        .gate-title .gate-num {
-            font-size: 1.14em; font-weight: 800;
-            color: var(--green); display: inline-block;
-            line-height: 1;
-        }
-        .gate-sub {
-            font-size: clamp(0.95rem,1.5vw,1.12rem); color: rgba(0,0,0,0.5);
-            font-weight: 300; margin-bottom: 1.2rem;
-            max-width: 520px; line-height: 1.7;
-            animation: gateFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
-            animation-delay: 0.35s;
-        }
-        .gate-benefits {
-            display: flex; gap: 0.55rem; flex-wrap: wrap; justify-content: center;
-            margin-bottom: 1.55rem;
-            animation: gateFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
-            animation-delay: 0.46s;
-        }
-        .gate-chip {
-            border: 1px solid rgba(26,92,56,0.13);
-            background: rgba(255,255,255,0.64);
-            border-radius: 999px;
-            padding: 0.42rem 0.72rem;
-            color: rgba(0,0,0,0.54);
-            font-size: 0.76rem;
-            backdrop-filter: blur(10px);
-        }
-        .gate-btn {
-            background: linear-gradient(135deg, #0f4c2e 0%, var(--green) 54%, #1d6d43 100%);
-            color: #fff;
-            min-width: min(100%, 420px);
-            padding: 1rem 2.4rem; border-radius: 100px;
-            font-weight: 700; font-size: clamp(0.98rem,1.6vw,1.18rem); text-decoration: none;
-            transition: all 0.25s cubic-bezier(0.22,1,0.36,1);
-            display: inline-flex; align-items: center; justify-content: center; gap: 0.8rem;
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 10px 20px; border-radius: 100px;
+            background: var(--green); color: #fff;
+            font-family: var(--font-body); font-size: 13px; font-weight: 500;
+            text-decoration: none; border: none; cursor: pointer;
             box-shadow: 0 18px 42px rgba(26,92,56,0.24), inset 0 1px 0 rgba(255,255,255,0.18);
-            animation: gateFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
-            animation-delay: 0.58s;
-        }
-        .gate-btn:hover { transform: translateY(-2px); box-shadow: 0 22px 50px rgba(26,92,56,0.3), inset 0 1px 0 rgba(255,255,255,0.2); }
-        .gate-btn iconify-icon { font-size: 1.15rem; }
-        .gate-btn-note {
-            display: block;
-            margin-top: 0.65rem;
-            font-size: 0.72rem;
-            font-weight: 400;
-            color: rgba(255,255,255,0.68);
-        }
-        .gate-signin {
-            margin-top: 1.05rem; font-size: 0.93rem; color: rgba(0,0,0,0.42);
-            animation: gateFadeUp 0.7s cubic-bezier(0.22,1,0.36,1) both;
-            animation-delay: 0.7s;
-        }
-        .gate-signin a { color: var(--green); font-weight: 500; text-decoration: none; }
-        .gate-signin a:hover { text-decoration: underline; }
-
-        @media (max-width: 700px) {
-            .opp-grid { min-height: 520px; }
-            .opp-grid::before, .opp-gate { inset: -1rem; }
-            .opp-card-preview { min-height: 220px; }
-            .opp-card-preview:nth-child(3) { display: none; }
-            .gate-btn { min-width: 100%; }
-        }
-
-        /* ── CTA ── */
-        .cta-section {
-            background: var(--green);
-            padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem);
-            text-align: center; position: relative; overflow: hidden;
-        }
-        .cta-watermark {
-            font-family: 'Noto Naskh Arabic', serif;
-            font-size: clamp(4rem,15vw,14rem);
-            color: rgba(255,255,255,0.035);
-            position: absolute; top: 50%; left: 50%;
-            transform: translate(-50%,-50%);
-            white-space: nowrap; pointer-events: none;
-        }
-        .cta-inner { max-width: 700px; margin: 0 auto; position: relative; z-index: 2; }
-        .cta-inner h2 {
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(2.5rem,5vw,4.5rem); color: #fff;
-            line-height: 1.1; margin-bottom: 1.5rem;
-        }
-        body.ar .cta-inner h2 { font-family: 'Noto Naskh Arabic', serif; line-height: 1.35; }
-        .cta-inner h2 em { font-style: italic; color: var(--lime); }
-        body.ar .cta-inner h2 em { font-style: normal; }
-        .cta-inner p { font-size: 1rem; color: rgba(255,255,255,0.6); font-weight: 300; margin-bottom: 3rem; line-height: 1.75; }
-        .cta-btns { display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap; }
-
-        /* ── FOOTER (ConnectED-inspired) ── */
-        footer {
-            background: var(--paper);
-            color: var(--ink);
-            position: relative;
-            overflow: hidden;
-            margin-top: -1px; /* seal against CTA */
-        }
-        /* Curved top that scoops out of the green CTA */
-        .footer-curve {
-            display: block;
-            width: 100%;
-            height: clamp(48px, 7vw, 90px);
-            background: var(--green);
-            position: relative;
-            z-index: 1;
-            line-height: 0;
-        }
-        .footer-curve svg {
-            display: block;
-            width: 100%;
-            height: 100%;
-        }
-        .footer-meta {
-            display: flex; justify-content: space-between;
-            padding: 2.5rem clamp(1.5rem, 6vw, 6rem) 0;
-            font-size: 0.8rem;
-            color: rgba(10,10,10,0.45);
-            flex-wrap: wrap; gap: 1rem;
-            position: relative; z-index: 2;
-        }
-        .footer-meta .meta-addr { display: flex; align-items: center; gap: 0.5rem; }
-        .footer-meta .meta-addr::before {
-            content: '';
-            width: 14px; height: 14px;
-            border: 1.5px solid currentColor; border-radius: 50% 50% 50% 0;
-            transform: rotate(-45deg);
-        }
-        .footer-grid {
-            max-width: 1200px; margin: 0 auto;
-            padding: 4rem clamp(1.5rem, 6vw, 6rem) 2rem;
-            display: grid;
-            grid-template-columns: 1.3fr 1fr 1fr 1fr;
-            gap: 3rem 2rem;
-            position: relative; z-index: 2;
-        }
-        .footer-brand-block .footer-logo {
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            font-family: Georgia, serif; font-style: italic; font-weight: 600;
-            font-size: 1.6rem; color: var(--ink); text-decoration: none;
-            margin-bottom: 1.25rem;
-        }
-        .footer-brand-block .footer-logo::before {
-            content: ''; width: 10px; height: 10px;
-            background: var(--lime); border-radius: 50%;
-            display: inline-block;
-        }
-        body.ar .footer-brand-block .footer-logo { font-family: 'Noto Naskh Arabic', serif; font-style: normal; }
-        .footer-tagline {
-            font-size: 0.95rem; line-height: 1.6;
-            color: rgba(10,10,10,0.6); max-width: 280px;
-        }
-        .footer-col h4 {
-            font-family: 'DM Sans', sans-serif;
-            font-size: 0.7rem; font-weight: 500;
-            text-transform: uppercase; letter-spacing: 0.2em;
-            color: rgba(10,10,10,0.4);
-            margin-bottom: 1.25rem;
-        }
-        body.ar .footer-col h4 { font-family: 'Noto Naskh Arabic', serif; letter-spacing: 0; }
-        .footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
-        .footer-col a {
-            font-size: 1rem; color: var(--ink); text-decoration: none;
-            transition: color 0.2s;
-        }
-        .footer-col a:hover { color: var(--green); }
-        /* Massive watermark */
-        .footer-watermark {
-            position: absolute;
-            left: 0; right: 0; bottom: -2vw;
-            font-family: 'Instrument Serif', serif;
-            font-size: clamp(6rem, 22vw, 22rem);
-            font-style: italic;
-            color: rgba(26,92,56,0.06);
-            text-align: center;
-            line-height: 0.85;
-            pointer-events: none;
+            transition: all 200ms var(--ease-out);
             white-space: nowrap;
-            z-index: 1;
-            user-select: none;
         }
-        body.ar .footer-watermark { font-family: 'Noto Naskh Arabic', serif; font-style: normal; }
-        .footer-bottom {
-            border-top: 1px solid rgba(10,10,10,0.08);
-            padding: 1.5rem clamp(1.5rem, 6vw, 6rem);
-            display: flex; justify-content: space-between; align-items: center;
-            font-size: 0.75rem; color: rgba(10,10,10,0.4);
-            flex-wrap: wrap; gap: 1rem;
-            position: relative; z-index: 2;
-        }
-        .footer-socials { display: flex; gap: 1rem; }
-        .footer-socials a {
-            width: 32px; height: 32px; display: inline-flex;
-            align-items: center; justify-content: center;
-            border-radius: 50%; border: 1px solid rgba(10,10,10,0.12);
-            color: rgba(10,10,10,0.5); text-decoration: none;
-            transition: all 0.2s;
-        }
-        .footer-socials a:hover { border-color: var(--green); color: var(--green); }
-        @media (max-width: 900px) {
-            .footer-grid { grid-template-columns: 1fr 1fr; }
-            .footer-brand-block { grid-column: 1 / -1; }
-        }
-        @media (max-width: 560px) {
-            .footer-grid { grid-template-columns: 1fr; }
-            .footer-meta { flex-direction: column; }
-            .footer-bottom { flex-direction: column; text-align: center; }
-        }
+        .nav-cta:hover { background: var(--green-light); transform: translateY(-1px); }
 
-        /* ── SCROLL REVEAL (unified fade-up) ── */
-        .reveal,
-        .reveal-left,
-        .reveal-right {
-            opacity: 0; transform: translateY(20px);
-            transition: opacity 0.6s cubic-bezier(0.25,1,0.5,1), transform 0.6s cubic-bezier(0.25,1,0.5,1);
-        }
-        .reveal.visible,
-        .reveal-left.visible,
-        .reveal-right.visible { opacity: 1; transform: none; }
-
-        /* Page transition */
-        #page-transition {
-            position: fixed; inset: 0; z-index: 9999;
-            background: var(--green);
-            display: flex; align-items: center; justify-content: center;
-            opacity: 1;
-            transition: opacity 550ms cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
-            will-change: opacity;
-        }
-        #transition-logo {
-            width: 4.5rem; height: 4.5rem;
-            transform: scale(0.92);
-            transition: transform 650ms cubic-bezier(0.25, 1, 0.5, 1);
-            will-change: transform;
-        }
-        #page-transition.leaving #transition-logo { transform: scale(1.08); }
-
-        /* ── MOBILE NAV TOGGLE ── */
+        /* Mobile nav toggle */
         .nav-toggle {
-            display: none;
-            background: transparent; border: 0; cursor: pointer;
-            padding: 0.5rem; width: 42px; height: 42px;
+            display: none; background: transparent; border: 0; cursor: pointer;
+            padding: 6px; width: 38px; height: 38px;
             flex-direction: column; justify-content: center; gap: 5px;
-            position: relative; z-index: 900;
         }
         .nav-toggle span {
-            display: block; width: 22px; height: 2px; background: var(--ink);
-            border-radius: 2px;
-            transition: transform 0.3s, opacity 0.3s;
+            display: block; width: 20px; height: 2px; background: var(--ink);
+            border-radius: 2px; transition: transform 0.3s, opacity 0.3s;
         }
         .nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
         .nav-toggle.active span:nth-child(2) { opacity: 0; }
         .nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
 
-        /* ── NAV BACKDROP ── */
         .nav-backdrop {
-            display: none;
-            position: fixed; inset: 0;
-            background: rgba(0,0,0,0.45);
-            z-index: 902;
-            opacity: 0;
-            pointer-events: none;
-            transition: opacity 0.3s ease;
+            display: none; position: fixed; inset: 0;
+            background: rgba(0,0,0,0.45); z-index: 98;
+            opacity: 0; pointer-events: none; transition: opacity 0.3s;
         }
         .nav-backdrop.show { opacity: 1; pointer-events: auto; }
-        @media (max-width: 860px) { .nav-backdrop { display: block; } }
 
+        /* ── HERO ─────────────────────────────────────── */
+        .hero {
+            min-height: 100dvh;
+            position: relative; overflow: hidden;
+            background: var(--green-dark); color: #fff;
+            display: grid; grid-template-rows: 1fr auto;
+            padding: clamp(110px,13vh,170px) clamp(1.5rem,6vw,6rem) 0;
+        }
+        /* Decorative washes */
+        .hero-wash-tr {
+            position: absolute; top: -10%; right: -10%; width: 70%; height: 70%;
+            background: radial-gradient(ellipse, rgba(168,224,99,0.18), transparent 60%);
+            pointer-events: none;
+        }
+        .hero-wash-bl {
+            position: absolute; bottom: -15%; left: -10%; width: 60%; height: 60%;
+            background: radial-gradient(ellipse, rgba(196,98,45,0.14), transparent 60%);
+            pointer-events: none;
+        }
+        .hero-watermark {
+            position: absolute; right: 3%; top: 14%;
+            font-family: var(--font-arabic); font-size: 18vw;
+            color: rgba(255,255,255,0.035); line-height: 1; font-weight: 500;
+            pointer-events: none; user-select: none; z-index: 0;
+        }
+
+        /* Hero main grid */
+        .hero-grid {
+            max-width: 1240px; margin: 0 auto; width: 100%;
+            position: relative; z-index: 2; align-self: center;
+            display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,0.85fr);
+            gap: clamp(32px,5vw,72px); align-items: center;
+        }
+
+        /* Left copy */
+        .hero-copy { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
+
+        .eyebrow {
+            display: inline-flex; align-items: center; gap: 0.6rem;
+            font-size: 11px; font-weight: 500; text-transform: uppercase;
+            letter-spacing: 0.15em;
+        }
+        .eyebrow::before { content: ''; width: 24px; height: 1px; background: currentColor; }
+        .eyebrow-lime { color: var(--lime); }
+        .eyebrow-rust { color: var(--rust); }
+        .eyebrow-green { color: var(--green); }
+        body.ar .eyebrow::before { display: none; }
+
+        .hero-title {
+            font-family: var(--font-display); font-weight: 400;
+            font-size: clamp(2.8rem,6.2vw,5.6rem); line-height: 1.04;
+            letter-spacing: -0.02em;
+        }
+        .hero-title em { font-style: italic; color: var(--lime); }
+
+        .hero-sub {
+            font-size: 18px; line-height: 1.7; max-width: 540px;
+            color: rgba(255,255,255,0.78); font-weight: 300;
+        }
+
+        .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+
+        .btn {
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 13px 24px; border-radius: 100px;
+            font-family: var(--font-body); font-size: 14px; font-weight: 500;
+            border: none; cursor: pointer; text-decoration: none;
+            transition: all 200ms var(--ease-out);
+        }
+        .btn:hover { transform: translateY(-1px); }
+        .btn-lime { background: var(--lime); color: var(--green-dark); }
+        .btn-lime:hover { background: #bef07a; }
+        .btn-ghost-dark { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3); }
+        .btn-ghost-dark:hover { border-color: rgba(255,255,255,0.6); }
+        .btn-primary { background: var(--green); color: #fff; box-shadow: 0 18px 42px rgba(26,92,56,0.24), inset 0 1px 0 rgba(255,255,255,0.18); }
+        .btn-primary:hover { background: var(--green-light); }
+        .btn-ghost-light { background: transparent; color: var(--ink); border: 1px solid rgba(0,0,0,0.15); }
+
+        /* ── HERO COLLAGE ────────────────────────────── */
+        .hero-collage {
+            position: relative; width: 100%; aspect-ratio: 0.92/1;
+            max-width: 540px; justify-self: end;
+        }
+        /* Lime block behind */
+        .collage-lime-block {
+            position: absolute; right: -18px; top: -18px;
+            width: 38%; aspect-ratio: 1/1; background: var(--lime);
+            border-radius: 22px; z-index: 0;
+            box-shadow: 0 30px 60px rgba(168,224,99,0.18);
+        }
+        /* Outline frame */
+        .collage-outline {
+            position: absolute; left: -22px; bottom: 28px;
+            width: 28%; aspect-ratio: 1/1;
+            border: 1.5px solid rgba(168,224,99,0.45); border-radius: 20px; z-index: 0;
+        }
+        /* Main photo */
+        .collage-main {
+            position: absolute; inset: 0 6% 14% 4%;
+            border-radius: 22px; overflow: hidden; z-index: 2;
+            box-shadow: 0 40px 80px rgba(0,0,0,0.45), 0 8px 20px rgba(0,0,0,0.3);
+            transform: rotate(-1.5deg);
+        }
+        .collage-main img {
+            width: 100%; height: 100%; object-fit: cover;
+            object-position: 50% 58%; display: block;
+        }
+        .collage-main-veil {
+            position: absolute; inset: 0;
+            background: linear-gradient(180deg, transparent 45%, rgba(11,46,29,0.78));
+        }
+        .collage-main-caption {
+            position: absolute; left: 18px; bottom: 16px; right: 18px;
+            display: flex; flex-direction: column; gap: 4px;
+        }
+        .caption-label {
+            font-family: var(--font-mono); font-size: 9.5px;
+            letter-spacing: 0.18em; text-transform: uppercase;
+            color: var(--lime); font-weight: 600;
+        }
+        .caption-title {
+            font-family: var(--font-display); font-style: italic;
+            font-size: 22px; line-height: 1.15; color: #fff;
+        }
+        .collage-live-dot {
+            position: absolute; top: 16px; left: 16px;
+            display: inline-flex; align-items: center; gap: 8px;
+            padding: 6px 10px; border-radius: 100px;
+            background: rgba(11,46,29,0.55); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.14);
+        }
+        .live-dot-pulse {
+            width: 6px; height: 6px; border-radius: 100%;
+            background: var(--lime); box-shadow: 0 0 8px var(--lime);
+        }
+        .live-dot-label {
+            font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
+            color: #fff; text-transform: uppercase;
+        }
+
+        /* Polaroid */
+        .collage-polaroid {
+            position: absolute; right: -2%; bottom: -2%;
+            width: 46%; background: #fff;
+            padding: 10px 10px 36px; border-radius: 8px;
+            box-shadow: 0 30px 60px rgba(0,0,0,0.45), 0 4px 12px rgba(0,0,0,0.2);
+            transform: rotate(5deg); z-index: 3;
+        }
+        .polaroid-photo {
+            width: 100%; aspect-ratio: 4/5; border-radius: 4px;
+            overflow: hidden; background: #000;
+        }
+        .polaroid-photo img {
+            width: 100%; height: 100%; object-fit: cover;
+            object-position: 50% 22%; display: block;
+        }
+        .polaroid-caption {
+            position: absolute; left: 0; right: 0; bottom: 10px;
+            text-align: center; font-family: var(--font-display);
+            font-style: italic; font-size: 14px; color: var(--ink);
+        }
+
+        /* Floating verified chip */
+        .collage-chip {
+            position: absolute; left: -6%; top: 32%;
+            background: #fff; color: var(--ink); border-radius: 14px;
+            padding: 12px 14px; display: flex; align-items: center; gap: 10px;
+            box-shadow: 0 24px 50px rgba(0,0,0,0.35); z-index: 4;
+            transform: rotate(-4deg);
+        }
+        .chip-icon-box {
+            width: 34px; height: 34px; border-radius: 10px;
+            background: var(--lime); display: grid; place-items: center; flex-shrink: 0;
+            color: var(--green-dark);
+        }
+        .chip-text { display: flex; flex-direction: column; min-width: 0; }
+        .chip-hours {
+            font-family: var(--font-display); font-style: italic;
+            font-size: 18px; line-height: 1; color: var(--green-dark);
+        }
+        .chip-loc {
+            font-size: 10px; color: var(--ink-3); font-family: var(--font-mono);
+            letter-spacing: 0.1em; text-transform: uppercase; margin-top: 3px;
+        }
+
+        /* ── STAT STRIP ───────────────────────────────── */
+        .hero-stats {
+            position: relative; z-index: 2;
+            margin: 4rem auto 0; max-width: 1240px; width: 100%;
+            border-top: 1px solid rgba(255,255,255,0.1);
+            display: grid; grid-template-columns: repeat(4,1fr);
+            padding: 24px 0;
+        }
+        .stat-item { padding-left: 0; }
+        .stat-item + .stat-item {
+            border-left: 1px solid rgba(255,255,255,0.1);
+            padding-left: 24px;
+        }
+        .stat-num {
+            font-family: var(--font-display); font-style: italic;
+            color: var(--lime); font-size: clamp(2rem,4vw,3rem);
+            line-height: 1; letter-spacing: -0.02em;
+        }
+        .stat-label {
+            margin-top: 6px; font-size: 11px; text-transform: uppercase;
+            letter-spacing: 0.15em; color: rgba(255,255,255,0.7);
+        }
+
+        /* ── PARTNERS STRIP ───────────────────────────── */
+        .partners-section {
+            background: var(--paper);
+            padding: clamp(3rem,6vw,4rem) clamp(1.5rem,6vw,6rem);
+        }
+        .partners-inner {
+            max-width: 1100px; margin: 0 auto;
+            display: flex; flex-direction: column; align-items: center; gap: 28px;
+        }
+        .partners-pill {
+            display: flex; align-items: center; justify-content: space-between;
+            gap: 32px; flex-wrap: wrap; width: 100%;
+            background: var(--sand); padding: 20px 32px; border-radius: 100px;
+        }
+        .partner-logo { height: 32px; width: auto; opacity: 0.85; filter: grayscale(0.2); }
+        .partner-name-text {
+            font-size: 12px; font-weight: 600; letter-spacing: 0.18em;
+            color: var(--ink-2); text-transform: uppercase;
+        }
+
+        /* ── PROBLEM SECTION ──────────────────────────── */
+        .problem-section {
+            background: var(--paper);
+            padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem);
+        }
+        .problem-inner { max-width: 1100px; margin: 0 auto; }
+
+        .section-header-grid {
+            display: grid; grid-template-columns: 1fr 1fr;
+            gap: 80px; align-items: start; margin-bottom: 60px;
+        }
+        .section-h2 {
+            font-family: var(--font-display); font-weight: 400;
+            font-size: clamp(2rem,4vw,3.5rem);
+            line-height: 1.1; letter-spacing: -0.02em; margin-top: 20px;
+        }
+        .section-h2 em { font-style: italic; color: var(--green); }
+        .section-h2.on-dark { color: #fff; }
+        .section-h2.on-dark em { color: var(--lime); }
+        .section-body {
+            font-size: 17px; line-height: 1.75; color: var(--ink-2);
+            font-weight: 300; margin-top: 36px;
+        }
+        .section-body.on-dark { color: rgba(255,255,255,0.7); }
+
+        .problem-cards {
+            display: grid; grid-template-columns: repeat(3,1fr);
+            border: 1.5px solid rgba(0,0,0,0.08);
+            border-radius: 18px; overflow: hidden;
+        }
+        .problem-card {
+            padding: 28px; background: #fff;
+            transition: background 200ms var(--ease-out);
+        }
+        .problem-card:hover { background: var(--sand); }
+        .problem-card + .problem-card { border-left: 1.5px solid rgba(0,0,0,0.08); }
+        .problem-card-icon { font-size: 28px; margin-bottom: 18px; }
+        .problem-card h3 {
+            font-family: var(--font-display); font-size: 22px;
+            line-height: 1.2; margin-bottom: 10px; color: var(--ink);
+        }
+        .problem-card p {
+            font-size: 14px; line-height: 1.7; color: var(--ink-2); font-weight: 300;
+        }
+
+        /* ── SOLUTION SECTION ─────────────────────────── */
+        .solution-section {
+            background: var(--ink); color: #fff; position: relative; overflow: hidden;
+            padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem);
+        }
+        .solution-wash {
+            position: absolute; top: -20%; left: -10%; width: 50%; height: 60%;
+            background: radial-gradient(ellipse, rgba(168,224,99,0.12), transparent 60%);
+            pointer-events: none;
+        }
+        .solution-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+        .solution-cards {
+            display: grid; grid-template-columns: repeat(3,1fr); gap: 16px;
+        }
+        .solution-card {
+            padding: 28px; border-radius: 18px;
+            background: rgba(255,255,255,0.04);
+            border: 1px solid rgba(255,255,255,0.08);
+            transition: border-color 200ms var(--ease-out), transform 200ms var(--ease-out);
+        }
+        .solution-card:hover { border-color: rgba(168,224,99,0.25); transform: translateY(-2px); }
+        .solution-card-num {
+            font-family: var(--font-display); font-style: italic;
+            font-size: 48px; color: var(--lime); line-height: 1; margin-bottom: 18px;
+        }
+        .solution-card h3 {
+            font-family: var(--font-display); font-size: 22px;
+            line-height: 1.2; margin-bottom: 10px; color: #fff;
+        }
+        .solution-card p {
+            font-size: 14px; line-height: 1.7;
+            color: rgba(255,255,255,0.65); font-weight: 300;
+        }
+
+        /* ── OPPORTUNITIES SECTION ────────────────────── */
+        .opp-section {
+            background: var(--paper);
+            padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem);
+        }
+        .opp-inner { max-width: 1100px; margin: 0 auto; }
+
+        .opp-header-row {
+            display: flex; justify-content: space-between;
+            align-items: flex-end; margin-bottom: 32px; gap: 40px; flex-wrap: wrap;
+        }
+        .opp-h2 {
+            font-family: var(--font-display); font-weight: 400;
+            font-size: clamp(2rem,4vw,3rem); line-height: 1.1;
+            letter-spacing: -0.02em; margin-top: 20px; color: var(--ink);
+        }
+        .opp-h2 em { font-style: italic; color: var(--green); }
+
+        .filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
+        .filter-pill {
+            padding: 8px 16px; border-radius: 100px; font-size: 13px; font-weight: 500;
+            font-family: var(--font-body); cursor: pointer; border: 1px solid rgba(0,0,0,0.12);
+            background: transparent; color: var(--ink-2);
+            transition: all 200ms var(--ease-out);
+        }
+        .filter-pill.active, .filter-pill:hover {
+            background: var(--ink); color: #fff; border-color: var(--ink);
+        }
+
+        /* Featured banner */
+        .opp-featured {
+            position: relative; border-radius: 22px; overflow: hidden;
+            background: var(--green-dark); color: #fff;
+            display: grid; grid-template-columns: minmax(0,1fr) minmax(0,0.85fr);
+            min-height: 260px;
+            box-shadow: 0 30px 70px rgba(0,0,0,0.12); margin-bottom: 28px;
+        }
+        .opp-featured-left {
+            padding: clamp(28px,4vw,44px); display: flex; flex-direction: column;
+            justify-content: space-between; gap: 24px; position: relative; z-index: 2;
+        }
+        .featured-badge {
+            display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+            padding: 6px 12px; border-radius: 100px;
+            background: rgba(168,224,99,0.16); border: 1px solid rgba(168,224,99,0.32);
+        }
+        .featured-badge-dot {
+            width: 6px; height: 6px; border-radius: 100%;
+            background: var(--lime); box-shadow: 0 0 10px var(--lime);
+        }
+        .featured-badge-label {
+            font-family: var(--font-mono); font-size: 10px;
+            letter-spacing: 0.16em; text-transform: uppercase; color: var(--lime); font-weight: 600;
+        }
+        .featured-h3 {
+            font-family: var(--font-display); font-weight: 400;
+            font-size: clamp(1.6rem,2.4vw,2.2rem); line-height: 1.12;
+            letter-spacing: -0.02em;
+        }
+        .featured-h3 em { font-style: italic; color: var(--lime); }
+        .featured-stats { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
+        .featured-stat-num {
+            font-family: var(--font-display); font-style: italic;
+            color: var(--lime); font-size: 26px; line-height: 1;
+        }
+        .featured-stat-label {
+            font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
+            color: rgba(255,255,255,0.6); margin-top: 4px;
+        }
+        .featured-divider { width: 1px; height: 30px; background: rgba(255,255,255,0.14); }
+
+        .opp-featured-right { position: relative; min-height: 260px; }
+        .opp-featured-right img {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+            object-fit: cover; object-position: 50% 56%;
+        }
+        .opp-featured-right-veil {
+            position: absolute; inset: 0;
+            background: linear-gradient(90deg, var(--green-dark) 0%, rgba(11,46,29,0.4) 30%, transparent 60%);
+        }
+        .featured-location-tag {
+            position: absolute; right: 18px; bottom: 18px;
+            padding: 8px 12px; border-radius: 8px;
+            background: rgba(11,46,29,0.55); backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.14);
+            font-family: var(--font-mono); font-size: 10px;
+            letter-spacing: 0.14em; text-transform: uppercase; color: #fff;
+        }
+
+        /* Opportunity cards grid */
+        .opp-grid-wrap { position: relative; }
+        .opp-card-grid {
+            display: grid; grid-template-columns: repeat(3,1fr); gap: 18px;
+        }
+        .opp-card {
+            background: #fff; border: 1px solid rgba(0,0,0,0.07);
+            border-radius: 18px; padding: 14px; display: flex; flex-direction: column;
+            box-shadow: 0 18px 50px rgba(0,0,0,0.06); cursor: pointer;
+            transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
+        }
+        .opp-card:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 24px 60px rgba(0,0,0,0.10);
+        }
+        .opp-card[style*="display: none"] { display: none !important; }
+
+        /* Card cover */
+        .card-cover {
+            height: 150px; border-radius: 12px; overflow: hidden;
+            margin-bottom: 14px; position: relative; flex-shrink: 0;
+        }
+        .card-cover img {
+            width: 100%; height: 100%; object-fit: cover; display: block;
+        }
+        .card-cover-veil {
+            position: absolute; inset: 0; pointer-events: none;
+        }
+        .card-cover-art {
+            width: 100%; height: 100%; display: flex; align-items: flex-end; padding: 14px;
+            position: relative;
+        }
+        .card-cover-art iconify-icon {
+            position: absolute; right: 14px; top: 14px;
+            opacity: 0.92; z-index: 2;
+            filter: drop-shadow(0 6px 14px rgba(0,0,0,0.25));
+        }
+        .card-cover-art svg {
+            position: absolute; inset: 0; width: 100%; height: 100%;
+        }
+
+        /* Card body */
+        .card-body { padding: 0 8px 4px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+        .card-tag-row { display: flex; justify-content: space-between; align-items: center; }
+        .card-tag-label {
+            font-size: 10px; font-weight: 600; letter-spacing: 0.15em; color: var(--rust);
+        }
+        .card-pill {
+            display: inline-flex; align-items: center; gap: 6px;
+            padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 500;
+        }
+        .card-pill-dot { width: 6px; height: 6px; border-radius: 100%; background: currentColor; }
+        .pill-lime { background: rgba(168,224,99,0.18); color: var(--green-dark); border: 1px solid rgba(168,224,99,0.4); }
+        .pill-green { background: var(--green); color: #fff; }
+        .pill-default { background: transparent; color: var(--ink-2); border: 1px solid rgba(0,0,0,0.15); }
+        .card-h3 {
+            font-family: var(--font-display); font-size: 22px; line-height: 1.2; color: var(--ink);
+        }
+        .card-org { font-size: 13px; color: var(--ink-3); }
+        .card-meta {
+            display: flex; gap: 14px; font-size: 12px; color: var(--ink-3);
+            margin-top: auto; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.06);
+        }
+        .card-hours { margin-left: auto; color: var(--green); font-weight: 500; }
+
+        /* Lock overlay */
+        .opp-lock-overlay {
+            position: absolute; left: 0; right: 0; bottom: 0; top: 40%;
+            background: linear-gradient(180deg, rgba(245,240,232,0) 0%, rgba(245,240,232,0.95) 50%, var(--paper) 100%);
+            pointer-events: none;
+        }
+        .opp-lock-cta {
+            position: absolute; left: 50%; bottom: 20px;
+            transform: translateX(-50%); text-align: center; z-index: 2;
+        }
+        .opp-lock-text {
+            font-size: 14px; color: var(--ink-2); margin-bottom: 16px; max-width: 360px;
+        }
+
+        /* ── FOOTER CTA ───────────────────────────────── */
+        .footer-cta {
+            background: var(--green); color: #fff; position: relative; overflow: hidden;
+            padding: clamp(4rem,8vw,7rem) clamp(1.5rem,6vw,6rem) clamp(6rem,10vw,9rem);
+        }
+        .footer-cta-wash {
+            position: absolute; inset: 0;
+            background: radial-gradient(ellipse at top right, rgba(168,224,99,0.18), transparent 60%),
+                        radial-gradient(ellipse at bottom left, rgba(196,98,45,0.12), transparent 60%);
+            pointer-events: none;
+        }
+        .footer-cta-inner {
+            max-width: 900px; margin: 0 auto; text-align: center;
+            position: relative; display: flex; flex-direction: column; gap: 24px; align-items: center;
+        }
+        .footer-cta h2 {
+            font-family: var(--font-display); font-weight: 400;
+            font-size: clamp(2.5rem,6vw,5rem); line-height: 1.05; letter-spacing: -0.02em;
+        }
+        .footer-cta h2 em { font-style: italic; color: var(--lime); }
+        .footer-cta p { font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.78); font-weight: 300; max-width: 560px; }
+        .footer-cta-btns { display: flex; gap: 12px; margin-top: 8px; flex-wrap: wrap; justify-content: center; }
+
+        /* ── DARK FOOTER ──────────────────────────────── */
+        footer { background: var(--green-dark); color: #fff; position: relative; }
+        .footer-scoop {
+            position: absolute; top: -1px; left: 0; width: 100%; height: 80px; display: block;
+        }
+        .footer-body {
+            max-width: 1100px; margin: 0 auto;
+            padding: 120px clamp(1.5rem,4vw,4rem) 40px;
+            display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px;
+        }
+        .footer-brand-col { display: flex; flex-direction: column; gap: 16px; }
+        .footer-logo-row { display: flex; align-items: center; gap: 10px; }
+        .footer-logo-mark {
+            width: 36px; height: 36px; border-radius: 10px;
+            background: var(--green); display: flex; align-items: center; justify-content: center;
+            color: #fff; font-family: var(--font-logo); font-weight: 800; font-size: 17px;
+            position: relative; flex-shrink: 0;
+        }
+        .footer-logo-mark::after {
+            content: ''; position: absolute; top: 7px; right: 7px;
+            width: 5px; height: 5px; border-radius: 100%; background: var(--lime);
+        }
+        .footer-wordmark {
+            font-family: var(--font-logo); letter-spacing: -0.025em; font-size: 20px; line-height: 1;
+        }
+        .footer-wordmark .eco { font-weight: 800; }
+        .footer-wordmark .aware { font-weight: 600; opacity: 0.78; }
+        .footer-brand-p {
+            font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.7;
+            font-weight: 300; max-width: 280px;
+        }
+        .footer-col h4 {
+            font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
+            color: var(--lime); margin-bottom: 16px; font-weight: 500;
+        }
+        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
+        .footer-col a {
+            font-size: 13px; color: rgba(255,255,255,0.7); text-decoration: none;
+            transition: color 200ms;
+        }
+        .footer-col a:hover { color: #fff; }
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.08);
+            padding: 20px clamp(1.5rem,6vw,6rem);
+            display: flex; justify-content: space-between;
+            font-size: 12px; color: rgba(255,255,255,0.5); flex-wrap: wrap; gap: 8px;
+        }
+
+        /* ── SCROLL REVEAL ────────────────────────────── */
+        .reveal, .reveal-left, .reveal-right {
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
+        }
+        .reveal.visible, .reveal-left.visible, .reveal-right.visible {
+            opacity: 1; transform: none;
+        }
+
+        /* ── PAGE TRANSITION ──────────────────────────── */
+        #page-transition {
+            position: fixed; inset: 0; z-index: 9998; background: var(--green);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 1; transition: opacity 550ms cubic-bezier(0.4,0,0.2,1);
+            pointer-events: none; will-change: opacity;
+        }
+        #transition-logo {
+            width: 4.5rem; height: 4.5rem; transform: scale(0.92);
+            transition: transform 650ms var(--ease-out); will-change: transform;
+        }
+        #page-transition.leaving #transition-logo { transform: scale(1.08); }
+
+        /* ── RESPONSIVE ───────────────────────────────── */
+        @media (max-width: 1024px) {
+            .hero-grid { grid-template-columns: 1fr; }
+            .hero-collage { display: none; }
+            .hero-copy { max-width: 700px; }
+        }
         @media (max-width: 860px) {
-            nav { padding: 1rem 1.25rem; }
-            .nav-toggle { display: flex; }
             .nav-links {
-                position: fixed; top: 0; right: 0;
-                width: min(320px, 85vw); height: 100vh; height: 100dvh;
-                background: var(--paper);
-                flex-direction: column; align-items: stretch; justify-content: flex-start;
-                padding: 5rem 2rem max(2rem, env(safe-area-inset-bottom));
-                gap: 0.4rem;
-                overflow-y: auto;
-                -webkit-overflow-scrolling: touch;
-                transform: translateX(100%);
-                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-                box-shadow: -8px 0 40px rgba(0,0,0,0.15);
-                z-index: 890;
+                position: fixed; top: 0; right: 0; width: min(320px,85vw); height: 100vh;
+                background: var(--paper); flex-direction: column; align-items: stretch;
+                justify-content: flex-start; padding: 5rem 2rem 2rem;
+                gap: 0; overflow-y: auto; transform: translateX(100%);
+                transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
+                box-shadow: -8px 0 40px rgba(0,0,0,0.15); z-index: 99;
+                border-radius: 0;
             }
             .nav-links.open { transform: translateX(0); }
-            .nav-links a { padding: 0.85rem 0; font-size: 1rem; opacity: 1; border-bottom: 1px solid rgba(0,0,0,0.06); }
-            .nav-links a.nav-cta { margin-top: 1rem; text-align: center; border-bottom: 0; padding: 0.8rem 1.4rem; }
-            body.ar .nav-links { right: auto; left: 0; transform: translateX(-100%); box-shadow: 8px 0 40px rgba(0,0,0,0.15); }
-            body.ar .nav-links.open { transform: translateX(0); }
+            .nav-links a {
+                padding: 0.85rem 0; font-size: 1rem; border-bottom: 1px solid rgba(0,0,0,0.06);
+                color: var(--ink); opacity: 1;
+            }
+            .nav-toggle { display: flex; }
+            .nav-backdrop { display: block; }
         }
-
         @media (max-width: 768px) {
-            .hero-stats { gap: 1.5rem; padding: 1.5rem 1.25rem; }
-            .hero-content { padding: 7rem 1.25rem 3rem; }
-            .hero-actions { width: 100%; }
-            .hero-actions .btn-primary, .hero-actions .btn-ghost { flex: 1; justify-content: center; }
-            body.ar #lang-toggle { left: 1rem; right: auto; }
-            #lang-toggle { bottom: max(1.25rem, env(safe-area-inset-bottom)); right: 1.25rem; padding: 0.55rem 1rem; font-size: 0.75rem; }
-            .problem-split { grid-template-columns: 1fr !important; gap: 2.5rem; }
-            .problem-photo { height: 380px !important; }
+            .section-header-grid { grid-template-columns: 1fr; gap: 24px; }
+            .problem-cards { grid-template-columns: 1fr; }
+            .problem-card + .problem-card { border-left: none; border-top: 1.5px solid rgba(0,0,0,0.08); }
+            .solution-cards { grid-template-columns: 1fr; }
+            .opp-card-grid { grid-template-columns: 1fr; }
+            .opp-featured { grid-template-columns: 1fr; }
+            .opp-featured-right { display: none; }
+            .hero-stats { grid-template-columns: repeat(2,1fr); gap: 16px; padding: 20px 0; }
+            .stat-item + .stat-item { border-left: none; padding-left: 0; }
+            .stat-item:nth-child(even) { border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; }
+            .footer-body { grid-template-columns: 1fr 1fr; }
+            .footer-brand-col { grid-column: 1/-1; }
         }
-
         @media (max-width: 560px) {
-            .footer-grid { grid-template-columns: 1fr 1fr !important; gap: 2rem 1.5rem !important; }
-            .footer-brand-block { grid-column: 1 / -1 !important; }
-            .footer-watermark { font-size: clamp(5rem, 28vw, 12rem) !important; }
-            .footer-bottom { flex-direction: column; gap: 1rem; align-items: flex-start !important; }
+            .partners-pill { border-radius: 20px; }
+            .opp-header-row { flex-direction: column; align-items: flex-start; }
+            .footer-body { grid-template-columns: 1fr; }
+            .footer-bottom { flex-direction: column; }
         }
     </style>
 </head>
@@ -802,280 +760,579 @@
 
 <!-- NAV -->
 <nav id="navbar">
-    <a href="index.html" class="nav-logo">
-        <span class="nav-logo-mark"><img src="assets/IMG.PNG" alt=""></span>
-        <span class="nav-logo-text"><span class="nlt-eco">Eco</span><span class="nlt-aware">Awareness</span></span>
+    <a href="index.html" class="nav-logo-link">
+        <img src="assets/logos/ecoawareness-logo.png" alt="EcoAwareness">
     </a>
     <div class="nav-links" id="nav-links">
-        <a href="signin.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
-        <a href="signin.html" data-en="Network" data-ar="الشبكة">Network</a>
-        <a href="certification.html" data-en="Certification" data-ar="الاعتماد">Certification</a>
+        <a href="index.html" class="active" data-en="Home" data-ar="الرئيسية">Home</a>
+        <a href="network.html" data-en="Network" data-ar="الشبكة">Network</a>
+        <a href="opportunities.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
         <a href="about.html" data-en="About" data-ar="من نحن">About</a>
-        <a href="signin.html" id="nav-signin" data-en="Sign In" data-ar="تسجيل الدخول">Sign In</a>
-        <a href="signin.html" class="nav-cta" id="nav-join" data-en="Join Free" data-ar="انضم مجانًا">Join Free</a>
+        <a href="faq.html" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a>
     </div>
+    <a href="signin.html" id="nav-signin" class="nav-cta">
+        <span data-en="Sign in" data-ar="تسجيل الدخول">Sign in</span>
+    </a>
     <button id="nav-toggle" class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
 </nav>
+<div class="nav-backdrop" id="nav-backdrop"></div>
 
-<!-- HERO -->
+<!-- ═══════════ HERO ═══════════ -->
 <section class="hero">
-    <div class="hero-bg"></div>
-    <div class="hero-watermark">بيئة</div>
-    <div class="hero-content">
-        <h1 class="hero-title reveal" style="transition-delay:0.1s">
-            <span data-en="Find real<br><em>environmental work</em><br>happening in Qatar." data-ar="اكتشف العمل<br><em>البيئي الحقيقي</em><br>في قطر.">Find real<br><em>environmental work</em><br>happening in Qatar.</span>
-        </h1>
-        <p class="hero-subtitle reveal" style="transition-delay:0.2s"
-           data-en="A place for students, clubs, NGOs, and local teams to find cleanups, mangrove days, workshops, and people who actually pick up the phone."
-           data-ar="مكان للطلاب والأندية والمنظمات والفرق المحلية للعثور على حملات تنظيف وزراعة مانغروف وورش عمل وأشخاص يمكن التواصل معهم فعلاً.">
-            A place for students, clubs, NGOs, and local teams to find cleanups, mangrove days, workshops, and people who actually pick up the phone.
-        </p>
-        <div class="hero-actions reveal" style="transition-delay:0.3s">
-            <a href="signin.html" class="btn-primary">
-                <span data-en="Find something to join" data-ar="ابحث عن فرصة للمشاركة">Find something to join</span>
-                <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
-            </a>
-            <a href="#problem" class="btn-ghost">
-                <span data-en="Why we made this" data-ar="لماذا أنشأناها">Why we made this</span>
-            </a>
-        </div>
-    </div>
-    <div class="hero-stats">
-        <div class="stat-item"><span class="stat-num">Doha</span><span class="stat-label" data-en="School clubs and campus teams" data-ar="أندية مدرسية وفرق جامعية">School clubs and campus teams</span></div>
-        <div class="stat-item"><span class="stat-num">Al Thakira</span><span class="stat-label" data-en="Mangrove volunteering" data-ar="تطوع في المانغروف">Mangrove volunteering</span></div>
-        <div class="stat-item"><span class="stat-num">Sealine</span><span class="stat-label" data-en="Cleanup season" data-ar="موسم حملات التنظيف">Cleanup season</span></div>
-        <div class="stat-item"><span class="stat-num">QNL</span><span class="stat-label" data-en="Talks and workshops" data-ar="محاضرات وورش عمل">Talks and workshops</span></div>
-    </div>
-</section>
+    <div class="hero-wash-tr"></div>
+    <div class="hero-wash-bl"></div>
+    <div class="hero-watermark" aria-hidden="true">بيئة</div>
 
-<!-- PROBLEM -->
-<section id="problem" class="problem-outer">
-    <div class="problem-section">
-        <div class="problem-split">
-            <!-- LEFT: text + cards -->
-            <div>
-                <div class="section-label reveal-left" data-en="The Problem" data-ar="المشكلة">The Problem</div>
-                <h2 class="problem-title reveal-left" style="transition-delay:0.12s">
-                    <span data-en="People want to help.<br><em>The info is scattered.</em>" data-ar="الناس يريدون المساعدة.<br><em>لكن المعلومات متفرقة.</em>">People want to help.<br><em>The info is scattered.</em></span>
-                </h2>
-                <div class="problem-grid reveal-left" style="transition-delay:0.26s">
-                    <div class="problem-card">
-                        <div class="problem-icon">🔍</div>
-                        <h3 data-en="Students keep asking around" data-ar="الطلاب يسألون كثيرًا">Students keep asking around</h3>
-                        <p data-en="Most opportunities live in WhatsApp groups, Instagram stories, or a poster someone saw too late."
-                           data-ar="كثير من الفرص تكون في مجموعات واتساب أو ستوري إنستغرام أو إعلان يراه الشخص بعد فوات الأوان.">Most opportunities live in WhatsApp groups, Instagram stories, or a poster someone saw too late.</p>
-                    </div>
-                    <div class="problem-card">
-                        <div class="problem-icon">🏢</div>
-                        <h3 data-en="Good groups don't always meet" data-ar="المجموعات الجيدة لا تلتقي دائمًا">Good groups don't always meet</h3>
-                        <p data-en="A school club, an NGO, and a small eco-business may be working on the same issue without knowing each other."
-                           data-ar="قد يعمل نادٍ مدرسي ومنظمة ومشروع بيئي صغير على نفس الموضوع دون أن يعرفوا بعضهم.">A school club, an NGO, and a small eco-business may be working on the same issue without knowing each other.</p>
-                    </div>
-                    <div class="problem-card">
-                        <div class="problem-icon">📊</div>
-                        <h3 data-en="Volunteer hours disappear" data-ar="ساعات التطوع تضيع">Volunteer hours disappear</h3>
-                        <p data-en="People show up, work hard, and leave with photos. The hours, skills, and follow-up often get lost."
-                           data-ar="يحضر المتطوعون ويعملون بجد ثم يغادرون بالصور فقط. غالبًا تضيع الساعات والمهارات والمتابعة.">People show up, work hard, and leave with photos. The hours, skills, and follow-up often get lost.</p>
-                    </div>
-                </div>
-            </div>
-            <!-- RIGHT: photo -->
-            <div class="problem-photo reveal-right" style="transition-delay:0.18s">
-                <img src="assets/DSC_3472.jpg" alt="Qatar youth presenting at climate event" loading="lazy" decoding="async">
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- SOLUTION -->
-<div class="solution-section" style="content-visibility:auto;contain-intrinsic-size:0 900px">
-    <div class="solution-inner">
-        <div class="section-label reveal" data-en="What We're Building" data-ar="ما نبنيه">What We're Building</div>
-        <h2 class="solution-title reveal" style="transition-delay:0.1s">
-            <span data-en="Less searching.<br><em>More showing up.</em>" data-ar="بحث أقل.<br><em>مشاركة أكثر.</em>">Less searching.<br><em>More showing up.</em></span>
-        </h2>
-        <div class="solution-pillars">
-            <div class="pillar-card reveal" data-bg="assets/DSC_1612.jpg" data-bg-pos="center top" style="transition-delay:0.1s;background-size:cover;background-position:center top">
-                <span class="pillar-number">01</span>
-                <div class="pillar-tag" data-en="People Directory" data-ar="دليل الأشخاص والجهات">People Directory</div>
-                <h3 data-en="Who's doing what" data-ar="من يعمل على ماذا">Who's doing what</h3>
-                <p data-en="Clubs, NGOs, student teams, and local projects in one place, with enough detail to know who to message and why."
-                   data-ar="الأندية والمنظمات والفرق الطلابية والمشاريع المحلية في مكان واحد، مع تفاصيل تساعدك على معرفة من تراسل ولماذا.">Clubs, NGOs, student teams, and local projects in one place, with enough detail to know who to message and why.</p>
-            </div>
-            <div class="pillar-card reveal" data-bg="assets/DSC_3462.jpg" data-bg-pos="center" style="transition-delay:0.2s;background-size:cover;background-position:center">
-                <span class="pillar-number">02</span>
-                <div class="pillar-tag" data-en="Opportunity Board" data-ar="لوحة الفرص">Opportunity Board</div>
-                <h3 data-en="Cleanups, talks, field days" data-ar="حملات تنظيف ولقاءات وأيام ميدانية">Cleanups, talks, field days</h3>
-                <p data-en="From Al Thakira mangroves to Education City workshops, opportunities should be easy to find before they pass."
-                   data-ar="من مانغروف الذخيرة إلى ورش المدينة التعليمية، يجب أن تكون الفرص سهلة الوصول قبل أن تفوت.">From Al Thakira mangroves to Education City workshops, opportunities should be easy to find before they pass.</p>
-            </div>
-            <div class="pillar-card reveal" data-bg="assets/DSC_0863.jpg" data-bg-pos="center" style="transition-delay:0.3s;background-size:cover;background-position:center">
-                <span class="pillar-number">03</span>
-                <div class="pillar-tag" data-en="Follow-through" data-ar="متابعة الأثر">Follow-through</div>
-                <h3 data-en="Keep the record" data-ar="احفظ السجل">Keep the record</h3>
-                <p data-en="Save events, collect hours, and remember what you worked on when a school, university, or partner asks."
-                   data-ar="احفظ الفعاليات واجمع الساعات وتذكر ما عملت عليه عندما تسأل المدرسة أو الجامعة أو الشريك.">Save events, collect hours, and remember what you worked on when a school, university, or partner asks.</p>
-            </div>
-        </div>
-    </div>
-</div>
-
-<!-- PARTNERS -->
-<div class="partners-section">
-    <div class="partners-inner">
-        <p class="partners-label reveal" data-en="Groups we keep seeing in the work" data-ar="جهات نراها كثيرًا في الميدان">Groups we keep seeing in the work</p>
-        <div class="partners-row reveal" style="transition-delay:0.1s">
-            <span class="partner-name">DEAP</span>
-            <span class="partner-name">AYCMQ</span>
-            <span class="partner-name">Enbat Holdings</span>
-            <span class="partner-name">MECC</span>
-            <span class="partner-name">EcoQatar</span>
-            <span class="partner-name">QNature</span>
-            <span class="partner-name">EarthYouth</span>
-        </div>
-    </div>
-</div>
-
-<!-- GATED OPPORTUNITIES -->
-<section class="opp-section">
-    <div class="opp-inner">
-        <div class="opp-header">
-            <div>
-                <div class="section-label reveal" data-en="Latest Opportunities" data-ar="أحدث الفرص">Latest Opportunities</div>
-                <h2 class="opp-title reveal" style="transition-delay:0.1s">
-                    <span data-en="The kind of work<br><em>people ask us about.</em>" data-ar="نوع الفرص<br><em>التي يسأل عنها الناس.</em>">The kind of work<br><em>people ask us about.</em></span>
-                </h2>
-            </div>
-        </div>
-        <div class="opp-grid reveal" style="transition-delay:0.2s">
-            <div class="opp-card-preview">
-                <span class="opp-tag tag-green" data-en="Conservation" data-ar="حفاظ على البيئة">Conservation</span>
-                <h4 data-en="Mangrove Restoration Drive" data-ar="حملة استعادة أشجار المانغروف">Mangrove Restoration Drive</h4>
-                <p data-en="A morning outside planting saplings, learning why mangroves matter, and leaving with muddy shoes."
-                   data-ar="صباح في الخارج لزراعة الشتلات وتعلم أهمية المانغروف والعودة بأحذية متسخة قليلاً.">A morning outside planting saplings, learning why mangroves matter, and leaving with muddy shoes.</p>
-                <div class="opp-meta"><span>📅 Oct 24 • 7:00 AM</span><span>📍 Al Thakira Mangroves</span></div>
-            </div>
-            <div class="opp-card-preview">
-                <span class="opp-tag tag-blue" data-en="Education" data-ar="تعليم">Education</span>
-                <h4 data-en="Circular Economy Workshop" data-ar="ورشة الاقتصاد الدائري">Circular Economy Workshop</h4>
-                <p data-en="A practical session on waste, reuse, and what circular economy looks like outside a slide deck."
-                   data-ar="جلسة عملية عن النفايات وإعادة الاستخدام وكيف يبدو الاقتصاد الدائري خارج العروض التقديمية.">A practical session on waste, reuse, and what circular economy looks like outside a slide deck.</p>
-                <div class="opp-meta"><span>📅 Nov 02 • 4:00 PM</span><span>📍 Qatar National Library</span></div>
-            </div>
-            <div class="opp-card-preview">
-                <span class="opp-tag tag-amber" data-en="Volunteering" data-ar="تطوع">Volunteering</span>
-                <h4 data-en="Desert Cleanup Campaign" data-ar="حملة تنظيف الصحراء">Desert Cleanup Campaign</h4>
-                <p data-en="Bring water, gloves, and a friend. The desert looks better when people clean up after the busy season."
-                   data-ar="أحضر ماء وقفازات وصديقًا. تبدو الصحراء أفضل عندما ننظفها بعد الموسم المزدحم.">Bring water, gloves, and a friend. The desert looks better when people clean up after the busy season.</p>
-                <div class="opp-meta"><span>📅 Nov 15 • 6:00 AM</span><span>📍 Sealine Beach Area</span></div>
-            </div>
-            <!-- Gate overlay -->
-            <div class="opp-gate">
-                <div class="gate-icon"><iconify-icon icon="solar:lock-keyhole-linear"></iconify-icon></div>
-                <h3 class="gate-title"><span data-en="See the next " data-ar="شاهد ">See the next </span><span class="gate-num" data-en="24" data-ar="٢٤">24</span> <span data-en="ways to help" data-ar="طريقة للمساعدة">ways to help</span></h3>
-                <p class="gate-sub" data-en="Make a profile, save events you care about, and keep your volunteer record in one place."
-                   data-ar="أنشئ ملفًا، واحفظ الفعاليات التي تهمك، واحتفظ بسجل تطوعك في مكان واحد.">Make a profile, save events you care about, and keep your volunteer record in one place.</p>
-                <div class="gate-benefits">
-                    <span class="gate-chip" data-en="Volunteer record" data-ar="سجل التطوع">Volunteer record</span>
-                    <span class="gate-chip" data-en="Eco ID" data-ar="بطاقة Eco ID">Eco ID</span>
-                    <span class="gate-chip" data-en="Qatar events" data-ar="فعاليات قطر">Qatar events</span>
-                </div>
-                <a href="signup.html" class="gate-btn">
-                    <span>
-                        <span data-en="Create free account" data-ar="أنشئ حسابًا مجانيًا">Create free account</span>
-                        <span class="gate-btn-note" data-en="Start with your email" data-ar="ابدأ ببريدك الإلكتروني">Start with your email</span>
-                    </span>
-                    <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+    <div class="hero-grid">
+        <!-- Left: copy -->
+        <div class="hero-copy">
+            <span class="eyebrow eyebrow-lime reveal" style="transition-delay:0.05s">
+                <span data-en="QATAR'S CLIMATE GENERATION" data-ar="جيل المناخ في قطر">QATAR'S CLIMATE GENERATION</span>
+            </span>
+            <h1 class="hero-title reveal" style="transition-delay:0.1s">
+                <span data-en="Where Qatar's <em>climate generation</em> takes action." data-ar="حيث <em>جيل المناخ</em> في قطر يتخذ إجراءات.">Where Qatar's <em>climate generation</em> takes action.</span>
+            </h1>
+            <p class="hero-sub reveal" style="transition-delay:0.18s"
+               data-en="One profile. Every opportunity. Verified hours. Real recognition. Built by students, for students — bilingual, free, forever."
+               data-ar="ملف واحد. كل فرصة. ساعات موثقة. اعتراف حقيقي. بناه الطلاب، للطلاب — ثنائي اللغة، مجاني، للأبد.">
+                One profile. Every opportunity. Verified hours. Real recognition.<br>
+                Built by students, for students — bilingual, free, forever.
+            </p>
+            <div class="hero-actions reveal" style="transition-delay:0.26s">
+                <a href="signup.html" id="nav-join" class="btn btn-lime">
+                    <span data-en="Join the Network" data-ar="انضم إلى الشبكة">Join the Network</span>
                 </a>
-                <p class="gate-signin">
-                    <span data-en="Already a member? " data-ar="لديك حساب؟ ">Already a member? </span><a href="signin.html" data-en="Sign in →" data-ar="سجّل الدخول →">Sign in →</a>
+                <a href="#problem" class="btn btn-ghost-dark">
+                    <span data-en="See how it works" data-ar="كيف يعمل">See how it works</span>
+                </a>
+            </div>
+        </div>
+
+        <!-- Right: photo collage -->
+        <div class="hero-collage" aria-hidden="true">
+            <!-- Decorative blocks -->
+            <div class="collage-lime-block"></div>
+            <div class="collage-outline"></div>
+
+            <!-- Main team photo -->
+            <div class="collage-main">
+                <img src="assets/ecoawareness.me%20group%20photo%20with%20mr%20Q.jpeg"
+                     alt="EcoAwareness team at Earthna Sustainability Week">
+                <div class="collage-main-veil"></div>
+                <div class="collage-main-caption">
+                    <span class="caption-label">— Earthna Sustainability Week '25</span>
+                    <span class="caption-title">The team, on the ground.</span>
+                </div>
+                <div class="collage-live-dot">
+                    <span class="live-dot-pulse"></span>
+                    <span class="live-dot-label">On site · Doha</span>
+                </div>
+            </div>
+
+            <!-- Polaroid: Firas -->
+            <div class="collage-polaroid">
+                <div class="polaroid-photo">
+                    <img src="assets/Firas.jpeg" alt="Firas, co-founder">
+                </div>
+                <div class="polaroid-caption">Firas · co-founder</div>
+            </div>
+
+            <!-- Floating verified chip -->
+            <div class="collage-chip">
+                <div class="chip-icon-box">
+                    <iconify-icon icon="ph:seal-check-fill" width="20"></iconify-icon>
+                </div>
+                <div class="chip-text">
+                    <span class="chip-hours">+4h verified</span>
+                    <span class="chip-loc">Mangrove · Al Thakira</span>
+                </div>
+            </div>
+        </div>
+    </div><!-- /hero-grid -->
+
+    <!-- Stat strip -->
+    <div class="hero-stats">
+        <div class="stat-item">
+            <div class="stat-num">2,500+</div>
+            <div class="stat-label" data-en="Active members" data-ar="أعضاء نشطون">Active members</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">60+</div>
+            <div class="stat-label" data-en="Partner orgs" data-ar="منظمات شريكة">Partner orgs</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">15k</div>
+            <div class="stat-label" data-en="Verified hours" data-ar="ساعات موثقة">Verified hours</div>
+        </div>
+        <div class="stat-item">
+            <div class="stat-num">50+</div>
+            <div class="stat-label" data-en="Initiatives" data-ar="مبادرات">Initiatives</div>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════ PARTNERS ═══════════ -->
+<section class="partners-section">
+    <div class="partners-inner">
+        <span class="eyebrow eyebrow-rust reveal"
+              data-en="TRUSTED BY 60+ ORGANISATIONS" data-ar="موثوق به من 60+ منظمة">
+            TRUSTED BY 60+ ORGANISATIONS
+        </span>
+        <div class="partners-pill reveal" style="transition-delay:0.1s">
+            <img src="assets/logos/cmuq.png" alt="CMU-Q" class="partner-logo">
+            <img src="assets/logos/earthna.png" alt="Earthna" class="partner-logo">
+            <img src="assets/logos/qkons.png" alt="QKONs" class="partner-logo">
+            <span class="partner-name-text">DEAP</span>
+            <span class="partner-name-text">AYCMQ</span>
+            <span class="partner-name-text">MECC</span>
+            <span class="partner-name-text">GU‑Q</span>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════ PROBLEM ═══════════ -->
+<section id="problem" class="problem-section">
+    <div class="problem-inner">
+        <div class="section-header-grid">
+            <div>
+                <span class="eyebrow eyebrow-rust reveal"
+                      data-en="THE PROBLEM" data-ar="المشكلة">THE PROBLEM</span>
+                <h2 class="section-h2 reveal" style="transition-delay:0.1s">
+                    <span data-en="Climate action in Qatar is <em>fragmented.</em>"
+                          data-ar="العمل المناخي في قطر <em>مجزأ.</em>">
+                        Climate action in Qatar is <em>fragmented.</em>
+                    </span>
+                </h2>
+            </div>
+            <p class="section-body reveal" style="transition-delay:0.15s"
+               data-en="Students who want to help can't find work. Organisations who need help can't find students. And the few hours that do happen disappear into spreadsheets."
+               data-ar="الطلاب الراغبون في المساعدة لا يجدون العمل. والمنظمات التي تحتاج إلى مساعدة لا تجد الطلاب. والساعات القليلة التي تحدث تختفي في جداول البيانات.">
+                Students who want to help can't find work. Organisations who need help can't
+                find students. And the few hours that do happen disappear into spreadsheets.
+            </p>
+        </div>
+        <div class="problem-cards reveal" style="transition-delay:0.2s">
+            <div class="problem-card">
+                <div class="problem-card-icon">🔍</div>
+                <h3 data-en="Opportunities are scattered." data-ar="الفرص متفرقة.">Opportunities are scattered.</h3>
+                <p data-en="Climate work in Qatar lives in DMs, posters, and word-of-mouth — most of it is invisible to students who could help."
+                   data-ar="العمل المناخي في قطر يعيش في الرسائل والملصقات والكلام الشفهي — معظمه غير مرئي للطلاب الذين يمكنهم المساعدة.">
+                    Climate work in Qatar lives in DMs, posters, and word-of-mouth — most of it is invisible to students who could help.
+                </p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-card-icon">🏢</div>
+                <h3 data-en="Organisations work alone." data-ar="المنظمات تعمل منفردة.">Organisations work alone.</h3>
+                <p data-en="Schools, universities, and NGOs run parallel initiatives without sharing volunteers, data, or impact."
+                   data-ar="تدير المدارس والجامعات والمنظمات غير الحكومية مبادرات موازية دون تبادل المتطوعين أو البيانات أو الأثر.">
+                    Schools, universities, and NGOs run parallel initiatives without sharing volunteers, data, or impact.
+                </p>
+            </div>
+            <div class="problem-card">
+                <div class="problem-card-icon">📊</div>
+                <h3 data-en="Volunteer hours don't count." data-ar="ساعات التطوع لا تُحسب.">Volunteer hours don't count.</h3>
+                <p data-en="No verification means real work goes unrecognised — for university applications, awards, or anything else."
+                   data-ar="غياب التحقق يعني أن العمل الحقيقي يمر دون اعتراف — للجامعات أو الجوائز أو أي شيء آخر.">
+                    No verification means real work goes unrecognised — for university applications, awards, or anything else.
                 </p>
             </div>
         </div>
     </div>
 </section>
 
-<!-- CTA -->
-<section class="cta-section">
-    <div class="cta-watermark">اعمل من أجل المناخ</div>
-    <div class="cta-inner">
-        <h2 class="reveal">
-            <span data-en="Want to help<br><em>without guessing where?</em>" data-ar="تريد المساعدة<br><em>دون أن تحتار أين؟</em>">Want to help<br><em>without guessing where?</em></span>
-        </h2>
-        <p class="reveal" style="transition-delay:0.1s"
-           data-en="Start with one event, one club, or one message. The point is to make the first step easier."
-           data-ar="ابدأ بفعالية واحدة أو نادٍ واحد أو رسالة واحدة. الفكرة أن تصبح الخطوة الأولى أسهل.">
-            Start with one event, one club, or one message. The point is to make the first step easier.
-        </p>
-        <div class="cta-btns reveal" style="transition-delay:0.2s">
-            <a href="signin.html" class="btn-primary" data-en="Find an event" data-ar="ابحث عن فعالية">Find an event</a>
-            <a href="signin.html" class="btn-ghost" data-en="Browse groups" data-ar="تصفح الجهات">Browse groups</a>
+<!-- ═══════════ SOLUTION ═══════════ -->
+<section class="solution-section">
+    <div class="solution-wash"></div>
+    <div class="solution-inner">
+        <div class="section-header-grid">
+            <div>
+                <span class="eyebrow eyebrow-lime reveal"
+                      data-en="THE SOLUTION" data-ar="الحل">THE SOLUTION</span>
+                <h2 class="section-h2 on-dark reveal" style="transition-delay:0.1s">
+                    <span data-en="One hub. <em>Every opportunity.</em>"
+                          data-ar="منصة واحدة. <em>كل فرصة.</em>">
+                        One hub. <em>Every opportunity.</em>
+                    </span>
+                </h2>
+            </div>
+            <p class="section-body on-dark reveal" style="transition-delay:0.15s"
+               data-en="EcoAwareness centralises every verified climate opportunity in Qatar, signs off your hours, and gives you a portable identity that grows with your work."
+               data-ar="تجمع EcoAwareness كل فرصة مناخية موثقة في قطر وتصادق على ساعاتك وتمنحك هوية محمولة تنمو مع عملك.">
+                EcoAwareness centralises every verified climate opportunity in Qatar, signs off your hours,
+                and gives you a portable identity that grows with your work.
+            </p>
+        </div>
+        <div class="solution-cards">
+            <div class="solution-card reveal" style="transition-delay:0.1s">
+                <div class="solution-card-num">01</div>
+                <h3 data-en="One verified hub." data-ar="منصة موثقة واحدة.">One verified hub.</h3>
+                <p data-en="Every climate opportunity in Qatar — events, internships, grants, research — in one filterable directory."
+                   data-ar="كل فرصة مناخية في قطر — فعاليات وتدريب ومنح وأبحاث — في دليل واحد قابل للتصفية.">
+                    Every climate opportunity in Qatar — events, internships, grants, research — in one filterable directory.
+                </p>
+            </div>
+            <div class="solution-card reveal" style="transition-delay:0.2s">
+                <div class="solution-card-num">02</div>
+                <h3 data-en="Earn recognition." data-ar="اكسب الاعتراف.">Earn recognition.</h3>
+                <p data-en="Hours are signed off by partner organisations and stored on your Eco ID. Export to apps, transcripts, anywhere."
+                   data-ar="تتم الموافقة على الساعات من قبل المنظمات الشريكة وتُخزن في Eco ID الخاص بك. صدّرها إلى التطبيقات والسجلات في أي مكان.">
+                    Hours are signed off by partner organisations and stored on your Eco ID. Export to apps, transcripts, anywhere.
+                </p>
+            </div>
+            <div class="solution-card reveal" style="transition-delay:0.3s">
+                <div class="solution-card-num">03</div>
+                <h3 data-en="Bilingual by default." data-ar="ثنائي اللغة بشكل افتراضي.">Bilingual by default.</h3>
+                <p data-en="Full English / Arabic parity, RTL-aware. Built for Qatar's actual student population."
+                   data-ar="تكافؤ كامل بين الإنجليزية والعربية مع دعم RTL. مصمم لطلاب قطر الفعليين.">
+                    Full English / Arabic parity, RTL-aware. Built for Qatar's actual student population.
+                </p>
+            </div>
         </div>
     </div>
 </section>
 
-<!-- FOOTER -->
-<footer>
-    <div class="footer-curve" aria-hidden="true"><svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,90 C360,-10 1080,-10 1440,90 L1440,90 L0,90 Z" fill="var(--paper)"/></svg></div>
-    <div class="footer-meta">
-        <div class="meta-addr" data-en="Education City, Doha, Qatar" data-ar="المدينة التعليمية، الدوحة، قطر">Education City, Doha, Qatar</div>
-        <div data-en="© 2026 EcoAwareness. All rights reserved." data-ar="© 2026 الوعي البيئي. جميع الحقوق محفوظة.">© 2026 EcoAwareness. All rights reserved.</div>
+<!-- ═══════════ OPPORTUNITIES ═══════════ -->
+<section class="opp-section">
+    <div class="opp-inner">
+        <div class="opp-header-row">
+            <div>
+                <span class="eyebrow eyebrow-rust reveal"
+                      data-en="LATEST OPPORTUNITIES" data-ar="أحدث الفرص">LATEST OPPORTUNITIES</span>
+                <h2 class="opp-h2 reveal" style="transition-delay:0.1s">
+                    <span data-en="Real action, <em>waiting for you.</em>"
+                          data-ar="عمل حقيقي، <em>ينتظرك.</em>">
+                        Real action, <em>waiting for you.</em>
+                    </span>
+                </h2>
+            </div>
+            <div class="filter-pills" id="filter-pills">
+                <button class="filter-pill active" data-filter="all" data-en="All" data-ar="الكل">All</button>
+                <button class="filter-pill" data-filter="cleanup" data-en="Cleanup" data-ar="تنظيف">Cleanup</button>
+                <button class="filter-pill" data-filter="research" data-en="Research" data-ar="بحث">Research</button>
+                <button class="filter-pill" data-filter="education" data-en="Education" data-ar="تعليم">Education</button>
+                <button class="filter-pill" data-filter="funding" data-en="Funding" data-ar="تمويل">Funding</button>
+            </div>
+        </div>
+
+        <!-- Featured banner (visible when filter = all) -->
+        <div class="opp-featured reveal" id="opp-featured">
+            <div class="opp-featured-left">
+                <div class="featured-badge">
+                    <span class="featured-badge-dot"></span>
+                    <span class="featured-badge-label"
+                          data-en="THIS WEEK · ON THE GROUND" data-ar="هذا الأسبوع · على أرض الواقع">THIS WEEK · ON THE GROUND</span>
+                </div>
+                <h3 class="featured-h3">
+                    <span data-en="Spotted at <em>Earthna Sustainability Week</em> — the climate generation, mid-mission."
+                          data-ar="رُصد في <em>أسبوع الاستدامة أرضنا</em> — جيل المناخ في منتصف المهمة.">
+                        Spotted at <em>Earthna Sustainability Week</em> — the climate generation, mid-mission.
+                    </span>
+                </h3>
+                <div class="featured-stats">
+                    <div>
+                        <div class="featured-stat-num">3</div>
+                        <div class="featured-stat-label" data-en="Active missions" data-ar="مهام نشطة">Active missions</div>
+                    </div>
+                    <div class="featured-divider"></div>
+                    <div>
+                        <div class="featured-stat-num">42h</div>
+                        <div class="featured-stat-label" data-en="Logged this week" data-ar="مسجلة هذا الأسبوع">Logged this week</div>
+                    </div>
+                    <div class="featured-divider"></div>
+                    <div>
+                        <div class="featured-stat-num">5</div>
+                        <div class="featured-stat-label" data-en="Partner orgs" data-ar="منظمات شريكة">Partner orgs</div>
+                    </div>
+                </div>
+            </div>
+            <div class="opp-featured-right">
+                <img src="assets/ecoawareness.me%20group%20photo%20with%20mr%20Q.jpeg" alt="EcoAwareness team at Earthna Sustainability Week">
+                <div class="opp-featured-right-veil"></div>
+                <div class="featured-location-tag">MSHEIREB · DOWNTOWN DOHA</div>
+            </div>
+        </div>
+
+        <!-- Cards grid -->
+        <div class="opp-grid-wrap">
+            <div class="opp-card-grid" id="opp-card-grid">
+
+                <!-- Card 1: Mangrove — photo cover, cleanup -->
+                <div class="opp-card" data-cat="cleanup">
+                    <div class="card-cover">
+                        <img src="assets/ecoawareness.me%20group%20photo%20with%20mr%20Q.jpeg" alt="Mangrove planting" style="object-position:50% 60%">
+                        <div class="card-cover-veil" style="background:linear-gradient(180deg,rgba(11,46,29,0) 50%,rgba(11,46,29,0.85))"></div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-tag-row">
+                            <span class="card-tag-label">— EVENT</span>
+                            <span class="card-pill pill-lime"><span class="card-pill-dot"></span>Verified</span>
+                        </div>
+                        <h3 class="card-h3">Mangrove planting at Al Thakira</h3>
+                        <div class="card-org">Earthna</div>
+                        <div class="card-meta">
+                            <span>📅 Nov 12</span>
+                            <span>📍 Al Khor</span>
+                            <span class="card-hours">4h</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 2: Climate policy intern — art cover, research -->
+                <div class="opp-card" data-cat="research">
+                    <div class="card-cover">
+                        <div class="card-cover-art" style="background:var(--ink)">
+                            <svg viewBox="0 0 300 150" preserveAspectRatio="none" style="opacity:0.16">
+                                <defs><pattern id="g1" width="18" height="18" patternUnits="userSpaceOnUse">
+                                    <path d="M0 18 L18 18 M18 0 L18 18" stroke="var(--lime)" stroke-width="0.8" fill="none"/>
+                                </pattern></defs>
+                                <rect width="300" height="150" fill="url(#g1)"/>
+                            </svg>
+                            <iconify-icon icon="ph:flask-fill" width="64" style="color:var(--lime)"></iconify-icon>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-tag-row">
+                            <span class="card-tag-label">— INTERNSHIP</span>
+                            <span class="card-pill pill-default"><span class="card-pill-dot"></span>Open</span>
+                        </div>
+                        <h3 class="card-h3">Climate policy intern, summer 2026</h3>
+                        <div class="card-org">CMU‑Q</div>
+                        <div class="card-meta">
+                            <span>📅 Apr 30</span>
+                            <span>📍 Education City</span>
+                            <span class="card-hours">120h</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 3: Youth Climate micro-grant — art cover, funding -->
+                <div class="opp-card" data-cat="funding">
+                    <div class="card-cover">
+                        <div class="card-cover-art" style="background:var(--lime)">
+                            <svg viewBox="0 0 300 150" preserveAspectRatio="none" style="opacity:0.55">
+                                <circle cx="-10" cy="170" r="28" fill="none" stroke="var(--green-dark)" stroke-width="1.2" opacity="0.47"/>
+                                <circle cx="-10" cy="170" r="56" fill="none" stroke="var(--green-dark)" stroke-width="1.2" opacity="0.39"/>
+                                <circle cx="-10" cy="170" r="88" fill="none" stroke="var(--green-dark)" stroke-width="1.2" opacity="0.31"/>
+                                <circle cx="-10" cy="170" r="122" fill="none" stroke="var(--green-dark)" stroke-width="1.2" opacity="0.23"/>
+                                <circle cx="-10" cy="170" r="158" fill="none" stroke="var(--green-dark)" stroke-width="1.2" opacity="0.15"/>
+                            </svg>
+                            <iconify-icon icon="ph:coin-vertical-fill" width="64" style="color:var(--green-dark)"></iconify-icon>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-tag-row">
+                            <span class="card-tag-label">— GRANT</span>
+                            <span class="card-pill pill-default"><span class="card-pill-dot"></span>Open</span>
+                        </div>
+                        <h3 class="card-h3">Youth Climate Action micro-grant</h3>
+                        <div class="card-org">QKONs</div>
+                        <div class="card-meta">
+                            <span>📅 Rolling</span>
+                            <span>📍 Remote</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 4 (locked): EC cleanup — art cover, cleanup -->
+                <div class="opp-card" data-cat="cleanup">
+                    <div class="card-cover">
+                        <div class="card-cover-art" style="background:var(--green)">
+                            <svg viewBox="0 0 300 150" preserveAspectRatio="none" style="opacity:0.35">
+                                <path d="M0 20 Q 75 8 150 20 T 300 20" fill="none" stroke="var(--lime)" stroke-width="1"/>
+                                <path d="M0 40 Q 75 28 150 40 T 300 40" fill="none" stroke="var(--lime)" stroke-width="1"/>
+                                <path d="M0 60 Q 75 48 150 60 T 300 60" fill="none" stroke="var(--lime)" stroke-width="1"/>
+                                <path d="M0 80 Q 75 68 150 80 T 300 80" fill="none" stroke="var(--lime)" stroke-width="1"/>
+                                <path d="M0 100 Q 75 88 150 100 T 300 100" fill="none" stroke="var(--lime)" stroke-width="1"/>
+                                <path d="M0 120 Q 75 108 150 120 T 300 120" fill="none" stroke="var(--lime)" stroke-width="1"/>
+                            </svg>
+                            <iconify-icon icon="ph:leaf-fill" width="64" style="color:var(--lime)"></iconify-icon>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-tag-row">
+                            <span class="card-tag-label">— EVENT</span>
+                            <span class="card-pill pill-lime"><span class="card-pill-dot"></span>Verified</span>
+                        </div>
+                        <h3 class="card-h3">Education City cleanup walk</h3>
+                        <div class="card-org">EcoAwareness</div>
+                        <div class="card-meta">
+                            <span>📅 Dec 02</span>
+                            <span>📍 EC</span>
+                            <span class="card-hours">3h</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 5 (locked): Carbon literacy — art cover, education -->
+                <div class="opp-card" data-cat="education">
+                    <div class="card-cover">
+                        <div class="card-cover-art" style="background:var(--rust)">
+                            <svg viewBox="0 0 300 150" preserveAspectRatio="none" style="opacity:0.22">
+                                <defs><pattern id="d1" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
+                                    <line x1="0" y1="0" x2="0" y2="16" stroke="#FFE9D9" stroke-width="1.4"/>
+                                </pattern></defs>
+                                <rect width="300" height="150" fill="url(#d1)"/>
+                            </svg>
+                            <iconify-icon icon="ph:chalkboard-teacher-fill" width="64" style="color:#FFE9D9"></iconify-icon>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-tag-row">
+                            <span class="card-tag-label">— WORKSHOP</span>
+                            <span class="card-pill pill-default"><span class="card-pill-dot"></span>Open</span>
+                        </div>
+                        <h3 class="card-h3">Carbon literacy for high schoolers</h3>
+                        <div class="card-org">AYCMQ</div>
+                        <div class="card-meta">
+                            <span>📅 Jan 18</span>
+                            <span>📍 Hybrid</span>
+                            <span class="card-hours">6h</span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Card 6 (locked): Dawn cleanup — art cover, cleanup -->
+                <div class="opp-card" data-cat="cleanup">
+                    <div class="card-cover">
+                        <div class="card-cover-art" style="background:var(--green-dark)">
+                            <svg viewBox="0 0 300 150" preserveAspectRatio="none">
+                                <defs>
+                                    <radialGradient id="sg" cx="20%" cy="120%" r="80%">
+                                        <stop offset="0%" stop-color="var(--lime)" stop-opacity="0.55"/>
+                                        <stop offset="60%" stop-color="var(--lime)" stop-opacity="0"/>
+                                    </radialGradient>
+                                </defs>
+                                <rect width="300" height="150" fill="url(#sg)"/>
+                                <line x1="0" y1="40" x2="300" y2="40" stroke="var(--lime)" stroke-width="0.6" opacity="0.18"/>
+                                <line x1="0" y1="70" x2="300" y2="70" stroke="var(--lime)" stroke-width="0.6" opacity="0.18"/>
+                                <line x1="0" y1="100" x2="300" y2="100" stroke="var(--lime)" stroke-width="0.6" opacity="0.18"/>
+                                <line x1="0" y1="130" x2="300" y2="130" stroke="var(--lime)" stroke-width="0.6" opacity="0.18"/>
+                            </svg>
+                            <iconify-icon icon="ph:sun-horizon-fill" width="64" style="color:var(--lime)"></iconify-icon>
+                        </div>
+                    </div>
+                    <div class="card-body">
+                        <div class="card-tag-row">
+                            <span class="card-tag-label">— EVENT</span>
+                            <span class="card-pill pill-green"><span class="card-pill-dot"></span>Featured</span>
+                        </div>
+                        <h3 class="card-h3">Doha Corniche dawn cleanup</h3>
+                        <div class="card-org">DEAP</div>
+                        <div class="card-meta">
+                            <span>📅 Jan 25</span>
+                            <span>📍 Corniche</span>
+                            <span class="card-hours">5h</span>
+                        </div>
+                    </div>
+                </div>
+
+            </div><!-- /opp-card-grid -->
+
+            <!-- Lock overlay -->
+            <div class="opp-lock-overlay" id="opp-lock-overlay"></div>
+            <div class="opp-lock-cta" id="opp-lock-cta">
+                <p class="opp-lock-text"
+                   data-en="Join EcoAwareness to apply, save events, and track verified impact hours."
+                   data-ar="انضم إلى EcoAwareness للتقديم وحفظ الفعاليات وتتبع ساعات الأثر الموثقة.">
+                    Join EcoAwareness to apply, save events, and track verified impact hours.
+                </p>
+                <a href="signup.html" class="btn btn-primary">
+                    🔒 <span data-en="Unlock 3 more opportunities" data-ar="افتح 3 فرص إضافية">Unlock 3 more opportunities</span>
+                </a>
+            </div>
+        </div><!-- /opp-grid-wrap -->
+
     </div>
-    <div class="footer-grid">
-        <div class="footer-brand-block">
-            <a href="index.html" class="footer-logo" data-en="EcoAwareness" data-ar="EcoAwareness">EcoAwareness</a>
-            <p class="footer-tagline" data-en="A practical home for Qatar's environmental events, groups, and volunteer records."
-               data-ar="مساحة عملية لفعاليات قطر البيئية والجهات وسجلات التطوع.">
-                A practical home for Qatar's environmental events, groups, and volunteer records.
+</section>
+
+<!-- ═══════════ FOOTER CTA ═══════════ -->
+<section class="footer-cta">
+    <div class="footer-cta-wash"></div>
+    <div class="footer-cta-inner">
+        <h2 class="reveal">
+            <span data-en="Built by youth, <em>for the planet.</em>"
+                  data-ar="بُني من قبل الشباب، <em>من أجل الكوكب.</em>">
+                Built by youth, <em>for the planet.</em>
+            </span>
+        </h2>
+        <p class="reveal" style="transition-delay:0.1s"
+           data-en="Join 2,500+ students already turning intention into impact."
+           data-ar="انضم إلى 2,500+ طالب يحولون النوايا إلى أثر.">
+            Join 2,500+ students already turning intention into impact.
+        </p>
+        <div class="footer-cta-btns reveal" style="transition-delay:0.2s">
+            <a href="signup.html" class="btn btn-lime">
+                <span data-en="Get started →" data-ar="ابدأ الآن →">Get started →</span>
+            </a>
+            <a href="mailto:hello@ecoawareness.qa" class="btn btn-ghost-dark">
+                <span data-en="Email us" data-ar="راسلنا">Email us</span>
+            </a>
+        </div>
+    </div>
+</section>
+
+<!-- ═══════════ FOOTER ═══════════ -->
+<footer>
+    <!-- SVG scoop curve -->
+    <svg class="footer-scoop" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+        <path d="M0,80 C480,0 960,0 1440,80 L1440,0 L0,0 Z" fill="var(--green)"/>
+    </svg>
+
+    <div class="footer-body">
+        <div class="footer-brand-col">
+            <div class="footer-logo-row">
+                <div class="footer-logo-mark">E</div>
+                <span class="footer-wordmark"><span class="eco">Eco</span><span class="aware">Awareness</span></span>
+            </div>
+            <p class="footer-brand-p"
+               data-en="Qatar's youth-led climate action platform. Built by students, for the planet. 🌱"
+               data-ar="منصة العمل المناخي بقيادة الشباب في قطر. بناها الطلاب من أجل الكوكب. 🌱">
+                Qatar's youth-led climate action platform. Built by students, for the planet. 🌱
             </p>
         </div>
         <div class="footer-col">
             <h4 data-en="Platform" data-ar="المنصة">Platform</h4>
             <ul>
+                <li><a href="network.html" data-en="Network" data-ar="الشبكة">Network</a></li>
+                <li><a href="opportunities.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a></li>
+                <li><a href="resources.html" data-en="Resources" data-ar="الموارد">Resources</a></li>
                 <li><a href="dashboard.html" data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</a></li>
-                <li><a href="signin.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a></li>
-                <li><a href="signin.html" data-en="Network" data-ar="الشبكة">Network</a></li>
-                <li><a href="signin.html" data-en="Resources" data-ar="الموارد">Resources</a></li>
             </ul>
         </div>
         <div class="footer-col">
-            <h4 data-en="Features" data-ar="الميزات">Features</h4>
+            <h4 data-en="About" data-ar="من نحن">About</h4>
             <ul>
-                <li><a href="dashboard.html" data-en="My Impact" data-ar="أثري">My Impact</a></li>
-                <li><a href="dashboard.html" data-en="Eco ID" data-ar="الهوية البيئية">Eco ID</a></li>
-                <li><a href="dashboard.html" data-en="My Events" data-ar="فعالياتي">My Events</a></li>
-
-            </ul>
-        </div>
-        <div class="footer-col">
-            <h4 data-en="Company" data-ar="الشركة">Company</h4>
-            <ul>
-                <li><a href="about.html" data-en="About Us" data-ar="من نحن">About Us</a></li>
+                <li><a href="about.html" data-en="Our story" data-ar="قصتنا">Our story</a></li>
+                <li><a href="about.html" data-en="Team" data-ar="الفريق">Team</a></li>
+                <li><a href="about.html" data-en="Partners" data-ar="الشركاء">Partners</a></li>
                 <li><a href="faq.html" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a></li>
-                <li><a href="privacy.html" data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</a></li>
-                <li><a href="terms.html" data-en="Terms of Use" data-ar="شروط الاستخدام">Terms of Use</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 data-en="Legal" data-ar="قانوني">Legal</h4>
+            <ul>
+                <li><a href="privacy.html" data-en="Privacy" data-ar="الخصوصية">Privacy</a></li>
+                <li><a href="terms.html" data-en="Terms" data-ar="الشروط">Terms</a></li>
                 <li><a href="mailto:hello@ecoawareness.qa" data-en="Contact" data-ar="اتصل بنا">Contact</a></li>
             </ul>
         </div>
     </div>
-    <div class="footer-watermark" aria-hidden="true">EcoAwareness</div>
+
     <div class="footer-bottom">
-        <div data-en="Built by young people in Qatar, for people ready to show up." data-ar="بناه شباب في قطر لمن يريدون المشاركة فعلاً.">Built by young people in Qatar, for people ready to show up.</div>
-        <div class="footer-socials">
-            <a href="#" aria-label="Instagram"><iconify-icon icon="solar:instagram-linear" width="16"></iconify-icon></a>
-            <a href="#" aria-label="LinkedIn"><iconify-icon icon="solar:link-circle-linear" width="16"></iconify-icon></a>
-            <a href="mailto:hello@ecoawareness.qa" aria-label="Email"><iconify-icon icon="solar:letter-linear" width="16"></iconify-icon></a>
-        </div>
+        <span data-en="© 2026 EcoAwareness · Doha, Qatar" data-ar="© 2026 الوعي البيئي · الدوحة، قطر">
+            © 2026 EcoAwareness · Doha, Qatar
+        </span>
+        <span>EN · العربية</span>
     </div>
 </footer>
 
-<!-- Page transition -->
+<!-- Page transition overlay -->
 <div id="page-transition">
     <img id="transition-logo" src="assets/IMG.PNG" alt="EcoAwareness Logo">
 </div>
 
 <script>
-// ── LENIS SMOOTH SCROLL ──────────────────────────────────
+// ── LENIS SMOOTH SCROLL ──────────────────────────
 let lenis = new Lenis({
     duration: 1.3,
     easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
@@ -1085,12 +1342,12 @@ let lenis = new Lenis({
 function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
 requestAnimationFrame(raf);
 
-// ── NAV SCROLL ───────────────────────────────────────────
+// ── NAV SCROLL STATE ─────────────────────────────
 window.addEventListener('scroll', () => {
     document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 40);
 });
 
-// ── SCROLL REVEAL ────────────────────────────────────────
+// ── SCROLL REVEAL ────────────────────────────────
 const revealObserver = new IntersectionObserver(entries => {
     entries.forEach(entry => {
         if (entry.isIntersecting) {
@@ -1101,35 +1358,54 @@ const revealObserver = new IntersectionObserver(entries => {
 }, { threshold: 0.1 });
 document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
 
-// ── LAZY BACKGROUND IMAGES ──────────────────────────────────
-// Only fetch heavy DSC photos when their card is about to enter viewport
-const bgObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            const el = entry.target;
-            const url = el.dataset.bg;
-            const pos = el.dataset.bgPos || 'center';
-            if (url) {
-                el.style.backgroundImage = `linear-gradient(rgba(0,0,0,0.62),rgba(0,0,0,0.62)),url('${url}')`;
-                el.style.backgroundPosition = pos;
-            }
-            bgObserver.unobserve(el);
-        }
-    });
-}, { rootMargin: '200px' }); // start loading 200px before entering view
-document.querySelectorAll('[data-bg]').forEach(el => bgObserver.observe(el));
-
-// Hero reveals on page load
-document.querySelectorAll('.hero-content .reveal').forEach((el, i) => {
-    setTimeout(() => el.classList.add('visible'), i * 130 + 200);
+// Hero elements reveal immediately on load
+document.querySelectorAll('.hero-copy .reveal').forEach((el, i) => {
+    setTimeout(() => el.classList.add('visible'), i * 120 + 200);
 });
 
-// ── LANGUAGE TOGGLE ──────────────────────────────────────
+// ── OPPORTUNITIES FILTER ─────────────────────────
+(function() {
+    const pills    = document.querySelectorAll('.filter-pill');
+    const cards    = document.querySelectorAll('#opp-card-grid .opp-card');
+    const banner   = document.getElementById('opp-featured');
+    const lockOver = document.getElementById('opp-lock-overlay');
+    const lockCta  = document.getElementById('opp-lock-cta');
+
+    function applyFilter(filter) {
+        // Toggle featured banner
+        if (banner) banner.style.display = filter === 'all' ? 'grid' : 'none';
+
+        // Show/hide cards
+        let visCount = 0;
+        cards.forEach(card => {
+            const match = filter === 'all' || card.dataset.cat === filter;
+            card.style.display = match ? 'flex' : 'none';
+            if (match) visCount++;
+        });
+
+        // Lock overlay: always show for guests
+        const locked = true; // becomes false after auth check below
+        if (lockOver) lockOver.style.display = locked ? 'block' : 'none';
+        if (lockCta)  lockCta.style.display  = locked ? 'block' : 'none';
+    }
+
+    pills.forEach(pill => {
+        pill.addEventListener('click', () => {
+            pills.forEach(p => p.classList.remove('active'));
+            pill.classList.add('active');
+            applyFilter(pill.dataset.filter);
+        });
+    });
+
+    applyFilter('all');
+})();
+
+// ── LANGUAGE TOGGLE ──────────────────────────────
 let isArabic = false;
 
 function applyLanguage() {
-    const body = document.body;
-    const html = document.documentElement;
+    const body  = document.body;
+    const html  = document.documentElement;
     const label = document.getElementById('lang-label');
 
     if (isArabic) {
@@ -1144,13 +1420,11 @@ function applyLanguage() {
         label.textContent = 'عربي';
     }
 
-    // Swap all [data-en]/[data-ar] text
     document.querySelectorAll('[data-en]').forEach(el => {
         const val = isArabic ? el.getAttribute('data-ar') : el.getAttribute('data-en');
         if (val !== null) el.innerHTML = val;
     });
 
-    // Watermark swap
     const wm = document.querySelector('.hero-watermark');
     if (wm) wm.textContent = isArabic ? 'nature' : 'بيئة';
 
@@ -1161,44 +1435,55 @@ document.getElementById('lang-toggle').addEventListener('click', () => {
     isArabic = !isArabic;
     applyLanguage();
 });
-
-// Restore saved preference
 if (localStorage.getItem('hub_lang') === 'ar') { isArabic = true; applyLanguage(); }
 
-// ── AUTH CHECK — runs after isArabic is defined ──────────
+// ── AUTH CHECK ───────────────────────────────────
 (async () => {
-    const _sb = window.supabase.createClient(
-        'https://nqvhxjsryatqgfvtjbki.supabase.co',
-        'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xdmh4anNyeWF0cWdmdnRqYmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDYxMDAsImV4cCI6MjA4ODYyMjEwMH0.HrnrIq5bK3FhxmHaLxWPIG0nD-CI-3ReHCoO5RL1c3M'
-    );
-    const { data: { session } } = await _sb.auth.getSession();
-    if (session) {
-        const meta = session.user.user_metadata || {};
-        const firstName = meta.first_name || meta.name || session.user.email.split('@')[0];
+    try {
+        const _sb = window.supabase.createClient(
+            'https://nqvhxjsryatqgfvtjbki.supabase.co',
+            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xdmh4anNyeWF0cWdmdnRqYmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDYxMDAsImV4cCI6MjA4ODYyMjEwMH0.HrnrIq5bK3FhxmHaLxWPIG0nD-CI-3ReHCoO5RL1c3M'
+        );
+        const { data: { session } } = await _sb.auth.getSession();
+        if (session) {
+            const meta      = session.user.user_metadata || {};
+            const firstName = meta.first_name || meta.name || session.user.email.split('@')[0];
 
-        // Swap Sign In → Dashboard
-        const signInEl = document.getElementById('nav-signin');
-        if (signInEl) {
-            signInEl.href = 'dashboard.html';
-            signInEl.textContent = isArabic ? 'لوحة التحكم' : 'Dashboard';
-        }
-        // Swap Join Free → username pill
-        const joinEl = document.getElementById('nav-join');
-        if (joinEl) {
-            joinEl.href = 'dashboard.html';
-            joinEl.innerHTML = `<iconify-icon icon="solar:home-smile-linear" style="font-size:1rem;vertical-align:middle"></iconify-icon> ${firstName}`;
-        }
-        // Gate section → go to dashboard
-        document.querySelectorAll('a[href="signup.html"]').forEach(a => {
-            a.href = 'dashboard.html';
-            if (a.classList.contains('gate-btn')) {
-                a.innerHTML = `<span>${isArabic ? 'انتقل إلى لوحة التحكم' : 'Go to Dashboard'}</span><iconify-icon icon="solar:arrow-right-linear"></iconify-icon>`;
+            // Update nav CTA → Dashboard
+            const signInEl = document.getElementById('nav-signin');
+            if (signInEl) {
+                signInEl.href = 'dashboard.html';
+                signInEl.innerHTML = `<iconify-icon icon="solar:home-smile-linear" style="font-size:1rem"></iconify-icon> ${firstName}`;
             }
-        });
+
+            // Update hero join btn → Dashboard
+            const joinEl = document.getElementById('nav-join');
+            if (joinEl) {
+                joinEl.href = 'dashboard.html';
+                joinEl.innerHTML = isArabic ? 'انتقل إلى لوحة التحكم →' : 'Go to Dashboard →';
+            }
+
+            // Remove lock overlay
+            const lockOver = document.getElementById('opp-lock-overlay');
+            const lockCta  = document.getElementById('opp-lock-cta');
+            if (lockOver) lockOver.style.display = 'none';
+            if (lockCta)  lockCta.style.display  = 'none';
+
+            // Show all 6 cards
+            document.querySelectorAll('#opp-card-grid .opp-card').forEach(c => c.style.display = 'flex');
+
+            // Redirect signup links → dashboard
+            document.querySelectorAll('a[href="signup.html"]').forEach(a => {
+                a.href = 'dashboard.html';
+            });
+        }
+    } catch(e) {
+        // Supabase offline (paused project) — fail silently
+        console.warn('Auth check failed:', e.message);
     }
 })();
 
-// ── ANCHOR SCROLL (Lenis) ────────────────────────────────
+// ── ANCHOR SCROLL ────────────────────────────────
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function(e) {
         const id = this.getAttribute('href');
@@ -1207,16 +1492,15 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     });
 });
 
-// ── PAGE TRANSITION ──────────────────────────────────────
+// ── PAGE TRANSITION ──────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
     const overlay = document.getElementById('page-transition');
-    const logo = document.getElementById('transition-logo');
+    const logo    = document.getElementById('transition-logo');
     if (!overlay || !logo) return;
 
-    // Smooth arrival: overlay fades 1→0, logo settles 0.92→1
     requestAnimationFrame(() => {
         overlay.style.opacity = '0';
-        logo.style.transform = 'scale(1)';
+        logo.style.transform  = 'scale(1)';
     });
 
     document.querySelectorAll('a').forEach(link => {
@@ -1235,19 +1519,19 @@ document.addEventListener('DOMContentLoaded', () => {
         if (e.persisted) {
             overlay.classList.remove('leaving');
             overlay.style.opacity = '0';
-            logo.style.transform = 'scale(1)';
+            logo.style.transform  = 'scale(1)';
         }
     });
 });
 
-// ── MOBILE NAV TOGGLE ────────────────────────────────────
+// ── MOBILE NAV ───────────────────────────────────
 (function() {
-    const toggle = document.getElementById('nav-toggle');
-    const links = document.getElementById('nav-links');
+    const toggle   = document.getElementById('nav-toggle');
+    const links    = document.getElementById('nav-links');
     const backdrop = document.getElementById('nav-backdrop');
     if (!toggle || !links) return;
 
-    function openNav() {
+    function openNav()  {
         toggle.classList.add('active');
         links.classList.add('open');
         if (backdrop) backdrop.classList.add('show');
@@ -1260,15 +1544,12 @@ document.addEventListener('DOMContentLoaded', () => {
         document.body.style.overflow = '';
     }
 
-    toggle.addEventListener('click', () => {
-        links.classList.contains('open') ? closeNav() : openNav();
-    });
+    toggle.addEventListener('click', () => links.classList.contains('open') ? closeNav() : openNav());
     if (backdrop) backdrop.addEventListener('click', closeNav);
     links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
     document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
 })();
 </script>
-<div class="nav-backdrop" id="nav-backdrop"></div>
 <script src="assets/js/ecohub-enhancements.js"></script>
 </body>
 </html>
