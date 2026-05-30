@@ -39,6 +39,16 @@
         ::-webkit-scrollbar-thumb:hover {
             background: #94a3b8;
         }
+    
+        /* Respect users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html { scroll-behavior: auto !important; }
+        }
     </style>
 </head>
 <body class="antialiased text-slate-900 bg-slate-50 font-['Inter'] selection:bg-[#16a34a]/20 selection:text-[#16a34a] flex flex-col min-h-screen">
@@ -100,7 +110,7 @@
     </main>
 
     <!-- Org Detail Modal -->
-    <div id="org-modal" class="fixed inset-0 z-[1000] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm" onclick="if(event.target===this)closeOrgModal()">
+    <div id="org-modal" class="fixed inset-0 z-[1000] hidden items-center justify-center p-4 bg-black/60 backdrop-blur-sm" role="dialog" aria-modal="true" aria-labelledby="org-modal-name" onclick="if(event.target===this)closeOrgModal()">
         <div class="bg-white rounded-2xl max-w-2xl w-full max-h-[90vh] overflow-y-auto shadow-2xl">
             <div id="org-modal-header" class="relative h-32 bg-gradient-to-br from-[#1a5c38] to-[#2d7a4f] rounded-t-2xl">
                 <button onclick="closeOrgModal()" class="absolute top-4 right-4 w-9 h-9 rounded-full bg-white/20 backdrop-blur hover:bg-white/30 text-white flex items-center justify-center transition-colors">
@@ -240,7 +250,7 @@
         function renderOrgCards() {
             const grid = document.getElementById('org-grid');
             grid.innerHTML = ORGS.map((o, i) => `
-                <article data-org="${o.id}" class="org-card group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:shadow-[#16a34a]/10 transition-all duration-300 flex flex-col cursor-pointer text-left">
+                <article data-org="${o.id}" tabindex="0" role="button" aria-label="View ${o.name}" class="org-card group bg-white rounded-2xl border border-gray-200 overflow-hidden hover:-translate-y-1 hover:shadow-xl hover:shadow-[#16a34a]/10 transition-all duration-300 flex flex-col cursor-pointer text-left focus-visible:outline-2 focus-visible:outline-[#16a34a] focus-visible:outline-offset-2">
                     <div class="h-32 relative bg-gradient-to-br ${o.gradient} overflow-hidden">
                         <div class="absolute inset-0 opacity-20" style="background-image:radial-gradient(circle at 30% 30%, rgba(255,255,255,0.5) 0%, transparent 60%)"></div>
                     </div>
@@ -273,6 +283,9 @@
             // Wire click handlers
             grid.querySelectorAll('.org-card').forEach(card => {
                 card.addEventListener('click', () => openOrgModal(card.dataset.org));
+                card.addEventListener('keydown', (e) => {
+                    if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); openOrgModal(card.dataset.org); }
+                });
             });
 
             // Stagger fade-in
@@ -329,16 +342,31 @@
                 dis.textContent = '';
             }
 
+            lastFocusedEl = document.activeElement;
             modal.classList.remove('hidden');
             modal.classList.add('flex');
             document.body.style.overflow = 'hidden';
+            modal.addEventListener('keydown', trapFocus);
+            modal.querySelector('button')?.focus();
         }
 
+        let lastFocusedEl = null;
+        function trapFocus(e) {
+            if (e.key !== 'Tab') return;
+            const modal = document.getElementById('org-modal');
+            const f = modal.querySelectorAll('button, a[href], [tabindex]:not([tabindex="-1"])');
+            if (!f.length) return;
+            const first = f[0], last = f[f.length - 1];
+            if (e.shiftKey && document.activeElement === first) { e.preventDefault(); last.focus(); }
+            else if (!e.shiftKey && document.activeElement === last) { e.preventDefault(); first.focus(); }
+        }
         function closeOrgModal() {
             const modal = document.getElementById('org-modal');
             modal.classList.add('hidden');
             modal.classList.remove('flex');
             document.body.style.overflow = '';
+            modal.removeEventListener('keydown', trapFocus);
+            if (lastFocusedEl) { lastFocusedEl.focus(); lastFocusedEl = null; }
         }
 
         // Close modal on Escape
