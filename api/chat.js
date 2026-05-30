@@ -3,15 +3,58 @@
 // Keys live in GROQ_API_KEY / OPENROUTER_API_KEY env vars — never in the
 // frontend bundle.
 
+// Abuse guards. The in-memory limiter only spans a single warm instance, so
+// treat it as a cheap first line of defence — pair with Vercel KV / Upstash
+// for hard limits that survive cold starts and span instances.
+const MAX_MESSAGES = 20;
+const MAX_TOTAL_CHARS = 8000;
+const RATE_WINDOW_MS = 60_000;
+const RATE_MAX = 15;
+const VALID_ROLES = ['system', 'user', 'assistant'];
+const rateHits = new Map(); // ip -> number[] of request timestamps
+
+function isRateLimited(ip) {
+    const now = Date.now();
+    const recent = (rateHits.get(ip) || []).filter((t) => now - t < RATE_WINDOW_MS);
+    recent.push(now);
+    rateHits.set(ip, recent);
+    if (rateHits.size > 5000) {
+        for (const [key, times] of rateHits) {
+            if (times.every((t) => now - t >= RATE_WINDOW_MS)) rateHits.delete(key);
+        }
+    }
+    return recent.length > RATE_MAX;
+}
+
 export default async function handler(req, res) {
     if (req.method !== 'POST') {
         res.setHeader('Allow', 'POST');
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
+    const ip = (req.headers['x-forwarded-for'] || '').split(',')[0].trim()
+        || req.socket?.remoteAddress || 'unknown';
+    if (isRateLimited(ip)) {
+        return res.status(429).json({ error: 'Too many requests. Please slow down. 🌿' });
+    }
+
     const { messages } = req.body || {};
     if (!Array.isArray(messages) || messages.length === 0) {
         return res.status(400).json({ error: 'messages[] required' });
+    }
+    if (messages.length > MAX_MESSAGES) {
+        return res.status(400).json({ error: `Too many messages (max ${MAX_MESSAGES})` });
+    }
+    // Keep only well-formed {role, content} entries before trusting the input.
+    const cleanMessages = messages
+        .filter((m) => m && VALID_ROLES.includes(m.role) && typeof m.content === 'string')
+        .map((m) => ({ role: m.role, content: m.content }));
+    if (cleanMessages.length === 0) {
+        return res.status(400).json({ error: 'messages[] must contain {role, content} objects' });
+    }
+    const totalChars = cleanMessages.reduce((n, m) => n + m.content.length, 0);
+    if (totalChars > MAX_TOTAL_CHARS) {
+        return res.status(400).json({ error: `Message content too long (max ${MAX_TOTAL_CHARS} characters)` });
     }
 
     const systemPrompt = {
@@ -19,7 +62,7 @@ export default async function handler(req, res) {
         content: "You are EcoBot, a friendly AI assistant for EcoHub — Qatar's youth climate action platform by EcoAwareness QA. Help young Qataris learn about climate change, Qatar Vision 2030, sustainability, volunteer opportunities, verified volunteer hours, Eco ID climate portfolios, and environmental impact. When users ask what to do next, suggest practical EcoHub actions like browsing opportunities, saving events, building verified hours, contacting local organizers, or creating a climate portfolio. Keep responses concise, friendly, specific to Qatar when possible, and remind users to verify important facts."
     };
 
-    const chatMessages = [systemPrompt, ...messages];
+    const chatMessages = [systemPrompt, ...cleanMessages];
 
     // Provider list — try each until one succeeds.
     const providers = [];
@@ -84,9 +127,9 @@ export default async function handler(req, res) {
         }
     }
 
+    // Upstream status/body are logged per-attempt above; don't leak them to the client.
+    console.error(`EcoBot upstream failure — last status ${lastStatus}: ${lastBody}`);
     return res.status(502).json({
-        error: 'AI is temporarily unavailable. Please try again in a moment. 🌿',
-        status: lastStatus,
-        detail: lastBody
+        error: 'AI is temporarily unavailable. Please try again in a moment. 🌿'
     });
 }

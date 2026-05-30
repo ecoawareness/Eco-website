@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>About — EcoAwareness</title>
+    <title>About EcoAwareness — EcoHub</title>
+    <meta name="description" content="Why four students in Qatar built EcoHub: one place to find environmental groups and events, and a verified record of the work you show up for.">
+    <link rel="canonical" href="https://ecoawarenessqa.org/about.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="EcoHub">
+    <meta property="og:locale" content="en_QA">
+    <meta property="og:title" content="About EcoAwareness — EcoHub">
+    <meta property="og:description" content="Why four students in Qatar built EcoHub: one place to find environmental groups and events, and a verified record of the work you show up for.">
+    <meta property="og:url" content="https://ecoawarenessqa.org/about.html">
+    <meta property="og:image" content="https://ecoawarenessqa.org/assets/opt/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About EcoAwareness — EcoHub">
+    <meta name="twitter:description" content="Why four students in Qatar built EcoHub: one place to find environmental groups and events, and a verified record of the work you show up for.">
+    <meta name="twitter:image" content="https://ecoawarenessqa.org/assets/opt/og-image.png">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%231a5c38%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2245%22%20text-anchor%3D%22middle%22%20font-family%3D%22Georgia%2C%20serif%22%20font-style%3D%22italic%22%20font-weight%3D%22700%22%20font-size%3D%2240%22%20fill%3D%22%23fff%22%3EE%3C/text%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2218%22%20r%3D%225%22%20fill%3D%22%23a8e063%22/%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="assets/IMG.PNG">
+    <link rel="apple-touch-icon" href="assets/opt/logo.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -568,6 +581,16 @@
             transition: opacity 0.6s cubic-bezier(0.25,1,0.5,1), transform 0.6s cubic-bezier(0.25,1,0.5,1);
         }
         .reveal.visible { opacity: 1; transform: none; }
+    
+        /* Respect users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html { scroll-behavior: auto !important; }
+        }
     </style>
 </head>
 <body>
@@ -586,8 +609,7 @@
     </a>
     <div class="nav-links" id="nav-links">
         <a href="index.html" data-en="Home" data-ar="الرئيسية">Home</a>
-        <a href="signin.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
-        <a href="certification.html" data-en="Certification" data-ar="الاعتماد">Certification</a>
+        <a href="signup.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
         <a href="about.html" data-en="About" data-ar="من نحن" style="opacity:1;">About</a>
         <a href="faq.html" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a>
         <a href="signin.html" data-en="Sign In" data-ar="تسجيل الدخول">Sign In</a>
@@ -621,7 +643,10 @@
 <!-- Team photo -->
 <section class="team-photo-wrap">
     <div class="team-photo reveal">
-        <img src="DSC_5345.jpg" alt="EcoAwareness team & community">
+        <picture>
+            <source type="image/webp" srcset="assets/opt/team-community.webp">
+            <img src="assets/opt/team-community.jpg" alt="EcoAwareness volunteers and community members together" width="1600" height="1067" loading="lazy" decoding="async">
+        </picture>
         <div class="team-photo-caption" data-en="The EcoAwareness community" data-ar="مجتمع الوعي البيئي">The EcoAwareness community</div>
     </div>
 </section>
@@ -666,8 +691,11 @@
         <div class="team-grid">
             <div class="team-card reveal">
                 <div class="team-avatar">
-                    <img src="assets/elfatih.jpg" alt="Mohamed Elfatih"
-                         onerror="this.onerror=null;this.src='assets/DSC_2823.jpg';">
+                    <picture>
+                        <source type="image/webp" srcset="assets/opt/elfatih.webp">
+                        <img src="assets/opt/elfatih.jpg" alt="Mohamed Elfatih" width="900" height="1053" loading="lazy" decoding="async"
+                             onerror="this.onerror=null;this.src='assets/opt/team-fallback.jpg';">
+                    </picture>
                 </div>
                 <div class="team-info">
                     <h3 data-en="Mohamed Elfatih" data-ar="محمد الفاتح">Mohamed Elfatih</h3>
@@ -681,7 +709,7 @@
 
             <div class="team-card reveal">
                 <div class="team-avatar">
-                    <img src="assets/Firas.jpeg" alt="Mohamed Firas">
+                    <img src="assets/Firas.jpeg" alt="Mohamed Firas" loading="lazy" decoding="async">
                 </div>
                 <div class="team-info">
                     <h3 data-en="Mohamed Firas" data-ar="محمد فراس">Mohamed Firas</h3>
@@ -695,7 +723,7 @@
 
             <div class="team-card reveal">
                 <div class="team-avatar">
-                    <img src="assets/ahmed.jpg.jpeg" alt="Ahmed">
+                    <img src="assets/ahmed.jpg.jpeg" alt="Ahmed" loading="lazy" decoding="async">
                 </div>
                 <div class="team-info">
                     <h3 data-en="Ahmed" data-ar="أحمد">Ahmed</h3>
@@ -709,7 +737,7 @@
 
             <div class="team-card reveal">
                 <div class="team-avatar">
-                    <img src="assets/mishal.jpg.jpeg" alt="Mohamed Mishal">
+                    <img src="assets/mishal.jpg.jpeg" alt="Mohamed Mishal" loading="lazy" decoding="async">
                 </div>
                 <div class="team-info">
                     <h3 data-en="Mohamed Mishal" data-ar="محمد مشعل">Mohamed Mishal</h3>
@@ -761,7 +789,7 @@
        data-ar="نبحث عن طلاب ومدارس ومنظمات وشركات تريد أن تجعل العمل البيئي أسهل للمشاركة. قل مرحبًا.">
         We're looking for students, schools, NGOs, and companies who want to make environmental work easier to join. Say hi.
     </p>
-    <a href="mailto:hello@ecoawareness.qa" class="cta-btn">
+    <a href="mailto:ecoawarenessme@gmail.com" class="cta-btn">
         <span data-en="Get in touch" data-ar="تواصل معنا">Get in touch</span>
         <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
     </a>
@@ -772,7 +800,7 @@
     <div class="footer-curve" aria-hidden="true"><svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,90 C360,-10 1080,-10 1440,90 L1440,90 L0,90 Z" fill="var(--paper)"/></svg></div>
     <div class="footer-meta">
         <div class="meta-addr" data-en="Education City, Doha, Qatar" data-ar="المدينة التعليمية، الدوحة، قطر">Education City, Doha, Qatar</div>
-        <div data-en="© 2026 EcoAwareness. All rights reserved." data-ar="© 2026 الوعي البيئي. جميع الحقوق محفوظة.">© 2026 EcoAwareness. All rights reserved.</div>
+        <div data-en="© 2026 EcoAwareness Qatar. All rights reserved." data-ar="© 2026 الوعي البيئي قطر. جميع الحقوق محفوظة.">© 2026 EcoAwareness Qatar. All rights reserved.</div>
     </div>
     <div class="footer-grid">
         <div class="footer-brand-block">
@@ -786,8 +814,8 @@
             <h4 data-en="Platform" data-ar="المنصة">Platform</h4>
             <ul>
                 <li><a href="dashboard.html" data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</a></li>
-                <li><a href="signin.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a></li>
-                <li><a href="signin.html" data-en="Network" data-ar="الشبكة">Network</a></li>
+                <li><a href="signup.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a></li>
+                <li><a href="signup.html" data-en="Network" data-ar="الشبكة">Network</a></li>
                 <li><a href="dashboard.html" data-en="Resources" data-ar="الموارد">Resources</a></li>
             </ul>
         </div>
@@ -806,7 +834,7 @@
                 <li><a href="about.html" data-en="About Us" data-ar="من نحن">About Us</a></li>
                 <li><a href="privacy.html" data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</a></li>
                 <li><a href="terms.html" data-en="Terms of Use" data-ar="شروط الاستخدام">Terms of Use</a></li>
-                <li><a href="mailto:hello@ecoawareness.qa" data-en="Contact" data-ar="اتصل بنا">Contact</a></li>
+                <li><a href="mailto:ecoawarenessme@gmail.com" data-en="Contact" data-ar="اتصل بنا">Contact</a></li>
             </ul>
         </div>
     </div>
@@ -816,14 +844,14 @@
         <div class="footer-socials">
             <a href="#" aria-label="Instagram"><iconify-icon icon="solar:instagram-linear" width="16"></iconify-icon></a>
             <a href="#" aria-label="LinkedIn"><iconify-icon icon="solar:link-circle-linear" width="16"></iconify-icon></a>
-            <a href="mailto:hello@ecoawareness.qa" aria-label="Email"><iconify-icon icon="solar:letter-linear" width="16"></iconify-icon></a>
+            <a href="mailto:ecoawarenessme@gmail.com" aria-label="Email"><iconify-icon icon="solar:letter-linear" width="16"></iconify-icon></a>
         </div>
     </div>
 </footer>
 
 <!-- Page transition -->
 <div id="page-transition">
-    <img id="transition-logo" src="assets/IMG.PNG" alt="EcoAwareness">
+    <img id="transition-logo" src="assets/opt/logo.png" alt="EcoAwareness">
 </div>
 
 <script>

@@ -15,10 +15,11 @@ export default async function handler(req, res) {
         return res.status(405).json({ error: 'Method not allowed' });
     }
 
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@admin.com';
+    const adminEmail = process.env.ADMIN_EMAIL;
     const serviceKey = process.env.SUPABASE_SERVICE_ROLE_KEY;
-    if (!serviceKey) {
-        return res.status(500).json({ error: 'Server misconfigured: missing SUPABASE_SERVICE_ROLE_KEY' });
+    if (!serviceKey || !adminEmail) {
+        // Fail closed: never fall back to a guessable default admin identity.
+        return res.status(500).json({ error: 'Server misconfigured: missing SUPABASE_SERVICE_ROLE_KEY or ADMIN_EMAIL' });
     }
 
     // ── 1. Validate the caller's session token ───────────────
@@ -34,7 +35,7 @@ export default async function handler(req, res) {
         return res.status(401).json({ error: 'Invalid session' });
     }
     const me = await meResp.json();
-    if (me.email !== adminEmail) {
+    if ((me.email || '').toLowerCase() !== adminEmail.toLowerCase()) {
         return res.status(403).json({ error: 'Forbidden — admin only' });
     }
 

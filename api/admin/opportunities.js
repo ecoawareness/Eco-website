@@ -1,7 +1,9 @@
 const SUPABASE_URL = 'https://nqvhxjsryatqgfvtjbki.supabase.co';
+const VALID_STATUSES = ['pending', 'approved', 'archived'];
 
 async function validateAdmin(req, serviceKey) {
-    const adminEmail = process.env.ADMIN_EMAIL || 'admin@admin.com';
+    const adminEmail = process.env.ADMIN_EMAIL;
+    if (!adminEmail) return { ok: false, status: 500, error: 'Server misconfigured: missing ADMIN_EMAIL' };
     const authHeader = req.headers['authorization'] || '';
     const token = authHeader.startsWith('Bearer ') ? authHeader.slice(7) : '';
     if (!token) return { ok: false, status: 401, error: 'Missing access token' };
@@ -11,7 +13,7 @@ async function validateAdmin(req, serviceKey) {
     });
     if (!meResp.ok) return { ok: false, status: 401, error: 'Invalid session' };
     const me = await meResp.json();
-    if (me.email !== adminEmail) return { ok: false, status: 403, error: 'Forbidden - admin only' };
+    if ((me.email || '').toLowerCase() !== adminEmail.toLowerCase()) return { ok: false, status: 403, error: 'Forbidden - admin only' };
     return { ok: true, user: me };
 }
 
@@ -26,6 +28,9 @@ export default async function handler(req, res) {
 
     if (req.method === 'GET') {
         const status = req.query.status || 'pending';
+        if (!VALID_STATUSES.includes(status)) {
+            return res.status(400).json({ error: 'invalid status' });
+        }
         const url = `${SUPABASE_URL}/rest/v1/eco_opportunities?select=*&status=eq.${encodeURIComponent(status)}&order=created_at.desc`;
         const r = await fetch(url, {
             headers: { apikey: serviceKey, Authorization: `Bearer ${serviceKey}` }
@@ -36,7 +41,7 @@ export default async function handler(req, res) {
 
     if (req.method === 'PATCH') {
         const { id, status } = req.body || {};
-        if (!id || !['pending', 'approved', 'archived'].includes(status)) {
+        if (!id || !VALID_STATUSES.includes(status)) {
             return res.status(400).json({ error: 'id and valid status required' });
         }
         const r = await fetch(`${SUPABASE_URL}/rest/v1/eco_opportunities?id=eq.${encodeURIComponent(id)}`, {

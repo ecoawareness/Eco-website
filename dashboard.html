@@ -3,9 +3,23 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoHub — Dashboard</title>
+    <title>Dashboard — EcoHub</title>
+    <meta name="description" content="Your EcoHub dashboard — track verified volunteer hours, saved events and your climate portfolio.">
+    <link rel="canonical" href="https://ecoawarenessqa.org/dashboard.html">
+    <meta name="robots" content="noindex, nofollow">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="EcoHub">
+    <meta property="og:locale" content="en_QA">
+    <meta property="og:title" content="Dashboard — EcoHub">
+    <meta property="og:description" content="Your EcoHub dashboard — track verified volunteer hours, saved events and your climate portfolio.">
+    <meta property="og:url" content="https://ecoawarenessqa.org/dashboard.html">
+    <meta property="og:image" content="https://ecoawarenessqa.org/assets/opt/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="Dashboard — EcoHub">
+    <meta name="twitter:description" content="Your EcoHub dashboard — track verified volunteer hours, saved events and your climate portfolio.">
+    <meta name="twitter:image" content="https://ecoawarenessqa.org/assets/opt/og-image.png">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%231a5c38%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2245%22%20text-anchor%3D%22middle%22%20font-family%3D%22Georgia%2C%20serif%22%20font-style%3D%22italic%22%20font-weight%3D%22700%22%20font-size%3D%2240%22%20fill%3D%22%23fff%22%3EE%3C/text%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2218%22%20r%3D%225%22%20fill%3D%22%23a8e063%22/%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="assets/IMG.PNG">
+    <link rel="apple-touch-icon" href="assets/opt/logo.png">
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
@@ -1153,6 +1167,16 @@
         .lenis.lenis-smooth [data-lenis-prevent] { overscroll-behavior: contain; }
         .lenis.lenis-stopped { overflow: hidden; }
         .lenis.lenis-scrolling iframe { pointer-events: none; }
+    
+        /* Respect users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html { scroll-behavior: auto !important; }
+        }
     </style>
     <script src="https://unpkg.com/lenis@1.1.20/dist/lenis.min.js"></script>
 </head>
@@ -2822,13 +2846,20 @@ function setAvatarImage(url) {
     pImg.src = url;
 
     // Sidebar avatar
+    const makeAvImg = () => {
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = '';
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%';
+        return img;
+    };
     const sbAv = document.getElementById('sb-avatar');
-    sbAv.innerHTML = '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%">';
+    sbAv.replaceChildren(makeAvImg());
 
     // Eco ID avatar
     const ecoidAv = document.getElementById('ecoid-avatar');
     if (ecoidAv) {
-        ecoidAv.innerHTML = '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%">';
+        ecoidAv.replaceChildren(makeAvImg());
     }
 }
 
@@ -2955,6 +2986,12 @@ function sendEcobotMsg() {
     sendEcobotMessage(text);
 }
 
+function escapeHtml(s) {
+    const d = document.createElement('div');
+    d.textContent = s == null ? '' : String(s);
+    return d.innerHTML;
+}
+
 function appendEcobotMsg(role, text) {
     const container = document.getElementById('ecobot-messages');
     const isUser = role === 'user';
@@ -2964,7 +3001,7 @@ function appendEcobotMsg(role, text) {
     const d = document.createElement('div');
     d.textContent = text;
     const escaped = d.innerHTML;
-    div.innerHTML = '<div class="ecobot-msg-av">' + initial + '</div><div><div class="ecobot-bubble">' + escaped + '</div></div>';
+    div.innerHTML = '<div class="ecobot-msg-av">' + escapeHtml(initial) + '</div><div><div class="ecobot-bubble">' + escaped + '</div></div>';
     container.appendChild(div);
     container.scrollTop = container.scrollHeight;
 }
@@ -3234,7 +3271,7 @@ function openOppModal(btn) {
                 ctx.style.cssText = 'background:rgba(26,92,56,0.06);border:1px solid rgba(26,92,56,0.15);border-radius:10px;padding:0.7rem 0.9rem;margin-bottom:1rem;font-size:0.82rem;line-height:1.4;color:var(--green)';
                 wrap.querySelector('.pe-form')?.prepend(ctx);
             }
-            ctx.innerHTML = '<strong>Applying to:</strong> ' + title + (org ? ' · <span style="opacity:0.75">' + org + '</span>' : '');
+            ctx.innerHTML = '<strong>Applying to:</strong> ' + escapeHtml(title) + (org ? ' · <span style="opacity:0.75">' + escapeHtml(org) + '</span>' : '');
         }
     }
     document.getElementById('apply-modal').classList.add('open');

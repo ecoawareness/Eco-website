@@ -3,9 +3,22 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoAwareness — Qatar's Youth Climate Platform</title>
+    <title>EcoHub — Qatar's Youth Climate Platform by EcoAwareness</title>
+    <meta name="description" content="EcoHub connects young people in Qatar with climate volunteering, verified volunteer hours, and a directory of environmental organisations — built by students, run by EcoAwareness.">
+    <link rel="canonical" href="https://ecoawarenessqa.org/">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="EcoHub">
+    <meta property="og:locale" content="en_QA">
+    <meta property="og:title" content="EcoHub — Qatar's Youth Climate Platform by EcoAwareness">
+    <meta property="og:description" content="EcoHub connects young people in Qatar with climate volunteering, verified volunteer hours, and a directory of environmental organisations — built by students, run by EcoAwareness.">
+    <meta property="og:url" content="https://ecoawarenessqa.org/">
+    <meta property="og:image" content="https://ecoawarenessqa.org/assets/opt/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="EcoHub — Qatar's Youth Climate Platform by EcoAwareness">
+    <meta name="twitter:description" content="EcoHub connects young people in Qatar with climate volunteering, verified volunteer hours, and a directory of environmental organisations — built by students, run by EcoAwareness.">
+    <meta name="twitter:image" content="https://ecoawarenessqa.org/assets/opt/og-image.png">
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%231a5c38%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2245%22%20text-anchor%3D%22middle%22%20font-family%3D%22Georgia%2C%20serif%22%20font-style%3D%22italic%22%20font-weight%3D%22700%22%20font-size%3D%2240%22%20fill%3D%22%23fff%22%3EE%3C/text%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2218%22%20r%3D%225%22%20fill%3D%22%23a8e063%22/%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="assets/IMG.PNG">
+    <link rel="apple-touch-icon" href="assets/opt/logo.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -774,6 +787,16 @@
             .footer-body { grid-template-columns: 1fr; }
             .footer-bottom { flex-direction: column; }
         }
+    
+        /* Respect users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html { scroll-behavior: auto !important; }
+        }
     </style>
 </head>
 <body>
@@ -787,13 +810,13 @@
 <!-- NAV -->
 <nav id="navbar">
     <a href="index.html" class="nav-logo-link">
-        <span class="nav-logo-mark"><img src="assets/IMG.PNG" alt=""></span>
+        <span class="nav-logo-mark"><img src="assets/opt/logo.png" alt=""></span>
         <span class="nav-wordmark"><span class="eco">Eco</span><span class="aware">Awareness</span></span>
     </a>
     <div class="nav-links" id="nav-links">
         <a href="index.html" class="active" data-en="Home" data-ar="الرئيسية">Home</a>
-        <a href="signin.html" data-en="Network" data-ar="الشبكة">Network</a>
-        <a href="signin.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
+        <a href="signup.html" data-en="Network" data-ar="الشبكة">Network</a>
+        <a href="signup.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
         <a href="about.html" data-en="About" data-ar="من نحن">About</a>
         <a href="faq.html" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a>
     </div>
@@ -843,8 +866,10 @@
 
             <!-- Main team photo -->
             <div class="collage-main">
-                <img src="assets/ecoawareness.me%20group%20photo%20with%20mr%20Q.jpeg"
-                     alt="EcoAwareness team at Earthna Sustainability Week">
+                <picture>
+                    <source type="image/webp" srcset="assets/opt/group-photo.webp">
+                    <img src="assets/opt/group-photo.jpg" alt="EcoAwareness team at Earthna Sustainability Week '25 in Doha" width="1600" height="2133" loading="lazy" decoding="async">
+                </picture>
                 <div class="collage-main-veil"></div>
                 <div class="collage-main-caption">
                     <span class="caption-label">— Earthna Sustainability Week '25</span>
@@ -880,20 +905,20 @@
     <!-- Stat strip -->
     <div class="hero-stats">
         <div class="stat-item">
-            <div class="stat-num">2,500+</div>
-            <div class="stat-label" data-en="Active members" data-ar="أعضاء نشطون">Active members</div>
+            <div class="stat-num">4</div>
+            <div class="stat-label" data-en="Student founders" data-ar="مؤسسون طلاب">Student founders</div>
         </div>
         <div class="stat-item">
-            <div class="stat-num">60+</div>
-            <div class="stat-label" data-en="Partner orgs" data-ar="منظمات شريكة">Partner orgs</div>
+            <div class="stat-num">2</div>
+            <div class="stat-label" data-en="Languages" data-ar="لغتان">Languages</div>
         </div>
         <div class="stat-item">
-            <div class="stat-num">15k</div>
-            <div class="stat-label" data-en="Verified hours" data-ar="ساعات موثقة">Verified hours</div>
+            <div class="stat-num">6</div>
+            <div class="stat-label" data-en="Network orgs" data-ar="منظمات في الشبكة">Network orgs</div>
         </div>
         <div class="stat-item">
-            <div class="stat-num">50+</div>
-            <div class="stat-label" data-en="Initiatives" data-ar="مبادرات">Initiatives</div>
+            <div class="stat-num">100%</div>
+            <div class="stat-label" data-en="Free to join" data-ar="مجاني للانضمام">Free to join</div>
         </div>
     </div>
 </section>
@@ -902,8 +927,8 @@
 <section class="partners-section">
     <div class="partners-inner">
         <span class="eyebrow eyebrow-rust reveal"
-              data-en="TRUSTED BY 60+ ORGANISATIONS" data-ar="موثوق به من 60+ منظمة">
-            TRUSTED BY 60+ ORGANISATIONS
+              data-en="ORGANISATIONS IN OUR NETWORK" data-ar="منظمات في شبكتنا">
+            ORGANISATIONS IN OUR NETWORK
         </span>
         <div class="partners-pill reveal" style="transition-delay:0.1s">
             <img src="assets/logos/cmuq.png" alt="CMU-Q" class="partner-logo">
@@ -1057,23 +1082,26 @@
                 </h3>
                 <div class="featured-stats">
                     <div>
-                        <div class="featured-stat-num">3</div>
-                        <div class="featured-stat-label" data-en="Active missions" data-ar="مهام نشطة">Active missions</div>
+                        <div class="featured-stat-num">'25</div>
+                        <div class="featured-stat-label" data-en="Earthna Week" data-ar="أسبوع أرضنا">Earthna Week</div>
                     </div>
                     <div class="featured-divider"></div>
                     <div>
-                        <div class="featured-stat-num">42h</div>
-                        <div class="featured-stat-label" data-en="Logged this week" data-ar="مسجلة هذا الأسبوع">Logged this week</div>
+                        <div class="featured-stat-num">Doha</div>
+                        <div class="featured-stat-label" data-en="Msheireb" data-ar="مشيرب">Msheireb</div>
                     </div>
                     <div class="featured-divider"></div>
                     <div>
-                        <div class="featured-stat-num">5</div>
-                        <div class="featured-stat-label" data-en="Partner orgs" data-ar="منظمات شريكة">Partner orgs</div>
+                        <div class="featured-stat-num">EN·ع</div>
+                        <div class="featured-stat-label" data-en="Bilingual" data-ar="بلغتين">Bilingual</div>
                     </div>
                 </div>
             </div>
             <div class="opp-featured-right">
-                <img src="assets/ecoawareness.me%20group%20photo%20with%20mr%20Q.jpeg" alt="EcoAwareness team at Earthna Sustainability Week">
+                <picture>
+                    <source type="image/webp" srcset="assets/opt/group-photo.webp">
+                    <img src="assets/opt/group-photo.jpg" alt="EcoAwareness team at Earthna Sustainability Week '25" width="1600" height="2133" loading="lazy" decoding="async">
+                </picture>
                 <div class="opp-featured-right-veil"></div>
                 <div class="featured-location-tag">MSHEIREB · DOWNTOWN DOHA</div>
             </div>
@@ -1086,7 +1114,10 @@
                 <!-- Card 1: Mangrove — photo cover, cleanup -->
                 <div class="opp-card" data-cat="cleanup">
                     <div class="card-cover">
-                        <img src="assets/ecoawareness.me%20group%20photo%20with%20mr%20Q.jpeg" alt="Mangrove planting" style="object-position:50% 60%">
+                        <picture>
+                            <source type="image/webp" srcset="assets/opt/group-photo.webp">
+                            <img src="assets/opt/group-photo.jpg" alt="Mangrove planting at Al Thakira" width="1600" height="2133" loading="lazy" decoding="async" style="object-position:50% 60%">
+                        </picture>
                         <div class="card-cover-veil" style="background:linear-gradient(180deg,rgba(11,46,29,0) 50%,rgba(11,46,29,0.85))"></div>
                     </div>
                     <div class="card-body">
@@ -1291,7 +1322,7 @@
             <a href="signup.html" class="btn btn-lime">
                 <span data-en="Get started →" data-ar="ابدأ الآن →">Get started →</span>
             </a>
-            <a href="mailto:hello@ecoawareness.qa" class="btn btn-ghost-dark">
+            <a href="mailto:ecoawarenessme@gmail.com" class="btn btn-ghost-dark">
                 <span data-en="Email us" data-ar="راسلنا">Email us</span>
             </a>
         </div>
@@ -1320,10 +1351,10 @@
         <div class="footer-col">
             <h4 data-en="Platform" data-ar="المنصة">Platform</h4>
             <ul>
-                <li><a href="signin.html" data-en="Network" data-ar="الشبكة">Network</a></li>
-                <li><a href="signin.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a></li>
-                <li><a href="signin.html" data-en="Resources" data-ar="الموارد">Resources</a></li>
-                <li><a href="signin.html" data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</a></li>
+                <li><a href="signup.html" data-en="Network" data-ar="الشبكة">Network</a></li>
+                <li><a href="signup.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a></li>
+                <li><a href="signup.html" data-en="Resources" data-ar="الموارد">Resources</a></li>
+                <li><a href="signup.html" data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</a></li>
             </ul>
         </div>
         <div class="footer-col">
@@ -1340,7 +1371,7 @@
             <ul>
                 <li><a href="privacy.html" data-en="Privacy" data-ar="الخصوصية">Privacy</a></li>
                 <li><a href="terms.html" data-en="Terms" data-ar="الشروط">Terms</a></li>
-                <li><a href="mailto:hello@ecoawareness.qa" data-en="Contact" data-ar="اتصل بنا">Contact</a></li>
+                <li><a href="mailto:ecoawarenessme@gmail.com" data-en="Contact" data-ar="اتصل بنا">Contact</a></li>
             </ul>
         </div>
     </div>
@@ -1355,7 +1386,7 @@
 
 <!-- Page transition overlay -->
 <div id="page-transition">
-    <img id="transition-logo" src="assets/IMG.PNG" alt="EcoAwareness Logo">
+    <img id="transition-logo" src="assets/opt/logo.png" alt="EcoAwareness Logo">
 </div>
 
 <script>
