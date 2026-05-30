@@ -181,7 +181,7 @@
     <div class="faq-category">Getting Started</div>
 
     <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
             <span>What is EcoAwareness?</span>
             <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
         </button>
@@ -189,7 +189,7 @@
     </div>
 
     <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
             <span>Who can join EcoAwareness?</span>
             <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
         </button>
@@ -197,7 +197,7 @@
     </div>
 
     <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
             <span>Is EcoAwareness free to use?</span>
             <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
         </button>
@@ -207,7 +207,7 @@
     <div class="faq-category">Opportunities</div>
 
     <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
             <span>How do I apply for an opportunity?</span>
             <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
         </button>
@@ -215,7 +215,7 @@
     </div>
 
     <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
             <span>Can I post an event or opportunity?</span>
             <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
         </button>
@@ -225,7 +225,7 @@
     <div class="faq-category">Eco ID</div>
 
     <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
             <span>What is the Eco ID?</span>
             <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
         </button>
@@ -233,7 +233,7 @@
     </div>
 
     <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
             <span>Is the Eco ID officially recognised?</span>
             <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
         </button>
@@ -243,7 +243,7 @@
     <div class="faq-category">Account &amp; Privacy</div>
 
     <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
             <span>How do I update my profile?</span>
             <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
         </button>
@@ -251,7 +251,7 @@
     </div>
 
     <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
             <span>Is my personal data kept private?</span>
             <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
         </button>
@@ -259,7 +259,7 @@
     </div>
 
     <div class="faq-item">
-        <button class="faq-q" onclick="toggleFaq(this)">
+        <button class="faq-q" onclick="toggleFaq(this)" aria-expanded="false">
             <span>How do I delete my account?</span>
             <iconify-icon icon="solar:add-circle-linear"></iconify-icon>
         </button>
@@ -290,8 +290,15 @@
 function toggleFaq(btn) {
     const item = btn.closest('.faq-item');
     const wasOpen = item.classList.contains('open');
-    document.querySelectorAll('.faq-item.open').forEach(el => el.classList.remove('open'));
-    if (!wasOpen) item.classList.add('open');
+    document.querySelectorAll('.faq-item.open').forEach(el => {
+        el.classList.remove('open');
+        const b = el.querySelector('.faq-q');
+        if (b) b.setAttribute('aria-expanded', 'false');
+    });
+    if (!wasOpen) {
+        item.classList.add('open');
+        btn.setAttribute('aria-expanded', 'true');
+    }
 }
 </script>
 
