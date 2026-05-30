@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>About — EcoAwareness</title>
     <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%231a5c38%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2245%22%20text-anchor%3D%22middle%22%20font-family%3D%22Georgia%2C%20serif%22%20font-style%3D%22italic%22%20font-weight%3D%22700%22%20font-size%3D%2240%22%20fill%3D%22%23fff%22%3EE%3C/text%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2218%22%20r%3D%225%22%20fill%3D%22%23a8e063%22/%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="assets/IMG.PNG">
+    <link rel="apple-touch-icon" href="assets/opt/logo.png">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -621,7 +621,10 @@
 <!-- Team photo -->
 <section class="team-photo-wrap">
     <div class="team-photo reveal">
-        <img src="DSC_5345.jpg" alt="EcoAwareness team & community">
+        <picture>
+            <source type="image/webp" srcset="assets/opt/team-community.webp">
+            <img src="assets/opt/team-community.jpg" alt="EcoAwareness volunteers and community members together" width="1600" height="1067" loading="lazy" decoding="async">
+        </picture>
         <div class="team-photo-caption" data-en="The EcoAwareness community" data-ar="مجتمع الوعي البيئي">The EcoAwareness community</div>
     </div>
 </section>
@@ -666,8 +669,11 @@
         <div class="team-grid">
             <div class="team-card reveal">
                 <div class="team-avatar">
-                    <img src="assets/elfatih.jpg" alt="Mohamed Elfatih"
-                         onerror="this.onerror=null;this.src='assets/DSC_2823.jpg';">
+                    <picture>
+                        <source type="image/webp" srcset="assets/opt/elfatih.webp">
+                        <img src="assets/opt/elfatih.jpg" alt="Mohamed Elfatih" width="900" height="1053" loading="lazy" decoding="async"
+                             onerror="this.onerror=null;this.src='assets/opt/team-fallback.jpg';">
+                    </picture>
                 </div>
                 <div class="team-info">
                     <h3 data-en="Mohamed Elfatih" data-ar="محمد الفاتح">Mohamed Elfatih</h3>
@@ -681,7 +687,7 @@
 
             <div class="team-card reveal">
                 <div class="team-avatar">
-                    <img src="assets/Firas.jpeg" alt="Mohamed Firas">
+                    <img src="assets/Firas.jpeg" alt="Mohamed Firas" loading="lazy" decoding="async">
                 </div>
                 <div class="team-info">
                     <h3 data-en="Mohamed Firas" data-ar="محمد فراس">Mohamed Firas</h3>
@@ -695,7 +701,7 @@
 
             <div class="team-card reveal">
                 <div class="team-avatar">
-                    <img src="assets/ahmed.jpg.jpeg" alt="Ahmed">
+                    <img src="assets/ahmed.jpg.jpeg" alt="Ahmed" loading="lazy" decoding="async">
                 </div>
                 <div class="team-info">
                     <h3 data-en="Ahmed" data-ar="أحمد">Ahmed</h3>
@@ -709,7 +715,7 @@
 
             <div class="team-card reveal">
                 <div class="team-avatar">
-                    <img src="assets/mishal.jpg.jpeg" alt="Mohamed Mishal">
+                    <img src="assets/mishal.jpg.jpeg" alt="Mohamed Mishal" loading="lazy" decoding="async">
                 </div>
                 <div class="team-info">
                     <h3 data-en="Mohamed Mishal" data-ar="محمد مشعل">Mohamed Mishal</h3>
@@ -823,7 +829,7 @@
 
 <!-- Page transition -->
 <div id="page-transition">
-    <img id="transition-logo" src="assets/IMG.PNG" alt="EcoAwareness">
+    <img id="transition-logo" src="assets/opt/logo.png" alt="EcoAwareness">
 </div>
 
 <script>
