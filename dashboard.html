@@ -2846,13 +2846,20 @@ function setAvatarImage(url) {
     pImg.src = url;
 
     // Sidebar avatar
+    const makeAvImg = () => {
+        const img = document.createElement('img');
+        img.src = url;
+        img.alt = '';
+        img.style.cssText = 'width:100%;height:100%;object-fit:cover;border-radius:50%';
+        return img;
+    };
     const sbAv = document.getElementById('sb-avatar');
-    sbAv.innerHTML = '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%">';
+    sbAv.replaceChildren(makeAvImg());
 
     // Eco ID avatar
     const ecoidAv = document.getElementById('ecoid-avatar');
     if (ecoidAv) {
-        ecoidAv.innerHTML = '<img src="' + url + '" style="width:100%;height:100%;object-fit:cover;border-radius:50%">';
+        ecoidAv.replaceChildren(makeAvImg());
     }
 }
 
@@ -2979,6 +2986,12 @@ function sendEcobotMsg() {
     sendEcobotMessage(text);
 }
 
+function escapeHtml(s) {
+    const d = document.createElement('div');
+    d.textContent = s == null ? '' : String(s);
+    return d.innerHTML;
+}
+
 function appendEcobotMsg(role, text) {
     const container = document.getElementById('ecobot-messages');
     const isUser = role === 'user';
@@ -2988,7 +3001,7 @@ function appendEcobotMsg(role, text) {
     const d = document.createElement('div');
     d.textContent = text;
     const escaped = d.innerHTML;
-    div.innerHTML = '<div class="ecobot-msg-av">' + initial + '</div><div><div class="ecobot-bubble">' + escaped + '</div></div>';
+    div.innerHTML = '<div class="ecobot-msg-av">' + escapeHtml(initial) + '</div><div><div class="ecobot-bubble">' + escaped + '</div></div>';
     container.appendChild(div);
     container.scrollTop = container.scrollHeight;
 }
@@ -3258,7 +3271,7 @@ function openOppModal(btn) {
                 ctx.style.cssText = 'background:rgba(26,92,56,0.06);border:1px solid rgba(26,92,56,0.15);border-radius:10px;padding:0.7rem 0.9rem;margin-bottom:1rem;font-size:0.82rem;line-height:1.4;color:var(--green)';
                 wrap.querySelector('.pe-form')?.prepend(ctx);
             }
-            ctx.innerHTML = '<strong>Applying to:</strong> ' + title + (org ? ' · <span style="opacity:0.75">' + org + '</span>' : '');
+            ctx.innerHTML = '<strong>Applying to:</strong> ' + escapeHtml(title) + (org ? ' · <span style="opacity:0.75">' + escapeHtml(org) + '</span>' : '');
         }
     }
     document.getElementById('apply-modal').classList.add('open');
