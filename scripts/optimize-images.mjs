@@ -36,4 +36,16 @@ for (const job of jobs) {
         console.log(`${outPath.padEnd(32)} ${info.width}x${info.height}  ${(info.size / 1024).toFixed(0)} KB`);
     }
 }
+
+// Branded 1200x630 social-share card: the logo centred on the brand green.
+{
+    const logo = await sharp('assets/IMG.PNG').resize({ height: 360 }).png().toBuffer();
+    const outPath = path.join(OUT_DIR, 'og-image.png');
+    const info = await sharp({ create: { width: 1200, height: 630, channels: 4, background: '#1a5c38' } })
+        .composite([{ input: logo, gravity: 'center' }])
+        .png()
+        .toFile(outPath);
+    console.log(`${outPath.padEnd(32)} ${info.width}x${info.height}  ${(info.size / 1024).toFixed(0)} KB`);
+}
+
 console.log('done');
