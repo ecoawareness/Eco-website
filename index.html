@@ -736,6 +736,82 @@
         }
         #page-transition.leaving #transition-logo { transform: scale(1.08); }
 
+        /* ── CHALLENGE SPOTLIGHT (hero) ───────────────── */
+        .hero-challenge-spot {
+            display: inline-flex; align-items: center; gap: 14px;
+            margin-top: 4px; padding: 12px 18px; border-radius: 16px;
+            background: rgba(168,224,99,0.1);
+            border: 1px solid rgba(168,224,99,0.35);
+            text-decoration: none; color: #fff; max-width: 560px;
+            align-self: flex-start;
+            transition: all 200ms var(--ease-out);
+        }
+        .hero-challenge-spot:hover {
+            background: rgba(168,224,99,0.16);
+            border-color: rgba(168,224,99,0.6);
+            transform: translateY(-2px);
+            box-shadow: 0 16px 40px rgba(168,224,99,0.15);
+        }
+        .spot-trophy { font-size: 22px; flex-shrink: 0; }
+        .spot-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
+        .spot-title { font-size: 13.5px; font-weight: 600; color: var(--lime); }
+        .spot-sub { font-size: 12.5px; color: rgba(255,255,255,0.72); font-weight: 300; }
+        .spot-arrow { font-size: 16px; color: var(--lime); flex-shrink: 0; transition: transform 200ms var(--ease-out); }
+        .hero-challenge-spot:hover .spot-arrow { transform: translateX(3px); }
+        body.ar .spot-arrow { transform: scaleX(-1); }
+        body.ar .hero-challenge-spot:hover .spot-arrow { transform: scaleX(-1) translateX(-3px); }
+
+        /* ── CHALLENGES TEASER ────────────────────────── */
+        .teaser-section {
+            background: var(--paper);
+            padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem) 0;
+        }
+        .teaser-shell {
+            max-width: 1100px; margin: 0 auto;
+            background: var(--sand); border-radius: 28px;
+            padding: clamp(28px,5vw,56px);
+            display: grid; grid-template-columns: 1.05fr 0.95fr;
+            gap: clamp(28px,5vw,64px); align-items: center;
+            position: relative; overflow: hidden;
+        }
+        .teaser-copy { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
+        .teaser-copy .section-h2 { margin-top: 0; }
+        .teaser-p {
+            font-size: 15.5px; line-height: 1.75; color: var(--ink-2);
+            font-weight: 300; max-width: 480px;
+        }
+        .teaser-card { text-decoration: none; color: inherit; max-width: 380px; justify-self: center; width: 100%; }
+        .example-badge {
+            position: absolute; top: 12px; left: 12px; z-index: 3;
+            padding: 5px 10px; border-radius: 7px;
+            background: rgba(245,240,232,0.94); color: var(--rust);
+            font-family: var(--font-mono); font-size: 9px; font-weight: 700;
+            letter-spacing: 0.18em; text-transform: uppercase;
+            border: 1px solid rgba(196,98,45,0.35);
+        }
+        body.ar .example-badge { left: auto; right: 12px; }
+        body.ar .teaser-card .card-cover-art iconify-icon { right: auto; left: 14px; }
+        .meta-bounty b {
+            font-family: var(--font-display); font-style: italic; font-weight: 400;
+            color: var(--green); font-size: 16px;
+        }
+        @media (max-width: 900px) {
+            .teaser-shell { grid-template-columns: 1fr; }
+        }
+
+        /* ── POLISH: partner logos come alive on hover ── */
+        .partner-logo, .partner-name-text {
+            transition: opacity 250ms var(--ease-out), filter 250ms var(--ease-out),
+                        transform 250ms var(--ease-out), color 250ms var(--ease-out);
+        }
+        .partner-logo:hover { opacity: 1; filter: grayscale(0); transform: translateY(-2px); }
+        .partner-name-text:hover { color: var(--ink); transform: translateY(-2px); }
+
+        /* ── POLISH: even title rows in the opportunity grid ── */
+        @media (min-width: 769px) {
+            #opp-card-grid .card-h3 { min-height: 2.4em; }
+        }
+
         /* ── RESPONSIVE ───────────────────────────────── */
         @media (max-width: 1024px) {
             .hero-grid { grid-template-columns: 1fr; }
@@ -857,6 +933,18 @@
                     <span data-en="See how it works" data-ar="كيف يعمل">See how it works</span>
                 </a>
             </div>
+            <a href="challenges.html" class="hero-challenge-spot reveal" style="transition-delay:0.34s">
+                <span class="spot-trophy" aria-hidden="true">🏆</span>
+                <span class="spot-text">
+                    <span class="spot-title"
+                          data-en="EcoHub Challenges — Season 1 launching soon"
+                          data-ar="تحديات EcoHub — الموسم الأول قريبًا">EcoHub Challenges — Season 1 launching soon</span>
+                    <span class="spot-sub"
+                          data-en="Real bounties. Real problems. Real recognition."
+                          data-ar="مكافآت حقيقية. مشكلات حقيقية. اعتراف حقيقي.">Real bounties. Real problems. Real recognition.</span>
+                </span>
+                <span class="spot-arrow" aria-hidden="true">→</span>
+            </a>
         </div>
 
         <!-- Right: photo collage -->
@@ -1041,6 +1129,64 @@
                 </p>
             </div>
         </div>
+    </div>
+</section>
+
+<!-- ═══════════ CHALLENGES TEASER ═══════════ -->
+<section class="teaser-section" id="challenges-teaser">
+    <div class="teaser-shell reveal">
+        <div class="teaser-copy">
+            <span class="eyebrow eyebrow-rust"
+                  data-en="NEW — ECOHUB CHALLENGES" data-ar="جديد — تحديات EcoHub">NEW — ECOHUB CHALLENGES</span>
+            <h2 class="section-h2">
+                <span data-en="Don't just volunteer. <em>Compete.</em>"
+                      data-ar="لا تكتفِ بالتطوع. <em>نافس.</em>">
+                    Don't just volunteer. <em>Compete.</em>
+                </span>
+            </h2>
+            <p class="teaser-p"
+               data-en="Companies and NGOs post real sustainability problems with bounties attached. Squads of 3–4 students compete to solve them over 2–4 weeks. The winning squad gets paid and presents to the organization — and everyone earns verified Eco ID hours."
+               data-ar="تنشر الشركات والمنظمات مشكلات استدامة حقيقية بمكافآت مالية، وتتنافس فرق من 3–4 طلاب على حلّها خلال 2–4 أسابيع. الفريق الفائز يحصل على المكافأة ويعرض حلّه أمام المنظمة — والجميع يكسب ساعات موثقة على Eco ID.">
+                Companies and NGOs post real sustainability problems with bounties attached.
+                Squads of 3–4 students compete to solve them over 2–4 weeks. The winning squad gets paid
+                and presents to the organization — and everyone earns verified Eco ID hours.
+            </p>
+            <a href="challenges.html" class="btn btn-primary">
+                <span data-en="See all challenges →" data-ar="شاهد كل التحديات →">See all challenges →</span>
+            </a>
+        </div>
+
+        <!-- Example challenge card (format preview — not a live challenge) -->
+        <a href="challenges.html" class="opp-card teaser-card">
+            <div class="card-cover">
+                <div class="card-cover-art" style="background:var(--lime)">
+                    <svg viewBox="0 0 300 150" preserveAspectRatio="none" style="opacity:0.55" aria-hidden="true">
+                        <circle cx="-10" cy="170" r="28" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.47"/>
+                        <circle cx="-10" cy="170" r="56" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.39"/>
+                        <circle cx="-10" cy="170" r="88" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.31"/>
+                        <circle cx="-10" cy="170" r="122" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.23"/>
+                        <circle cx="-10" cy="170" r="158" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.15"/>
+                    </svg>
+                    <iconify-icon icon="ph:cube-fill" width="64" style="color:var(--green-dark)" aria-hidden="true"></iconify-icon>
+                </div>
+                <span class="example-badge" data-en="EXAMPLE" data-ar="مثال">EXAMPLE</span>
+            </div>
+            <div class="card-body">
+                <div class="card-tag-row">
+                    <span class="card-tag-label">— <span data-en="PROTOTYPE" data-ar="نموذج أولي">PROTOTYPE</span></span>
+                    <span class="card-pill pill-lime"><span class="card-pill-dot"></span><span data-en="Open" data-ar="مفتوح">Open</span></span>
+                </div>
+                <h3 class="card-h3"
+                    data-en="Make household recycling easier to start"
+                    data-ar="اجعلوا إعادة التدوير المنزلية أسهل">Make household recycling easier to start</h3>
+                <div class="card-org" data-en="Partner Organization" data-ar="منظمة شريكة">Partner Organization</div>
+                <div class="card-meta">
+                    <span class="meta-bounty">💰 <b data-en="QAR 2,500" data-ar="2,500 ر.ق">QAR 2,500</b></span>
+                    <span>⏱ <span data-en="2 weeks" data-ar="أسبوعان">2 weeks</span></span>
+                    <span class="card-hours" data-en="Squad of 3–4" data-ar="فريق من 3–4">Squad of 3–4</span>
+                </div>
+            </div>
+        </a>
     </div>
 </section>
 
@@ -1422,6 +1568,29 @@ document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => 
 document.querySelectorAll('.hero-copy .reveal').forEach((el, i) => {
     setTimeout(() => el.classList.add('visible'), i * 120 + 200);
 });
+
+// ── STAT COUNT-UP ────────────────────────────────
+(function() {
+    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const nums = document.querySelectorAll('.hero-stats .stat-num');
+    const obs = new IntersectionObserver(entries => {
+        entries.forEach(entry => {
+            if (!entry.isIntersecting) return;
+            obs.unobserve(entry.target);
+            const el  = entry.target;
+            const m   = el.textContent.trim().match(/^(\d+)(.*)$/);
+            if (!m) return;
+            const target = parseInt(m[1], 10), suffix = m[2];
+            const t0 = performance.now(), dur = 900;
+            (function tick(now) {
+                const p = Math.min(1, (now - t0) / dur);
+                el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
+                if (p < 1) requestAnimationFrame(tick);
+            })(t0);
+        });
+    }, { threshold: 0.5 });
+    nums.forEach(n => obs.observe(n));
+})();
 
 // ── OPPORTUNITIES FILTER ─────────────────────────
 window.__ecoLocked = true; // flipped to false by auth check if signed in
