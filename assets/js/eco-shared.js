@@ -173,7 +173,7 @@ function applyLanguage() {
 let lenis = null;
 if (window.Lenis) {
     lenis = new Lenis({
-        duration: 1.3,
+        duration: 1.0,
         easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
         smooth: true,
         smoothTouch: false,
@@ -205,6 +205,16 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         overlay.style.opacity = '0';
         logo.style.transform  = 'scale(1)';
     });
+    // Release the overlay's compositor layer once the entry fade is done —
+    // an always-mounted fixed layer above the page costs scroll fps
+    overlay.addEventListener('transitionend', e => {
+        if (e.propertyName === 'opacity' && !overlay.classList.contains('leaving')) {
+            overlay.style.visibility = 'hidden';
+        }
+    });
+    setTimeout(() => {
+        if (!overlay.classList.contains('leaving')) overlay.style.visibility = 'hidden';
+    }, 1500);
 
     document.querySelectorAll('a').forEach(link => {
         link.addEventListener('click', function (e) {
@@ -212,6 +222,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             const tgt = this.getAttribute('target');
             if (!url || url.startsWith('#') || url.startsWith('mailto:') || url.startsWith('tel:') || url.startsWith('javascript:') || tgt === '_blank' || (this.hostname && this.hostname !== window.location.hostname)) return;
             e.preventDefault();
+            overlay.style.visibility = 'visible';
             overlay.classList.add('leaving');
             overlay.style.opacity = '1';
             setTimeout(() => { window.location.href = url; }, 450);
@@ -222,6 +233,7 @@ document.querySelectorAll('a[href^="#"]').forEach(anchor => {
         if (e.persisted) {
             overlay.classList.remove('leaving');
             overlay.style.opacity = '0';
+            overlay.style.visibility = 'hidden';
             logo.style.transform  = 'scale(1)';
         }
     });
