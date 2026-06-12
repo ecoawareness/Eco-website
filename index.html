@@ -1,879 +1,374 @@
 <!DOCTYPE html>
 <html lang="en" dir="ltr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>EcoHub — Qatar's Youth Climate Platform by EcoAwareness</title>
-    <meta name="description" content="EcoHub connects young people in Qatar with climate volunteering, verified volunteer hours, and a directory of environmental organisations — built by students, run by EcoAwareness.">
-    <link rel="canonical" href="https://ecoawarenessqa.org/">
-    <meta property="og:type" content="website">
-    <meta property="og:site_name" content="EcoHub">
-    <meta property="og:locale" content="en_QA">
-    <meta property="og:title" content="EcoHub — Qatar's Youth Climate Platform by EcoAwareness">
-    <meta property="og:description" content="EcoHub connects young people in Qatar with climate volunteering, verified volunteer hours, and a directory of environmental organisations — built by students, run by EcoAwareness.">
-    <meta property="og:url" content="https://ecoawarenessqa.org/">
-    <meta property="og:image" content="https://ecoawarenessqa.org/assets/opt/og-image.png">
-    <meta name="twitter:card" content="summary_large_image">
-    <meta name="twitter:title" content="EcoHub — Qatar's Youth Climate Platform by EcoAwareness">
-    <meta name="twitter:description" content="EcoHub connects young people in Qatar with climate volunteering, verified volunteer hours, and a directory of environmental organisations — built by students, run by EcoAwareness.">
-    <meta name="twitter:image" content="https://ecoawarenessqa.org/assets/opt/og-image.png">
-    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%231a5c38%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2245%22%20text-anchor%3D%22middle%22%20font-family%3D%22Georgia%2C%20serif%22%20font-style%3D%22italic%22%20font-weight%3D%22700%22%20font-size%3D%2240%22%20fill%3D%22%23fff%22%3EE%3C/text%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2218%22%20r%3D%225%22%20fill%3D%22%23a8e063%22/%3E%3C/svg%3E">
-    <link rel="apple-touch-icon" href="assets/opt/logo.png">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>EcoAwareness — Qatar's youth-led climate action platform</title>
+<meta name="description" content="One profile. Every opportunity. Verified hours. Real recognition. Qatar's youth-led climate action platform — built by students, for students, bilingual and free.">
+<link rel="canonical" href="https://ecoawarenessqa.org/index.html">
+<meta property="og:type" content="website">
+<meta property="og:site_name" content="EcoAwareness">
+<meta property="og:locale" content="en_QA">
+<meta property="og:title" content="EcoAwareness — Where Qatar's climate generation takes action.">
+<meta property="og:description" content="One profile. Every opportunity. Verified hours. Real recognition. Built by students, for students — bilingual, free, forever.">
+<meta property="og:url" content="https://ecoawarenessqa.org/">
+<meta property="og:image" content="https://ecoawarenessqa.org/assets/opt/og-image.png">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%231a5c38%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2245%22%20text-anchor%3D%22middle%22%20font-family%3D%22Georgia%2C%20serif%22%20font-style%3D%22italic%22%20font-weight%3D%22700%22%20font-size%3D%2240%22%20fill%3D%22%23fff%22%3EE%3C/text%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2218%22%20r%3D%225%22%20fill%3D%22%23a8e063%22/%3E%3C/svg%3E">
+<link rel="apple-touch-icon" href="assets/opt/logo.png">
 
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
-    <script src="https://cdn.tailwindcss.com"></script>
-    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
-    <script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
-    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+<script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+<script src="https://unpkg.com/@studio-freight/lenis@1.0.39/dist/lenis.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<link rel="stylesheet" href="assets/css/eco-shared.css">
 
-    <style>
-        /* ── TOKENS ──────────────────────────────────── */
-        :root {
-            --ink:        #0a0a0a;
-            --ink-2:      rgba(10,10,10,0.7);
-            --ink-3:      rgba(10,10,10,0.5);
-            --ink-4:      rgba(10,10,10,0.35);
-            --paper:      #f5f0e8;
-            --sand:       #e8dfc8;
-            --green:      #1a5c38;
-            --green-light:#2d7a4f;
-            --green-dark: #0d3a22;
-            --lime:       #a8e063;
-            --rust:       #c4622d;
+<style>
+/* ── Language toggle ──────────────────────────── */
+#lang-toggle {
+    position: fixed; bottom: max(1.5rem, env(safe-area-inset-bottom));
+    right: 1.5rem; z-index: 800;
+    display: inline-flex; align-items: center; gap: 0.5rem;
+    padding: 0.5rem 1rem; border-radius: 100px;
+    background: rgba(245,240,232,0.9); backdrop-filter: blur(10px);
+    border: 1px solid rgba(0,0,0,0.1);
+    font-family: var(--font-body); font-size: 0.78rem; font-weight: 500;
+    color: var(--ink); cursor: pointer;
+    transition: all 200ms var(--ease-out);
+}
+#lang-toggle:hover { background: var(--sand); }
+.lang-dot { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; flex-shrink: 0; }
+body.ar #lang-toggle { right: auto; left: 1.5rem; }
 
-            --font-display:'Instrument Serif', Georgia, serif;
-            --font-body:   'DM Sans', system-ui, sans-serif;
-            --font-logo:   'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
-            --font-arabic: 'Noto Naskh Arabic', serif;
-            --font-mono:   ui-monospace, 'SF Mono', Menlo, monospace;
+/* ── Page transition ──────────────────────────── */
+#page-transition {
+    position: fixed; inset: 0; z-index: 9998; background: var(--green);
+    display: flex; align-items: center; justify-content: center;
+    opacity: 1; transition: opacity 550ms var(--ease-in-out);
+    pointer-events: none; will-change: opacity;
+}
+#transition-logo {
+    width: 4.5rem; height: 4.5rem; transform: scale(0.92);
+    transition: transform 650ms var(--ease-out); will-change: transform;
+}
+#page-transition.leaving #transition-logo { transform: scale(1.08); }
 
-            --ease-out:   cubic-bezier(0.25,1,0.5,1);
-            --ease-spring:cubic-bezier(0.22,1,0.36,1);
-        }
+/* ════════ HERO ════════ */
+.home-hero {
+    min-height: 100dvh;
+    position: relative; overflow: hidden;
+    background: var(--green-dark); color: #fff;
+    display: grid; grid-template-rows: 1fr auto;
+    padding: clamp(110px,13vh,170px) var(--space-gutter) 0;
+}
+.home-hero-wash-tr {
+    position: absolute; top: -10%; right: -10%; width: 70%; height: 70%;
+    background: radial-gradient(ellipse, rgba(168,224,99,0.18), transparent 60%);
+    pointer-events: none;
+}
+.home-hero-wash-bl {
+    position: absolute; bottom: -15%; left: -10%; width: 60%; height: 60%;
+    background: radial-gradient(ellipse, rgba(196,98,45,0.14), transparent 60%);
+    pointer-events: none;
+}
+.home-watermark {
+    position: absolute; right: 2%; top: 10%;
+    font-family: var(--font-arabic); font-size: 17vw;
+    color: rgba(255,255,255,0.035); line-height: 1; font-weight: 500;
+    pointer-events: none; user-select: none; z-index: 0;
+}
+.home-hero-inner {
+    max-width: 1240px; margin: 0 auto; width: 100%;
+    position: relative; z-index: 2; align-self: center;
+    display: grid; grid-template-columns: 1.2fr 0.8fr; gap: 60px; align-items: center;
+}
+.home-hero-copy { display: flex; flex-direction: column; gap: 28px; }
+.home-hero-title {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(3rem,6.6vw,6rem); line-height: 1.02;
+    letter-spacing: var(--tracking-tight); text-wrap: pretty;
+}
+body.ar .home-hero-title { font-family: var(--font-arabic); letter-spacing: 0; line-height: 1.25; }
+.home-hero-title em { font-style: italic; color: var(--lime); }
 
-        /* ── RESET ────────────────────────────────────── */
-        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-        html { scroll-behavior: auto; }
-        body {
-            background: var(--paper);
-            color: var(--ink);
-            font-family: var(--font-body);
-            overflow-x: hidden;
-            -webkit-font-smoothing: antialiased;
-        }
-        body.ar { font-family: var(--font-arabic); direction: rtl; }
+/* Cycling italic phrase */
+.cycler { display: inline-grid; vertical-align: baseline; text-align: left; }
+body.ar .cycler { text-align: right; }
+.cycler > span {
+    grid-area: 1 / 1; white-space: nowrap;
+    opacity: 0; transform: translateY(0.45em);
+    transition: opacity 0.5s var(--ease-spring), transform 0.5s var(--ease-spring);
+    font-style: italic; color: var(--lime);
+}
+body.ar .cycler > span { font-style: normal; }
+.cycler > span.on { opacity: 1; transform: none; }
+.cycler > span.off { opacity: 0; transform: translateY(-0.45em); }
 
-        /* ── GRAIN OVERLAY ────────────────────────────── */
-        body::before {
-            content: '';
-            position: fixed; inset: 0;
-            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='200' height='200'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.4'/%3E%3C/svg%3E");
-            pointer-events: none; z-index: 9999; opacity: 0.04;
-            mix-blend-mode: multiply;
-        }
+.home-hero-sub {
+    font-size: 18px; line-height: 1.7; max-width: 540px;
+    color: rgba(255,255,255,0.78); font-weight: 300;
+}
+.home-hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
+.btn-arrow iconify-icon { transition: transform var(--dur-fast) var(--ease-out); }
+.btn-arrow:hover iconify-icon { transform: translateX(3px); }
+body.ar .btn-arrow:hover iconify-icon { transform: translateX(-3px) scaleX(-1); }
+body.ar .btn-arrow iconify-icon { transform: scaleX(-1); }
 
-        /* ── LANGUAGE TOGGLE ──────────────────────────── */
-        #lang-toggle {
-            position: fixed; bottom: max(1.5rem, env(safe-area-inset-bottom));
-            right: 1.5rem; z-index: 800;
-            display: inline-flex; align-items: center; gap: 0.5rem;
-            padding: 0.5rem 1rem; border-radius: 100px;
-            background: rgba(245,240,232,0.9); backdrop-filter: blur(10px);
-            border: 1px solid rgba(0,0,0,0.1);
-            font-family: var(--font-body); font-size: 0.78rem; font-weight: 500;
-            color: var(--ink); cursor: pointer;
-            transition: all 200ms var(--ease-out);
-        }
-        #lang-toggle:hover { background: var(--sand); }
-        .lang-dot { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; flex-shrink: 0; }
+/* Hero photo card */
+.hero-photo { position: relative; }
+.hero-photo-frame {
+    border-radius: 22px; overflow: hidden;
+    box-shadow: 0 24px 60px -20px rgba(10,10,10,0.45);
+    transform: rotate(2deg);
+    transition: transform 0.5s var(--ease-spring);
+    position: relative;
+}
+.hero-photo:hover .hero-photo-frame { transform: rotate(0.5deg) translateY(-4px); }
+.hero-photo-frame img { display: block; width: 100%; height: 440px; object-fit: cover; }
+.hero-photo-frame::after {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(160deg, transparent 40%, rgba(0,0,0,0.4));
+    pointer-events: none;
+}
+.hero-photo-caption {
+    position: absolute; bottom: 16px; left: 16px; z-index: 2;
+    display: inline-flex; align-items: center; gap: 8px;
+    padding: 8px 14px; border-radius: var(--radius-pill);
+    background: rgba(10,10,10,0.35); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px);
+    font-size: 11.5px; font-weight: 500; color: #fff;
+}
+body.ar .hero-photo-caption { left: auto; right: 16px; }
+.hero-photo-caption .dot { width: 6px; height: 6px; border-radius: 100%; background: var(--lime); }
+.hero-photo-badge {
+    position: absolute; top: -18px; right: -10px; z-index: 3;
+    background: var(--lime); color: var(--green-dark);
+    border-radius: 14px; padding: 12px 16px;
+    font-family: var(--font-display); font-style: italic; font-size: 19px; line-height: 1.1;
+    box-shadow: 0 16px 40px rgba(0,0,0,0.3);
+    transform: rotate(-4deg);
+    animation: badgeFloat 4s ease-in-out infinite;
+}
+body.ar .hero-photo-badge { right: auto; left: -10px; font-family: var(--font-arabic); font-style: normal; }
+.hero-photo-badge small { display: block; font-family: var(--font-mono); font-style: normal; font-size: 8.5px; font-weight: 700; letter-spacing: 0.16em; margin-top: 3px; opacity: 0.75; }
+body.ar .hero-photo-badge small { font-family: var(--font-arabic); letter-spacing: 0; font-size: 10px; }
+@keyframes badgeFloat { 0%,100% { transform: rotate(-4deg) translateY(0); } 50% { transform: rotate(-4deg) translateY(-6px); } }
 
-        /* ── NAV ─────────────────────────────────────── */
-        nav {
-            position: fixed; top: 14px; left: 50%;
-            transform: translateX(-50%);
-            width: min(1180px, calc(100% - 28px));
-            z-index: 100;
-            display: flex; align-items: center; justify-content: space-between;
-            padding: 10px 16px; border-radius: 100px;
-            background: rgba(245,240,232,0.55);
-            backdrop-filter: blur(14px); -webkit-backdrop-filter: blur(14px);
-            border: 1px solid rgba(0,0,0,0.06);
-            transition: background 300ms var(--ease-out);
-        }
-        nav.scrolled { background: rgba(245,240,232,0.93); }
+/* Hero stat strip */
+.hero-stats {
+    position: relative; z-index: 2;
+    margin: 4rem auto 0; max-width: 1240px; width: 100%;
+    border-top: 1px solid rgba(255,255,255,0.1);
+    display: grid; grid-template-columns: repeat(4,1fr);
+    padding: 24px 0 28px;
+}
+.stat-item + .stat-item { border-left: 1px solid rgba(255,255,255,0.1); padding-left: 24px; }
+body.ar .stat-item + .stat-item { border-left: none; border-right: 1px solid rgba(255,255,255,0.1); padding-left: 0; padding-right: 24px; }
+.stat-num {
+    font-family: var(--font-display); font-style: italic;
+    color: var(--lime); font-size: clamp(2rem,4vw,3rem);
+    line-height: 1; letter-spacing: var(--tracking-tight);
+}
+body.ar .stat-num { font-family: var(--font-arabic); font-style: normal; }
+.stat-label {
+    margin-top: 6px; font-size: 11px; text-transform: uppercase;
+    letter-spacing: var(--tracking-eyebrow); color: rgba(255,255,255,0.7);
+}
+body.ar .stat-label { letter-spacing: 0; font-size: 13px; }
 
-        .nav-logo-link { display: flex; align-items: center; gap: 9px; text-decoration: none; color: var(--ink); }
-        .nav-logo-mark {
-            width: 36px; height: 36px; border-radius: 9px;
-            background: var(--green); display: flex; align-items: center;
-            justify-content: center; flex-shrink: 0;
-        }
-        .nav-logo-mark img { width: 72%; height: 72%; object-fit: contain; filter: brightness(0) invert(1); }
-        .nav-wordmark {
-            font-family: var(--font-logo); letter-spacing: -0.025em;
-            font-size: 1.2rem; line-height: 1; white-space: nowrap;
-        }
-        .nav-wordmark .eco { font-weight: 800; }
-        .nav-wordmark .aware { font-weight: 600; opacity: 0.78; }
+/* ════════ CHALLENGES SPOTLIGHT ════════ */
+.spotlight { background: var(--ink); color: #fff; position: relative; overflow: hidden; }
+.spotlight-wash {
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse at 75% 20%, rgba(168,224,99,0.14), transparent 55%),
+                radial-gradient(ellipse at 10% 90%, rgba(196,98,45,0.10), transparent 55%);
+    pointer-events: none;
+}
+.spotlight-ticker {
+    border-bottom: 1px solid rgba(168,224,99,0.22);
+    overflow: hidden; white-space: nowrap; padding: 11px 0;
+    color: var(--lime); position: relative;
+}
+.spotlight-ticker-track { display: inline-flex; animation: tickerScroll 30s linear infinite; will-change: transform; }
+body.ar .spotlight-ticker-track { animation-name: tickerScrollRtl; }
+.spotlight-ticker:hover .spotlight-ticker-track { animation-play-state: paused; }
+.spotlight-ticker-item {
+    font-family: var(--font-mono); font-size: 10.5px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    padding: 0 26px; display: inline-flex; align-items: center; gap: 26px;
+}
+body.ar .spotlight-ticker-item { font-family: var(--font-arabic); letter-spacing: 0; font-size: 13px; }
+.spotlight-ticker-item::after { content: '✦'; color: rgba(168,224,99,0.4); font-size: 9px; }
+@keyframes tickerScroll { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+@keyframes tickerScrollRtl { from { transform: translateX(0); } to { transform: translateX(50%); } }
 
-        .nav-links {
-            display: flex; align-items: center; gap: 28px;
-        }
-        .nav-links a {
-            font-size: 13px; font-weight: 400; color: var(--ink-2);
-            text-decoration: none; transition: color 200ms;
-        }
-        .nav-links a:hover, .nav-links a.active { color: var(--ink); font-weight: 500; }
+.spotlight-body {
+    position: relative; max-width: 1140px; margin: 0 auto;
+    padding: var(--space-section) var(--space-gutter);
+    display: grid; grid-template-columns: 0.95fr 1.05fr; gap: clamp(40px,5vw,80px); align-items: center;
+}
+.spotlight-copy { display: flex; flex-direction: column; gap: 22px; }
+.season-chip {
+    display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
+    padding: 7px 14px; border-radius: var(--radius-pill);
+    background: rgba(168,224,99,0.14); border: 1px solid rgba(168,224,99,0.32);
+}
+.season-chip-dot {
+    width: 6px; height: 6px; border-radius: 100%; background: var(--lime);
+    box-shadow: 0 0 10px var(--lime); animation: pulseDot 1.8s ease-in-out infinite;
+}
+@keyframes pulseDot { 0%,100% { box-shadow: 0 0 6px var(--lime); opacity: 1; } 50% { box-shadow: 0 0 14px var(--lime); opacity: 0.7; } }
+.season-chip-label {
+    font-family: var(--font-mono); font-size: 10px; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--lime); font-weight: 600;
+}
+body.ar .season-chip-label { font-family: var(--font-arabic); letter-spacing: 0; font-size: 12px; }
+.spotlight-title {
+    font-family: var(--font-display); font-weight: 400;
+    font-size: clamp(2.4rem,4.6vw,4rem); line-height: 1.05; letter-spacing: var(--tracking-tight);
+}
+body.ar .spotlight-title { font-family: var(--font-arabic); letter-spacing: 0; line-height: 1.25; }
+.spotlight-title em { font-style: italic; color: var(--lime); }
+.spotlight-p { font-size: 16px; line-height: 1.75; color: rgba(255,255,255,0.7); font-weight: 300; max-width: 460px; }
 
-        .nav-cta {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 10px 20px; border-radius: 100px;
-            background: var(--green); color: #fff;
-            font-family: var(--font-body); font-size: 13px; font-weight: 500;
-            text-decoration: none; border: none; cursor: pointer;
-            box-shadow: 0 18px 42px rgba(26,92,56,0.24), inset 0 1px 0 rgba(255,255,255,0.18);
-            transition: all 200ms var(--ease-out);
-            white-space: nowrap;
-        }
-        .nav-cta:hover { background: var(--green-light); transform: translateY(-1px); }
+.spotlight-countdown {
+    display: flex; align-items: baseline; gap: 6px;
+    font-family: var(--font-mono); font-weight: 600;
+    font-size: clamp(1.4rem,2.2vw,1.9rem); letter-spacing: 0.02em;
+    font-variant-numeric: tabular-nums; color: #fff;
+    direction: ltr;
+}
+body.ar .spotlight-countdown { justify-content: flex-end; }
+.spotlight-countdown .cd-unit { font-size: 10px; font-weight: 500; color: rgba(255,255,255,0.45); letter-spacing: 0.1em; }
+.spotlight-countdown .cd-sep { color: rgba(168,224,99,0.6); }
+.spotlight-cd-label {
+    font-family: var(--font-mono); font-size: 9.5px; font-weight: 600;
+    letter-spacing: 0.18em; text-transform: uppercase; color: rgba(255,255,255,0.5);
+    margin-bottom: -14px;
+}
+body.ar .spotlight-cd-label { font-family: var(--font-arabic); letter-spacing: 0; font-size: 12px; }
+.spotlight-actions { display: flex; gap: 12px; flex-wrap: wrap; margin-top: 6px; }
 
-        /* Mobile nav toggle */
-        .nav-toggle {
-            display: none; background: transparent; border: 0; cursor: pointer;
-            padding: 6px; width: 38px; height: 38px;
-            flex-direction: column; justify-content: center; gap: 5px;
-        }
-        .nav-toggle span {
-            display: block; width: 20px; height: 2px; background: var(--ink);
-            border-radius: 2px; transition: transform 0.3s, opacity 0.3s;
-        }
-        .nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
-        .nav-toggle.active span:nth-child(2) { opacity: 0; }
-        .nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+/* Mini bounty deck — fanned cards */
+.deck { position: relative; min-height: 460px; }
+.deck-card {
+    position: absolute; width: min(330px, 78%);
+    background: #fff; color: var(--ink);
+    border-radius: 16px; padding: 20px;
+    box-shadow: 0 30px 70px rgba(0,0,0,0.35);
+    border: var(--border-hairline);
+    transition: transform 0.5s var(--ease-spring), box-shadow 0.5s var(--ease-out);
+}
+.deck-card.c1 { top: 6%; left: 0; transform: rotate(-5deg); z-index: 1; }
+.deck-card.c2 { top: 22%; left: 22%; transform: rotate(2deg); z-index: 2; }
+.deck-card.c3 { top: 40%; left: 8%; transform: rotate(-2deg); z-index: 3; }
+.deck:hover .deck-card.c1 { transform: rotate(-7deg) translate(-12px,-6px); }
+.deck:hover .deck-card.c2 { transform: rotate(4deg) translate(14px,-4px); }
+.deck:hover .deck-card.c3 { transform: rotate(-1deg) translateY(-10px); }
+.deck-card:hover { box-shadow: 0 40px 90px rgba(0,0,0,0.5); z-index: 5 !important; }
+.deck-tag-row { display: flex; justify-content: space-between; align-items: center; margin-bottom: 12px; }
+.deck-type { font-family: var(--font-mono); font-size: 9px; font-weight: 700; letter-spacing: 0.18em; text-transform: uppercase; color: var(--rust); }
+body.ar .deck-type { font-family: var(--font-arabic); letter-spacing: 0; font-size: 11px; }
+.deck-stamp {
+    font-family: var(--font-mono); font-size: 8.5px; font-weight: 700; letter-spacing: 0.16em;
+    text-transform: uppercase; color: var(--rust); border: 1.2px solid currentColor;
+    border-radius: 6px; padding: 3px 7px; transform: rotate(3deg); opacity: 0.8;
+}
+body.ar .deck-stamp { font-family: var(--font-arabic); letter-spacing: 0; font-size: 10.5px; transform: rotate(-3deg); }
+.deck-title { font-family: var(--font-display); font-weight: 400; font-size: 19px; line-height: 1.2; }
+body.ar .deck-title { font-family: var(--font-arabic); }
+.deck-meta {
+    margin-top: 14px; padding-top: 12px; border-top: 1px dashed rgba(0,0,0,0.15);
+    display: flex; justify-content: space-between; align-items: baseline;
+}
+.deck-bounty { font-family: var(--font-display); font-style: italic; font-size: 22px; color: var(--green); }
+body.ar .deck-bounty { font-family: var(--font-arabic); font-style: normal; font-size: 19px; }
+.deck-dur { font-size: 11.5px; color: var(--ink-3); display: inline-flex; gap: 5px; align-items: center; }
+.deck-dur iconify-icon { color: var(--green); }
 
-        .nav-backdrop {
-            display: none; position: fixed; inset: 0;
-            background: rgba(0,0,0,0.45); z-index: 98;
-            opacity: 0; pointer-events: none; transition: opacity 0.3s;
-        }
-        .nav-backdrop.show { opacity: 1; pointer-events: auto; }
+/* ════════ PARTNERS ════════ */
+.partners-section {
+    background: var(--sand); padding: clamp(3rem,6vw,4.5rem) var(--space-gutter);
+    text-align: center;
+}
+.partners-row {
+    margin-top: 28px; display: flex; flex-wrap: wrap; justify-content: center;
+    align-items: center; gap: clamp(24px,4vw,56px);
+}
+.partner-name {
+    font-family: var(--font-body); font-weight: 600; font-size: 14px;
+    letter-spacing: 0.22em; text-transform: uppercase; color: var(--ink-3);
+}
+.partners-row img { height: 34px; width: auto; opacity: 0.75; filter: grayscale(1); transition: all var(--dur-fast); }
+.partners-row img:hover { opacity: 1; filter: none; }
 
-        /* ── HERO ─────────────────────────────────────── */
-        .hero {
-            min-height: 100dvh;
-            position: relative; overflow: hidden;
-            background: var(--green-dark); color: #fff;
-            display: grid; grid-template-rows: 1fr auto;
-            padding: clamp(110px,13vh,170px) clamp(1.5rem,6vw,6rem) 0;
-        }
-        /* Decorative washes */
-        .hero-wash-tr {
-            position: absolute; top: -10%; right: -10%; width: 70%; height: 70%;
-            background: radial-gradient(ellipse, rgba(168,224,99,0.18), transparent 60%);
-            pointer-events: none;
-        }
-        .hero-wash-bl {
-            position: absolute; bottom: -15%; left: -10%; width: 60%; height: 60%;
-            background: radial-gradient(ellipse, rgba(196,98,45,0.14), transparent 60%);
-            pointer-events: none;
-        }
-        .hero-watermark {
-            position: absolute; right: 3%; top: 14%;
-            font-family: var(--font-arabic); font-size: 18vw;
-            color: rgba(255,255,255,0.035); line-height: 1; font-weight: 500;
-            pointer-events: none; user-select: none; z-index: 0;
-        }
+/* ════════ PROBLEM ════════ */
+.problem-section { background: var(--paper); padding: var(--space-section) var(--space-gutter); }
+.problem-inner { max-width: 1100px; margin: 0 auto; }
+.problem-cards {
+    display: grid; grid-template-columns: repeat(3,1fr);
+    border: 1.5px solid rgba(0,0,0,0.08); border-radius: var(--radius-card); overflow: hidden;
+}
+.problem-card { padding: 30px 28px; background: #fff; transition: background var(--dur-fast) var(--ease-out); }
+.problem-card:hover { background: var(--sand); }
+.problem-card + .problem-card { border-left: 1.5px solid rgba(0,0,0,0.08); }
+body.ar .problem-card + .problem-card { border-left: none; border-right: 1.5px solid rgba(0,0,0,0.08); }
+.problem-card iconify-icon { font-size: 26px; color: var(--rust); margin-bottom: 18px; }
+.problem-card h3 { font-family: var(--font-display); font-weight: 400; font-size: 22px; line-height: 1.2; margin-bottom: 10px; }
+body.ar .problem-card h3 { font-family: var(--font-arabic); }
+.problem-card p { font-size: 14px; line-height: 1.7; color: var(--ink-2); font-weight: 300; }
 
-        /* Hero main grid */
-        .hero-grid {
-            max-width: 1240px; margin: 0 auto; width: 100%;
-            position: relative; z-index: 2; align-self: center;
-            display: grid; grid-template-columns: minmax(0,1.15fr) minmax(0,0.85fr);
-            gap: clamp(32px,5vw,72px); align-items: center;
-        }
+/* ════════ SOLUTION ════════ */
+.solution-section {
+    background: var(--green-dark); color: #fff; position: relative; overflow: hidden;
+    padding: var(--space-section) var(--space-gutter);
+}
+.solution-wash {
+    position: absolute; top: -20%; right: -10%; width: 55%; height: 65%;
+    background: radial-gradient(ellipse, rgba(168,224,99,0.13), transparent 60%);
+    pointer-events: none;
+}
+.solution-inner { max-width: 1100px; margin: 0 auto; position: relative; }
+.solution-cards { display: grid; grid-template-columns: repeat(3,1fr); gap: 16px; }
+.solution-card {
+    padding: 28px; border-radius: var(--radius-card);
+    background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08);
+    transition: border-color var(--dur-fast) var(--ease-out), transform var(--dur-fast) var(--ease-out);
+}
+.solution-card:hover { border-color: rgba(168,224,99,0.25); transform: translateY(-2px); }
+.solution-card-num {
+    font-family: var(--font-display); font-style: italic;
+    font-size: 44px; color: var(--lime); line-height: 1; margin-bottom: 18px;
+}
+.solution-card h3 { font-family: var(--font-display); font-weight: 400; font-size: 21px; line-height: 1.2; margin-bottom: 10px; color: #fff; }
+body.ar .solution-card h3 { font-family: var(--font-arabic); }
+.solution-card p { font-size: 13.5px; line-height: 1.7; color: rgba(255,255,255,0.65); font-weight: 300; }
 
-        /* Left copy */
-        .hero-copy { display: flex; flex-direction: column; gap: 28px; min-width: 0; }
-
-        .eyebrow {
-            display: inline-flex; align-items: center; gap: 0.6rem;
-            font-size: 11px; font-weight: 500; text-transform: uppercase;
-            letter-spacing: 0.15em;
-        }
-        .eyebrow::before { content: ''; width: 24px; height: 1px; background: currentColor; }
-        .eyebrow-lime { color: var(--lime); }
-        .eyebrow-rust { color: var(--rust); }
-        .eyebrow-green { color: var(--green); }
-        body.ar .eyebrow::before { display: none; }
-
-        .hero-title {
-            font-family: var(--font-display); font-weight: 400;
-            font-size: clamp(2.8rem,6.2vw,5.6rem); line-height: 1.04;
-            letter-spacing: -0.02em; text-wrap: pretty;
-        }
-        .section-h2, .opp-h2, .featured-h3 { text-wrap: pretty; }
-        .hero-title em { font-style: italic; color: var(--lime); }
-
-        .hero-sub {
-            font-size: 18px; line-height: 1.7; max-width: 540px;
-            color: rgba(255,255,255,0.78); font-weight: 300;
-        }
-
-        .hero-actions { display: flex; gap: 12px; flex-wrap: wrap; }
-
-        .btn {
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 13px 24px; border-radius: 100px;
-            font-family: var(--font-body); font-size: 14px; font-weight: 500;
-            border: none; cursor: pointer; text-decoration: none;
-            transition: all 200ms var(--ease-out);
-        }
-        .btn:hover { transform: translateY(-1px); }
-        .btn-lime { background: var(--lime); color: var(--green-dark); }
-        .btn-lime:hover { background: #bef07a; }
-        .btn-ghost-dark { background: transparent; color: #fff; border: 1px solid rgba(255,255,255,0.3); }
-        .btn-ghost-dark:hover { border-color: rgba(255,255,255,0.6); }
-        .btn-primary { background: var(--green); color: #fff; box-shadow: 0 18px 42px rgba(26,92,56,0.24), inset 0 1px 0 rgba(255,255,255,0.18); }
-        .btn-primary:hover { background: var(--green-light); }
-        .btn-ghost-light { background: transparent; color: var(--ink); border: 1px solid rgba(0,0,0,0.15); }
-
-        /* ── HERO COLLAGE ────────────────────────────── */
-        .hero-collage {
-            position: relative; width: 100%; aspect-ratio: 0.92/1;
-            max-width: 540px; justify-self: end;
-        }
-        /* Lime block behind */
-        .collage-lime-block {
-            position: absolute; right: -18px; top: -18px;
-            width: 38%; aspect-ratio: 1/1; background: var(--lime);
-            border-radius: 22px; z-index: 0;
-            box-shadow: 0 30px 60px rgba(168,224,99,0.18);
-        }
-        /* Outline frame */
-        .collage-outline {
-            position: absolute; left: -22px; bottom: 28px;
-            width: 28%; aspect-ratio: 1/1;
-            border: 1.5px solid rgba(168,224,99,0.45); border-radius: 20px; z-index: 0;
-        }
-        /* Main photo */
-        .collage-main {
-            position: absolute; inset: 0 6% 14% 4%;
-            border-radius: 22px; overflow: hidden; z-index: 2;
-            box-shadow: 0 40px 80px rgba(0,0,0,0.45), 0 8px 20px rgba(0,0,0,0.3);
-            transform: rotate(-1.5deg);
-        }
-        .collage-main img {
-            width: 100%; height: 100%; object-fit: cover;
-            object-position: 50% 58%; display: block;
-        }
-        .collage-main-veil {
-            position: absolute; inset: 0;
-            background: linear-gradient(180deg, transparent 45%, rgba(11,46,29,0.78));
-        }
-        .collage-main-caption {
-            position: absolute; left: 18px; bottom: 16px; right: 18px;
-            display: flex; flex-direction: column; gap: 4px;
-        }
-        .caption-label {
-            font-family: var(--font-mono); font-size: 9.5px;
-            letter-spacing: 0.18em; text-transform: uppercase;
-            color: var(--lime); font-weight: 600;
-        }
-        .caption-title {
-            font-family: var(--font-display); font-style: italic;
-            font-size: 22px; line-height: 1.15; color: #fff;
-        }
-        .collage-live-dot {
-            position: absolute; top: 16px; left: 16px;
-            display: inline-flex; align-items: center; gap: 8px;
-            padding: 6px 10px; border-radius: 100px;
-            background: rgba(11,46,29,0.55); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.14);
-        }
-        .live-dot-pulse {
-            width: 6px; height: 6px; border-radius: 100%;
-            background: var(--lime); box-shadow: 0 0 8px var(--lime);
-        }
-        @keyframes pulseDot {
-            0%, 100% { box-shadow: 0 0 6px var(--lime); opacity: 1; }
-            50%      { box-shadow: 0 0 14px var(--lime); opacity: 0.7; }
-        }
-        .live-dot-pulse, .featured-badge-dot {
-            animation: pulseDot 1.8s ease-in-out infinite;
-        }
-        .live-dot-label {
-            font-size: 10px; font-weight: 600; letter-spacing: 0.12em;
-            color: #fff; text-transform: uppercase;
-        }
-
-        /* Polaroid */
-        .collage-polaroid {
-            position: absolute; right: -2%; bottom: -2%;
-            width: 46%; background: #fff;
-            padding: 10px 10px 36px; border-radius: 8px;
-            box-shadow: 0 30px 60px rgba(0,0,0,0.45), 0 4px 12px rgba(0,0,0,0.2);
-            transform: rotate(5deg); z-index: 3;
-        }
-        .polaroid-photo {
-            width: 100%; aspect-ratio: 4/5; border-radius: 4px;
-            overflow: hidden; background: #000;
-        }
-        .polaroid-photo img {
-            width: 100%; height: 100%; object-fit: cover;
-            object-position: 50% 22%; display: block;
-        }
-        .polaroid-caption {
-            position: absolute; left: 0; right: 0; bottom: 10px;
-            text-align: center; font-family: var(--font-display);
-            font-style: italic; font-size: 14px; color: var(--ink);
-        }
-
-        /* Floating verified chip */
-        .collage-chip {
-            position: absolute; left: -6%; top: 32%;
-            background: #fff; color: var(--ink); border-radius: 14px;
-            padding: 12px 14px; display: flex; align-items: center; gap: 10px;
-            box-shadow: 0 24px 50px rgba(0,0,0,0.35); z-index: 4;
-            transform: rotate(-4deg);
-        }
-        .chip-icon-box {
-            width: 34px; height: 34px; border-radius: 10px;
-            background: var(--lime); display: grid; place-items: center; flex-shrink: 0;
-            color: var(--green-dark);
-        }
-        .chip-text { display: flex; flex-direction: column; min-width: 0; }
-        .chip-hours {
-            font-family: var(--font-display); font-style: italic;
-            font-size: 18px; line-height: 1; color: var(--green-dark);
-        }
-        .chip-loc {
-            font-size: 10px; color: var(--ink-3); font-family: var(--font-mono);
-            letter-spacing: 0.1em; text-transform: uppercase; margin-top: 3px;
-        }
-
-        /* ── STAT STRIP ───────────────────────────────── */
-        .hero-stats {
-            position: relative; z-index: 2;
-            margin: 4rem auto 0; max-width: 1240px; width: 100%;
-            border-top: 1px solid rgba(255,255,255,0.1);
-            display: grid; grid-template-columns: repeat(4,1fr);
-            padding: 24px 0;
-        }
-        .stat-item { padding-left: 0; }
-        .stat-item + .stat-item {
-            border-left: 1px solid rgba(255,255,255,0.1);
-            padding-left: 24px;
-        }
-        .stat-num {
-            font-family: var(--font-display); font-style: italic;
-            color: var(--lime); font-size: clamp(2rem,4vw,3rem);
-            line-height: 1; letter-spacing: -0.02em;
-        }
-        .stat-label {
-            margin-top: 6px; font-size: 11px; text-transform: uppercase;
-            letter-spacing: 0.15em; color: rgba(255,255,255,0.7);
-        }
-
-        /* ── PARTNERS STRIP ───────────────────────────── */
-        .partners-section {
-            background: var(--paper);
-            padding: clamp(3rem,6vw,4rem) clamp(1.5rem,6vw,6rem);
-        }
-        .partners-inner {
-            max-width: 1100px; margin: 0 auto;
-            display: flex; flex-direction: column; align-items: center; gap: 28px;
-        }
-        .partners-pill {
-            display: flex; align-items: center; justify-content: space-between;
-            gap: 32px; flex-wrap: wrap; width: 100%;
-            background: var(--sand); padding: 20px 32px; border-radius: 100px;
-        }
-        .partner-logo { height: 32px; width: auto; opacity: 0.85; filter: grayscale(0.2); }
-        .partner-name-text {
-            font-size: 12px; font-weight: 600; letter-spacing: 0.18em;
-            color: var(--ink-2); text-transform: uppercase;
-        }
-
-        /* ── PROBLEM SECTION ──────────────────────────── */
-        .problem-section {
-            background: var(--paper);
-            padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem);
-        }
-        .problem-inner { max-width: 1100px; margin: 0 auto; }
-
-        .section-header-grid {
-            display: grid; grid-template-columns: 1fr 1fr;
-            gap: 80px; align-items: start; margin-bottom: 60px;
-        }
-        .section-h2 {
-            font-family: var(--font-display); font-weight: 400;
-            font-size: clamp(2rem,4vw,3.5rem);
-            line-height: 1.1; letter-spacing: -0.02em; margin-top: 20px;
-        }
-        .section-h2 em { font-style: italic; color: var(--green); }
-        .section-h2.on-dark { color: #fff; }
-        .section-h2.on-dark em { color: var(--lime); }
-        .section-body {
-            font-size: 17px; line-height: 1.75; color: var(--ink-2);
-            font-weight: 300; margin-top: 36px;
-        }
-        .section-body.on-dark { color: rgba(255,255,255,0.7); }
-
-        .problem-cards {
-            display: grid; grid-template-columns: repeat(3,1fr);
-            border: 1.5px solid rgba(0,0,0,0.08);
-            border-radius: 18px; overflow: hidden;
-        }
-        .problem-card {
-            padding: 28px; background: #fff;
-            transition: background 200ms var(--ease-out);
-        }
-        .problem-card:hover { background: var(--sand); }
-        .problem-card + .problem-card { border-left: 1.5px solid rgba(0,0,0,0.08); }
-        .problem-card-icon { font-size: 28px; margin-bottom: 18px; }
-        .problem-card h3 {
-            font-family: var(--font-display); font-size: 22px;
-            line-height: 1.2; margin-bottom: 10px; color: var(--ink);
-        }
-        .problem-card p {
-            font-size: 14px; line-height: 1.7; color: var(--ink-2); font-weight: 300;
-        }
-
-        /* ── SOLUTION SECTION ─────────────────────────── */
-        .solution-section {
-            background: var(--ink); color: #fff; position: relative; overflow: hidden;
-            padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem);
-        }
-        .solution-wash {
-            position: absolute; top: -20%; left: -10%; width: 50%; height: 60%;
-            background: radial-gradient(ellipse, rgba(168,224,99,0.12), transparent 60%);
-            pointer-events: none;
-        }
-        .solution-inner { max-width: 1100px; margin: 0 auto; position: relative; }
-        .solution-cards {
-            display: grid; grid-template-columns: repeat(3,1fr); gap: 16px;
-        }
-        .solution-card {
-            padding: 28px; border-radius: 18px;
-            background: rgba(255,255,255,0.04);
-            border: 1px solid rgba(255,255,255,0.08);
-            transition: border-color 200ms var(--ease-out), transform 200ms var(--ease-out);
-        }
-        .solution-card:hover { border-color: rgba(168,224,99,0.25); transform: translateY(-2px); }
-        .solution-card-num {
-            font-family: var(--font-display); font-style: italic;
-            font-size: 48px; color: var(--lime); line-height: 1; margin-bottom: 18px;
-        }
-        .solution-card h3 {
-            font-family: var(--font-display); font-size: 22px;
-            line-height: 1.2; margin-bottom: 10px; color: #fff;
-        }
-        .solution-card p {
-            font-size: 14px; line-height: 1.7;
-            color: rgba(255,255,255,0.65); font-weight: 300;
-        }
-
-        /* ── OPPORTUNITIES SECTION ────────────────────── */
-        .opp-section {
-            background: var(--paper);
-            padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem);
-        }
-        .opp-inner { max-width: 1100px; margin: 0 auto; }
-
-        .opp-header-row {
-            display: flex; justify-content: space-between;
-            align-items: flex-end; margin-bottom: 32px; gap: 40px; flex-wrap: wrap;
-        }
-        .opp-h2 {
-            font-family: var(--font-display); font-weight: 400;
-            font-size: clamp(2rem,4vw,3rem); line-height: 1.1;
-            letter-spacing: -0.02em; margin-top: 20px; color: var(--ink);
-        }
-        .opp-h2 em { font-style: italic; color: var(--green); }
-
-        .filter-pills { display: flex; gap: 8px; flex-wrap: wrap; }
-        .filter-pill {
-            padding: 8px 16px; border-radius: 100px; font-size: 13px; font-weight: 500;
-            font-family: var(--font-body); cursor: pointer; border: 1px solid rgba(0,0,0,0.12);
-            background: transparent; color: var(--ink-2);
-            transition: all 200ms var(--ease-out);
-        }
-        .filter-pill.active, .filter-pill:hover {
-            background: var(--ink); color: #fff; border-color: var(--ink);
-        }
-
-        /* Featured banner */
-        .opp-featured {
-            position: relative; border-radius: 22px; overflow: hidden;
-            background: var(--green-dark); color: #fff;
-            display: grid; grid-template-columns: minmax(0,1fr) minmax(0,0.85fr);
-            min-height: 260px;
-            box-shadow: 0 30px 70px rgba(0,0,0,0.12); margin-bottom: 28px;
-        }
-        .opp-featured-left {
-            padding: clamp(28px,4vw,44px); display: flex; flex-direction: column;
-            justify-content: space-between; gap: 24px; position: relative; z-index: 2;
-        }
-        .featured-badge {
-            display: inline-flex; align-items: center; gap: 8px; align-self: flex-start;
-            padding: 6px 12px; border-radius: 100px;
-            background: rgba(168,224,99,0.16); border: 1px solid rgba(168,224,99,0.32);
-        }
-        .featured-badge-dot {
-            width: 6px; height: 6px; border-radius: 100%;
-            background: var(--lime); box-shadow: 0 0 10px var(--lime);
-        }
-        .featured-badge-label {
-            font-family: var(--font-mono); font-size: 10px;
-            letter-spacing: 0.16em; text-transform: uppercase; color: var(--lime); font-weight: 600;
-        }
-        .featured-h3 {
-            font-family: var(--font-display); font-weight: 400;
-            font-size: clamp(1.6rem,2.4vw,2.2rem); line-height: 1.12;
-            letter-spacing: -0.02em;
-        }
-        .featured-h3 em { font-style: italic; color: var(--lime); }
-        .featured-stats { display: flex; gap: 20px; flex-wrap: wrap; align-items: center; }
-        .featured-stat-num {
-            font-family: var(--font-display); font-style: italic;
-            color: var(--lime); font-size: 26px; line-height: 1;
-        }
-        .featured-stat-label {
-            font-size: 10px; letter-spacing: 0.14em; text-transform: uppercase;
-            color: rgba(255,255,255,0.6); margin-top: 4px;
-        }
-        .featured-divider { width: 1px; height: 30px; background: rgba(255,255,255,0.14); }
-
-        .opp-featured-right { position: relative; min-height: 260px; }
-        .opp-featured-right img {
-            position: absolute; inset: 0; width: 100%; height: 100%;
-            object-fit: cover; object-position: 50% 56%;
-        }
-        .opp-featured-right-veil {
-            position: absolute; inset: 0;
-            background: linear-gradient(90deg, var(--green-dark) 0%, rgba(11,46,29,0.4) 30%, transparent 60%);
-        }
-        .featured-location-tag {
-            position: absolute; right: 18px; bottom: 18px;
-            padding: 8px 12px; border-radius: 8px;
-            background: rgba(11,46,29,0.55); backdrop-filter: blur(10px);
-            border: 1px solid rgba(255,255,255,0.14);
-            font-family: var(--font-mono); font-size: 10px;
-            letter-spacing: 0.14em; text-transform: uppercase; color: #fff;
-        }
-
-        /* Opportunity cards grid */
-        .opp-grid-wrap { position: relative; }
-        .opp-card-grid {
-            display: grid; grid-template-columns: repeat(3,1fr); gap: 18px;
-        }
-        .opp-card {
-            background: #fff; border: 1px solid rgba(0,0,0,0.07);
-            border-radius: 18px; padding: 14px; display: flex; flex-direction: column;
-            box-shadow: 0 18px 50px rgba(0,0,0,0.06); cursor: pointer;
-            transition: transform 200ms var(--ease-out), box-shadow 200ms var(--ease-out);
-        }
-        .opp-card:hover {
-            transform: translateY(-3px);
-            box-shadow: 0 24px 60px rgba(0,0,0,0.10);
-        }
-        .opp-card[style*="display: none"] { display: none !important; }
-
-        /* Card cover */
-        .card-cover {
-            height: 150px; border-radius: 12px; overflow: hidden;
-            margin-bottom: 14px; position: relative; flex-shrink: 0;
-        }
-        .card-cover img {
-            width: 100%; height: 100%; object-fit: cover; display: block;
-        }
-        .card-cover-veil {
-            position: absolute; inset: 0; pointer-events: none;
-        }
-        .card-cover-art {
-            width: 100%; height: 100%; display: flex; align-items: flex-end; padding: 14px;
-            position: relative;
-        }
-        .card-cover-art iconify-icon {
-            position: absolute; right: 14px; top: 14px;
-            opacity: 0.92; z-index: 2;
-            filter: drop-shadow(0 6px 14px rgba(0,0,0,0.25));
-        }
-        .card-cover-art svg {
-            position: absolute; inset: 0; width: 100%; height: 100%;
-        }
-
-        /* Card body */
-        .card-body { padding: 0 8px 4px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
-        .card-tag-row { display: flex; justify-content: space-between; align-items: center; }
-        .card-tag-label {
-            font-size: 10px; font-weight: 600; letter-spacing: 0.15em; color: var(--rust);
-        }
-        .card-pill {
-            display: inline-flex; align-items: center; gap: 6px;
-            padding: 6px 14px; border-radius: 100px; font-size: 12px; font-weight: 500;
-        }
-        .card-pill-dot { width: 6px; height: 6px; border-radius: 100%; background: currentColor; }
-        .pill-lime { background: rgba(168,224,99,0.18); color: var(--green-dark); border: 1px solid rgba(168,224,99,0.4); }
-        .pill-green { background: var(--green); color: #fff; }
-        .pill-default { background: transparent; color: var(--ink-2); border: 1px solid rgba(0,0,0,0.15); }
-        .card-h3 {
-            font-family: var(--font-display); font-size: 22px; line-height: 1.2; color: var(--ink);
-        }
-        .card-org { font-size: 13px; color: var(--ink-3); }
-        .card-meta {
-            display: flex; gap: 14px; font-size: 12px; color: var(--ink-3);
-            margin-top: auto; padding-top: 12px; border-top: 1px solid rgba(0,0,0,0.06);
-        }
-        .card-hours { margin-left: auto; color: var(--green); font-weight: 500; }
-
-        /* Lock overlay */
-        .opp-lock-overlay {
-            position: absolute; left: 0; right: 0; bottom: 0; top: 40%;
-            background: linear-gradient(180deg, rgba(245,240,232,0) 0%, rgba(245,240,232,0.95) 50%, var(--paper) 100%);
-            pointer-events: none;
-        }
-        .opp-lock-cta {
-            position: absolute; left: 50%; bottom: 20px;
-            transform: translateX(-50%); text-align: center; z-index: 2;
-        }
-        .opp-lock-text {
-            font-size: 14px; color: var(--ink-2); margin-bottom: 16px; max-width: 360px;
-        }
-
-        /* ── FOOTER CTA ───────────────────────────────── */
-        .footer-cta {
-            background: var(--green); color: #fff; position: relative; overflow: hidden;
-            padding: clamp(4rem,8vw,7rem) clamp(1.5rem,6vw,6rem) clamp(6rem,10vw,9rem);
-        }
-        .footer-cta-wash {
-            position: absolute; inset: 0;
-            background: radial-gradient(ellipse at top right, rgba(168,224,99,0.18), transparent 60%),
-                        radial-gradient(ellipse at bottom left, rgba(196,98,45,0.12), transparent 60%);
-            pointer-events: none;
-        }
-        .footer-cta-inner {
-            max-width: 900px; margin: 0 auto; text-align: center;
-            position: relative; display: flex; flex-direction: column; gap: 24px; align-items: center;
-        }
-        .footer-cta h2 {
-            font-family: var(--font-display); font-weight: 400;
-            font-size: clamp(2.5rem,6vw,5rem); line-height: 1.05; letter-spacing: -0.02em;
-        }
-        .footer-cta h2 em { font-style: italic; color: var(--lime); }
-        .footer-cta p { font-size: 17px; line-height: 1.7; color: rgba(255,255,255,0.78); font-weight: 300; max-width: 560px; }
-        .footer-cta-btns { display: flex; gap: 12px; margin-top: 8px; flex-wrap: wrap; justify-content: center; }
-
-        /* ── DARK FOOTER ──────────────────────────────── */
-        footer { background: var(--green-dark); color: #fff; position: relative; }
-        .footer-scoop {
-            position: absolute; top: -1px; left: 0; width: 100%; height: 80px; display: block;
-        }
-        .footer-body {
-            max-width: 1100px; margin: 0 auto;
-            padding: 120px clamp(1.5rem,4vw,4rem) 40px;
-            display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr; gap: 40px;
-        }
-        .footer-brand-col { display: flex; flex-direction: column; gap: 16px; }
-        .footer-logo-row { display: flex; align-items: center; gap: 10px; }
-        .footer-logo-mark {
-            width: 36px; height: 36px; border-radius: 10px;
-            background: var(--green); display: flex; align-items: center; justify-content: center;
-            color: #fff; font-family: var(--font-logo); font-weight: 800; font-size: 17px;
-            position: relative; flex-shrink: 0;
-        }
-        .footer-logo-mark::after {
-            content: ''; position: absolute; top: 7px; right: 7px;
-            width: 5px; height: 5px; border-radius: 100%; background: var(--lime);
-        }
-        .footer-wordmark {
-            font-family: var(--font-logo); letter-spacing: -0.025em; font-size: 20px; line-height: 1;
-        }
-        .footer-wordmark .eco { font-weight: 800; }
-        .footer-wordmark .aware { font-weight: 600; opacity: 0.78; }
-        .footer-brand-p {
-            font-size: 13px; color: rgba(255,255,255,0.6); line-height: 1.7;
-            font-weight: 300; max-width: 280px;
-        }
-        .footer-col h4 {
-            font-size: 11px; letter-spacing: 0.15em; text-transform: uppercase;
-            color: var(--lime); margin-bottom: 16px; font-weight: 500;
-        }
-        .footer-col ul { list-style: none; display: flex; flex-direction: column; gap: 10px; }
-        .footer-col a {
-            font-size: 13px; color: rgba(255,255,255,0.7); text-decoration: none;
-            transition: color 200ms;
-        }
-        .footer-col a:hover { color: #fff; }
-        .footer-bottom {
-            border-top: 1px solid rgba(255,255,255,0.08);
-            padding: 20px clamp(1.5rem,6vw,6rem);
-            display: flex; justify-content: space-between;
-            font-size: 12px; color: rgba(255,255,255,0.5); flex-wrap: wrap; gap: 8px;
-        }
-
-        /* ── SCROLL REVEAL ────────────────────────────── */
-        .reveal, .reveal-left, .reveal-right {
-            opacity: 0; transform: translateY(20px);
-            transition: opacity 0.6s var(--ease-out), transform 0.6s var(--ease-out);
-        }
-        .reveal.visible, .reveal-left.visible, .reveal-right.visible {
-            opacity: 1; transform: none;
-        }
-
-        /* ── PAGE TRANSITION ──────────────────────────── */
-        #page-transition {
-            position: fixed; inset: 0; z-index: 9998; background: var(--green);
-            display: flex; align-items: center; justify-content: center;
-            opacity: 1; transition: opacity 550ms cubic-bezier(0.4,0,0.2,1);
-            pointer-events: none; will-change: opacity;
-        }
-        #transition-logo {
-            width: 4.5rem; height: 4.5rem; transform: scale(0.92);
-            transition: transform 650ms var(--ease-out); will-change: transform;
-        }
-        #page-transition.leaving #transition-logo { transform: scale(1.08); }
-
-        /* ── CHALLENGE SPOTLIGHT (hero) ───────────────── */
-        .hero-challenge-spot {
-            display: inline-flex; align-items: center; gap: 14px;
-            margin-top: 4px; padding: 12px 18px; border-radius: 16px;
-            background: rgba(168,224,99,0.1);
-            border: 1px solid rgba(168,224,99,0.35);
-            text-decoration: none; color: #fff; max-width: 560px;
-            align-self: flex-start;
-            transition: all 200ms var(--ease-out);
-        }
-        .hero-challenge-spot:hover {
-            background: rgba(168,224,99,0.16);
-            border-color: rgba(168,224,99,0.6);
-            transform: translateY(-2px);
-            box-shadow: 0 16px 40px rgba(168,224,99,0.15);
-        }
-        .spot-trophy { font-size: 22px; flex-shrink: 0; }
-        .spot-text { display: flex; flex-direction: column; gap: 2px; min-width: 0; }
-        .spot-title { font-size: 13.5px; font-weight: 600; color: var(--lime); }
-        .spot-sub { font-size: 12.5px; color: rgba(255,255,255,0.72); font-weight: 300; }
-        .spot-arrow { font-size: 16px; color: var(--lime); flex-shrink: 0; transition: transform 200ms var(--ease-out); }
-        .hero-challenge-spot:hover .spot-arrow { transform: translateX(3px); }
-        body.ar .spot-arrow { transform: scaleX(-1); }
-        body.ar .hero-challenge-spot:hover .spot-arrow { transform: scaleX(-1) translateX(-3px); }
-
-        /* ── CHALLENGES TEASER ────────────────────────── */
-        .teaser-section {
-            background: var(--paper);
-            padding: clamp(5rem,10vw,9rem) clamp(1.5rem,6vw,6rem) 0;
-        }
-        .teaser-shell {
-            max-width: 1100px; margin: 0 auto;
-            background: var(--sand); border-radius: 28px;
-            padding: clamp(28px,5vw,56px);
-            display: grid; grid-template-columns: 1.05fr 0.95fr;
-            gap: clamp(28px,5vw,64px); align-items: center;
-            position: relative; overflow: hidden;
-        }
-        .teaser-copy { display: flex; flex-direction: column; gap: 20px; align-items: flex-start; }
-        .teaser-copy .section-h2 { margin-top: 0; }
-        .teaser-p {
-            font-size: 15.5px; line-height: 1.75; color: var(--ink-2);
-            font-weight: 300; max-width: 480px;
-        }
-        .teaser-card { text-decoration: none; color: inherit; max-width: 380px; justify-self: center; width: 100%; }
-        .example-badge {
-            position: absolute; top: 12px; left: 12px; z-index: 3;
-            padding: 5px 10px; border-radius: 7px;
-            background: rgba(245,240,232,0.94); color: var(--rust);
-            font-family: var(--font-mono); font-size: 9px; font-weight: 700;
-            letter-spacing: 0.18em; text-transform: uppercase;
-            border: 1px solid rgba(196,98,45,0.35);
-        }
-        body.ar .example-badge { left: auto; right: 12px; }
-        body.ar .teaser-card .card-cover-art iconify-icon { right: auto; left: 14px; }
-        .meta-bounty b {
-            font-family: var(--font-display); font-style: italic; font-weight: 400;
-            color: var(--green); font-size: 16px;
-        }
-        @media (max-width: 900px) {
-            .teaser-shell { grid-template-columns: 1fr; }
-        }
-
-        /* ── POLISH: partner logos come alive on hover ── */
-        .partner-logo, .partner-name-text {
-            transition: opacity 250ms var(--ease-out), filter 250ms var(--ease-out),
-                        transform 250ms var(--ease-out), color 250ms var(--ease-out);
-        }
-        .partner-logo:hover { opacity: 1; filter: grayscale(0); transform: translateY(-2px); }
-        .partner-name-text:hover { color: var(--ink); transform: translateY(-2px); }
-
-        /* ── POLISH: even title rows in the opportunity grid ── */
-        @media (min-width: 769px) {
-            #opp-card-grid .card-h3 { min-height: 2.4em; }
-        }
-
-        /* ── RESPONSIVE ───────────────────────────────── */
-        @media (max-width: 1024px) {
-            .hero-grid { grid-template-columns: 1fr; }
-            .hero-copy { max-width: 700px; }
-            .hero-collage {
-                max-width: 420px; width: 100%;
-                justify-self: center; margin-top: 24px;
-            }
-        }
-        @media (max-width: 560px) {
-            .hero-collage { max-width: 320px; }
-            .collage-chip { left: -2%; }
-        }
-        @media (max-width: 860px) {
-            .nav-links {
-                position: fixed; top: 0; right: 0; width: min(320px,85vw); height: 100vh;
-                background: var(--paper); flex-direction: column; align-items: stretch;
-                justify-content: flex-start; padding: 5rem 2rem 2rem;
-                gap: 0; overflow-y: auto; transform: translateX(100%);
-                transition: transform 0.4s cubic-bezier(0.4,0,0.2,1);
-                box-shadow: -8px 0 40px rgba(0,0,0,0.15); z-index: 99;
-                border-radius: 0;
-            }
-            .nav-links.open { transform: translateX(0); }
-            .nav-links a {
-                padding: 0.85rem 0; font-size: 1rem; border-bottom: 1px solid rgba(0,0,0,0.06);
-                color: var(--ink); opacity: 1;
-            }
-            .nav-toggle { display: flex; }
-            .nav-backdrop { display: block; }
-        }
-        @media (max-width: 768px) {
-            .section-header-grid { grid-template-columns: 1fr; gap: 24px; }
-            .problem-cards { grid-template-columns: 1fr; }
-            .problem-card + .problem-card { border-left: none; border-top: 1.5px solid rgba(0,0,0,0.08); }
-            .solution-cards { grid-template-columns: 1fr; }
-            .opp-card-grid { grid-template-columns: 1fr; }
-            .opp-featured { grid-template-columns: 1fr; }
-            .opp-featured-right { display: none; }
-            .hero-stats { grid-template-columns: repeat(2,1fr); gap: 16px; padding: 20px 0; }
-            .stat-item + .stat-item { border-left: none; padding-left: 0; }
-            .stat-item:nth-child(even) { border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; }
-            .footer-body { grid-template-columns: 1fr 1fr; }
-            .footer-brand-col { grid-column: 1/-1; }
-        }
-        @media (max-width: 560px) {
-            .partners-pill { border-radius: 20px; }
-            .opp-header-row { flex-direction: column; align-items: flex-start; }
-            .footer-body { grid-template-columns: 1fr; }
-            .footer-bottom { flex-direction: column; }
-        }
-    
-        /* Respect users who prefer reduced motion */
-        @media (prefers-reduced-motion: reduce) {
-            *, *::before, *::after {
-                animation-duration: 0.01ms !important;
-                animation-iteration-count: 1 !important;
-                transition-duration: 0.01ms !important;
-            }
-            html { scroll-behavior: auto !important; }
-        }
-    </style>
+/* ════════ RESPONSIVE ════════ */
+@media (max-width: 1024px) {
+    .home-hero-inner { grid-template-columns: 1fr; gap: 50px; }
+    .hero-photo { max-width: 480px; }
+    .spotlight-body { grid-template-columns: 1fr; }
+    .deck { min-height: 430px; max-width: 520px; }
+}
+@media (max-width: 768px) {
+    .hero-stats { grid-template-columns: repeat(2,1fr); gap: 16px; padding: 20px 0; }
+    .stat-item + .stat-item { border-left: none; padding-left: 0; }
+    body.ar .stat-item + .stat-item { border-right: none; padding-right: 0; }
+    .stat-item:nth-child(even) { border-left: 1px solid rgba(255,255,255,0.1); padding-left: 20px; }
+    body.ar .stat-item:nth-child(even) { border-left: none; border-right: 1px solid rgba(255,255,255,0.1); padding-left: 0; padding-right: 20px; }
+    .problem-cards, .solution-cards { grid-template-columns: 1fr; }
+    .problem-card + .problem-card { border-left: none; border-top: 1.5px solid rgba(0,0,0,0.08); }
+    body.ar .problem-card + .problem-card { border-right: none; }
+    .hero-photo-frame img { height: 340px; }
+}
+@media (max-width: 600px) {
+    .deck { min-height: 0; }
+    .deck-card { position: static; width: 100%; margin-bottom: 14px; }
+    .deck-card.c1, .deck-card.c2, .deck-card.c3 { transform: rotate(0); }
+}
+</style>
 </head>
 <body>
 
@@ -884,7 +379,7 @@
 </button>
 
 <!-- NAV -->
-<nav id="navbar">
+<nav class="eco-nav" id="navbar">
     <a href="index.html" class="nav-logo-link">
         <span class="nav-logo-mark"><img src="assets/opt/logo.png" alt=""></span>
         <span class="nav-wordmark"><span class="eco">Eco</span><span class="aware">Awareness</span></span>
@@ -905,105 +400,65 @@
 <div class="nav-backdrop" id="nav-backdrop"></div>
 
 <!-- ═══════════ HERO ═══════════ -->
-<section class="hero">
-    <div class="hero-wash-tr"></div>
-    <div class="hero-wash-bl"></div>
-    <div class="hero-watermark" aria-hidden="true">بيئة</div>
+<section class="home-hero" data-reveal-now data-screen-label="Home — Hero">
+    <div class="home-hero-wash-tr"></div>
+    <div class="home-hero-wash-bl"></div>
+    <div class="home-watermark" id="home-watermark" aria-hidden="true" data-watermark-en="بيئة" data-watermark-ar="eco">بيئة</div>
 
-    <div class="hero-grid">
-        <!-- Left: copy -->
-        <div class="hero-copy">
-            <span class="eyebrow eyebrow-lime reveal" style="transition-delay:0.05s">
-                <span data-en="QATAR'S CLIMATE GENERATION" data-ar="جيل المناخ في قطر">QATAR'S CLIMATE GENERATION</span>
-            </span>
-            <h1 class="hero-title reveal" style="transition-delay:0.1s">
-                <span data-en="Where Qatar's <em>climate generation</em> takes action." data-ar="حيث <em>جيل المناخ</em> في قطر يتخذ إجراءات.">Where Qatar's <em>climate generation</em> takes action.</span>
+    <div class="home-hero-inner">
+        <div class="home-hero-copy">
+            <span class="eyebrow eyebrow-lime reveal" data-en="QATAR'S CLIMATE GENERATION" data-ar="جيل المناخ في قطر">QATAR'S CLIMATE GENERATION</span>
+            <h1 class="home-hero-title reveal">
+                <span data-en="Where Qatar's climate generation" data-ar="حيث جيل المناخ في قطر">Where Qatar's climate generation</span>
+                <span class="cycler" id="hero-cycler">
+                    <span class="on" data-en="takes action." data-ar="يتخذ إجراءً.">takes action.</span>
+                    <span data-en="wins bounties." data-ar="يفوز بالمكافآت.">wins bounties.</span>
+                    <span data-en="earns proof." data-ar="يكسب الإثبات.">earns proof.</span>
+                    <span data-en="gets recognized." data-ar="ينال الاعتراف.">gets recognized.</span>
+                </span>
             </h1>
-            <p class="hero-sub reveal" style="transition-delay:0.18s"
+            <p class="home-hero-sub reveal"
                data-en="One profile. Every opportunity. Verified hours. Real recognition. Built by students, for students — bilingual, free, forever."
                data-ar="ملف واحد. كل فرصة. ساعات موثقة. اعتراف حقيقي. بناه الطلاب، للطلاب — ثنائي اللغة، مجاني، للأبد.">
-                One profile. Every opportunity. Verified hours. Real recognition.<br>
+                One profile. Every opportunity. Verified hours. Real recognition.
                 Built by students, for students — bilingual, free, forever.
             </p>
-            <div class="hero-actions reveal" style="transition-delay:0.26s">
-                <a href="signup.html" id="nav-join" class="btn btn-lime">
+            <div class="home-hero-actions reveal">
+                <a href="signup.html" class="btn btn-lime btn-arrow">
                     <span data-en="Join the Network" data-ar="انضم إلى الشبكة">Join the Network</span>
+                    <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
                 </a>
-                <a href="#problem" class="btn btn-ghost-dark">
-                    <span data-en="See how it works" data-ar="كيف يعمل">See how it works</span>
+                <a href="#challenges-spotlight" class="btn btn-ghost-dark">
+                    <span data-en="See the challenges" data-ar="شاهد التحديات">See the challenges</span>
                 </a>
             </div>
-            <a href="challenges.html" class="hero-challenge-spot reveal" style="transition-delay:0.34s">
-                <span class="spot-trophy" aria-hidden="true">🏆</span>
-                <span class="spot-text">
-                    <span class="spot-title"
-                          data-en="EcoHub Challenges — Season 1 launching soon"
-                          data-ar="تحديات EcoHub — الموسم الأول قريبًا">EcoHub Challenges — Season 1 launching soon</span>
-                    <span class="spot-sub"
-                          data-en="Real bounties. Real problems. Real recognition."
-                          data-ar="مكافآت حقيقية. مشكلات حقيقية. اعتراف حقيقي.">Real bounties. Real problems. Real recognition.</span>
-                </span>
-                <span class="spot-arrow" aria-hidden="true">→</span>
-            </a>
         </div>
 
-        <!-- Right: photo collage -->
-        <div class="hero-collage">
-            <!-- Decorative blocks -->
-            <div class="collage-lime-block"></div>
-            <div class="collage-outline"></div>
-
-            <!-- Main team photo -->
-            <div class="collage-main">
-                <picture>
-                    <source type="image/webp" srcset="assets/opt/group-photo.webp">
-                    <img src="assets/opt/group-photo.jpg" alt="EcoAwareness team at Earthna Sustainability Week '25 in Doha" width="1600" height="2133" loading="lazy" decoding="async">
-                </picture>
-                <div class="collage-main-veil"></div>
-                <div class="collage-main-caption">
-                    <span class="caption-label">— Earthna Sustainability Week '25</span>
-                    <span class="caption-title">The team, on the ground.</span>
-                </div>
-                <div class="collage-live-dot">
-                    <span class="live-dot-pulse"></span>
-                    <span class="live-dot-label">On site · Doha</span>
-                </div>
+        <div class="hero-photo reveal">
+            <div class="hero-photo-badge">
+                <span data-en="15k hours" data-ar="15 ألف ساعة">15k hours</span>
+                <small data-en="VERIFIED &amp; COUNTING" data-ar="موثقة ومتزايدة">VERIFIED &amp; COUNTING</small>
             </div>
-
-            <!-- Polaroid: Firas -->
-            <div class="collage-polaroid">
-                <div class="polaroid-photo">
-                    <img src="assets/Firas.jpeg" alt="Firas, co-founder">
-                </div>
-                <div class="polaroid-caption">Firas · co-founder</div>
+            <div class="hero-photo-frame">
+                <img src="assets/opt/group-photo.jpg" alt="EcoAwareness members at an event in Doha">
             </div>
-
-            <!-- Floating verified chip -->
-            <div class="collage-chip">
-                <div class="chip-icon-box">
-                    <iconify-icon icon="ph:seal-check-fill" width="20"></iconify-icon>
-                </div>
-                <div class="chip-text">
-                    <span class="chip-hours">+4h verified</span>
-                    <span class="chip-loc">Mangrove · Al Thakira</span>
-                </div>
-            </div>
+            <span class="hero-photo-caption"><span class="dot"></span> <span data-en="The network, Education City" data-ar="الشبكة، المدينة التعليمية">The network, Education City</span></span>
         </div>
-    </div><!-- /hero-grid -->
+    </div>
 
     <!-- Stat strip -->
-    <div class="hero-stats">
+    <div class="hero-stats reveal">
         <div class="stat-item">
-            <div class="stat-num">4</div>
-            <div class="stat-label" data-en="Student founders" data-ar="مؤسسون طلاب">Student founders</div>
+            <div class="stat-num" data-countup="2500" data-suffix="+">0</div>
+            <div class="stat-label" data-en="Student members" data-ar="أعضاء طلاب">Student members</div>
         </div>
         <div class="stat-item">
-            <div class="stat-num">2</div>
-            <div class="stat-label" data-en="Languages" data-ar="لغتان">Languages</div>
+            <div class="stat-num" data-countup="60" data-suffix="+">0</div>
+            <div class="stat-label" data-en="Partner orgs" data-ar="منظمات شريكة">Partner orgs</div>
         </div>
         <div class="stat-item">
-            <div class="stat-num">6</div>
-            <div class="stat-label" data-en="Network orgs" data-ar="منظمات في الشبكة">Network orgs</div>
+            <div class="stat-num" data-countup="15" data-suffix="k">0</div>
+            <div class="stat-label" data-en="Volunteer hours" data-ar="ساعات تطوع">Volunteer hours</div>
         </div>
         <div class="stat-item">
             <div class="stat-num">100%</div>
@@ -1012,91 +467,150 @@
     </div>
 </section>
 
-<!-- ═══════════ PARTNERS ═══════════ -->
-<section class="partners-section">
-    <div class="partners-inner">
-        <span class="eyebrow eyebrow-rust reveal"
-              data-en="ORGANISATIONS IN OUR NETWORK" data-ar="منظمات في شبكتنا">
-            ORGANISATIONS IN OUR NETWORK
-        </span>
-        <div class="partners-pill reveal" style="transition-delay:0.1s">
-            <img src="assets/logos/cmuq.png" alt="CMU-Q" class="partner-logo">
-            <img src="assets/logos/earthna.png" alt="Earthna" class="partner-logo">
-            <img src="assets/logos/qkons.png" alt="QKONs" class="partner-logo">
-            <span class="partner-name-text">DEAP</span>
-            <span class="partner-name-text">AYCMQ</span>
-            <span class="partner-name-text">MECC</span>
-            <span class="partner-name-text">GU‑Q</span>
+<!-- ═══════════ CHALLENGES SPOTLIGHT ═══════════ -->
+<section class="spotlight" id="challenges-spotlight" data-screen-label="Home — Challenges spotlight">
+    <div class="spotlight-wash"></div>
+    <div class="spotlight-ticker" aria-hidden="true">
+        <div class="spotlight-ticker-track" id="spot-ticker">
+            <span class="spotlight-ticker-item" data-en="New — EcoHub Challenges" data-ar="جديد — تحديات EcoHub">New — EcoHub Challenges</span>
+            <span class="spotlight-ticker-item" data-en="Season 1 forming now" data-ar="الموسم الأول قيد التشكّل">Season 1 forming now</span>
+            <span class="spotlight-ticker-item" data-en="QAR 7,500 target bounty pool" data-ar="7,500 ر.ق حصيلة المكافآت المستهدفة">QAR 7,500 target bounty pool</span>
+            <span class="spotlight-ticker-item" data-en="Squads of 3–4 students" data-ar="فرق من 3–4 طلاب">Squads of 3–4 students</span>
+            <span class="spotlight-ticker-item" data-en="Winners get paid · everyone gets verified hours" data-ar="الفائزون يحصلون على المكافأة · والجميع يكسب ساعات موثقة">Winners get paid · everyone gets verified hours</span>
+        </div>
+    </div>
+
+    <div class="spotlight-body">
+        <div class="spotlight-copy">
+            <span class="season-chip reveal">
+                <span class="season-chip-dot"></span>
+                <span class="season-chip-label" data-en="SEASON 1 · LAUNCHING SOON" data-ar="الموسم الأول · قريبًا">SEASON 1 · LAUNCHING SOON</span>
+            </span>
+            <h2 class="spotlight-title reveal">
+                <span data-en="Don't just volunteer. <em>Compete.</em>" data-ar="لا تكتفِ بالتطوع. <em>نافس.</em>">Don't just volunteer. <em>Compete.</em></span>
+            </h2>
+            <p class="spotlight-p reveal"
+               data-en="Companies and NGOs post real sustainability problems with bounties attached. Squads of 3–4 students compete to solve them over 2–4 weeks. The winning squad gets paid — and everyone earns verified Eco ID hours."
+               data-ar="تنشر الشركات والمنظمات مشكلات استدامة حقيقية بمكافآت مالية، وتتنافس فرق من 3–4 طلاب على حلّها خلال 2–4 أسابيع. الفريق الفائز يحصل على المكافأة — والجميع يكسب ساعات موثقة على Eco ID.">
+                Companies and NGOs post real sustainability problems with bounties attached.
+                Squads of 3–4 students compete to solve them over 2–4 weeks.
+                The winning squad gets paid — and everyone earns verified Eco ID hours.
+            </p>
+            <span class="spotlight-cd-label reveal" data-en="SEASON 1 OPENS IN" data-ar="ينطلق الموسم الأول خلال">SEASON 1 OPENS IN</span>
+            <div class="spotlight-countdown reveal" data-countdown="2026-09-01T09:00:00+03:00">
+                <span data-cd="d">00</span><span class="cd-unit">D</span><span class="cd-sep">:</span>
+                <span data-cd="h">00</span><span class="cd-unit">H</span><span class="cd-sep">:</span>
+                <span data-cd="m">00</span><span class="cd-unit">M</span><span class="cd-sep">:</span>
+                <span data-cd="s">00</span><span class="cd-unit">S</span>
+            </div>
+            <div class="spotlight-actions reveal">
+                <a href="challenges.html" class="btn btn-lime btn-arrow">
+                    <span data-en="See all challenges" data-ar="شاهد كل التحديات">See all challenges</span>
+                    <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+                </a>
+                <a href="mailto:ecoawarenessme@gmail.com?subject=Post%20a%20challenge%20on%20EcoHub" class="btn btn-ghost-dark">
+                    <span data-en="Post a challenge" data-ar="انشر تحديًا">Post a challenge</span>
+                </a>
+            </div>
+        </div>
+
+        <div class="deck reveal" aria-label="Example challenges">
+            <div class="deck-card c1">
+                <div class="deck-tag-row"><span class="deck-type" data-en="— Campaign" data-ar="— حملة">— Campaign</span><span class="deck-stamp" data-en="Example" data-ar="مثال">Example</span></div>
+                <h3 class="deck-title" data-en="Cut single-use plastic in a school cafeteria" data-ar="تقليل البلاستيك أحادي الاستخدام في مقصف مدرسي">Cut single-use plastic in a school cafeteria</h3>
+                <div class="deck-meta">
+                    <span class="deck-bounty" data-en="QAR 2,000" data-ar="2,000 ر.ق">QAR 2,000</span>
+                    <span class="deck-dur"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon> <span data-en="3 weeks" data-ar="3 أسابيع">3 weeks</span></span>
+                </div>
+            </div>
+            <div class="deck-card c2">
+                <div class="deck-tag-row"><span class="deck-type" data-en="— Audit" data-ar="— تدقيق">— Audit</span><span class="deck-stamp" data-en="Example" data-ar="مثال">Example</span></div>
+                <h3 class="deck-title" data-en="Energy audit of a small office building" data-ar="تدقيق طاقة لمبنى مكاتب صغير">Energy audit of a small office building</h3>
+                <div class="deck-meta">
+                    <span class="deck-bounty" data-en="QAR 3,000" data-ar="3,000 ر.ق">QAR 3,000</span>
+                    <span class="deck-dur"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon> <span data-en="4 weeks" data-ar="4 أسابيع">4 weeks</span></span>
+                </div>
+            </div>
+            <div class="deck-card c3">
+                <div class="deck-tag-row"><span class="deck-type" data-en="— Prototype" data-ar="— نموذج أولي">— Prototype</span><span class="deck-stamp" data-en="Example" data-ar="مثال">Example</span></div>
+                <h3 class="deck-title" data-en="Make household recycling easier to start" data-ar="اجعلوا إعادة التدوير المنزلية أسهل">Make household recycling easier to start</h3>
+                <div class="deck-meta">
+                    <span class="deck-bounty" data-en="QAR 2,500" data-ar="2,500 ر.ق">QAR 2,500</span>
+                    <span class="deck-dur"><iconify-icon icon="solar:clock-circle-linear"></iconify-icon> <span data-en="2 weeks" data-ar="أسبوعان">2 weeks</span></span>
+                </div>
+            </div>
         </div>
     </div>
 </section>
 
+<!-- ═══════════ PARTNERS ═══════════ -->
+<section class="partners-section" data-screen-label="Home — Partners">
+    <span class="eyebrow eyebrow-rust reveal" data-en="ORGANISATIONS IN OUR NETWORK" data-ar="منظمات في شبكتنا">ORGANISATIONS IN OUR NETWORK</span>
+    <div class="partners-row reveal">
+        <img src="assets/logos/cmuq.png" alt="Carnegie Mellon University in Qatar">
+        <img src="assets/logos/earthna.png" alt="Earthna">
+        <span class="partner-name">DEAP</span>
+        <span class="partner-name">AYCMQ</span>
+        <span class="partner-name">MECC</span>
+        <span class="partner-name">QKONs</span>
+    </div>
+</section>
+
 <!-- ═══════════ PROBLEM ═══════════ -->
-<section id="problem" class="problem-section">
+<section class="problem-section" id="problem" data-screen-label="Home — Problem">
     <div class="problem-inner">
         <div class="section-header-grid">
             <div>
-                <span class="eyebrow eyebrow-rust reveal"
-                      data-en="THE PROBLEM" data-ar="المشكلة">THE PROBLEM</span>
-                <h2 class="section-h2 reveal" style="transition-delay:0.1s">
-                    <span data-en="Climate action in Qatar is <em>fragmented.</em>"
-                          data-ar="العمل المناخي في قطر <em>مجزأ.</em>">
-                        Climate action in Qatar is <em>fragmented.</em>
-                    </span>
+                <span class="eyebrow eyebrow-rust reveal" data-en="THE PROBLEM" data-ar="المشكلة">THE PROBLEM</span>
+                <h2 class="section-h2 reveal">
+                    <span data-en="Climate action in Qatar is <em>fragmented.</em>" data-ar="العمل المناخي في قطر <em>مجزأ.</em>">Climate action in Qatar is <em>fragmented.</em></span>
                 </h2>
             </div>
-            <p class="section-body reveal" style="transition-delay:0.15s"
+            <p class="section-body reveal"
                data-en="Students who want to help can't find work. Organisations who need help can't find students. And the few hours that do happen disappear into spreadsheets."
-               data-ar="الطلاب الراغبون في المساعدة لا يجدون العمل. والمنظمات التي تحتاج إلى مساعدة لا تجد الطلاب. والساعات القليلة التي تحدث تختفي في جداول البيانات.">
+               data-ar="الطلاب الراغبون في المساعدة لا يجدون العمل. والمنظمات التي تحتاج إلى مساعدة لا تجد الطلاب. والساعات القليلة التي تحدث فعلًا تضيع في جداول البيانات.">
                 Students who want to help can't find work. Organisations who need help can't
                 find students. And the few hours that do happen disappear into spreadsheets.
             </p>
         </div>
-        <div class="problem-cards reveal" style="transition-delay:0.2s">
+        <div class="problem-cards reveal">
             <div class="problem-card">
-                <div class="problem-card-icon">🔍</div>
+                <iconify-icon icon="solar:magnifer-linear" aria-hidden="true"></iconify-icon>
                 <h3 data-en="Opportunities are scattered." data-ar="الفرص متفرقة.">Opportunities are scattered.</h3>
                 <p data-en="Climate work in Qatar lives in DMs, posters, and word-of-mouth — most of it is invisible to students who could help."
                    data-ar="العمل المناخي في قطر يعيش في الرسائل والملصقات والكلام الشفهي — معظمه غير مرئي للطلاب الذين يمكنهم المساعدة.">
-                    Climate work in Qatar lives in DMs, posters, and word-of-mouth — most of it is invisible to students who could help.
-                </p>
+                    Climate work in Qatar lives in DMs, posters, and word-of-mouth — most of it is invisible to students who could help.</p>
             </div>
             <div class="problem-card">
-                <div class="problem-card-icon">🏢</div>
+                <iconify-icon icon="solar:buildings-2-linear" aria-hidden="true"></iconify-icon>
                 <h3 data-en="Organisations work alone." data-ar="المنظمات تعمل منفردة.">Organisations work alone.</h3>
                 <p data-en="Schools, universities, and NGOs run parallel initiatives without sharing volunteers, data, or impact."
                    data-ar="تدير المدارس والجامعات والمنظمات غير الحكومية مبادرات موازية دون تبادل المتطوعين أو البيانات أو الأثر.">
-                    Schools, universities, and NGOs run parallel initiatives without sharing volunteers, data, or impact.
-                </p>
+                    Schools, universities, and NGOs run parallel initiatives without sharing volunteers, data, or impact.</p>
             </div>
             <div class="problem-card">
-                <div class="problem-card-icon">📊</div>
+                <iconify-icon icon="solar:chart-square-linear" aria-hidden="true"></iconify-icon>
                 <h3 data-en="Volunteer hours don't count." data-ar="ساعات التطوع لا تُحسب.">Volunteer hours don't count.</h3>
                 <p data-en="No verification means real work goes unrecognised — for university applications, awards, or anything else."
                    data-ar="غياب التحقق يعني أن العمل الحقيقي يمر دون اعتراف — للجامعات أو الجوائز أو أي شيء آخر.">
-                    No verification means real work goes unrecognised — for university applications, awards, or anything else.
-                </p>
+                    No verification means real work goes unrecognised — for university applications, awards, or anything else.</p>
             </div>
         </div>
     </div>
 </section>
 
 <!-- ═══════════ SOLUTION ═══════════ -->
-<section class="solution-section">
+<section class="solution-section" data-screen-label="Home — Solution">
     <div class="solution-wash"></div>
     <div class="solution-inner">
         <div class="section-header-grid">
             <div>
-                <span class="eyebrow eyebrow-lime reveal"
-                      data-en="THE SOLUTION" data-ar="الحل">THE SOLUTION</span>
-                <h2 class="section-h2 on-dark reveal" style="transition-delay:0.1s">
-                    <span data-en="One hub. <em>Every opportunity.</em>"
-                          data-ar="منصة واحدة. <em>كل فرصة.</em>">
-                        One hub. <em>Every opportunity.</em>
-                    </span>
+                <span class="eyebrow eyebrow-lime reveal" data-en="THE SOLUTION" data-ar="الحل">THE SOLUTION</span>
+                <h2 class="section-h2 on-dark reveal">
+                    <span data-en="One hub. <em>Every opportunity.</em>" data-ar="منصة واحدة. <em>كل فرصة.</em>">One hub. <em>Every opportunity.</em></span>
                 </h2>
             </div>
-            <p class="section-body on-dark reveal" style="transition-delay:0.15s"
+            <p class="section-body on-dark reveal"
                data-en="EcoAwareness centralises every verified climate opportunity in Qatar, signs off your hours, and gives you a portable identity that grows with your work."
                data-ar="تجمع EcoAwareness كل فرصة مناخية موثقة في قطر وتصادق على ساعاتك وتمنحك هوية محمولة تنمو مع عملك.">
                 EcoAwareness centralises every verified climate opportunity in Qatar, signs off your hours,
@@ -1104,349 +618,28 @@
             </p>
         </div>
         <div class="solution-cards">
-            <div class="solution-card reveal" style="transition-delay:0.1s">
+            <div class="solution-card reveal">
                 <div class="solution-card-num">01</div>
                 <h3 data-en="One verified hub." data-ar="منصة موثقة واحدة.">One verified hub.</h3>
                 <p data-en="Every climate opportunity in Qatar — events, internships, grants, research — in one filterable directory."
                    data-ar="كل فرصة مناخية في قطر — فعاليات وتدريب ومنح وأبحاث — في دليل واحد قابل للتصفية.">
-                    Every climate opportunity in Qatar — events, internships, grants, research — in one filterable directory.
-                </p>
+                    Every climate opportunity in Qatar — events, internships, grants, research — in one filterable directory.</p>
             </div>
-            <div class="solution-card reveal" style="transition-delay:0.2s">
+            <div class="solution-card reveal" style="transition-delay:0.1s">
                 <div class="solution-card-num">02</div>
                 <h3 data-en="Earn recognition." data-ar="اكسب الاعتراف.">Earn recognition.</h3>
                 <p data-en="Hours are signed off by partner organisations and stored on your Eco ID. Export to apps, transcripts, anywhere."
-                   data-ar="تتم الموافقة على الساعات من قبل المنظمات الشريكة وتُخزن في Eco ID الخاص بك. صدّرها إلى التطبيقات والسجلات في أي مكان.">
-                    Hours are signed off by partner organisations and stored on your Eco ID. Export to apps, transcripts, anywhere.
-                </p>
+                   data-ar="تتم الموافقة على الساعات من قبل المنظمات الشريكة وتُخزن في Eco ID الخاص بك. صدّرها إلى التطبيقات والسجلات وأي مكان.">
+                    Hours are signed off by partner organisations and stored on your Eco ID. Export to apps, transcripts, anywhere.</p>
             </div>
-            <div class="solution-card reveal" style="transition-delay:0.3s">
+            <div class="solution-card reveal" style="transition-delay:0.2s">
                 <div class="solution-card-num">03</div>
                 <h3 data-en="Bilingual by default." data-ar="ثنائي اللغة بشكل افتراضي.">Bilingual by default.</h3>
                 <p data-en="Full English / Arabic parity, RTL-aware. Built for Qatar's actual student population."
                    data-ar="تكافؤ كامل بين الإنجليزية والعربية مع دعم RTL. مصمم لطلاب قطر الفعليين.">
-                    Full English / Arabic parity, RTL-aware. Built for Qatar's actual student population.
-                </p>
+                    Full English / Arabic parity, RTL-aware. Built for Qatar's actual student population.</p>
             </div>
         </div>
-    </div>
-</section>
-
-<!-- ═══════════ CHALLENGES TEASER ═══════════ -->
-<section class="teaser-section" id="challenges-teaser">
-    <div class="teaser-shell reveal">
-        <div class="teaser-copy">
-            <span class="eyebrow eyebrow-rust"
-                  data-en="NEW — ECOHUB CHALLENGES" data-ar="جديد — تحديات EcoHub">NEW — ECOHUB CHALLENGES</span>
-            <h2 class="section-h2">
-                <span data-en="Don't just volunteer. <em>Compete.</em>"
-                      data-ar="لا تكتفِ بالتطوع. <em>نافس.</em>">
-                    Don't just volunteer. <em>Compete.</em>
-                </span>
-            </h2>
-            <p class="teaser-p"
-               data-en="Companies and NGOs post real sustainability problems with bounties attached. Squads of 3–4 students compete to solve them over 2–4 weeks. The winning squad gets paid and presents to the organization — and everyone earns verified Eco ID hours."
-               data-ar="تنشر الشركات والمنظمات مشكلات استدامة حقيقية بمكافآت مالية، وتتنافس فرق من 3–4 طلاب على حلّها خلال 2–4 أسابيع. الفريق الفائز يحصل على المكافأة ويعرض حلّه أمام المنظمة — والجميع يكسب ساعات موثقة على Eco ID.">
-                Companies and NGOs post real sustainability problems with bounties attached.
-                Squads of 3–4 students compete to solve them over 2–4 weeks. The winning squad gets paid
-                and presents to the organization — and everyone earns verified Eco ID hours.
-            </p>
-            <a href="challenges.html" class="btn btn-primary">
-                <span data-en="See all challenges →" data-ar="شاهد كل التحديات →">See all challenges →</span>
-            </a>
-        </div>
-
-        <!-- Example challenge card (format preview — not a live challenge) -->
-        <a href="challenges.html" class="opp-card teaser-card">
-            <div class="card-cover">
-                <div class="card-cover-art" style="background:var(--lime)">
-                    <svg viewBox="0 0 300 150" preserveAspectRatio="none" style="opacity:0.55" aria-hidden="true">
-                        <circle cx="-10" cy="170" r="28" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.47"/>
-                        <circle cx="-10" cy="170" r="56" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.39"/>
-                        <circle cx="-10" cy="170" r="88" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.31"/>
-                        <circle cx="-10" cy="170" r="122" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.23"/>
-                        <circle cx="-10" cy="170" r="158" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.15"/>
-                    </svg>
-                    <iconify-icon icon="ph:cube-fill" width="64" style="color:var(--green-dark)" aria-hidden="true"></iconify-icon>
-                </div>
-                <span class="example-badge" data-en="EXAMPLE" data-ar="مثال">EXAMPLE</span>
-            </div>
-            <div class="card-body">
-                <div class="card-tag-row">
-                    <span class="card-tag-label">— <span data-en="PROTOTYPE" data-ar="نموذج أولي">PROTOTYPE</span></span>
-                    <span class="card-pill pill-lime"><span class="card-pill-dot"></span><span data-en="Open" data-ar="مفتوح">Open</span></span>
-                </div>
-                <h3 class="card-h3"
-                    data-en="Make household recycling easier to start"
-                    data-ar="اجعلوا إعادة التدوير المنزلية أسهل">Make household recycling easier to start</h3>
-                <div class="card-org" data-en="Partner Organization" data-ar="منظمة شريكة">Partner Organization</div>
-                <div class="card-meta">
-                    <span class="meta-bounty">💰 <b data-en="QAR 2,500" data-ar="2,500 ر.ق">QAR 2,500</b></span>
-                    <span>⏱ <span data-en="2 weeks" data-ar="أسبوعان">2 weeks</span></span>
-                    <span class="card-hours" data-en="Squad of 3–4" data-ar="فريق من 3–4">Squad of 3–4</span>
-                </div>
-            </div>
-        </a>
-    </div>
-</section>
-
-<!-- ═══════════ OPPORTUNITIES ═══════════ -->
-<section class="opp-section">
-    <div class="opp-inner">
-        <div class="opp-header-row">
-            <div>
-                <span class="eyebrow eyebrow-rust reveal"
-                      data-en="LATEST OPPORTUNITIES" data-ar="أحدث الفرص">LATEST OPPORTUNITIES</span>
-                <h2 class="opp-h2 reveal" style="transition-delay:0.1s">
-                    <span data-en="Real action, <em>waiting for you.</em>"
-                          data-ar="عمل حقيقي، <em>ينتظرك.</em>">
-                        Real action, <em>waiting for you.</em>
-                    </span>
-                </h2>
-            </div>
-            <div class="filter-pills" id="filter-pills">
-                <button class="filter-pill active" data-filter="all" data-en="All" data-ar="الكل">All</button>
-                <button class="filter-pill" data-filter="cleanup" data-en="Cleanup" data-ar="تنظيف">Cleanup</button>
-                <button class="filter-pill" data-filter="research" data-en="Research" data-ar="بحث">Research</button>
-                <button class="filter-pill" data-filter="education" data-en="Education" data-ar="تعليم">Education</button>
-                <button class="filter-pill" data-filter="funding" data-en="Funding" data-ar="تمويل">Funding</button>
-            </div>
-        </div>
-
-        <!-- Featured banner (visible when filter = all) -->
-        <div class="opp-featured reveal" id="opp-featured">
-            <div class="opp-featured-left">
-                <div class="featured-badge">
-                    <span class="featured-badge-dot"></span>
-                    <span class="featured-badge-label"
-                          data-en="THIS WEEK · ON THE GROUND" data-ar="هذا الأسبوع · على أرض الواقع">THIS WEEK · ON THE GROUND</span>
-                </div>
-                <h3 class="featured-h3">
-                    <span data-en="Spotted at <em>Earthna Sustainability Week</em> — the climate generation, mid-mission."
-                          data-ar="رُصد في <em>أسبوع الاستدامة أرضنا</em> — جيل المناخ في منتصف المهمة.">
-                        Spotted at <em>Earthna Sustainability Week</em> — the climate generation, mid-mission.
-                    </span>
-                </h3>
-                <div class="featured-stats">
-                    <div>
-                        <div class="featured-stat-num">'25</div>
-                        <div class="featured-stat-label" data-en="Earthna Week" data-ar="أسبوع أرضنا">Earthna Week</div>
-                    </div>
-                    <div class="featured-divider"></div>
-                    <div>
-                        <div class="featured-stat-num">Doha</div>
-                        <div class="featured-stat-label" data-en="Msheireb" data-ar="مشيرب">Msheireb</div>
-                    </div>
-                    <div class="featured-divider"></div>
-                    <div>
-                        <div class="featured-stat-num">EN·ع</div>
-                        <div class="featured-stat-label" data-en="Bilingual" data-ar="بلغتين">Bilingual</div>
-                    </div>
-                </div>
-            </div>
-            <div class="opp-featured-right">
-                <picture>
-                    <source type="image/webp" srcset="assets/opt/group-photo.webp">
-                    <img src="assets/opt/group-photo.jpg" alt="EcoAwareness team at Earthna Sustainability Week '25" width="1600" height="2133" loading="lazy" decoding="async">
-                </picture>
-                <div class="opp-featured-right-veil"></div>
-                <div class="featured-location-tag">MSHEIREB · DOWNTOWN DOHA</div>
-            </div>
-        </div>
-
-        <!-- Cards grid -->
-        <div class="opp-grid-wrap">
-            <div class="opp-card-grid" id="opp-card-grid">
-
-                <!-- Card 1: Mangrove — photo cover, cleanup -->
-                <div class="opp-card" data-cat="cleanup">
-                    <div class="card-cover">
-                        <picture>
-                            <source type="image/webp" srcset="assets/opt/group-photo.webp">
-                            <img src="assets/opt/group-photo.jpg" alt="Mangrove planting at Al Thakira" width="1600" height="2133" loading="lazy" decoding="async" style="object-position:50% 60%">
-                        </picture>
-                        <div class="card-cover-veil" style="background:linear-gradient(180deg,rgba(11,46,29,0) 50%,rgba(11,46,29,0.85))"></div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-tag-row">
-                            <span class="card-tag-label">— EVENT</span>
-                            <span class="card-pill pill-lime"><span class="card-pill-dot"></span>Verified</span>
-                        </div>
-                        <h3 class="card-h3">Mangrove planting at Al Thakira</h3>
-                        <div class="card-org">Earthna</div>
-                        <div class="card-meta">
-                            <span>📅 Nov 12</span>
-                            <span>📍 Al Khor</span>
-                            <span class="card-hours">4h</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 2: Climate policy intern — art cover, research -->
-                <div class="opp-card" data-cat="research">
-                    <div class="card-cover">
-                        <div class="card-cover-art" style="background:var(--ink)">
-                            <svg viewBox="0 0 300 150" preserveAspectRatio="none" style="opacity:0.16">
-                                <defs><pattern id="g1" width="18" height="18" patternUnits="userSpaceOnUse">
-                                    <path d="M0 18 L18 18 M18 0 L18 18" stroke="#a8e063" stroke-width="0.8" fill="none"/>
-                                </pattern></defs>
-                                <rect width="300" height="150" fill="url(#g1)"/>
-                            </svg>
-                            <iconify-icon icon="ph:flask-fill" width="64" style="color:var(--lime)"></iconify-icon>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-tag-row">
-                            <span class="card-tag-label">— INTERNSHIP</span>
-                            <span class="card-pill pill-default"><span class="card-pill-dot"></span>Open</span>
-                        </div>
-                        <h3 class="card-h3">Climate policy intern, summer 2026</h3>
-                        <div class="card-org">CMU‑Q</div>
-                        <div class="card-meta">
-                            <span>📅 Apr 30</span>
-                            <span>📍 Education City</span>
-                            <span class="card-hours">120h</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 3: Youth Climate micro-grant — art cover, funding -->
-                <div class="opp-card" data-cat="funding">
-                    <div class="card-cover">
-                        <div class="card-cover-art" style="background:var(--lime)">
-                            <svg viewBox="0 0 300 150" preserveAspectRatio="none" style="opacity:0.55">
-                                <circle cx="-10" cy="170" r="28" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.47"/>
-                                <circle cx="-10" cy="170" r="56" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.39"/>
-                                <circle cx="-10" cy="170" r="88" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.31"/>
-                                <circle cx="-10" cy="170" r="122" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.23"/>
-                                <circle cx="-10" cy="170" r="158" fill="none" stroke="#0d3a22" stroke-width="1.2" opacity="0.15"/>
-                            </svg>
-                            <iconify-icon icon="ph:coin-vertical-fill" width="64" style="color:var(--green-dark)"></iconify-icon>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-tag-row">
-                            <span class="card-tag-label">— GRANT</span>
-                            <span class="card-pill pill-default"><span class="card-pill-dot"></span>Open</span>
-                        </div>
-                        <h3 class="card-h3">Youth Climate Action micro-grant</h3>
-                        <div class="card-org">QKONs</div>
-                        <div class="card-meta">
-                            <span>📅 Rolling</span>
-                            <span>📍 Remote</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 4 (locked): EC cleanup — art cover, cleanup -->
-                <div class="opp-card" data-cat="cleanup">
-                    <div class="card-cover">
-                        <div class="card-cover-art" style="background:var(--green)">
-                            <svg viewBox="0 0 300 150" preserveAspectRatio="none" style="opacity:0.35">
-                                <path d="M0 20 Q 75 8 150 20 T 300 20" fill="none" stroke="#a8e063" stroke-width="1"/>
-                                <path d="M0 40 Q 75 28 150 40 T 300 40" fill="none" stroke="#a8e063" stroke-width="1"/>
-                                <path d="M0 60 Q 75 48 150 60 T 300 60" fill="none" stroke="#a8e063" stroke-width="1"/>
-                                <path d="M0 80 Q 75 68 150 80 T 300 80" fill="none" stroke="#a8e063" stroke-width="1"/>
-                                <path d="M0 100 Q 75 88 150 100 T 300 100" fill="none" stroke="#a8e063" stroke-width="1"/>
-                                <path d="M0 120 Q 75 108 150 120 T 300 120" fill="none" stroke="#a8e063" stroke-width="1"/>
-                            </svg>
-                            <iconify-icon icon="ph:leaf-fill" width="64" style="color:var(--lime)"></iconify-icon>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-tag-row">
-                            <span class="card-tag-label">— EVENT</span>
-                            <span class="card-pill pill-lime"><span class="card-pill-dot"></span>Verified</span>
-                        </div>
-                        <h3 class="card-h3">Education City cleanup walk</h3>
-                        <div class="card-org">EcoAwareness</div>
-                        <div class="card-meta">
-                            <span>📅 Dec 02</span>
-                            <span>📍 EC</span>
-                            <span class="card-hours">3h</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 5 (locked): Carbon literacy — art cover, education -->
-                <div class="opp-card" data-cat="education">
-                    <div class="card-cover">
-                        <div class="card-cover-art" style="background:var(--rust)">
-                            <svg viewBox="0 0 300 150" preserveAspectRatio="none" style="opacity:0.22">
-                                <defs><pattern id="d1" width="16" height="16" patternUnits="userSpaceOnUse" patternTransform="rotate(35)">
-                                    <line x1="0" y1="0" x2="0" y2="16" stroke="#FFE9D9" stroke-width="1.4"/>
-                                </pattern></defs>
-                                <rect width="300" height="150" fill="url(#d1)"/>
-                            </svg>
-                            <iconify-icon icon="ph:chalkboard-teacher-fill" width="64" style="color:#FFE9D9"></iconify-icon>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-tag-row">
-                            <span class="card-tag-label">— WORKSHOP</span>
-                            <span class="card-pill pill-default"><span class="card-pill-dot"></span>Open</span>
-                        </div>
-                        <h3 class="card-h3">Carbon literacy for high schoolers</h3>
-                        <div class="card-org">AYCMQ</div>
-                        <div class="card-meta">
-                            <span>📅 Jan 18</span>
-                            <span>📍 Hybrid</span>
-                            <span class="card-hours">6h</span>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Card 6 (locked): Dawn cleanup — art cover, cleanup -->
-                <div class="opp-card" data-cat="cleanup">
-                    <div class="card-cover">
-                        <div class="card-cover-art" style="background:var(--green-dark)">
-                            <svg viewBox="0 0 300 150" preserveAspectRatio="none">
-                                <defs>
-                                    <radialGradient id="sg" cx="20%" cy="120%" r="80%">
-                                        <stop offset="0%" stop-color="#a8e063" stop-opacity="0.55"/>
-                                        <stop offset="60%" stop-color="#a8e063" stop-opacity="0"/>
-                                    </radialGradient>
-                                </defs>
-                                <rect width="300" height="150" fill="url(#sg)"/>
-                                <line x1="0" y1="40" x2="300" y2="40" stroke="#a8e063" stroke-width="0.6" opacity="0.18"/>
-                                <line x1="0" y1="70" x2="300" y2="70" stroke="#a8e063" stroke-width="0.6" opacity="0.18"/>
-                                <line x1="0" y1="100" x2="300" y2="100" stroke="#a8e063" stroke-width="0.6" opacity="0.18"/>
-                                <line x1="0" y1="130" x2="300" y2="130" stroke="#a8e063" stroke-width="0.6" opacity="0.18"/>
-                            </svg>
-                            <iconify-icon icon="ph:sun-horizon-fill" width="64" style="color:#a8e063"></iconify-icon>
-                        </div>
-                    </div>
-                    <div class="card-body">
-                        <div class="card-tag-row">
-                            <span class="card-tag-label">— EVENT</span>
-                            <span class="card-pill pill-green"><span class="card-pill-dot"></span>Featured</span>
-                        </div>
-                        <h3 class="card-h3">Doha Corniche dawn cleanup</h3>
-                        <div class="card-org">DEAP</div>
-                        <div class="card-meta">
-                            <span>📅 Jan 25</span>
-                            <span>📍 Corniche</span>
-                            <span class="card-hours">5h</span>
-                        </div>
-                    </div>
-                </div>
-
-            </div><!-- /opp-card-grid -->
-
-            <!-- Lock overlay -->
-            <div class="opp-lock-overlay" id="opp-lock-overlay"></div>
-            <div class="opp-lock-cta" id="opp-lock-cta">
-                <p class="opp-lock-text"
-                   data-en="Join EcoAwareness to apply, save events, and track verified impact hours."
-                   data-ar="انضم إلى EcoAwareness للتقديم وحفظ الفعاليات وتتبع ساعات الأثر الموثقة.">
-                    Join EcoAwareness to apply, save events, and track verified impact hours.
-                </p>
-                <a href="signup.html" class="btn btn-primary">
-                    🔒 <span data-en="Unlock 3 more opportunities" data-ar="افتح 3 فرص إضافية">Unlock 3 more opportunities</span>
-                </a>
-            </div>
-        </div><!-- /opp-grid-wrap -->
-
     </div>
 </section>
 
@@ -1455,34 +648,28 @@
     <div class="footer-cta-wash"></div>
     <div class="footer-cta-inner">
         <h2 class="reveal">
-            <span data-en="Built by youth, <em>for the planet.</em>"
-                  data-ar="بُني من قبل الشباب، <em>من أجل الكوكب.</em>">
-                Built by youth, <em>for the planet.</em>
-            </span>
+            <span data-en="Real action, <em>waiting for you.</em>" data-ar="عمل حقيقي، <em>بانتظارك.</em>">Real action, <em>waiting for you.</em></span>
         </h2>
-        <p class="reveal" style="transition-delay:0.1s"
-           data-en="Join 2,500+ students already turning intention into impact."
-           data-ar="انضم إلى 2,500+ طالب يحولون النوايا إلى أثر.">
-            Join 2,500+ students already turning intention into impact.
-        </p>
-        <div class="footer-cta-btns reveal" style="transition-delay:0.2s">
+        <p class="reveal"
+           data-en="Join 2,500+ students building Qatar's climate generation — free, bilingual, forever."
+           data-ar="انضم إلى أكثر من 2,500 طالب يبنون جيل المناخ في قطر — مجانًا، بلغتين، للأبد.">
+            Join 2,500+ students building Qatar's climate generation — free, bilingual, forever.</p>
+        <div class="footer-cta-btns reveal">
             <a href="signup.html" class="btn btn-lime">
-                <span data-en="Get started →" data-ar="ابدأ الآن →">Get started →</span>
+                <span data-en="Get Started →" data-ar="ابدأ الآن →">Get Started →</span>
             </a>
-            <a href="mailto:ecoawarenessme@gmail.com" class="btn btn-ghost-dark">
-                <span data-en="Email us" data-ar="راسلنا">Email us</span>
+            <a href="challenges.html" class="btn btn-ghost-dark">
+                <span data-en="Explore challenges" data-ar="استكشف التحديات">Explore challenges</span>
             </a>
         </div>
     </div>
 </section>
 
 <!-- ═══════════ FOOTER ═══════════ -->
-<footer>
-    <!-- SVG scoop curve -->
+<footer class="eco-footer">
     <svg class="footer-scoop" viewBox="0 0 1440 80" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
-        <path d="M0,80 C480,0 960,0 1440,80 L1440,0 L0,0 Z" fill="#1a5c38"/>
+        <path d="M0,80 C480,0 960,0 1440,80 L1440,0 L0,0 Z" fill="#1a5c38"></path>
     </svg>
-
     <div class="footer-body">
         <div class="footer-brand-col">
             <div class="footer-logo-row">
@@ -1492,8 +679,7 @@
             <p class="footer-brand-p"
                data-en="Qatar's youth-led climate action platform. Built by students, for the planet. 🌱"
                data-ar="منصة العمل المناخي بقيادة الشباب في قطر. بناها الطلاب من أجل الكوكب. 🌱">
-                Qatar's youth-led climate action platform. Built by students, for the planet. 🌱
-            </p>
+                Qatar's youth-led climate action platform. Built by students, for the planet. 🌱</p>
         </div>
         <div class="footer-col">
             <h4 data-en="Platform" data-ar="المنصة">Platform</h4>
@@ -1501,7 +687,6 @@
                 <li><a href="challenges.html" data-en="Challenges" data-ar="التحديات">Challenges</a></li>
                 <li><a href="signup.html" data-en="Network" data-ar="الشبكة">Network</a></li>
                 <li><a href="signup.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a></li>
-                <li><a href="signup.html" data-en="Resources" data-ar="الموارد">Resources</a></li>
                 <li><a href="signup.html" data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</a></li>
             </ul>
         </div>
@@ -1523,11 +708,8 @@
             </ul>
         </div>
     </div>
-
     <div class="footer-bottom">
-        <span data-en="© 2026 EcoAwareness · Doha, Qatar" data-ar="© 2026 الوعي البيئي · الدوحة، قطر">
-            © 2026 EcoAwareness · Doha, Qatar
-        </span>
+        <span data-en="© 2026 EcoAwareness · Doha, Qatar" data-ar="© 2026 الوعي البيئي · الدوحة، قطر">© 2026 EcoAwareness · Doha, Qatar</span>
         <span>EN · العربية</span>
     </div>
 </footer>
@@ -1538,260 +720,27 @@
 </div>
 
 <script>
-// ── LENIS SMOOTH SCROLL ──────────────────────────
-let lenis = new Lenis({
-    duration: 1.3,
-    easing: t => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
-    smooth: true,
-    smoothTouch: false,
-});
-function raf(time) { lenis.raf(time); requestAnimationFrame(raf); }
-requestAnimationFrame(raf);
-
-// ── NAV SCROLL STATE ─────────────────────────────
-window.addEventListener('scroll', () => {
-    document.getElementById('navbar').classList.toggle('scrolled', window.scrollY > 20);
-});
-
-// ── SCROLL REVEAL ────────────────────────────────
-const revealObserver = new IntersectionObserver(entries => {
-    entries.forEach(entry => {
-        if (entry.isIntersecting) {
-            entry.target.classList.add('visible');
-            revealObserver.unobserve(entry.target);
-        }
-    });
-}, { threshold: 0.1 });
-document.querySelectorAll('.reveal, .reveal-left, .reveal-right').forEach(el => revealObserver.observe(el));
-
-// Hero elements reveal immediately on load
-document.querySelectorAll('.hero-copy .reveal').forEach((el, i) => {
-    setTimeout(() => el.classList.add('visible'), i * 120 + 200);
-});
-
-// ── STAT COUNT-UP ────────────────────────────────
-(function() {
-    if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const nums = document.querySelectorAll('.hero-stats .stat-num');
-    const obs = new IntersectionObserver(entries => {
-        entries.forEach(entry => {
-            if (!entry.isIntersecting) return;
-            obs.unobserve(entry.target);
-            const el  = entry.target;
-            const m   = el.textContent.trim().match(/^(\d+)(.*)$/);
-            if (!m) return;
-            const target = parseInt(m[1], 10), suffix = m[2];
-            const t0 = performance.now(), dur = 900;
-            (function tick(now) {
-                const p = Math.min(1, (now - t0) / dur);
-                el.textContent = Math.round(target * (1 - Math.pow(1 - p, 3))) + suffix;
-                if (p < 1) requestAnimationFrame(tick);
-            })(t0);
-        });
-    }, { threshold: 0.5 });
-    nums.forEach(n => obs.observe(n));
+// ── HERO WORD CYCLER ────────────────────────────
+(function () {
+    const spans = [...document.querySelectorAll('#hero-cycler > span')];
+    let i = 0;
+    setInterval(() => {
+        spans[i].classList.remove('on');
+        spans[i].classList.add('off');
+        const prev = i;
+        i = (i + 1) % spans.length;
+        spans[i].classList.remove('off');
+        spans[i].classList.add('on');
+        setTimeout(() => spans[prev].classList.remove('off'), 520);
+    }, 2800);
 })();
 
-// ── OPPORTUNITIES FILTER ─────────────────────────
-window.__ecoLocked = true; // flipped to false by auth check if signed in
-(function() {
-    const pills    = document.querySelectorAll('.filter-pill');
-    const cards    = document.querySelectorAll('#opp-card-grid .opp-card');
-    const banner   = document.getElementById('opp-featured');
-    const lockOver = document.getElementById('opp-lock-overlay');
-    const lockCta  = document.getElementById('opp-lock-cta');
-
-    function applyFilter(filter) {
-        const locked = window.__ecoLocked;
-
-        // Toggle featured banner
-        if (banner) banner.style.display = filter === 'all' ? 'grid' : 'none';
-
-        // First hide all, then collect matches
-        const matching = [];
-        cards.forEach(card => {
-            const match = filter === 'all' || card.dataset.cat === filter;
-            if (match) matching.push(card);
-            card.style.display = 'none';
-        });
-
-        // Show first N (locked → 3, unlocked → all)
-        const limit = locked ? 3 : matching.length;
-        matching.slice(0, limit).forEach(c => c.style.display = 'flex');
-
-        // Lock overlay only when there are MORE cards being hidden
-        const moreCount = matching.length - 3;
-        const showLock  = locked && moreCount > 0;
-        if (lockOver) lockOver.style.display = showLock ? 'block' : 'none';
-        if (lockCta) {
-            lockCta.style.display = showLock ? 'block' : 'none';
-            const btnLabel = lockCta.querySelector('.btn span[data-en]');
-            if (btnLabel && showLock) {
-                btnLabel.textContent = `Unlock ${moreCount} more opportunities`;
-                btnLabel.setAttribute('data-en', `Unlock ${moreCount} more opportunities`);
-                btnLabel.setAttribute('data-ar', `افتح ${moreCount} فرص إضافية`);
-            }
-        }
-    }
-
-    pills.forEach(pill => {
-        pill.addEventListener('click', () => {
-            pills.forEach(p => p.classList.remove('active'));
-            pill.classList.add('active');
-            applyFilter(pill.dataset.filter);
-        });
-    });
-
-    window.__ecoApplyFilter = applyFilter;
-    applyFilter('all');
-})();
-
-// ── LANGUAGE TOGGLE ──────────────────────────────
-let isArabic = false;
-
-function applyLanguage() {
-    const body  = document.body;
-    const html  = document.documentElement;
-    const label = document.getElementById('lang-label');
-
-    if (isArabic) {
-        body.classList.add('ar');
-        html.setAttribute('lang', 'ar');
-        html.setAttribute('dir', 'rtl');
-        label.textContent = 'English';
-    } else {
-        body.classList.remove('ar');
-        html.setAttribute('lang', 'en');
-        html.setAttribute('dir', 'ltr');
-        label.textContent = 'عربي';
-    }
-
-    document.querySelectorAll('[data-en]').forEach(el => {
-        const val = isArabic ? el.getAttribute('data-ar') : el.getAttribute('data-en');
-        if (val !== null) el.innerHTML = val;
-    });
-
-    const wm = document.querySelector('.hero-watermark');
-    if (wm) wm.textContent = isArabic ? 'nature' : 'بيئة';
-
-    localStorage.setItem('hub_lang', isArabic ? 'ar' : 'en');
-}
-
-document.getElementById('lang-toggle').addEventListener('click', () => {
-    isArabic = !isArabic;
-    applyLanguage();
-});
-if (localStorage.getItem('hub_lang') === 'ar') { isArabic = true; applyLanguage(); }
-
-// ── AUTH CHECK ───────────────────────────────────
-(async () => {
-    try {
-        const _sb = window.supabase.createClient(
-            'https://nqvhxjsryatqgfvtjbki.supabase.co',
-            'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im5xdmh4anNyeWF0cWdmdnRqYmtpIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzMwNDYxMDAsImV4cCI6MjA4ODYyMjEwMH0.HrnrIq5bK3FhxmHaLxWPIG0nD-CI-3ReHCoO5RL1c3M'
-        );
-        const { data: { session } } = await _sb.auth.getSession();
-        if (session) {
-            const meta      = session.user.user_metadata || {};
-            const firstName = meta.first_name || meta.name || session.user.email.split('@')[0];
-
-            // Update nav CTA → Dashboard
-            const signInEl = document.getElementById('nav-signin');
-            if (signInEl) {
-                signInEl.href = 'dashboard.html';
-                signInEl.innerHTML = `<iconify-icon icon="solar:home-smile-linear" style="font-size:1rem"></iconify-icon> ${firstName}`;
-            }
-
-            // Update hero join btn → Dashboard
-            const joinEl = document.getElementById('nav-join');
-            if (joinEl) {
-                joinEl.href = 'dashboard.html';
-                joinEl.innerHTML = isArabic ? 'انتقل إلى لوحة التحكم →' : 'Go to Dashboard →';
-            }
-
-            // Unlock opportunities & re-render
-            window.__ecoLocked = false;
-            const activePill = document.querySelector('.filter-pill.active');
-            if (window.__ecoApplyFilter) window.__ecoApplyFilter(activePill ? activePill.dataset.filter : 'all');
-
-            // Redirect signup links → dashboard
-            document.querySelectorAll('a[href="signup.html"]').forEach(a => {
-                a.href = 'dashboard.html';
-            });
-        }
-    } catch(e) {
-        // Supabase offline (paused project) — fail silently
-        console.warn('Auth check failed:', e.message);
-    }
-})();
-
-// ── ANCHOR SCROLL ────────────────────────────────
-document.querySelectorAll('a[href^="#"]').forEach(anchor => {
-    anchor.addEventListener('click', function(e) {
-        const id = this.getAttribute('href');
-        const target = document.querySelector(id);
-        if (target) { e.preventDefault(); lenis.scrollTo(target, { offset: -80, duration: 1.4 }); }
-    });
-});
-
-// ── PAGE TRANSITION ──────────────────────────────
-document.addEventListener('DOMContentLoaded', () => {
-    const overlay = document.getElementById('page-transition');
-    const logo    = document.getElementById('transition-logo');
-    if (!overlay || !logo) return;
-
-    requestAnimationFrame(() => {
-        overlay.style.opacity = '0';
-        logo.style.transform  = 'scale(1)';
-    });
-
-    document.querySelectorAll('a').forEach(link => {
-        link.addEventListener('click', function(e) {
-            const url = this.getAttribute('href');
-            const tgt = this.getAttribute('target');
-            if (!url || url.startsWith('#') || url.startsWith('mailto:') || url.startsWith('tel:') || url.startsWith('javascript:') || tgt === '_blank' || (this.hostname && this.hostname !== window.location.hostname)) return;
-            e.preventDefault();
-            overlay.classList.add('leaving');
-            overlay.style.opacity = '1';
-            setTimeout(() => { window.location.href = url; }, 450);
-        });
-    });
-
-    window.addEventListener('pageshow', e => {
-        if (e.persisted) {
-            overlay.classList.remove('leaving');
-            overlay.style.opacity = '0';
-            logo.style.transform  = 'scale(1)';
-        }
-    });
-});
-
-// ── MOBILE NAV ───────────────────────────────────
-(function() {
-    const toggle   = document.getElementById('nav-toggle');
-    const links    = document.getElementById('nav-links');
-    const backdrop = document.getElementById('nav-backdrop');
-    if (!toggle || !links) return;
-
-    function openNav()  {
-        toggle.classList.add('active');
-        links.classList.add('open');
-        if (backdrop) backdrop.classList.add('show');
-        document.body.style.overflow = 'hidden';
-    }
-    function closeNav() {
-        toggle.classList.remove('active');
-        links.classList.remove('open');
-        if (backdrop) backdrop.classList.remove('show');
-        document.body.style.overflow = '';
-    }
-
-    toggle.addEventListener('click', () => links.classList.contains('open') ? closeNav() : openNav());
-    if (backdrop) backdrop.addEventListener('click', closeNav);
-    links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
-    document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+// ── Seamless ticker loop ────────────────────────
+(function () {
+    const track = document.getElementById('spot-ticker');
+    track.innerHTML += track.innerHTML;
 })();
 </script>
-<script src="assets/js/ecohub-enhancements.js"></script>
+<script src="assets/js/eco-shared.js"></script>
 </body>
 </html>
