@@ -6,9 +6,12 @@
   "type": "module",
   "scripts": {
     "dev": "node scripts/local-server.cjs",
+    "build:app": "node scripts/build-app.cjs",
     "optimize:images": "node scripts/optimize-images.mjs"
   },
   "devDependencies": {
+    "@babel/core": "^7.29.7",
+    "@babel/preset-react": "^7.29.7",
     "sharp": "^0.33.5"
   }
 }

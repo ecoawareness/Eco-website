@@ -1,0 +1,194 @@
+/* ───────────────────────────────────────────────────────────────────
+   EcoAwareness Design System — Tokens
+   Source: ecoawareness/Eco-website (index.html, about.html, signup.html)
+   ─────────────────────────────────────────────────────────────────── */
+
+@import url('https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&family=Plus+Jakarta+Sans:wght@600;700;800&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap');
+
+:root {
+  /* ── BRAND COLORS ─────────────────────────────── */
+  --ink: #0a0a0a;          /* primary text on paper */
+  --ink-2: rgba(10,10,10,0.7);
+  --ink-3: rgba(10,10,10,0.5);
+  --ink-4: rgba(10,10,10,0.35);
+
+  --paper: #f5f0e8;        /* warm off-white background */
+  --sand:  #e8dfc8;        /* deeper warm neutral */
+
+  --green:        #1a5c38; /* primary brand green */
+  --green-light:  #2d7a4f; /* hover green */
+  --green-dark:   #0d3a22; /* deep green / dark panel base */
+  --lime:         #a8e063; /* accent / italic emphasis on dark */
+  --rust:         #c4622d; /* tertiary warm accent */
+
+  /* Semantic foreground/background */
+  --fg-on-paper:  var(--ink);
+  --fg-on-green:  #ffffff;
+  --fg-on-green-muted: rgba(255,255,255,0.65);
+  --fg-on-paper-muted: rgba(10,10,10,0.55);
+
+  /* Eyebrow / label colors per surface */
+  --label-on-paper: var(--rust);
+  --label-on-green: var(--lime);
+  --label-on-ink:   var(--lime);
+
+  /* Status / tag */
+  --tag-green-bg: #dcfce7; --tag-green-fg: #166534;
+  --tag-blue-bg:  #dbeafe; --tag-blue-fg:  #1e40af;
+  --tag-amber-bg: #fef3c7; --tag-amber-fg: #92400e;
+  --tag-red-bg:   #fee2e2; --tag-red-fg:   #991b1b;
+
+  --error: #d64545;
+  --error-soft: rgba(214,69,69,0.08);
+
+  /* ── TYPOGRAPHY FAMILIES ─────────────────────── */
+  --font-display: 'Instrument Serif', Georgia, serif;
+  --font-body:    'DM Sans', system-ui, -apple-system, sans-serif;
+  --font-logo:    'Plus Jakarta Sans', 'Inter', system-ui, sans-serif;
+  --font-arabic:  'Noto Naskh Arabic', serif;
+  --font-mono:    ui-monospace, 'SF Mono', Menlo, monospace;
+
+  /* ── TYPE SCALE (responsive clamps used across site) ── */
+  --text-hero:   clamp(3.5rem, 8vw, 7.5rem);    /* serif italic */
+  --text-h1:     clamp(2.5rem, 5vw, 4.5rem);
+  --text-h2:     clamp(2rem, 4vw, 3.5rem);
+  --text-h3:     1.6rem;
+  --text-h4:     1.35rem;
+  --text-body:   1rem;
+  --text-sm:     0.875rem;
+  --text-xs:     0.75rem;
+  --text-2xs:    0.7rem;       /* eyebrows */
+
+  --leading-tight:  1.05;
+  --leading-snug:   1.2;
+  --leading-normal: 1.6;
+  --leading-relaxed:1.75;
+
+  --tracking-eyebrow: 0.15em;   /* uppercase eyebrows */
+  --tracking-tight:   -0.02em;  /* large display */
+
+  /* ── SPACING ──────────────────────────────────── */
+  --space-1: 0.25rem;
+  --space-2: 0.5rem;
+  --space-3: 0.75rem;
+  --space-4: 1rem;
+  --space-5: 1.25rem;
+  --space-6: 1.5rem;
+  --space-8: 2rem;
+  --space-10: 2.5rem;
+  --space-12: 3rem;
+  --space-16: 4rem;
+  --space-24: 6rem;
+  --space-section: clamp(5rem, 10vw, 9rem);
+  --space-gutter:  clamp(1.5rem, 6vw, 6rem);
+
+  /* ── RADII ────────────────────────────────────── */
+  --radius-sm:   8px;
+  --radius-md:   12px;
+  --radius-lg:   16px;
+  --radius-xl:   20px;
+  --radius-2xl:  24px;
+  --radius-card: 18px;
+  --radius-pill: 100px;       /* buttons + chips */
+  --radius-panel: 32px;       /* curved auth panels */
+
+  /* ── SHADOWS ─────────────────────────────────── */
+  --shadow-sm:   0 4px 14px rgba(26,92,56,0.18);
+  --shadow-md:   0 10px 30px rgba(0,0,0,0.10);
+  --shadow-lg:   0 18px 50px rgba(0,0,0,0.08);
+  --shadow-xl:   0 24px 60px -20px rgba(10,10,10,0.25);
+  --shadow-cta:  0 18px 42px rgba(26,92,56,0.24), inset 0 1px 0 rgba(255,255,255,0.18);
+  --shadow-focus:0 0 0 3px rgba(26,92,56,0.10);
+
+  /* ── BORDERS ─────────────────────────────────── */
+  --border-hairline: 1px solid rgba(0,0,0,0.07);      /* @kind other */
+  --border-soft:     1px solid rgba(0,0,0,0.10);      /* @kind other */
+  --border-on-dark:  1px solid rgba(255,255,255,0.08); /* @kind other */
+  --border-accent:   1px solid rgba(168,224,99,0.28);  /* @kind other */
+
+  /* ── MOTION ──────────────────────────────────── */
+  --ease-out:   cubic-bezier(0.25, 1, 0.5, 1);  /* @kind other */
+  --ease-spring:cubic-bezier(0.22, 1, 0.36, 1); /* @kind other */
+  --ease-in-out:cubic-bezier(0.4, 0, 0.2, 1);   /* @kind other */
+  --dur-fast:   200ms; /* @kind other */
+  --dur-base:   300ms; /* @kind other */
+  --dur-slow:   600ms; /* @kind other */
+  --dur-page:   550ms; /* @kind other */
+}
+
+/* ── SEMANTIC ELEMENT STYLES ─────────────────── */
+body {
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+}
+body.ar { font-family: var(--font-arabic); direction: rtl; }
+
+h1, .h1 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-h1);
+  line-height: var(--leading-tight);
+  letter-spacing: var(--tracking-tight);
+}
+h1 em, .h1 em { font-style: italic; color: var(--lime); }
+.on-paper h1 em { color: var(--green); }
+
+h2, .h2 {
+  font-family: var(--font-display);
+  font-weight: 400;
+  font-size: var(--text-h2);
+  line-height: var(--leading-snug);
+  letter-spacing: var(--tracking-tight);
+}
+h2 em, .h2 em { font-style: italic; color: var(--green); }
+
+h3, .h3 {
+  font-family: var(--font-display);
+  font-size: var(--text-h3);
+  line-height: 1.2;
+}
+h4, .h4 {
+  font-family: var(--font-body);
+  font-weight: 500;
+  font-size: var(--text-h4);
+}
+
+p, .body {
+  font-size: var(--text-body);
+  line-height: var(--leading-relaxed);
+  font-weight: 300;
+  color: var(--fg-on-paper-muted);
+}
+
+.eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: var(--font-body);
+  font-size: var(--text-2xs);
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: var(--tracking-eyebrow);
+  color: var(--label-on-paper);
+}
+.eyebrow::before {
+  content: '';
+  width: 24px;
+  height: 1px;
+  background: currentColor;
+}
+
+.logo-text {
+  font-family: var(--font-logo);
+  font-weight: 800;
+  letter-spacing: -0.025em;
+}
+.logo-text .eco { font-weight: 800; }
+.logo-text .aware { font-weight: 600; opacity: 0.78; }
+
+/* Display italic emphasis */
+.display-italic { font-style: italic; }
+
+code, .mono { font-family: var(--font-mono); font-size: 0.9em; }

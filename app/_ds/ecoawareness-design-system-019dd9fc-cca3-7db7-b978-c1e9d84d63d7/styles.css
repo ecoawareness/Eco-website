@@ -1,0 +1,5 @@
+/* ───────────────────────────────────────────────────────────────────
+   EcoAwareness Design System — root stylesheet
+   Link this ONE file from consuming pages; it pulls in all global CSS.
+   ─────────────────────────────────────────────────────────────────── */
+@import url('colors_and_type.css');
