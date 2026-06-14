@@ -271,7 +271,15 @@ function EventsPage({
     key: e.id,
     e: e,
     go: go
-  })) : PAST_EVENTS.map(e => React.createElement(PastRow, {
+  })) : PAST_EVENTS.length === 0 ? React.createElement("div", {
+    className: "card",
+    style: {
+      padding: '1.4rem',
+      color: 'var(--ink-3)',
+      fontSize: '0.9rem',
+      textAlign: 'center'
+    }
+  }, "No verified events yet \u2014 your signed-off hours will appear here.") : PAST_EVENTS.map(e => React.createElement(PastRow, {
     key: e.id,
     e: e
   }))));

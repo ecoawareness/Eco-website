@@ -4,16 +4,8 @@ const {
 function MomentumHero({
   go
 }) {
-  const u = {
-    level: 1,
-    levelName: 'Newcomer',
-    xp: 0,
-    xpFloor: 0,
-    xpNext: 100,
-    streak: 0
-  };
-  const pct = (u.xp - u.xpFloor) / (u.xpNext - u.xpFloor);
-  const toGo = u.xpNext - u.xp;
+  const pct = (USER.xp - USER.xpFloor) / (USER.xpNext - USER.xpFloor);
+  const toGo = USER.xpNext - USER.xp;
   return React.createElement("div", {
     style: {
       position: 'relative',
@@ -56,7 +48,7 @@ function MomentumHero({
       lineHeight: 1,
       color: 'var(--lime)'
     }
-  }, "L", u.level), React.createElement("div", {
+  }, "L", USER.level), React.createElement("div", {
     style: {
       fontSize: '0.62rem',
       letterSpacing: '0.12em',
@@ -83,7 +75,7 @@ function MomentumHero({
     }
   }, React.createElement(Icon, {
     i: "solar:medal-star-bold"
-  }), " ", u.levelName), React.createElement("h2", {
+  }), " ", USER.levelName), React.createElement("h2", {
     style: {
       fontFamily: 'var(--font-display)',
       fontSize: 'clamp(1.6rem,2.6vw,2.2rem)',
@@ -95,7 +87,7 @@ function MomentumHero({
       fontStyle: 'italic',
       color: 'var(--lime)'
     }
-  }, toGo, " XP"), " from Level ", u.level + 1, "."), React.createElement("p", {
+  }, toGo, " XP"), " from Level ", USER.level + 1, "."), React.createElement("p", {
     style: {
       fontSize: '0.92rem',
       color: 'rgba(255,255,255,0.62)',
@@ -103,12 +95,12 @@ function MomentumHero({
       margin: '0 0 1rem',
       maxWidth: 440
     }
-  }, "Keep the streak alive \u2014 one more verified event this week unlocks the ", React.createElement("strong", {
+  }, "Join your first verified event to start your action streak and earn your ", React.createElement("strong", {
     style: {
       color: '#fff',
       fontWeight: 600
     }
-  }, "Century Club"), " badge."), React.createElement("div", {
+  }, "First Steps"), " badge."), React.createElement("div", {
     style: {
       display: 'flex',
       gap: '0.7rem',
@@ -155,7 +147,7 @@ function MomentumHero({
       fontSize: '1.5rem',
       lineHeight: 1
     }
-  }, u.streak, " days"), React.createElement("div", {
+  }, USER.streak, " days"), React.createElement("div", {
     style: {
       fontSize: '0.66rem',
       color: 'rgba(255,255,255,0.6)'
@@ -355,9 +347,8 @@ function EventCard({
   }), " ", e.hours, "h"))));
 }
 function HoursChart() {
-  const HOURS = HOURS_BY_MONTH.map(() => 0);
-  const max = Math.max(...HOURS);
-  const total = HOURS.reduce((a, b) => a + b, 0);
+  const max = Math.max(...HOURS_BY_MONTH);
+  const total = HOURS_BY_MONTH.reduce((a, b) => a + b, 0);
   const t = useCountUp(total);
   const cur = 5;
   return React.createElement("div", {
@@ -394,7 +385,7 @@ function HoursChart() {
     style: {
       marginTop: '1.3rem'
     }
-  }, HOURS.map((h, i) => React.createElement("div", {
+  }, HOURS_BY_MONTH.map((h, i) => React.createElement("div", {
     key: i,
     className: 'bar ' + (h === 0 ? 'dim' : i === cur ? 'hi' : ''),
     style: {

@@ -244,7 +244,7 @@ function ProfilePage({
       fontWeight: 700,
       marginBottom: '1rem'
     }
-  }, "At a glance"), [['solar:clock-circle-bold', '#1a5c38', USER.hours + ' hrs', 'Verified'], ['solar:calendar-bold', '#c4622d', USER.events, 'Events'], ['solar:users-group-rounded-bold', '#6b4ea8', USER.orgs, 'Orgs'], ['solar:medal-ribbons-star-bold', '#b8902f', '5', 'Badges']].map(([ic, c, val, lab], i) => React.createElement("div", {
+  }, "At a glance"), [['solar:clock-circle-bold', '#1a5c38', USER.hours + ' hrs', 'Verified'], ['solar:calendar-bold', '#c4622d', USER.events, 'Events'], ['solar:users-group-rounded-bold', '#6b4ea8', USER.orgs, 'Orgs'], ['solar:medal-ribbons-star-bold', '#b8902f', '0', 'Badges']].map(([ic, c, val, lab], i) => React.createElement("div", {
     key: i,
     style: {
       display: 'flex',

@@ -14,24 +14,24 @@ const USER = {
   school: 'Qatar Academy · Grade 12',
   email: 'mohammed@ecoawareness.me',
   memberSince: 'Sep 2025',
-  level: 4,
-  levelName: 'Field Steward',
-  xp: 1840,
-  xpFloor: 1500,
-  xpNext: 2400,
-  streak: 12,
-  rank: 7,
-  rankTotal: 2547,
-  hours: 86,
-  events: 19,
-  orgs: 8,
-  applications: 4,
-  co2: 1.9,
-  trees: 42,
+  level: 1,
+  levelName: 'Newcomer',
+  xp: 0,
+  xpFloor: 0,
+  xpNext: 100,
+  streak: 0,
+  rank: 0,
+  rankTotal: 0,
+  hours: 0,
+  events: 0,
+  orgs: 0,
+  applications: 0,
+  co2: 0,
+  trees: 0,
   bio: 'Grade 12 student at Qatar Academy. Mangrove-restoration volunteer, recycling-drive lead, and aspiring environmental engineer. Arabic-first when you need it.',
   interests: ['Mangroves', 'Recycling', 'Climate policy', 'Marine life', 'Renewable energy']
 };
-const HOURS_BY_MONTH = [4, 6, 9, 11, 14, 18, 0, 0, 0, 0, 0, 0];
+const HOURS_BY_MONTH = [0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0, 0];
 const MONTHS = ['Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 const EVENTS = [{
   id: 'e1',
@@ -79,39 +79,7 @@ const EVENTS = [{
   tone: 'green',
   status: 'saved'
 }];
-const PAST_EVENTS = [{
-  id: 'p1',
-  title: 'Beach Cleanup — Fuwairit',
-  org: 'Earthna',
-  date: 'MAY 30',
-  hours: 5,
-  cat: 'Restoration',
-  verified: true
-}, {
-  id: 'p2',
-  title: 'Sustainability Hackathon',
-  org: 'CMU-Q',
-  date: 'MAY 18',
-  hours: 8,
-  cat: 'Innovation',
-  verified: true
-}, {
-  id: 'p3',
-  title: 'Tree Planting — Aspire Park',
-  org: 'Municipality',
-  date: 'MAY 04',
-  hours: 4,
-  cat: 'Restoration',
-  verified: true
-}, {
-  id: 'p4',
-  title: 'Recycling Workshop',
-  org: 'DEAP',
-  date: 'APR 27',
-  hours: 3,
-  cat: 'Education',
-  verified: true
-}];
+const PAST_EVENTS = [];
 const OPPS = [{
   id: 'o1',
   title: 'Mangrove Restoration Volunteer',
@@ -185,35 +153,45 @@ const BADGES = [{
   name: 'First Steps',
   desc: 'Logged your first verified hour',
   icon: 'solar:flag-bold',
-  earned: true,
+  earned: false,
+  progress: 0,
+  goal: 1,
   tone: '#1a5c38'
 }, {
   id: 'b2',
   name: 'Tide Turner',
   desc: 'Joined 3 coastal cleanups',
   icon: 'solar:water-bold',
-  earned: true,
+  earned: false,
+  progress: 0,
+  goal: 3,
   tone: '#1d6d8a'
 }, {
   id: 'b3',
   name: 'Streak Keeper',
   desc: '10-day action streak',
   icon: 'solar:fire-bold',
-  earned: true,
+  earned: false,
+  progress: 0,
+  goal: 10,
   tone: '#c4622d'
 }, {
   id: 'b4',
   name: 'Tree Hugger',
   desc: 'Planted 25+ trees',
   icon: 'solar:leaf-bold',
-  earned: true,
+  earned: false,
+  progress: 0,
+  goal: 25,
   tone: '#3c8c4a'
 }, {
   id: 'b5',
   name: 'Org Connector',
   desc: 'Connected with 5 orgs',
   icon: 'solar:users-group-rounded-bold',
-  earned: true,
+  earned: false,
+  progress: 0,
+  goal: 5,
   tone: '#6b4ea8'
 }, {
   id: 'b6',
@@ -221,7 +199,7 @@ const BADGES = [{
   desc: 'Reach 100 verified hours',
   icon: 'solar:medal-ribbons-star-bold',
   earned: false,
-  progress: 86,
+  progress: 0,
   goal: 100,
   tone: '#b8902f'
 }, {
@@ -230,7 +208,7 @@ const BADGES = [{
   desc: 'Attend 3 advocacy forums',
   icon: 'solar:microphone-bold',
   earned: false,
-  progress: 1,
+  progress: 0,
   goal: 3,
   tone: '#c4622d'
 }, {
@@ -239,47 +217,11 @@ const BADGES = [{
   desc: 'Complete marine track',
   icon: 'solar:diving-mask-bold',
   earned: false,
-  progress: 2,
+  progress: 0,
   goal: 5,
   tone: '#1d6d8a'
 }];
-const TIMELINE = [{
-  m: 'Sep',
-  title: 'Joined EcoAwareness',
-  desc: 'Created your Eco ID and connected with Earthna.',
-  icon: 'solar:user-plus-bold',
-  tone: '#1a5c38'
-}, {
-  m: 'Oct',
-  title: 'First cleanup',
-  desc: '5 verified hours at Fuwairit beach.',
-  icon: 'solar:water-bold',
-  tone: '#1d6d8a'
-}, {
-  m: 'Dec',
-  title: 'Hit Level 2',
-  desc: 'Recycling drive lead — 28 hours logged.',
-  icon: 'solar:cup-star-bold',
-  tone: '#c4622d'
-}, {
-  m: 'Feb',
-  title: 'Tree Hugger badge',
-  desc: 'Planted 25 ghaf saplings at Aspire.',
-  icon: 'solar:leaf-bold',
-  tone: '#3c8c4a'
-}, {
-  m: 'May',
-  title: 'Sustainability Hackathon',
-  desc: 'Top-10 finish at CMU-Q, 8 hours.',
-  icon: 'solar:lightbulb-bolt-bold',
-  tone: '#b8902f'
-}, {
-  m: 'Jun',
-  title: 'Reached Level 4',
-  desc: 'Field Steward — ranked #7 in Qatar.',
-  icon: 'solar:medal-star-bold',
-  tone: '#1a5c38'
-}];
+const TIMELINE = [];
 const ORGS = [{
   name: 'Earthna',
   type: 'Foundation',
@@ -343,13 +285,13 @@ const RESOURCES = {
     title: 'How verified hours actually work',
     kind: 'Guide',
     read: '6 min',
-    progress: 64,
+    progress: 0,
     tone: '#1d6d8a'
   }, {
     title: 'Mangroves 101: Qatar\u2019s carbon sinks',
     kind: 'Science',
     read: '9 min',
-    progress: 30,
+    progress: 0,
     tone: '#3c8c4a'
   }],
   shelves: [{
@@ -463,8 +405,7 @@ const NAV = [{
   }, {
     id: 'events',
     label: 'My Events',
-    icon: 'solar:calendar-bold-duotone',
-    count: 2
+    icon: 'solar:calendar-bold-duotone'
   }, {
     id: 'impact',
     label: 'My Impact',

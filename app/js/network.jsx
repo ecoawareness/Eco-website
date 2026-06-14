@@ -28,7 +28,7 @@ function OrgCard({ o, connected, onConnect }) {
 function NetworkPage() {
   const toast = useToast();
   const [tab, setTab] = useStateNet('All');
-  const [conn, setConn] = useStateNet({ Earthna: true, 'Qatar Foundation': true });
+  const [conn, setConn] = useStateNet({});
   const r1 = useReveal();
   const list = tab === 'All' ? ORGS : ORGS.filter(o => o.tag === tab);
   const connect = (o) => { setConn(c => ({ ...c, [o.name]: true })); toast('Now following ' + o.name + ' 🌿', 'solar:check-circle-bold'); };

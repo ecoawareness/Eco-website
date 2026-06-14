@@ -19,11 +19,11 @@ function ImpactHero() {
             {USER.name}, the <em style={{ fontStyle: 'italic', color: 'var(--lime)' }}>{USER.levelName}</em>.
           </h1>
           <p style={{ fontSize: '0.96rem', color: 'rgba(255,255,255,0.66)', fontWeight: 300, margin: 0, maxWidth: 460 }}>
-            {USER.xp.toLocaleString()} XP earned &middot; ranked <strong style={{ color: '#fff', fontWeight: 600 }}>#{USER.rank}</strong> of {USER.rankTotal.toLocaleString()} climate students in Qatar. {USER.xpNext - USER.xp} XP to Level {USER.level + 1}.
+            {USER.xp.toLocaleString()} XP earned. {USER.xpNext - USER.xp} XP to reach Level {USER.level + 1}. Log your first verified hour to climb the Qatar leaderboard.
           </p>
           <div style={{ display: 'flex', gap: '1.4rem', marginTop: '1.3rem', flexWrap: 'wrap' }}>
             <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}><Icon i="solar:fire-bold" style={{ fontSize: '1.5rem', color: '#ff9a52' }} /><div><div style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', lineHeight: 1 }}>{USER.streak}</div><div style={{ fontSize: '0.64rem', color: 'rgba(255,255,255,0.55)' }}>day streak</div></div></div>
-            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}><Icon i="solar:medal-ribbons-star-bold" style={{ fontSize: '1.5rem', color: 'var(--lime)' }} /><div><div style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', lineHeight: 1 }}>5</div><div style={{ fontSize: '0.64rem', color: 'rgba(255,255,255,0.55)' }}>badges</div></div></div>
+            <div style={{ display: 'flex', alignItems: 'center', gap: '0.6rem' }}><Icon i="solar:medal-ribbons-star-bold" style={{ fontSize: '1.5rem', color: 'var(--lime)' }} /><div><div style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', lineHeight: 1 }}>0</div><div style={{ fontSize: '0.64rem', color: 'rgba(255,255,255,0.55)' }}>badges</div></div></div>
             <button className="btn btn-lime btn-sm" style={{ alignSelf: 'center' }}><Icon i="solar:share-bold" /> Share impact card</button>
           </div>
         </div>
@@ -59,8 +59,7 @@ function GrowthChart() {
   return (
     <div className="card reveal" ref={ref} style={{ padding: '1.5rem' }}>
       <div style={{ display: 'flex', justifyContent: 'space-between', alignItems: 'baseline', marginBottom: '0.4rem' }}>
-        <div><div className="eyebrow green">Verified hours · cumulative</div><div style={{ fontFamily: 'var(--font-display)', fontSize: '1.9rem', marginTop: 6 }}>A steady climb to {Math.max(...data)} hours</div></div>
-        <span className="pill pill-lime"><Icon i="solar:arrow-right-up-linear" /> on track for 150+</span>
+        <div><div className="eyebrow green">Verified hours · cumulative</div><div style={{ fontFamily: 'var(--font-display)', fontSize: '1.9rem', marginTop: 6 }}>No verified hours yet</div></div>
       </div>
       <svg viewBox={`0 0 ${w} ${h}`} style={{ width: '100%', height: 'auto', display: 'block', marginTop: '0.6rem' }}>
         <defs>
@@ -103,6 +102,9 @@ function BadgeCard({ b }) {
 function YearTimeline() {
   return (
     <div className="rail" style={{ marginTop: '1.1rem' }}>
+      {TIMELINE.length === 0 && (
+        <div className="card" style={{ padding: '1.2rem 1.4rem', color: 'var(--ink-3)', fontSize: '0.88rem' }}>Your journey starts here — milestones appear as you take action.</div>
+      )}
       {TIMELINE.map((t, i) => (
         <div key={i} style={{ width: 230, position: 'relative' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '0.7rem' }}>
@@ -120,16 +122,15 @@ function YearTimeline() {
   );
 }
 
-const LEADERS = [
-  { r: 5, n: 'Noor K.', h: 94, you: false }, { r: 6, n: 'Yousef M.', h: 89, you: false },
-  { r: 7, n: 'You', h: 86, you: true }, { r: 8, n: 'Layla H.', h: 81, you: false }, { r: 9, n: 'Omar S.', h: 78, you: false },
-];
+const LEADERS = []; // fresh account — not ranked yet
 
 function Leaderboard() {
   return (
     <div className="card" style={{ padding: '1.4rem' }}>
       <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem', marginBottom: '1rem' }}><Icon i="solar:ranking-bold" style={{ color: 'var(--rust)', fontSize: '1.3rem' }} /><div style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem' }}>Qatar leaderboard</div></div>
-      {LEADERS.map(l => (
+      {LEADERS.length === 0
+        ? <div style={{ fontSize: '0.84rem', color: 'var(--ink-3)', textAlign: 'center', padding: '1.4rem 0' }}>Log your first verified hour to join the Qatar leaderboard.</div>
+        : LEADERS.map(l => (
         <div key={l.r} style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', padding: '0.65rem 0.7rem', borderRadius: 12, marginBottom: 4,
           background: l.you ? 'linear-gradient(100deg,rgba(168,224,99,0.18),rgba(168,224,99,0.05))' : 'transparent', border: l.you ? '1px solid rgba(168,224,99,0.4)' : '1px solid transparent' }}>
           <div style={{ width: 26, fontFamily: 'var(--font-display)', fontSize: '1.1rem', color: l.you ? 'var(--green)' : 'var(--ink-4)', textAlign: 'center' }}>{l.r}</div>
@@ -138,7 +139,6 @@ function Leaderboard() {
           <div style={{ fontWeight: 700, fontSize: '0.9rem', color: l.you ? 'var(--green)' : 'var(--ink-2)' }}>{l.h}<span style={{ fontSize: '0.7rem', color: 'var(--ink-4)', fontWeight: 500 }}> hrs</span></div>
         </div>
       ))}
-      <div style={{ fontSize: '0.76rem', color: 'var(--ink-3)', textAlign: 'center', marginTop: '0.7rem' }}>8 more verified hours to overtake <strong>Yousef M.</strong></div>
     </div>
   );
 }
@@ -149,10 +149,10 @@ function ImpactPage() {
     <div className="page">
       <ImpactHero />
       <div className="stat-grid" style={{ marginTop: '1.3rem', gridTemplateColumns: 'repeat(4,1fr)' }}>
-        <MetricTile icon="solar:clock-circle-bold" tone="#1a5c38" value={86} label="Hours" foot="verified & signed off" />
-        <MetricTile icon="solar:cloud-bold" tone="#1d6d8a" value={1.9} decimals={1} suffix="t" label="CO₂ offset" foot="estimated this year" />
-        <MetricTile icon="solar:leaf-bold" tone="#3c8c4a" value={42} label="Trees" foot="planted with your crews" />
-        <MetricTile icon="solar:calendar-bold" tone="#c4622d" value={19} label="Events" foot="across 8 organisations" />
+        <MetricTile icon="solar:clock-circle-bold" tone="#1a5c38" value={0} label="Hours" foot="verified & signed off" />
+        <MetricTile icon="solar:cloud-bold" tone="#1d6d8a" value={0} decimals={1} suffix="t" label="CO₂ offset" foot="estimated this year" />
+        <MetricTile icon="solar:leaf-bold" tone="#3c8c4a" value={0} label="Trees" foot="planted with your crews" />
+        <MetricTile icon="solar:calendar-bold" tone="#c4622d" value={0} label="Events" foot="across 0 organisations" />
       </div>
 
       <div style={{ display: 'grid', gridTemplateColumns: 'minmax(0,1.6fr) minmax(0,1fr)', gap: '1.4rem', marginTop: '1.4rem' }} className="dash-cols">
@@ -160,7 +160,7 @@ function ImpactPage() {
         <Leaderboard />
       </div>
 
-      <div className="section-head"><h2>Badges &amp; achievements</h2><span style={{ fontSize: '0.84rem', color: 'var(--ink-3)' }}>5 of 8 earned</span></div>
+      <div className="section-head"><h2>Badges &amp; achievements</h2><span style={{ fontSize: '0.84rem', color: 'var(--ink-3)' }}>0 of 8 earned</span></div>
       <div ref={r1} className="reveal impact-badges" style={{ display: 'grid', gridTemplateColumns: 'repeat(4,1fr)', gap: '1.1rem' }}>
         {BADGES.map(b => <BadgeCard key={b.id} b={b} />)}
       </div>

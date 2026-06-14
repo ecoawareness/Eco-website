@@ -84,12 +84,7 @@ function ImpactHero() {
       margin: 0,
       maxWidth: 460
     }
-  }, USER.xp.toLocaleString(), " XP earned \xB7 ranked ", React.createElement("strong", {
-    style: {
-      color: '#fff',
-      fontWeight: 600
-    }
-  }, "#", USER.rank), " of ", USER.rankTotal.toLocaleString(), " climate students in Qatar. ", USER.xpNext - USER.xp, " XP to Level ", USER.level + 1, "."), React.createElement("div", {
+  }, USER.xp.toLocaleString(), " XP earned. ", USER.xpNext - USER.xp, " XP to reach Level ", USER.level + 1, ". Log your first verified hour to climb the Qatar leaderboard."), React.createElement("div", {
     style: {
       display: 'flex',
       gap: '1.4rem',
@@ -137,7 +132,7 @@ function ImpactHero() {
       fontSize: '1.4rem',
       lineHeight: 1
     }
-  }, "5"), React.createElement("div", {
+  }, "0"), React.createElement("div", {
     style: {
       fontSize: '0.64rem',
       color: 'rgba(255,255,255,0.55)'
@@ -245,11 +240,7 @@ function GrowthChart() {
       fontSize: '1.9rem',
       marginTop: 6
     }
-  }, "A steady climb to ", Math.max(...data), " hours")), React.createElement("span", {
-    className: "pill pill-lime"
-  }, React.createElement(Icon, {
-    i: "solar:arrow-right-up-linear"
-  }), " on track for 150+")), React.createElement("svg", {
+  }, "No verified hours yet"))), React.createElement("svg", {
     viewBox: `0 0 ${w} ${h}`,
     style: {
       width: '100%',
@@ -404,7 +395,14 @@ function YearTimeline() {
     style: {
       marginTop: '1.1rem'
     }
-  }, TIMELINE.map((t, i) => React.createElement("div", {
+  }, TIMELINE.length === 0 && React.createElement("div", {
+    className: "card",
+    style: {
+      padding: '1.2rem 1.4rem',
+      color: 'var(--ink-3)',
+      fontSize: '0.88rem'
+    }
+  }, "Your journey starts here \u2014 milestones appear as you take action."), TIMELINE.map((t, i) => React.createElement("div", {
     key: i,
     style: {
       width: 230,
@@ -463,32 +461,7 @@ function YearTimeline() {
     }
   }, t.desc)))));
 }
-const LEADERS = [{
-  r: 5,
-  n: 'Noor K.',
-  h: 94,
-  you: false
-}, {
-  r: 6,
-  n: 'Yousef M.',
-  h: 89,
-  you: false
-}, {
-  r: 7,
-  n: 'You',
-  h: 86,
-  you: true
-}, {
-  r: 8,
-  n: 'Layla H.',
-  h: 81,
-  you: false
-}, {
-  r: 9,
-  n: 'Omar S.',
-  h: 78,
-  you: false
-}];
+const LEADERS = [];
 function Leaderboard() {
   return React.createElement("div", {
     className: "card",
@@ -513,7 +486,14 @@ function Leaderboard() {
       fontFamily: 'var(--font-display)',
       fontSize: '1.4rem'
     }
-  }, "Qatar leaderboard")), LEADERS.map(l => React.createElement("div", {
+  }, "Qatar leaderboard")), LEADERS.length === 0 ? React.createElement("div", {
+    style: {
+      fontSize: '0.84rem',
+      color: 'var(--ink-3)',
+      textAlign: 'center',
+      padding: '1.4rem 0'
+    }
+  }, "Log your first verified hour to join the Qatar leaderboard.") : LEADERS.map(l => React.createElement("div", {
     key: l.r,
     style: {
       display: 'flex',
@@ -570,14 +550,7 @@ function Leaderboard() {
       color: 'var(--ink-4)',
       fontWeight: 500
     }
-  }, " hrs")))), React.createElement("div", {
-    style: {
-      fontSize: '0.76rem',
-      color: 'var(--ink-3)',
-      textAlign: 'center',
-      marginTop: '0.7rem'
-    }
-  }, "8 more verified hours to overtake ", React.createElement("strong", null, "Yousef M.")));
+  }, " hrs")))));
 }
 function ImpactPage() {
   const r1 = useReveal(),
@@ -593,13 +566,13 @@ function ImpactPage() {
   }, React.createElement(MetricTile, {
     icon: "solar:clock-circle-bold",
     tone: "#1a5c38",
-    value: 86,
+    value: 0,
     label: "Hours",
     foot: "verified & signed off"
   }), React.createElement(MetricTile, {
     icon: "solar:cloud-bold",
     tone: "#1d6d8a",
-    value: 1.9,
+    value: 0,
     decimals: 1,
     suffix: "t",
     label: "CO\u2082 offset",
@@ -607,15 +580,15 @@ function ImpactPage() {
   }), React.createElement(MetricTile, {
     icon: "solar:leaf-bold",
     tone: "#3c8c4a",
-    value: 42,
+    value: 0,
     label: "Trees",
     foot: "planted with your crews"
   }), React.createElement(MetricTile, {
     icon: "solar:calendar-bold",
     tone: "#c4622d",
-    value: 19,
+    value: 0,
     label: "Events",
-    foot: "across 8 organisations"
+    foot: "across 0 organisations"
   })), React.createElement("div", {
     style: {
       display: 'grid',
@@ -631,7 +604,7 @@ function ImpactPage() {
       fontSize: '0.84rem',
       color: 'var(--ink-3)'
     }
-  }, "5 of 8 earned")), React.createElement("div", {
+  }, "0 of 8 earned")), React.createElement("div", {
     ref: r1,
     className: "reveal impact-badges",
     style: {

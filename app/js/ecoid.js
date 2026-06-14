@@ -209,7 +209,7 @@ function EcoIdPage({
       color: 'var(--lime)',
       lineHeight: 1
     }
-  }, "#", USER.rank), React.createElement("div", {
+  }, "\u2014"), React.createElement("div", {
     style: {
       fontSize: '0.58rem',
       letterSpacing: '0.1em',
@@ -264,26 +264,11 @@ function EcoIdPage({
     }
   }, "Any school or org can scan this to confirm ", USER.name, "\u2019s ", USER.hours, " verified hours."))), React.createElement("div", {
     style: {
-      display: 'flex',
-      gap: '0.4rem',
       marginTop: '1rem',
-      flexWrap: 'wrap'
+      fontSize: '0.74rem',
+      color: 'var(--ink-3)'
     }
-  }, ['solar:flag-bold', 'solar:water-bold', 'solar:fire-bold', 'solar:leaf-bold', 'solar:users-group-rounded-bold'].map((ic, i) => React.createElement("div", {
-    key: i,
-    style: {
-      width: 32,
-      height: 32,
-      borderRadius: 8,
-      background: 'var(--green)',
-      color: '#fff',
-      display: 'grid',
-      placeItems: 'center',
-      fontSize: '0.95rem'
-    }
-  }, React.createElement(Icon, {
-    i: ic
-  })))), React.createElement("div", {
+  }, "No badges earned yet."), React.createElement("div", {
     style: {
       fontSize: '0.64rem',
       color: 'var(--ink-4)',

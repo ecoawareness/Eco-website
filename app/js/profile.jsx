@@ -69,7 +69,7 @@ function ProfilePage({ go }) {
         <div>
           <div className="card" style={{ padding: '1.4rem' }}>
             <div style={{ fontWeight: 700, marginBottom: '1rem' }}>At a glance</div>
-            {[['solar:clock-circle-bold', '#1a5c38', USER.hours + ' hrs', 'Verified'], ['solar:calendar-bold', '#c4622d', USER.events, 'Events'], ['solar:users-group-rounded-bold', '#6b4ea8', USER.orgs, 'Orgs'], ['solar:medal-ribbons-star-bold', '#b8902f', '5', 'Badges']].map(([ic, c, val, lab], i) => (
+            {[['solar:clock-circle-bold', '#1a5c38', USER.hours + ' hrs', 'Verified'], ['solar:calendar-bold', '#c4622d', USER.events, 'Events'], ['solar:users-group-rounded-bold', '#6b4ea8', USER.orgs, 'Orgs'], ['solar:medal-ribbons-star-bold', '#b8902f', '0', 'Badges']].map(([ic, c, val, lab], i) => (
               <div key={i} style={{ display: 'flex', alignItems: 'center', gap: '0.8rem', padding: '0.6rem 0', borderTop: i ? '1px solid rgba(0,0,0,0.05)' : 'none' }}>
                 <div style={{ width: 34, height: 34, borderRadius: 9, display: 'grid', placeItems: 'center', background: c + '18', color: c, fontSize: '1.1rem' }}><Icon i={ic} /></div>
                 <div style={{ flex: 1, fontSize: '0.86rem', color: 'var(--ink-3)' }}>{lab}</div>

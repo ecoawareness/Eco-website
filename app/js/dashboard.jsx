@@ -2,10 +2,8 @@
 const { useState: useStateDash } = React;
 
 function MomentumHero({ go }) {
-  // Dashboard renders a zeroed, fresh-account state. (Other pages keep USER's demo data.)
-  const u = { level: 1, levelName: 'Newcomer', xp: 0, xpFloor: 0, xpNext: 100, streak: 0 };
-  const pct = (u.xp - u.xpFloor) / (u.xpNext - u.xpFloor);
-  const toGo = u.xpNext - u.xp;
+  const pct = (USER.xp - USER.xpFloor) / (USER.xpNext - USER.xpFloor);
+  const toGo = USER.xpNext - USER.xp;
   return (
     <div style={{ position: 'relative', overflow: 'hidden', borderRadius: 22, color: '#fff', padding: 'clamp(1.4rem,2.6vw,2rem)',
       background: 'radial-gradient(ellipse 60% 80% at 100% 0%, rgba(168,224,99,0.18), transparent 60%), linear-gradient(135deg,#0e3f26,#0a2c1c)',
@@ -13,18 +11,18 @@ function MomentumHero({ go }) {
       <div aria-hidden="true" style={{ position: 'absolute', right: '-4%', bottom: '-30%', fontFamily: 'var(--font-arabic)', fontSize: '12rem', color: 'rgba(255,255,255,0.03)' }}>بيئة</div>
       <div style={{ display: 'flex', alignItems: 'center', gap: 'clamp(1.2rem,3vw,2.6rem)', flexWrap: 'wrap', position: 'relative' }}>
         <Ring size={132} stroke={12} pct={pct} color="var(--lime)" track="rgba(255,255,255,0.12)" glow>
-          <div style={{ fontFamily: 'var(--font-display)', fontSize: '2.3rem', lineHeight: 1, color: 'var(--lime)' }}>L{u.level}</div>
+          <div style={{ fontFamily: 'var(--font-display)', fontSize: '2.3rem', lineHeight: 1, color: 'var(--lime)' }}>L{USER.level}</div>
           <div style={{ fontSize: '0.62rem', letterSpacing: '0.12em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)', marginTop: 3 }}>Level</div>
         </Ring>
         <div style={{ flex: 1, minWidth: 240 }}>
           <div style={{ display: 'inline-flex', alignItems: 'center', gap: '0.5rem', fontSize: '0.7rem', fontWeight: 600, letterSpacing: '0.14em', textTransform: 'uppercase', color: 'var(--lime)', marginBottom: '0.6rem' }}>
-            <Icon i="solar:medal-star-bold" /> {u.levelName}
+            <Icon i="solar:medal-star-bold" /> {USER.levelName}
           </div>
           <h2 style={{ fontFamily: 'var(--font-display)', fontSize: 'clamp(1.6rem,2.6vw,2.2rem)', margin: '0 0 0.4rem', lineHeight: 1.1 }}>
-            You&rsquo;re <em style={{ fontStyle: 'italic', color: 'var(--lime)' }}>{toGo} XP</em> from Level {u.level + 1}.
+            You&rsquo;re <em style={{ fontStyle: 'italic', color: 'var(--lime)' }}>{toGo} XP</em> from Level {USER.level + 1}.
           </h2>
           <p style={{ fontSize: '0.92rem', color: 'rgba(255,255,255,0.62)', fontWeight: 300, margin: '0 0 1rem', maxWidth: 440 }}>
-            Keep the streak alive &mdash; one more verified event this week unlocks the <strong style={{ color: '#fff', fontWeight: 600 }}>Century Club</strong> badge.
+            Join your first verified event to start your action streak and earn your <strong style={{ color: '#fff', fontWeight: 600 }}>First Steps</strong> badge.
           </p>
           <div style={{ display: 'flex', gap: '0.7rem', flexWrap: 'wrap' }}>
             <button className="btn btn-lime btn-sm" onClick={() => go('opportunities')}><Icon i="solar:compass-bold" /> Find an event</button>
@@ -34,7 +32,7 @@ function MomentumHero({ go }) {
         <div style={{ display: 'flex', flexDirection: 'column', gap: '0.7rem' }}>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', padding: '0.7rem 1rem', borderRadius: 14, background: 'rgba(196,98,45,0.16)', border: '1px solid rgba(196,98,45,0.3)' }}>
             <Icon i="solar:fire-bold" style={{ fontSize: '1.6rem', color: '#ff9a52' }} />
-            <div><div style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', lineHeight: 1 }}>{u.streak} days</div><div style={{ fontSize: '0.66rem', color: 'rgba(255,255,255,0.6)' }}>Action streak</div></div>
+            <div><div style={{ fontFamily: 'var(--font-display)', fontSize: '1.5rem', lineHeight: 1 }}>{USER.streak} days</div><div style={{ fontSize: '0.66rem', color: 'rgba(255,255,255,0.6)' }}>Action streak</div></div>
           </div>
           <div style={{ display: 'flex', alignItems: 'center', gap: '0.7rem', padding: '0.7rem 1rem', borderRadius: 14, background: 'rgba(168,224,99,0.12)', border: '1px solid rgba(168,224,99,0.26)' }}>
             <Icon i="solar:ranking-bold" style={{ fontSize: '1.6rem', color: 'var(--lime)' }} />
@@ -88,9 +86,8 @@ function EventCard({ e, go }) {
 }
 
 function HoursChart() {
-  const HOURS = HOURS_BY_MONTH.map(() => 0); // zeroed for a fresh account
-  const max = Math.max(...HOURS);
-  const total = HOURS.reduce((a, b) => a + b, 0);
+  const max = Math.max(...HOURS_BY_MONTH);
+  const total = HOURS_BY_MONTH.reduce((a, b) => a + b, 0);
   const t = useCountUp(total);
   const cur = 5; // current month index (Jun)
   return (
@@ -100,7 +97,7 @@ function HoursChart() {
           <div style={{ fontSize: '0.78rem', color: 'var(--ink-3)', marginTop: 4 }}>Verified this year</div></div>
       </div>
       <div className="barchart" style={{ marginTop: '1.3rem' }}>
-        {HOURS.map((h, i) => (
+        {HOURS_BY_MONTH.map((h, i) => (
           <div key={i} className={'bar ' + (h === 0 ? 'dim' : i === cur ? 'hi' : '')} style={{ height: (h === 0 ? 4 : Math.max(8, (h / max) * 100)) + '%' }} title={`${MONTHS[i]}: ${h}h`} />
         ))}
       </div>

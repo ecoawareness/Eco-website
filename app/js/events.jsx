@@ -70,7 +70,11 @@ function EventsPage({ go }) {
       </div>
 
       <div ref={r1} className="reveal" style={{ display: 'flex', flexDirection: 'column', gap: '0.9rem' }}>
-        {tab === 'upcoming' ? EVENTS.map(e => <UpcomingRow key={e.id} e={e} go={go} />) : PAST_EVENTS.map(e => <PastRow key={e.id} e={e} />)}
+        {tab === 'upcoming'
+          ? EVENTS.map(e => <UpcomingRow key={e.id} e={e} go={go} />)
+          : (PAST_EVENTS.length === 0
+              ? <div className="card" style={{ padding: '1.4rem', color: 'var(--ink-3)', fontSize: '0.9rem', textAlign: 'center' }}>No verified events yet — your signed-off hours will appear here.</div>
+              : PAST_EVENTS.map(e => <PastRow key={e.id} e={e} />))}
       </div>
     </div>
   );

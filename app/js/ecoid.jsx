@@ -52,7 +52,7 @@ function EcoIdPage({ go }) {
                 <div style={{ display: 'flex', gap: '1.4rem' }}>
                   <div><div style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', color: 'var(--lime)', lineHeight: 1 }}>{USER.hours}</div><div style={{ fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)' }}>Hours</div></div>
                   <div><div style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', color: 'var(--lime)', lineHeight: 1 }}>{USER.events}</div><div style={{ fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)' }}>Events</div></div>
-                  <div><div style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', color: 'var(--lime)', lineHeight: 1 }}>#{USER.rank}</div><div style={{ fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)' }}>Rank</div></div>
+                  <div><div style={{ fontFamily: 'var(--font-display)', fontSize: '1.4rem', color: 'var(--lime)', lineHeight: 1 }}>&mdash;</div><div style={{ fontSize: '0.58rem', letterSpacing: '0.1em', textTransform: 'uppercase', color: 'rgba(255,255,255,0.55)' }}>Rank</div></div>
                 </div>
                 <div style={{ fontSize: '0.6rem', color: 'rgba(255,255,255,0.4)', textAlign: 'right' }}>ID · EA-2547<br />Since {USER.memberSince}</div>
               </div>
@@ -67,11 +67,7 @@ function EcoIdPage({ go }) {
                   <div style={{ fontSize: '0.76rem', color: 'var(--ink-3)', lineHeight: 1.5, marginTop: 4 }}>Any school or org can scan this to confirm {USER.name}&rsquo;s {USER.hours} verified hours.</div>
                 </div>
               </div>
-              <div style={{ display: 'flex', gap: '0.4rem', marginTop: '1rem', flexWrap: 'wrap' }}>
-                {['solar:flag-bold', 'solar:water-bold', 'solar:fire-bold', 'solar:leaf-bold', 'solar:users-group-rounded-bold'].map((ic, i) => (
-                  <div key={i} style={{ width: 32, height: 32, borderRadius: 8, background: 'var(--green)', color: '#fff', display: 'grid', placeItems: 'center', fontSize: '0.95rem' }}><Icon i={ic} /></div>
-                ))}
-              </div>
+              <div style={{ marginTop: '1rem', fontSize: '0.74rem', color: 'var(--ink-3)' }}>No badges earned yet.</div>
               <div style={{ fontSize: '0.64rem', color: 'var(--ink-4)', marginTop: '0.8rem' }}>ecoawareness.me/id/ea-2547</div>
             </div>
           </div>
