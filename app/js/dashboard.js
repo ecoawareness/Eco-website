@@ -4,8 +4,16 @@ const {
 function MomentumHero({
   go
 }) {
-  const pct = (USER.xp - USER.xpFloor) / (USER.xpNext - USER.xpFloor);
-  const toGo = USER.xpNext - USER.xp;
+  const u = {
+    level: 1,
+    levelName: 'Newcomer',
+    xp: 0,
+    xpFloor: 0,
+    xpNext: 100,
+    streak: 0
+  };
+  const pct = (u.xp - u.xpFloor) / (u.xpNext - u.xpFloor);
+  const toGo = u.xpNext - u.xp;
   return React.createElement("div", {
     style: {
       position: 'relative',
@@ -48,7 +56,7 @@ function MomentumHero({
       lineHeight: 1,
       color: 'var(--lime)'
     }
-  }, "L", USER.level), React.createElement("div", {
+  }, "L", u.level), React.createElement("div", {
     style: {
       fontSize: '0.62rem',
       letterSpacing: '0.12em',
@@ -75,7 +83,7 @@ function MomentumHero({
     }
   }, React.createElement(Icon, {
     i: "solar:medal-star-bold"
-  }), " ", USER.levelName), React.createElement("h2", {
+  }), " ", u.levelName), React.createElement("h2", {
     style: {
       fontFamily: 'var(--font-display)',
       fontSize: 'clamp(1.6rem,2.6vw,2.2rem)',
@@ -87,7 +95,7 @@ function MomentumHero({
       fontStyle: 'italic',
       color: 'var(--lime)'
     }
-  }, toGo, " XP"), " from Level ", USER.level + 1, "."), React.createElement("p", {
+  }, toGo, " XP"), " from Level ", u.level + 1, "."), React.createElement("p", {
     style: {
       fontSize: '0.92rem',
       color: 'rgba(255,255,255,0.62)',
@@ -147,7 +155,7 @@ function MomentumHero({
       fontSize: '1.5rem',
       lineHeight: 1
     }
-  }, USER.streak, " days"), React.createElement("div", {
+  }, u.streak, " days"), React.createElement("div", {
     style: {
       fontSize: '0.66rem',
       color: 'rgba(255,255,255,0.6)'
@@ -174,12 +182,12 @@ function MomentumHero({
       fontSize: '1.5rem',
       lineHeight: 1
     }
-  }, "#", USER.rank), React.createElement("div", {
+  }, "\u2014"), React.createElement("div", {
     style: {
       fontSize: '0.66rem',
       color: 'rgba(255,255,255,0.6)'
     }
-  }, "in Qatar"))))));
+  }, "Qatar rank"))))));
 }
 function StatCard({
   icon,
@@ -347,8 +355,9 @@ function EventCard({
   }), " ", e.hours, "h"))));
 }
 function HoursChart() {
-  const max = Math.max(...HOURS_BY_MONTH);
-  const total = HOURS_BY_MONTH.reduce((a, b) => a + b, 0);
+  const HOURS = HOURS_BY_MONTH.map(() => 0);
+  const max = Math.max(...HOURS);
+  const total = HOURS.reduce((a, b) => a + b, 0);
   const t = useCountUp(total);
   const cur = 5;
   return React.createElement("div", {
@@ -380,16 +389,12 @@ function HoursChart() {
       color: 'var(--ink-3)',
       marginTop: 4
     }
-  }, "Verified this year")), React.createElement("span", {
-    className: "pill pill-lime"
-  }, React.createElement(Icon, {
-    i: "solar:arrow-right-up-linear"
-  }), " +28%")), React.createElement("div", {
+  }, "Verified this year"))), React.createElement("div", {
     className: "barchart",
     style: {
       marginTop: '1.3rem'
     }
-  }, HOURS_BY_MONTH.map((h, i) => React.createElement("div", {
+  }, HOURS.map((h, i) => React.createElement("div", {
     key: i,
     className: 'bar ' + (h === 0 ? 'dim' : i === cur ? 'hi' : ''),
     style: {
@@ -402,31 +407,7 @@ function HoursChart() {
     key: m
   }, m[0]))));
 }
-const ACTIVITY = [{
-  icon: 'solar:check-circle-bold',
-  tone: '#1a5c38',
-  t: 'Verified 5 hours',
-  s: 'Beach Cleanup — Fuwairit · Earthna',
-  time: '2d'
-}, {
-  icon: 'solar:medal-star-bold',
-  tone: '#b8902f',
-  t: 'Reached Level 4',
-  s: 'Field Steward unlocked',
-  time: '4d'
-}, {
-  icon: 'solar:users-group-rounded-bold',
-  tone: '#6b4ea8',
-  t: 'Connected with QKONs',
-  s: 'Now following 8 orgs',
-  time: '1w'
-}, {
-  icon: 'solar:leaf-bold',
-  tone: '#3c8c4a',
-  t: 'Earned Tree Hugger badge',
-  s: 'Planted 25+ trees',
-  time: '2w'
-}];
+const ACTIVITY = [];
 function QuickAction({
   icon,
   tone,
@@ -499,35 +480,27 @@ function DashboardPage({
     icon: "solar:clock-circle-bold",
     tone: "#1a5c38",
     bg: "rgba(26,92,56,0.1)",
-    value: 86,
+    value: 0,
     suffix: "",
-    label: "Verified hours",
-    trend: "+18 this month",
-    spark: [4, 6, 9, 11, 14, 18]
+    label: "Verified hours"
   }), React.createElement(StatCard, {
     icon: "solar:leaf-bold",
     tone: "#3c8c4a",
     bg: "rgba(60,140,74,0.12)",
-    value: 19,
-    label: "Events attended",
-    trend: "+3 this month",
-    spark: [2, 3, 3, 4, 4, 3]
+    value: 0,
+    label: "Events attended"
   }), React.createElement(StatCard, {
     icon: "solar:users-group-rounded-bold",
     tone: "#c4622d",
     bg: "rgba(196,98,45,0.1)",
-    value: 8,
-    label: "Orgs connected",
-    trend: "+1 this week",
-    spark: [3, 4, 5, 6, 7, 8]
+    value: 0,
+    label: "Orgs connected"
   }), React.createElement(StatCard, {
     icon: "solar:bookmark-bold",
     tone: "#6b4ea8",
     bg: "rgba(107,78,168,0.1)",
-    value: 4,
-    label: "Open applications",
-    trend: "2 in review",
-    spark: [1, 2, 2, 3, 4, 4]
+    value: 0,
+    label: "Open applications"
   })), React.createElement("div", {
     style: {
       display: 'grid',
@@ -636,7 +609,13 @@ function DashboardPage({
       flexDirection: 'column',
       gap: '0.1rem'
     }
-  }, ACTIVITY.map((a, i) => React.createElement("div", {
+  }, ACTIVITY.length === 0 && React.createElement("div", {
+    style: {
+      fontSize: '0.82rem',
+      color: 'var(--ink-3)',
+      padding: '0.4rem 0'
+    }
+  }, "No activity yet \u2014 your verified actions will show up here."), ACTIVITY.map((a, i) => React.createElement("div", {
     key: i,
     style: {
       display: 'flex',
