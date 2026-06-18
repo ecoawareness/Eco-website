@@ -1,0 +1,1011 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Learn Claude Code /commands — EcoHub</title>
+    <meta name="description" content="An interactive, crystal-clear lesson on Claude Code slash (/) commands — learn faster than reading the docs with a live terminal playground, examples, a custom-command builder, and a quiz.">
+    <link rel="canonical" href="https://ecoawarenessqa.org/learn-commands.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="EcoHub">
+    <meta property="og:title" content="Learn Claude Code /commands — interactively">
+    <meta property="og:description" content="The fastest way to truly understand Claude Code slash commands: a live terminal playground, worked examples, a custom-command builder, and a quiz.">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%231a5c38%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2245%22%20text-anchor%3D%22middle%22%20font-family%3D%22Georgia%2C%20serif%22%20font-style%3D%22italic%22%20font-weight%3D%22700%22%20font-size%3D%2240%22%20fill%3D%22%23fff%22%3EE%3C/text%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2218%22%20r%3D%225%22%20fill%3D%22%23a8e063%22/%3E%3C/svg%3E">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <style>
+        :root {
+            --ink: #0a0a0a; --ink-2: rgba(10,10,10,0.7); --ink-3: rgba(10,10,10,0.5);
+            --paper: #f5f0e8; --green: #1a5c38; --green-light: #2d7a4f;
+            --green-dark: #0d3a22; --lime: #a8e063; --rust: #c4622d; --sand: #e8dfc8;
+            --term-bg: #0d1f17; --term-line: rgba(168,224,99,0.18);
+            --font-display: 'Instrument Serif', Georgia, serif;
+            --font-body: 'DM Sans', system-ui, sans-serif;
+            --font-mono: ui-monospace, 'SF Mono', Menlo, Consolas, monospace;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--paper); color: var(--ink);
+            font-family: var(--font-body); min-height: 100vh;
+            display: flex; flex-direction: column; line-height: 1.6;
+            -webkit-font-smoothing: antialiased;
+        }
+
+        /* ─── NAV ─── */
+        nav {
+            position: sticky; top: 0; z-index: 900;
+            padding: 0 2.5rem; height: 72px;
+            display: flex; align-items: center; justify-content: space-between;
+            background: rgba(245,240,232,0.93); backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(0,0,0,0.07);
+        }
+        .nav-logo {
+            font-family: var(--font-display); font-size: 1.4rem; color: var(--ink);
+            text-decoration: none; display: flex; align-items: center; gap: 0.5rem;
+        }
+        .nav-logo-dot { width: 8px; height: 8px; background: var(--lime); border-radius: 50%; }
+        .nav-links { display: flex; align-items: center; gap: 1.75rem; }
+        .nav-links a {
+            font-size: 0.875rem; color: var(--ink); text-decoration: none;
+            opacity: 0.55; transition: opacity 0.2s;
+        }
+        .nav-links a:hover, .nav-links a.active { opacity: 1; }
+        .nav-links a.active { color: var(--green); font-weight: 600; }
+        .nav-cta {
+            background: var(--green); color: #fff !important; opacity: 1 !important;
+            padding: 0.5rem 1.1rem; border-radius: 999px; font-weight: 500;
+        }
+        .nav-cta:hover { background: var(--green-light) !important; }
+
+        /* ─── HERO ─── */
+        .hero {
+            padding: 5rem 2.5rem 3.5rem; max-width: 1100px; margin: 0 auto; width: 100%;
+        }
+        .eyebrow {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            font-size: 0.72rem; letter-spacing: 0.15em; text-transform: uppercase;
+            color: var(--rust); font-weight: 600; margin-bottom: 1.4rem;
+        }
+        .eyebrow span.dot { width: 5px; height: 5px; background: var(--lime); border-radius: 50%; display: inline-block; }
+        .hero h1 {
+            font-family: var(--font-display); font-weight: 400;
+            font-size: clamp(2.8rem, 6.5vw, 5.5rem); line-height: 1.02;
+            letter-spacing: -0.02em; margin-bottom: 1.4rem;
+        }
+        .hero h1 em { font-style: italic; color: var(--green); }
+        .hero h1 .cmd { font-family: var(--font-mono); font-size: 0.62em; color: var(--rust); font-style: normal; }
+        .hero p.lead { font-size: 1.18rem; max-width: 640px; color: var(--ink-2); }
+        .hero-meta {
+            display: flex; flex-wrap: wrap; gap: 1.5rem; margin-top: 2rem;
+            font-size: 0.85rem; color: var(--ink-3);
+        }
+        .hero-meta span { display: inline-flex; align-items: center; gap: 0.45rem; }
+        .hero-meta iconify-icon { color: var(--green); font-size: 1.05rem; }
+
+        /* ─── SECTION ─── */
+        section { max-width: 1100px; margin: 0 auto; padding: 2.5rem 2.5rem; width: 100%; }
+        .section-head { margin-bottom: 2rem; }
+        .section-head h2 {
+            font-family: var(--font-display); font-weight: 400;
+            font-size: clamp(1.9rem, 3.5vw, 2.8rem); line-height: 1.1;
+            letter-spacing: -0.01em;
+        }
+        .section-head h2 em { font-style: italic; color: var(--green); }
+        .section-head p { color: var(--ink-2); max-width: 680px; margin-top: 0.7rem; }
+        .step-num {
+            font-family: var(--font-mono); font-size: 0.72rem; letter-spacing: 0.12em;
+            color: var(--rust); font-weight: 600; text-transform: uppercase;
+            display: block; margin-bottom: 0.5rem;
+        }
+
+        /* ─── MENTAL MODEL CARDS ─── */
+        .model-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.1rem; }
+        .model-card {
+            background: #fff; border: 1px solid rgba(0,0,0,0.07); border-radius: 16px;
+            padding: 1.5rem; transition: transform 0.18s, box-shadow 0.18s;
+        }
+        .model-card:hover { transform: translateY(-3px); box-shadow: 0 12px 30px rgba(0,0,0,0.07); }
+        .model-card .ico {
+            width: 42px; height: 42px; border-radius: 11px; display: grid; place-items: center;
+            background: rgba(26,92,56,0.1); color: var(--green); font-size: 1.4rem; margin-bottom: 1rem;
+        }
+        .model-card h3 { font-size: 1.05rem; font-weight: 600; margin-bottom: 0.4rem; }
+        .model-card p { font-size: 0.9rem; color: var(--ink-2); }
+
+        /* ─── ANATOMY ─── */
+        .anatomy {
+            background: var(--green-dark); border-radius: 20px; padding: 2.5rem 2rem;
+            text-align: center; color: #fff;
+        }
+        .anatomy-line {
+            font-family: var(--font-mono); font-size: clamp(1.1rem, 3vw, 2rem);
+            display: inline-flex; flex-wrap: wrap; gap: 0.4rem; justify-content: center;
+            align-items: flex-start;
+        }
+        .atom { position: relative; padding: 0.2rem 0.55rem; border-radius: 8px; cursor: default; }
+        .atom .tag {
+            position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            margin-top: 0.7rem; font-family: var(--font-body); font-size: 0.7rem;
+            white-space: nowrap; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.85;
+        }
+        .atom::after {
+            content: ''; position: absolute; top: 100%; left: 50%; transform: translateX(-50%);
+            width: 1px; height: 0.55rem; background: currentColor; opacity: 0.5;
+        }
+        .atom.slash { background: rgba(196,98,45,0.25); color: var(--rust); }
+        .atom.name { background: rgba(168,224,99,0.2); color: var(--lime); }
+        .atom.args { background: rgba(255,255,255,0.12); color: #fff; }
+        .anatomy p.note { margin-top: 3.2rem; font-size: 0.92rem; opacity: 0.7; }
+
+        /* ─── TERMINAL PLAYGROUND ─── */
+        .term-wrap { display: grid; grid-template-columns: 1.55fr 1fr; gap: 1.25rem; align-items: start; }
+        .terminal {
+            background: var(--term-bg); border-radius: 14px; overflow: hidden;
+            box-shadow: 0 20px 50px rgba(13,31,23,0.3); border: 1px solid rgba(168,224,99,0.15);
+        }
+        .term-bar {
+            display: flex; align-items: center; gap: 0.5rem; padding: 0.7rem 1rem;
+            background: rgba(0,0,0,0.25); border-bottom: 1px solid var(--term-line);
+        }
+        .term-dot { width: 11px; height: 11px; border-radius: 50%; }
+        .term-bar .title {
+            margin-left: 0.6rem; font-family: var(--font-mono); font-size: 0.74rem;
+            color: rgba(168,224,99,0.65);
+        }
+        .term-body {
+            padding: 1.1rem 1.2rem; font-family: var(--font-mono); font-size: 0.85rem;
+            color: #d7e8d7; height: 340px; overflow-y: auto; line-height: 1.55;
+        }
+        .term-body::-webkit-scrollbar { width: 8px; }
+        .term-body::-webkit-scrollbar-thumb { background: rgba(168,224,99,0.25); border-radius: 4px; }
+        .t-line { white-space: pre-wrap; word-break: break-word; }
+        .t-prompt { color: var(--lime); }
+        .t-cmd { color: #fff; font-weight: 600; }
+        .t-out { color: rgba(215,232,215,0.82); }
+        .t-dim { color: rgba(215,232,215,0.5); }
+        .t-accent { color: var(--lime); }
+        .t-warn { color: #ffcf6b; }
+        .t-err { color: #ff8a7a; }
+        .term-input-row {
+            display: flex; align-items: center; gap: 0.5rem; padding: 0.75rem 1.2rem;
+            border-top: 1px solid var(--term-line); background: rgba(0,0,0,0.2);
+        }
+        .term-input-row .t-prompt { font-family: var(--font-mono); font-size: 0.9rem; }
+        #termInput {
+            flex: 1; background: transparent; border: none; outline: none;
+            color: #fff; font-family: var(--font-mono); font-size: 0.9rem;
+        }
+        #termInput::placeholder { color: rgba(215,232,215,0.4); }
+        .term-side h3 { font-size: 0.78rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--ink-3); margin-bottom: 0.85rem; }
+        .chip-stack { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+        .chip {
+            font-family: var(--font-mono); font-size: 0.8rem; cursor: pointer;
+            background: #fff; border: 1px solid rgba(0,0,0,0.1); border-radius: 999px;
+            padding: 0.4rem 0.85rem; color: var(--green); transition: all 0.15s; user-select: none;
+        }
+        .chip:hover { background: var(--green); color: #fff; border-color: var(--green); transform: translateY(-1px); }
+        .term-hint { margin-top: 1.1rem; font-size: 0.82rem; color: var(--ink-3); }
+        .term-hint kbd {
+            font-family: var(--font-mono); background: var(--sand); border-radius: 5px;
+            padding: 0.1rem 0.4rem; font-size: 0.78rem; border: 1px solid rgba(0,0,0,0.12);
+        }
+
+        /* ─── COMMAND EXPLORER ─── */
+        .filter-bar { display: flex; flex-wrap: wrap; gap: 0.5rem; margin-bottom: 1.5rem; }
+        .filter-btn {
+            font-size: 0.83rem; cursor: pointer; background: #fff; border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 999px; padding: 0.45rem 1rem; color: var(--ink-2); transition: all 0.15s;
+        }
+        .filter-btn:hover { border-color: var(--green); }
+        .filter-btn.active { background: var(--green); color: #fff; border-color: var(--green); }
+        .cmd-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem; }
+        .cmd-card {
+            background: #fff; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px;
+            padding: 1.25rem; display: flex; flex-direction: column; gap: 0.45rem;
+            transition: transform 0.15s, box-shadow 0.15s;
+        }
+        .cmd-card:hover { transform: translateY(-2px); box-shadow: 0 10px 26px rgba(0,0,0,0.06); }
+        .cmd-card .cname { font-family: var(--font-mono); font-weight: 600; color: var(--green); font-size: 0.98rem; }
+        .cmd-card .cdesc { font-size: 0.87rem; color: var(--ink-2); }
+        .cmd-card .ctag {
+            align-self: flex-start; margin-top: auto; font-size: 0.66rem; letter-spacing: 0.08em;
+            text-transform: uppercase; padding: 0.2rem 0.55rem; border-radius: 6px; font-weight: 600;
+        }
+        .ctag.cat-session { background: #dbeafe; color: #1e40af; }
+        .ctag.cat-context { background: #dcfce7; color: #166534; }
+        .ctag.cat-config  { background: #fef3c7; color: #92400e; }
+        .ctag.cat-code    { background: #f3e8ff; color: #6b21a8; }
+        .ctag.cat-info    { background: #e8dfc8; color: #6b5a2e; }
+
+        /* ─── CODE BLOCKS / EXAMPLES ─── */
+        .example { display: grid; grid-template-columns: 1fr 1fr; gap: 1.1rem; margin-bottom: 1.1rem; align-items: stretch; }
+        .code-card {
+            background: var(--term-bg); border-radius: 14px; overflow: hidden;
+            border: 1px solid rgba(168,224,99,0.15); display: flex; flex-direction: column;
+        }
+        .code-card .file-bar {
+            display: flex; align-items: center; gap: 0.5rem; padding: 0.6rem 1rem;
+            background: rgba(0,0,0,0.25); border-bottom: 1px solid var(--term-line);
+            font-family: var(--font-mono); font-size: 0.76rem; color: rgba(168,224,99,0.7);
+        }
+        .code-card pre {
+            padding: 1.1rem 1.2rem; font-family: var(--font-mono); font-size: 0.82rem;
+            color: #d7e8d7; overflow-x: auto; line-height: 1.6; flex: 1;
+        }
+        .code-card pre .k { color: var(--lime); }
+        .code-card pre .c { color: rgba(215,232,215,0.45); }
+        .code-card pre .v { color: #ffcf6b; }
+        .code-card pre .a { color: #79c0ff; }
+        .explain {
+            background: #fff; border: 1px solid rgba(0,0,0,0.07); border-radius: 14px; padding: 1.4rem;
+        }
+        .explain h4 { font-size: 1.02rem; font-weight: 600; margin-bottom: 0.6rem; display: flex; align-items: center; gap: 0.5rem; }
+        .explain h4 iconify-icon { color: var(--green); }
+        .explain p { font-size: 0.9rem; color: var(--ink-2); margin-bottom: 0.7rem; }
+        .explain ul { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+        .explain li { font-size: 0.88rem; color: var(--ink-2); padding-left: 1.4rem; position: relative; }
+        .explain li::before {
+            content: '→'; position: absolute; left: 0; color: var(--rust); font-weight: 600;
+        }
+        .explain code, p code, li code {
+            font-family: var(--font-mono); background: var(--sand); border-radius: 5px;
+            padding: 0.08rem 0.35rem; font-size: 0.85em; color: var(--green-dark);
+        }
+
+        /* ─── BUILDER ─── */
+        .builder { display: grid; grid-template-columns: 1fr 1.1fr; gap: 1.5rem; align-items: start; }
+        .builder-form {
+            background: #fff; border: 1px solid rgba(0,0,0,0.07); border-radius: 16px; padding: 1.6rem;
+            display: flex; flex-direction: column; gap: 1.1rem;
+        }
+        .field label { display: block; font-size: 0.82rem; font-weight: 600; margin-bottom: 0.4rem; }
+        .field label .opt { color: var(--ink-3); font-weight: 400; }
+        .field input, .field textarea, .field select {
+            width: 100%; font-family: var(--font-body); font-size: 0.9rem;
+            padding: 0.6rem 0.75rem; border: 1px solid rgba(0,0,0,0.15); border-radius: 9px;
+            background: var(--paper); color: var(--ink); outline: none; transition: border 0.15s;
+        }
+        .field input:focus, .field textarea:focus, .field select:focus { border-color: var(--green); }
+        .field textarea { resize: vertical; min-height: 70px; font-family: var(--font-mono); font-size: 0.84rem; }
+        .field .hint { font-size: 0.76rem; color: var(--ink-3); margin-top: 0.35rem; }
+        .field-row { display: grid; grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+        .toggle-row { display: flex; align-items: center; gap: 0.6rem; }
+        .toggle-row input { width: auto; }
+        .copy-btn {
+            margin-top: 0.9rem; align-self: flex-start; cursor: pointer; border: none;
+            background: var(--green); color: #fff; font-family: var(--font-body); font-weight: 500;
+            font-size: 0.85rem; padding: 0.55rem 1.1rem; border-radius: 9px;
+            display: inline-flex; align-items: center; gap: 0.5rem; transition: background 0.15s;
+        }
+        .copy-btn:hover { background: var(--green-light); }
+        .builder-out { position: sticky; top: 90px; }
+
+        /* ─── QUIZ ─── */
+        .quiz { background: #fff; border: 1px solid rgba(0,0,0,0.07); border-radius: 18px; padding: 2rem; }
+        .quiz-q { margin-bottom: 1.6rem; }
+        .quiz-q:last-of-type { margin-bottom: 1rem; }
+        .quiz-q .q { font-weight: 600; margin-bottom: 0.9rem; display: flex; gap: 0.6rem; }
+        .quiz-q .q .qn { color: var(--rust); font-family: var(--font-mono); }
+        .quiz-q .opts { display: flex; flex-direction: column; gap: 0.55rem; }
+        .opt-btn {
+            text-align: left; cursor: pointer; background: var(--paper); border: 1px solid rgba(0,0,0,0.1);
+            border-radius: 10px; padding: 0.7rem 0.95rem; font-family: var(--font-body); font-size: 0.9rem;
+            color: var(--ink); transition: all 0.15s; display: flex; align-items: center; gap: 0.6rem;
+        }
+        .opt-btn:hover:not(.locked) { border-color: var(--green); }
+        .opt-btn .mark { font-size: 1.1rem; width: 1.2rem; }
+        .opt-btn.correct { background: #dcfce7; border-color: #4ade80; color: #166534; }
+        .opt-btn.wrong { background: #fee2e2; border-color: #f87171; color: #991b1b; }
+        .opt-btn.locked { cursor: default; }
+        .quiz-explain {
+            margin-top: 0.7rem; font-size: 0.84rem; color: var(--ink-2);
+            background: var(--paper); border-left: 3px solid var(--lime); padding: 0.6rem 0.9rem;
+            border-radius: 0 8px 8px 0; display: none;
+        }
+        .quiz-explain.show { display: block; }
+        .quiz-score {
+            text-align: center; font-family: var(--font-display); font-size: 1.6rem;
+            color: var(--green); margin-top: 1rem; min-height: 2rem;
+        }
+
+        /* ─── CHEAT / CTA ─── */
+        .cheat { background: var(--green-dark); border-radius: 20px; padding: 2.5rem; color: #fff; }
+        .cheat h2 { font-family: var(--font-display); font-weight: 400; font-size: 2rem; margin-bottom: 1.5rem; }
+        .cheat h2 em { color: var(--lime); font-style: italic; }
+        .cheat-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem 2rem; }
+        .cheat-row {
+            display: flex; gap: 1rem; align-items: baseline; padding: 0.55rem 0;
+            border-bottom: 1px solid rgba(255,255,255,0.08); font-size: 0.9rem;
+        }
+        .cheat-row code {
+            font-family: var(--font-mono); color: var(--lime); background: rgba(168,224,99,0.12);
+            padding: 0.15rem 0.5rem; border-radius: 6px; white-space: nowrap; font-size: 0.85rem;
+        }
+        .cheat-row span { color: rgba(255,255,255,0.78); }
+        .cheat .docs-link {
+            display: inline-flex; align-items: center; gap: 0.5rem; margin-top: 1.8rem;
+            color: var(--lime); text-decoration: none; font-weight: 500; font-size: 0.95rem;
+        }
+        .cheat .docs-link:hover { text-decoration: underline; }
+
+        /* ─── FOOTER ─── */
+        footer { margin-top: 3rem; background: #fff; border-top: 1px solid rgba(0,0,0,0.07); }
+        .footer-inner {
+            max-width: 1100px; margin: 0 auto; padding: 2.5rem; display: flex;
+            flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 1rem;
+        }
+        .footer-logo { font-family: var(--font-display); font-size: 1.3rem; color: var(--ink); text-decoration: none; }
+        .footer-links { display: flex; flex-wrap: wrap; gap: 1.5rem; }
+        .footer-links a { font-size: 0.85rem; color: var(--ink-2); text-decoration: none; }
+        .footer-links a:hover { color: var(--green); }
+        .footer-copy { font-size: 0.8rem; color: var(--ink-3); width: 100%; }
+
+        /* ─── RESPONSIVE ─── */
+        @media (max-width: 860px) {
+            .nav-links a:not(.nav-cta):not(.active) { display: none; }
+            .model-grid, .cmd-grid { grid-template-columns: 1fr 1fr; }
+            .term-wrap, .example, .builder { grid-template-columns: 1fr; }
+            .cheat-grid { grid-template-columns: 1fr; }
+            .builder-out { position: static; }
+        }
+        @media (max-width: 560px) {
+            section, .hero { padding-left: 1.25rem; padding-right: 1.25rem; }
+            nav { padding: 0 1.25rem; }
+            .model-grid, .cmd-grid { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+
+<nav>
+    <a href="index.html" class="nav-logo">
+        <span class="nav-logo-dot"></span>
+        <span>EcoHub</span>
+    </a>
+    <div class="nav-links">
+        <a href="index.html">Home</a>
+        <a href="challenges.html">Challenges</a>
+        <a href="faq.html">FAQ</a>
+        <a href="learn-commands.html" class="active">Learn /commands</a>
+        <a href="signup.html" class="nav-cta">Join Free</a>
+    </div>
+</nav>
+
+<!-- ─────────── HERO ─────────── -->
+<header class="hero">
+    <div class="eyebrow"><span class="dot"></span><span>Interactive Lesson · ~10 min</span></div>
+    <h1>Master Claude Code<br><span class="cmd">/commands</span> <em>in minutes.</em></h1>
+    <p class="lead">Slash commands are the steering wheel of Claude Code. Instead of skimming docs, you'll <strong>type real commands</strong>, watch what they do, build your own, and prove it with a quiz — all on one page.</p>
+    <div class="hero-meta">
+        <span><iconify-icon icon="solar:play-circle-bold"></iconify-icon> Live terminal you can type into</span>
+        <span><iconify-icon icon="solar:widget-add-bold"></iconify-icon> Custom-command builder</span>
+        <span><iconify-icon icon="solar:checklist-minimalistic-bold"></iconify-icon> Quick knowledge check</span>
+    </div>
+</header>
+
+<!-- ─────────── 1. MENTAL MODEL ─────────── -->
+<section>
+    <div class="section-head">
+        <span class="step-num">Step 01 · The big idea</span>
+        <h2>What <em>is</em> a slash command?</h2>
+        <p>When you're chatting with Claude Code in your terminal, a line that starts with <code>/</code> isn't a message to the AI — it's an <strong>instruction to the tool itself</strong>. Think of it as three everyday things you already know:</p>
+    </div>
+    <div class="model-grid">
+        <div class="model-card">
+            <div class="ico"><iconify-icon icon="solar:slash-circle-bold"></iconify-icon></div>
+            <h3>A shortcut</h3>
+            <p>One keystroke triggers an action that would otherwise take a paragraph of explanation — like <code>/clear</code> to wipe the conversation or <code>/model</code> to switch models.</p>
+        </div>
+        <div class="model-card">
+            <div class="ico"><iconify-icon icon="solar:command-bold"></iconify-icon></div>
+            <h3>A control panel</h3>
+            <p>Commands manage the <em>session</em>: context, permissions, memory, MCP servers, and config — the knobs Claude can't change by chatting.</p>
+        </div>
+        <div class="model-card">
+            <div class="ico"><iconify-icon icon="solar:magic-stick-3-bold"></iconify-icon></div>
+            <h3>A reusable prompt</h3>
+            <p>You can <strong>invent your own</strong> commands. Save a prompt as a file, and <code>/your-command</code> replays it any time — for your whole team.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ─────────── 2. ANATOMY ─────────── -->
+<section>
+    <div class="section-head">
+        <span class="step-num">Step 02 · Read one at a glance</span>
+        <h2>The <em>anatomy</em> of a command</h2>
+        <p>Every slash command has the same simple shape. Here's a custom command being run with an argument:</p>
+    </div>
+    <div class="anatomy">
+        <div class="anatomy-line">
+            <span class="atom slash">/<span class="tag">trigger</span></span><span class="atom name">fix-issue<span class="tag">command name</span></span><span class="atom args">&nbsp;1234<span class="tag">arguments</span></span>
+        </div>
+        <p class="note">The <strong style="color:var(--rust)">slash</strong> says "this is a command." The <strong style="color:var(--lime)">name</strong> picks which one. Anything <strong>after a space</strong> is passed in as arguments the command can use.</p>
+    </div>
+</section>
+
+<!-- ─────────── 3. TERMINAL PLAYGROUND ─────────── -->
+<section>
+    <div class="section-head">
+        <span class="step-num">Step 03 · Try it yourself</span>
+        <h2>Live <em>terminal</em> playground</h2>
+        <p>This is a safe simulation — nothing runs on your machine. Click a command chip or type one (try <code>/help</code>) and press Enter to see what it would do in real Claude Code.</p>
+    </div>
+    <div class="term-wrap">
+        <div class="terminal">
+            <div class="term-bar">
+                <span class="term-dot" style="background:#ff5f57"></span>
+                <span class="term-dot" style="background:#febc2e"></span>
+                <span class="term-dot" style="background:#28c840"></span>
+                <span class="title">claude — eco-website</span>
+            </div>
+            <div class="term-body" id="termBody"></div>
+            <div class="term-input-row">
+                <span class="t-prompt">&gt;</span>
+                <input id="termInput" autocomplete="off" spellcheck="false" placeholder="Type a command, e.g. /help  then press Enter">
+            </div>
+        </div>
+        <div class="term-side">
+            <h3>Tap to run</h3>
+            <div class="chip-stack" id="chipStack"></div>
+            <p class="term-hint">Type <code>/</code> in real Claude Code to see an autocomplete menu of every available command. Press <kbd>Enter</kbd> here to run. Try <code>/clear</code> to reset this terminal.</p>
+        </div>
+    </div>
+</section>
+
+<!-- ─────────── 4. BUILT-IN EXPLORER ─────────── -->
+<section>
+    <div class="section-head">
+        <span class="step-num">Step 04 · Know your toolkit</span>
+        <h2>The built-in <em>commands</em> that matter most</h2>
+        <p>Claude Code ships with dozens of commands. These are the ones you'll reach for daily. Filter by what you're trying to do:</p>
+    </div>
+    <div class="filter-bar" id="filterBar"></div>
+    <div class="cmd-grid" id="cmdGrid"></div>
+</section>
+
+<!-- ─────────── 5. CUSTOM COMMANDS (EXAMPLES) ─────────── -->
+<section>
+    <div class="section-head">
+        <span class="step-num">Step 05 · The superpower</span>
+        <h2>Build your <em>own</em> commands</h2>
+        <p>This is what separates casual users from power users. Drop a Markdown file in <code>.claude/commands/</code> and its filename becomes a command. Here are three real examples, from simplest to most powerful.</p>
+    </div>
+
+    <!-- Example A -->
+    <div class="example">
+        <div class="code-card">
+            <div class="file-bar"><iconify-icon icon="solar:file-text-linear"></iconify-icon> .claude/commands/explain.md</div>
+<pre><span class="c"># A plain prompt — the whole file is the instruction</span>
+Explain how the code I just shared works,
+step by step, as if teaching a beginner.
+Keep it under 200 words.</pre>
+        </div>
+        <div class="explain">
+            <h4><iconify-icon icon="solar:leaf-bold"></iconify-icon> A. The simplest possible command</h4>
+            <p>No setup, no syntax. The filename <code>explain.md</code> creates the command <code>/explain</code>. Running it sends the file's text to Claude as your prompt.</p>
+            <ul>
+                <li>Saved in the project → teammates get <code>/explain</code> too</li>
+                <li>Save it in <code>~/.claude/commands/</code> instead to keep it personal across all projects</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Example B -->
+    <div class="example">
+        <div class="code-card">
+            <div class="file-bar"><iconify-icon icon="solar:file-text-linear"></iconify-icon> .claude/commands/fix-issue.md</div>
+<pre><span class="c">---</span>
+<span class="k">argument-hint:</span> <span class="v">[issue-number]</span>
+<span class="k">description:</span> <span class="v">Find and fix a GitHub issue</span>
+<span class="c">---</span>
+Find issue #<span class="a">$1</span> in our tracker, reproduce
+the bug, fix it, and write a test that
+covers it. Summarize what you changed.</pre>
+        </div>
+        <div class="explain">
+            <h4><iconify-icon icon="solar:leaf-bold"></iconify-icon> B. Adding arguments &amp; metadata</h4>
+            <p>The block between <code>---</code> lines is <strong>frontmatter</strong> — optional settings. Run it with <code>/fix-issue 1234</code>.</p>
+            <ul>
+                <li><code>$1</code>, <code>$2</code>… grab arguments by position</li>
+                <li><code>$ARGUMENTS</code> grabs everything after the command at once</li>
+                <li><code>argument-hint</code> shows expected input in the autocomplete menu</li>
+                <li><code>description</code> is the one-liner shown next to the command</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- Example C -->
+    <div class="example">
+        <div class="code-card">
+            <div class="file-bar"><iconify-icon icon="solar:file-text-linear"></iconify-icon> .claude/commands/review-pr.md</div>
+<pre><span class="c">---</span>
+<span class="k">allowed-tools:</span> <span class="v">Bash(git diff:*), Bash(git log:*)</span>
+<span class="k">description:</span> <span class="v">Review my uncommitted changes</span>
+<span class="k">model:</span> <span class="v">claude-opus-4-8</span>
+<span class="c">---</span>
+<span class="c">## Context (runs before Claude reads this)</span>
+Current diff: <span class="a">!`git diff HEAD`</span>
+Style guide: <span class="a">@docs/style.md</span>
+
+<span class="c">## Your task</span>
+Review the diff above against our style
+guide. Flag bugs first, then nits.</pre>
+        </div>
+        <div class="explain">
+            <h4><iconify-icon icon="solar:leaf-bold"></iconify-icon> C. Pulling in live context</h4>
+            <p>The real magic: feed Claude fresh data before it even starts thinking.</p>
+            <ul>
+                <li><code>!`command`</code> runs a shell command and pastes its <strong>output</strong> into the prompt</li>
+                <li><code>@path/to/file</code> drops a file's contents in as a reference</li>
+                <li><code>allowed-tools</code> pre-approves exactly which shell commands may run — no permission pop-ups</li>
+                <li><code>model</code> forces a specific model just for this command</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<!-- ─────────── 6. BUILDER ─────────── -->
+<section>
+    <div class="section-head">
+        <span class="step-num">Step 06 · Make one now</span>
+        <h2>Custom command <em>builder</em></h2>
+        <p>Fill in the fields and watch a ready-to-use command file generate live. Copy it into <code>.claude/commands/</code> and you've shipped your first command.</p>
+    </div>
+    <div class="builder">
+        <div class="builder-form">
+            <div class="field">
+                <label for="bName">Command name</label>
+                <input id="bName" type="text" value="changelog" placeholder="e.g. changelog">
+                <div class="hint">Becomes the filename and the command: <code id="bNamePreview">/changelog</code></div>
+            </div>
+            <div class="field">
+                <label for="bDesc">Description <span class="opt">— shown in the menu</span></label>
+                <input id="bDesc" type="text" value="Draft a changelog entry from recent commits">
+            </div>
+            <div class="field-row">
+                <div class="field">
+                    <label for="bHint">Argument hint <span class="opt">— optional</span></label>
+                    <input id="bHint" type="text" value="[version]" placeholder="[version]">
+                </div>
+                <div class="field">
+                    <label for="bScope">Where it lives</label>
+                    <select id="bScope">
+                        <option value="project">Project — shared with team</option>
+                        <option value="personal">Personal — just me</option>
+                    </select>
+                </div>
+            </div>
+            <div class="field">
+                <label for="bPrompt">The prompt / instructions</label>
+                <textarea id="bPrompt">Summarize the commits since the last release into a clean changelog for version $1. Group entries under Added, Changed, and Fixed.</textarea>
+            </div>
+            <div class="field toggle-row">
+                <input id="bBash" type="checkbox" checked>
+                <label for="bBash" style="margin:0">Inject live <code>git log</code> output (adds a Bash tool permission)</label>
+            </div>
+        </div>
+        <div class="builder-out">
+            <div class="code-card">
+                <div class="file-bar"><iconify-icon icon="solar:file-text-linear"></iconify-icon> <span id="outPath">.claude/commands/changelog.md</span></div>
+                <pre id="outCode"></pre>
+            </div>
+            <button class="copy-btn" id="copyBtn"><iconify-icon icon="solar:copy-linear"></iconify-icon> Copy file contents</button>
+        </div>
+    </div>
+</section>
+
+<!-- ─────────── 7. QUIZ ─────────── -->
+<section>
+    <div class="section-head">
+        <span class="step-num">Step 07 · Prove it</span>
+        <h2>Quick <em>knowledge</em> check</h2>
+        <p>Five questions. Pick an answer to see if you've got it — explanations appear instantly.</p>
+    </div>
+    <div class="quiz" id="quiz"></div>
+</section>
+
+<!-- ─────────── 8. CHEAT SHEET ─────────── -->
+<section>
+    <div class="cheat">
+        <h2>Pocket <em>cheat sheet</em></h2>
+        <div class="cheat-grid">
+            <div class="cheat-row"><code>/help</code><span>List every available command</span></div>
+            <div class="cheat-row"><code>/clear</code><span>Wipe the conversation &amp; context</span></div>
+            <div class="cheat-row"><code>/compact</code><span>Summarize to free up context</span></div>
+            <div class="cheat-row"><code>/init</code><span>Generate a CLAUDE.md for the repo</span></div>
+            <div class="cheat-row"><code>/model</code><span>Switch the active model</span></div>
+            <div class="cheat-row"><code>/agents</code><span>Create &amp; manage subagents</span></div>
+            <div class="cheat-row"><code>/mcp</code><span>Manage MCP server connections</span></div>
+            <div class="cheat-row"><code>/cost</code><span>See token usage this session</span></div>
+            <div class="cheat-row"><code>$ARGUMENTS</code><span>All args in a custom command</span></div>
+            <div class="cheat-row"><code>$1 $2 $3</code><span>Positional args</span></div>
+            <div class="cheat-row"><code>!`cmd`</code><span>Inject shell output into a prompt</span></div>
+            <div class="cheat-row"><code>@file</code><span>Reference a file's contents</span></div>
+        </div>
+        <a class="docs-link" href="https://code.claude.com/docs/en/slash-commands" target="_blank" rel="noopener">
+            <iconify-icon icon="solar:book-bookmark-bold"></iconify-icon>
+            Go deeper in the official Claude Code docs
+        </a>
+    </div>
+</section>
+
+<footer>
+    <div class="footer-inner">
+        <a href="index.html" class="footer-logo">EcoHub</a>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="challenges.html">Challenges</a>
+            <a href="faq.html">FAQ</a>
+            <a href="learn-commands.html">Learn /commands</a>
+        </div>
+        <p class="footer-copy">© 2026 EcoAwareness Qatar · An interactive learning experiment built with Claude Code.</p>
+    </div>
+</footer>
+
+<script>
+/* ════════════ TERMINAL PLAYGROUND ════════════ */
+const COMMANDS = {
+    '/help': {
+        out: [
+            ['t-out', 'Available commands (showing common ones):'],
+            ['t-accent', '  /clear /compact /init /model /agents'],
+            ['t-accent', '  /mcp /memory /cost /config /review /help'],
+            ['t-dim', 'Tip: custom commands you create appear here too,'],
+            ['t-dim', 'labelled (project) or (user) by where they live.']
+        ]
+    },
+    '/clear': { special: 'clear' },
+    '/compact': {
+        out: [
+            ['t-out', 'Summarizing conversation to reclaim context…'],
+            ['t-accent', '✔ Context compacted — older turns condensed into a summary.'],
+            ['t-dim', 'Use this when a long session gets sluggish or near the limit.']
+        ]
+    },
+    '/init': {
+        out: [
+            ['t-out', 'Scanning project structure…'],
+            ['t-accent', '✔ Created CLAUDE.md'],
+            ['t-dim', 'A guide Claude reads automatically every session —'],
+            ['t-dim', 'document build commands, conventions & architecture here.']
+        ]
+    },
+    '/model': {
+        out: [
+            ['t-out', 'Select a model:'],
+            ['t-accent', '  ● Opus 4.8   — most capable'],
+            ['t-out',    '  ○ Sonnet 4.6 — fast & balanced'],
+            ['t-out',    '  ○ Haiku 4.5  — quickest, lightest'],
+            ['t-dim', 'Pick per-task: heavy reasoning vs. speed.']
+        ]
+    },
+    '/agents': {
+        out: [
+            ['t-out', 'Subagent manager'],
+            ['t-accent', '  + Create new subagent'],
+            ['t-dim', 'Subagents are specialised helpers with their own'],
+            ['t-dim', 'tools & prompt — great for delegating focused work.']
+        ]
+    },
+    '/mcp': {
+        out: [
+            ['t-out', 'MCP servers connected to this session:'],
+            ['t-accent', '  ● github      (tools + prompts)'],
+            ['t-accent', '  ● adobe       (tools)'],
+            ['t-dim', 'MCP prompts become commands: /mcp__github__<prompt>']
+        ]
+    },
+    '/cost': {
+        out: [
+            ['t-out', 'Session usage:'],
+            ['t-accent', '  Tokens: 48,210 in · 12,940 out'],
+            ['t-dim', 'Handy for keeping an eye on a long session.']
+        ]
+    },
+    '/review': {
+        out: [
+            ['t-out', 'Reviewing changes on the current branch…'],
+            ['t-accent', '✔ 2 suggestions, 0 blocking issues.'],
+            ['t-dim', 'Reviews your diff for bugs & cleanups.']
+        ]
+    },
+    '/fix-issue': {
+        out: [
+            ['t-warn', 'This is a CUSTOM command (one you wrote).'],
+            ['t-out', 'It would run its saved prompt, substituting your'],
+            ['t-out', 'argument for $1. Example: /fix-issue 1234'],
+            ['t-dim', 'See Step 05 to learn how to build commands like this.']
+        ]
+    }
+};
+const SUGGESTED = ['/help','/clear','/compact','/init','/model','/agents','/mcp','/cost','/review','/fix-issue'];
+
+const termBody = document.getElementById('termBody');
+const termInput = document.getElementById('termInput');
+const chipStack = document.getElementById('chipStack');
+
+function addLine(cls, text) {
+    const d = document.createElement('div');
+    d.className = 't-line ' + cls;
+    d.textContent = text;
+    termBody.appendChild(d);
+}
+function scrollTerm() { termBody.scrollTop = termBody.scrollHeight; }
+
+function runCommand(raw) {
+    const input = raw.trim();
+    if (!input) return;
+    // echo
+    const echo = document.createElement('div');
+    echo.className = 't-line';
+    echo.innerHTML = '<span class="t-prompt">&gt; </span><span class="t-cmd"></span>';
+    echo.querySelector('.t-cmd').textContent = input;
+    termBody.appendChild(echo);
+
+    const base = input.split(/\s+/)[0];
+    const cmd = COMMANDS[base];
+    if (!input.startsWith('/')) {
+        addLine('t-dim', 'That\'s a normal message — it would go to Claude as a prompt. Commands start with /');
+    } else if (base === '/clear') {
+        termBody.innerHTML = '';
+        bootTerminal(true);
+        return;
+    } else if (cmd) {
+        cmd.out.forEach(([c, t]) => addLine(c, t));
+    } else {
+        addLine('t-err', 'Unknown command: ' + base);
+        addLine('t-dim', 'Try /help — or one of the chips on the right.');
+    }
+    addLine('t-line', '');
+    scrollTerm();
+}
+
+function bootTerminal(reset) {
+    addLine('t-dim', reset ? 'Terminal cleared. ✨' : 'Claude Code v2.x · simulated learning sandbox');
+    addLine('t-dim', 'Type /help and press Enter, or tap a command on the right →');
+    addLine('t-line', '');
+    scrollTerm();
+}
+
+termInput.addEventListener('keydown', (e) => {
+    if (e.key === 'Enter') { runCommand(termInput.value); termInput.value = ''; }
+});
+SUGGESTED.forEach(c => {
+    const chip = document.createElement('span');
+    chip.className = 'chip';
+    chip.textContent = c;
+    chip.addEventListener('click', () => { runCommand(c); termInput.focus(); });
+    chipStack.appendChild(chip);
+});
+bootTerminal(false);
+
+/* ════════════ COMMAND EXPLORER ════════════ */
+const CMD_DATA = [
+    { n: '/help',     d: 'List all available commands and basic usage.', c: 'info' },
+    { n: '/clear',    d: 'Clear the conversation history and start fresh.', c: 'session' },
+    { n: '/compact',  d: 'Condense the conversation to reclaim context space.', c: 'context' },
+    { n: '/init',     d: 'Scan the repo and generate a CLAUDE.md project guide.', c: 'config' },
+    { n: '/memory',   d: 'Open and edit your CLAUDE.md memory files.', c: 'context' },
+    { n: '/model',    d: 'Switch the active model (Opus / Sonnet / Haiku).', c: 'config' },
+    { n: '/agents',   d: 'Create and manage specialised subagents.', c: 'code' },
+    { n: '/review',   d: 'Review the changes on the current branch.', c: 'code' },
+    { n: '/mcp',      d: 'Manage Model Context Protocol server connections.', c: 'config' },
+    { n: '/permissions', d: 'View and edit which tools Claude may use.', c: 'config' },
+    { n: '/config',   d: 'Open the settings interface for the session.', c: 'config' },
+    { n: '/cost',     d: 'Show token usage and cost for this session.', c: 'info' },
+    { n: '/add-dir',  d: 'Add another working directory to the session.', c: 'session' },
+    { n: '/status',   d: 'Show version, model, and account status.', c: 'info' },
+    { n: '/doctor',   d: 'Diagnose the health of your installation.', c: 'info' },
+    { n: '/login',    d: 'Sign in or switch your Anthropic account.', c: 'session' }
+];
+const CATS = [
+    { id: 'all', label: 'All' },
+    { id: 'session', label: 'Session' },
+    { id: 'context', label: 'Context' },
+    { id: 'config', label: 'Config & Tools' },
+    { id: 'code', label: 'Code' },
+    { id: 'info', label: 'Info' }
+];
+const filterBar = document.getElementById('filterBar');
+const cmdGrid = document.getElementById('cmdGrid');
+let activeFilter = 'all';
+
+function renderCmds() {
+    cmdGrid.innerHTML = '';
+    CMD_DATA.filter(c => activeFilter === 'all' || c.c === activeFilter).forEach(c => {
+        const card = document.createElement('div');
+        card.className = 'cmd-card';
+        const label = (CATS.find(x => x.id === c.c) || {}).label || c.c;
+        card.innerHTML =
+            '<div class="cname"></div>' +
+            '<div class="cdesc"></div>' +
+            '<span class="ctag cat-' + c.c + '">' + label + '</span>';
+        card.querySelector('.cname').textContent = c.n;
+        card.querySelector('.cdesc').textContent = c.d;
+        cmdGrid.appendChild(card);
+    });
+}
+CATS.forEach(cat => {
+    const b = document.createElement('button');
+    b.className = 'filter-btn' + (cat.id === 'all' ? ' active' : '');
+    b.textContent = cat.label;
+    b.addEventListener('click', () => {
+        activeFilter = cat.id;
+        document.querySelectorAll('.filter-btn').forEach(x => x.classList.remove('active'));
+        b.classList.add('active');
+        renderCmds();
+    });
+    filterBar.appendChild(b);
+});
+renderCmds();
+
+/* ════════════ BUILDER ════════════ */
+const bName = document.getElementById('bName'),
+      bDesc = document.getElementById('bDesc'),
+      bHint = document.getElementById('bHint'),
+      bScope = document.getElementById('bScope'),
+      bPrompt = document.getElementById('bPrompt'),
+      bBash = document.getElementById('bBash'),
+      outCode = document.getElementById('outCode'),
+      outPath = document.getElementById('outPath'),
+      bNamePreview = document.getElementById('bNamePreview'),
+      copyBtn = document.getElementById('copyBtn');
+
+function slug(s) {
+    return (s || 'my-command').toLowerCase().trim().replace(/[^a-z0-9-]+/g, '-').replace(/^-+|-+$/g, '') || 'my-command';
+}
+function buildFile() {
+    const name = slug(bName.value);
+    const dir = bScope.value === 'personal' ? '~/.claude/commands/' : '.claude/commands/';
+    outPath.textContent = dir + name + '.md';
+    bNamePreview.textContent = '/' + name;
+
+    let fm = ['---'];
+    if (bDesc.value.trim()) fm.push('description: ' + bDesc.value.trim());
+    if (bHint.value.trim()) fm.push('argument-hint: ' + bHint.value.trim());
+    if (bBash.checked) fm.push('allowed-tools: Bash(git log:*)');
+    fm.push('---');
+
+    let body = '';
+    if (bBash.checked) {
+        body += 'Recent commits:\n!`git log --oneline -20`\n\n';
+    }
+    body += (bPrompt.value.trim() || 'Write your instructions here. Use $1 or $ARGUMENTS for input.');
+
+    const hasFm = fm.length > 2; // more than just the --- pair
+    const file = (hasFm ? fm.join('\n') + '\n\n' : '') + body + '\n';
+    renderHighlighted(file);
+    outCode.dataset.raw = file;
+}
+function renderHighlighted(text) {
+    // lightweight highlight matching the example blocks
+    const esc = text.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    const lines = esc.split('\n').map(line => {
+        if (line === '---') return '<span class="c">---</span>';
+        const m = line.match(/^([a-z-]+):(.*)$/);
+        if (m && /^(description|argument-hint|allowed-tools|model):/.test(line)) {
+            return '<span class="k">' + m[1] + ':</span><span class="v">' + m[2] + '</span>';
+        }
+        let l = line.replace(/(!`[^`]*`|@\S+|\$ARGUMENTS|\$\d)/g, '<span class="a">$1</span>');
+        return l;
+    });
+    outCode.innerHTML = lines.join('\n');
+}
+[bName, bDesc, bHint, bScope, bPrompt].forEach(el => {
+    el.addEventListener('input', buildFile);
+    el.addEventListener('change', buildFile);
+});
+bBash.addEventListener('change', buildFile);
+copyBtn.addEventListener('click', () => {
+    const raw = outCode.dataset.raw || '';
+    navigator.clipboard.writeText(raw).then(() => {
+        const orig = copyBtn.innerHTML;
+        copyBtn.innerHTML = '<iconify-icon icon="solar:check-circle-bold"></iconify-icon> Copied!';
+        setTimeout(() => copyBtn.innerHTML = orig, 1600);
+    }).catch(() => {
+        copyBtn.innerHTML = '<iconify-icon icon="solar:danger-triangle-linear"></iconify-icon> Press Ctrl+C';
+    });
+});
+buildFile();
+
+/* ════════════ QUIZ ════════════ */
+const QUIZ = [
+    {
+        q: 'What does a line that starts with / do in Claude Code?',
+        opts: [
+            'Sends a normal message to the AI',
+            'Runs a command that controls the tool or session',
+            'Comments out the line so it is ignored'
+        ],
+        correct: 1,
+        why: 'A leading / marks a command — an instruction to Claude Code itself, not a chat message to the model.'
+    },
+    {
+        q: 'You created .claude/commands/deploy.md. How do you run it?',
+        opts: ['/run deploy.md', '/deploy', 'deploy()'],
+        correct: 1,
+        why: 'The filename (minus .md) becomes the command name, so deploy.md is invoked as /deploy.'
+    },
+    {
+        q: 'Inside a custom command, what does $ARGUMENTS refer to?',
+        opts: [
+            'A list of every file in the project',
+            'Everything the user typed after the command name',
+            'The previous command that was run'
+        ],
+        correct: 1,
+        why: '$ARGUMENTS captures all arguments at once; use $1, $2… when you want them individually by position.'
+    },
+    {
+        q: 'In a command file, what does !`git diff` do?',
+        opts: [
+            'Tells Claude to never run git',
+            'Runs the shell command and injects its output into the prompt',
+            'Prints a literal exclamation mark'
+        ],
+        correct: 1,
+        why: 'The !`...` syntax executes a shell command before Claude reads the prompt and pastes the output in — perfect for live context. It needs an allowed-tools entry.'
+    },
+    {
+        q: 'You want a command available in every project, only for you. Where do you save it?',
+        opts: [
+            '.claude/commands/ in the project',
+            '~/.claude/commands/ in your home folder',
+            'It is not possible — commands are always shared'
+        ],
+        correct: 1,
+        why: 'Project commands (.claude/commands/) are shared with the repo; personal commands live in ~/.claude/commands/ and follow you everywhere.'
+    }
+];
+const quizEl = document.getElementById('quiz');
+let answered = 0, scoreCount = 0;
+QUIZ.forEach((item, qi) => {
+    const wrap = document.createElement('div');
+    wrap.className = 'quiz-q';
+    const opts = item.opts.map((o, oi) =>
+        '<button class="opt-btn" data-q="' + qi + '" data-o="' + oi + '"><span class="mark"></span><span class="txt"></span></button>'
+    ).join('');
+    wrap.innerHTML =
+        '<div class="q"><span class="qn">Q' + (qi+1) + '</span><span class="qtext"></span></div>' +
+        '<div class="opts">' + opts + '</div>' +
+        '<div class="quiz-explain"></div>';
+    wrap.querySelector('.qtext').textContent = item.q;
+    const btns = wrap.querySelectorAll('.opt-btn');
+    btns.forEach((b, oi) => { b.querySelector('.txt').textContent = item.opts[oi]; });
+    wrap.querySelector('.quiz-explain').textContent = item.why;
+    quizEl.appendChild(wrap);
+});
+const scoreEl = document.createElement('div');
+scoreEl.className = 'quiz-score';
+quizEl.appendChild(scoreEl);
+
+quizEl.addEventListener('click', (e) => {
+    const btn = e.target.closest('.opt-btn');
+    if (!btn) return;
+    const qi = +btn.dataset.q, oi = +btn.dataset.o;
+    const wrap = btn.closest('.quiz-q');
+    if (wrap.dataset.done) return;
+    wrap.dataset.done = '1';
+    answered++;
+    const correct = QUIZ[qi].correct;
+    wrap.querySelectorAll('.opt-btn').forEach((b, i) => {
+        b.classList.add('locked');
+        if (i === correct) { b.classList.add('correct'); b.querySelector('.mark').textContent = '✓'; }
+        if (i === oi && oi !== correct) { b.classList.add('wrong'); b.querySelector('.mark').textContent = '✕'; }
+    });
+    if (oi === correct) scoreCount++;
+    wrap.querySelector('.quiz-explain').classList.add('show');
+    if (answered === QUIZ.length) {
+        scoreEl.textContent = 'You scored ' + scoreCount + ' / ' + QUIZ.length +
+            (scoreCount === QUIZ.length ? ' — you\'ve got this! 🌿' : ' — review & you\'ll nail it.');
+    }
+});
+</script>
+</body>
+</html>
