@@ -1,0 +1,443 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>دراسة تعليم عائلة الحصني — تطبيق تفاعلي</title>
+<meta name="robots" content="noindex, nofollow">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --ink:#16302a; --muted:#5d716a; --faint:#8aa093; --line:#e4eae6; --paper:#f6f9f7; --card:#fff;
+    --green:#137a52; --gold:#a9791a; --green-soft:#e7f3ec; --bg:#eef2f0;
+    --cost:#e0533f; --give:#137a52;
+    --faisal:#b58900; --feras:#d6249f; --mohammad:#e8590c; --ghiyath:#0d9488;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{background:var(--bg); color:var(--ink); font-family:'Tajawal','Cairo',sans-serif; font-size:14px;}
+  .display{font-family:'Cairo','Tajawal',sans-serif;}
+  .num{font-family:'Cairo',sans-serif; font-feature-settings:"tnum";}
+  .muted{color:var(--muted)} .faint{color:var(--faint)}
+  a{color:var(--green)}
+
+  /* top bar */
+  header{position:sticky; top:0; z-index:20; background:linear-gradient(135deg,#0e3c2b,#0a5238);
+    color:#fff; padding:12px clamp(12px,3vw,28px); box-shadow:0 4px 18px rgba(0,0,0,.18);}
+  .htop{display:flex; align-items:center; gap:12px; flex-wrap:wrap;}
+  .crest{width:40px;height:40px;border-radius:11px;background:#0a2a1e;border:1px solid var(--gold);
+    color:var(--gold);display:grid;place-items:center;font-family:'Cairo';font-weight:900;font-size:20px;flex:0 0 auto;}
+  header h1{font-family:'Cairo';font-weight:800;font-size:clamp(1.05rem,2.4vw,1.5rem);line-height:1.1;}
+  header .sub{color:#bfe3d2;font-size:.8rem;margin-top:2px;}
+  .spacer{margin-inline-start:auto;}
+
+  /* controls */
+  .controls{display:flex; flex-wrap:wrap; gap:10px 16px; align-items:center; margin-top:12px;}
+  .ctl{display:flex; flex-direction:column; gap:3px;}
+  .ctl label{font-size:.7rem; color:#bfe3d2; font-weight:600;}
+  .ctl label b{color:#ffe9b8;}
+  select,input[type=number]{background:rgba(255,255,255,.12); border:1px solid rgba(255,255,255,.25);
+    color:#fff; padding:7px 10px; border-radius:9px; font:inherit; font-size:.85rem;}
+  select option{color:#000;}
+  input[type=range]{accent-color:var(--gold); width:140px;}
+  .seg{display:inline-flex; background:rgba(255,255,255,.1); border-radius:10px; padding:3px; gap:2px;}
+  .seg button{background:transparent; border:none; color:#cfe7da; font:inherit; font-weight:700; font-size:.82rem;
+    padding:6px 12px; border-radius:8px; cursor:pointer; font-family:'Tajawal';}
+  .seg button.on{background:var(--gold); color:#06231a;}
+
+  /* sub picker */
+  .picker{display:flex; flex-wrap:wrap; gap:7px; padding:11px clamp(12px,3vw,28px) 0;}
+  .pchip{cursor:pointer; padding:6px 13px; border-radius:999px; font-size:.82rem; font-weight:700;
+    background:#fff; border:1px solid var(--line); color:var(--ink); display:inline-flex; align-items:center; gap:7px;}
+  .pchip i{width:10px;height:10px;border-radius:3px;}
+  .pchip.on{background:var(--ink); color:#fff; border-color:var(--ink);}
+
+  main{padding:14px clamp(12px,3vw,28px) 60px; max-width:1280px; margin:0 auto;}
+
+  .sec-t{font-family:'Cairo'; font-weight:700; font-size:1.05rem; color:#0e3c2b; margin:18px 0 10px;
+    display:flex; align-items:center; gap:8px;}
+  .sec-t::before{content:"";width:5px;height:18px;border-radius:3px;background:var(--green);}
+  .sec-t .s{font-size:.8rem; color:var(--muted); font-weight:500;}
+
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:11px;}
+  .kpi{background:var(--card); border:1px solid var(--line); border-radius:13px; padding:13px 15px;}
+  .kpi.gold{background:#fbf4e4; border-color:#eedcb4;}
+  .kpi .l{font-size:.72rem; color:var(--faint); font-weight:600;}
+  .kpi .v{font-family:'Cairo'; font-weight:800; font-size:1.45rem; color:#0e3c2b; line-height:1.1; margin-top:4px;}
+  .kpi.gold .v{color:#8a6310;}
+  .kpi .n{font-size:.74rem; color:var(--muted); margin-top:4px;}
+
+  .card{background:var(--card); border:1px solid var(--line); border-radius:14px; padding:15px 17px; margin-bottom:14px;}
+  .grid2{display:grid; grid-template-columns:1fr 1fr; gap:14px;}
+  @media(max-width:820px){.grid2{grid-template-columns:1fr;}}
+  .chart-h{font-family:'Cairo'; font-weight:700; font-size:.98rem; margin-bottom:2px;}
+  .chart-cap{font-size:.78rem; color:var(--muted); margin-bottom:8px;}
+  svg{display:block; width:100%; height:auto;}
+
+  table{width:100%; border-collapse:collapse; font-size:.85rem;}
+  th,td{padding:8px 10px; text-align:center; border-bottom:1px solid var(--line);}
+  th{background:var(--green-soft); color:#1c5a40; font-weight:700; font-size:.8rem;}
+  td:first-child,th:first-child{text-align:right;}
+  td.num,th.num{font-family:'Cairo'; font-feature-settings:"tnum";}
+  tr.tot td{background:#fbf4e4; font-weight:800;}
+
+  .legend{display:flex; gap:14px; flex-wrap:wrap; font-size:.78rem; color:var(--muted); margin:4px 0 10px;}
+  .legend span{display:inline-flex; align-items:center; gap:6px;}
+  .legend i{width:12px;height:12px;border-radius:3px;}
+
+  .facts{display:grid; grid-template-columns:repeat(auto-fit,minmax(130px,1fr)); gap:10px; margin-bottom:6px;}
+  .fact{background:var(--paper); border:1px solid var(--line); border-radius:11px; padding:10px 12px;}
+  .fact .l{font-size:.7rem;color:var(--faint);font-weight:600;}
+  .fact .v{font-family:'Cairo'; font-weight:800; font-size:1.1rem; margin-top:3px;}
+
+  .av{width:34px;height:34px;border-radius:9px;display:grid;place-items:center;color:#fff;font-family:'Cairo';font-weight:700;flex:0 0 auto;}
+  .smgrid{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:11px;}
+  .sm{background:var(--card); border:1px solid var(--line); border-radius:12px; padding:10px;}
+  .sm .h{display:flex; align-items:center; gap:8px; margin-bottom:6px; font-weight:700; font-size:.9rem;}
+  .note{font-size:.78rem;color:var(--muted); background:#fbf7ec; border:1px solid #eedcb4; border-radius:10px; padding:9px 12px; margin-bottom:12px;}
+  .note b{color:#8a6310;}
+</style>
+</head>
+<body>
+<header>
+  <div class="htop">
+    <div class="crest">ح</div>
+    <div>
+      <h1 class="display">دراسة تعليم عائلة الحصني</h1>
+      <div class="sub">تطبيق تفاعلي — التكاليف، المساهمات، والسداد · السيناريو المرجّح (توزيع متساوٍ)</div>
+    </div>
+  </div>
+  <div class="controls">
+    <div class="ctl"><label>النطاق</label>
+      <div class="seg" id="scopeSeg">
+        <button data-s="overview" class="on">نظرة عامة</button>
+        <button data-s="family">العائلات</button>
+        <button data-s="father">الآباء</button>
+        <button data-s="kid">الأبناء</button>
+      </div>
+    </div>
+    <div class="ctl"><label>نموذج التمويل</label>
+      <select id="modelSel">
+        <option value="M1">كل أب لأبنائه + سداد الأبناء</option>
+        <option value="M2">كل أب لأبنائه فقط (بلا سداد)</option>
+        <option value="M3">صندوق مشترك (الجميع)</option>
+      </select>
+    </div>
+    <div class="ctl"><label>التضخّم <b id="inflV">4%</b></label>
+      <input type="range" id="inflR" min="0" max="10" step="0.5" value="4">
+    </div>
+    <div class="ctl"><label>تكلفة الجامعة/سنة</label>
+      <input type="number" id="uniN" value="30000" step="5000" style="width:110px">
+    </div>
+    <div class="ctl"><label>المقياس</label>
+      <div class="seg" id="scaleSeg">
+        <button data-sc="group" class="on">لكل فئة</button>
+        <button data-sc="global">موحّد</button>
+      </div>
+    </div>
+  </div>
+</header>
+<div class="picker" id="picker"></div>
+<main id="main"></main>
+
+<script>
+/* ============================== DATA ============================== */
+const NOW=2025, END=2060;
+const YEARS=[]; for(let y=NOW;y<=END;y++) YEARS.push(y);
+const CUR="ر.ق";
+const FATHERS=[
+  {key:"faisal",  ar:"فيصل",  born:1978, color:"var(--faisal)"},
+  {key:"feras",   ar:"فراس",  born:1980, color:"var(--feras)"},
+  {key:"mohammad",ar:"محمد",  born:1983, color:"var(--mohammad)"},
+  {key:"ghiyath", ar:"غياث",  born:1987, color:"var(--ghiyath)"},
+];
+const FMAP=Object.fromEntries(FATHERS.map(f=>[f.key,f]));
+const KIDS=[
+  {ar:"حنين",     born:2007, f:"feras",   school:0},
+  {ar:"محمد",     born:2008, f:"feras",   school:0},
+  {ar:"نور",      born:2016, f:"feras",   school:0},
+  {ar:"عمر",      born:2019, f:"feras",   school:0},
+  {ar:"قمر",      born:2025, f:"feras",   school:0},
+  {ar:"أحمد",     born:2008, f:"mohammad",school:0},
+  {ar:"رغد",      born:2010, f:"mohammad",school:0},
+  {ar:"رنيم",     born:2011, f:"mohammad",school:0},
+  {ar:"تيم",      born:2017, f:"mohammad",school:0},
+  {ar:"شام",      born:2021, f:"mohammad",school:0},
+  {ar:"عبد العليم",born:2015,f:"faisal",  school:35000},
+  {ar:"عبد الله", born:2025, f:"ghiyath", school:0},
+];
+KIDS.forEach((k,i)=>{k.id=i; k.color=FMAP[k.f].color;});
+
+/* ============================== STATE ============================== */
+const S={scope:"overview", model:"M1", infl:4, uniBase:30000, scale:"group", sel:null};
+
+/* ============================== MODEL ============================== */
+const inflF=y=>Math.pow(1+S.infl/100, y-NOW);
+const schoolSpan=k=>[k.born+4, k.born+17];      // KG1..G12
+const uniSpan=k=>[k.born+18, k.born+21];          // 4 years
+const uniGrad=k=>k.born+22;
+function kidSchoolY(k,y){const[s,e]=schoolSpan(k); return (y>=Math.max(NOW,s)&&y<=e)? k.school*inflF(y):0;}
+function kidUniY(k,y){const[s,e]=uniSpan(k); return (y>=Math.max(NOW,s)&&y<=e)? S.uniBase*inflF(y):0;}
+function kidCostY(k,y){return kidSchoolY(k,y)+kidUniY(k,y);}            // money spent ON the kid that year
+function kidUniTotal(k){let t=0;for(const y of YEARS)t+=kidUniY(k,y);return t;}
+function kidTook(k){let t=0;for(const y of YEARS)t+=kidCostY(k,y);return t;}
+/* repayment (give-away): kid repays university total, interest-free, 10y, starting grad+3 */
+const REPAY_Y=10, REPAY_OFF=3;
+function kidGiveY(k,y){
+  if(S.model==="M2") return 0;
+  const start=uniGrad(k)+REPAY_OFF, tot=kidUniTotal(k);
+  return (y>=start && y<start+REPAY_Y)? tot/REPAY_Y : 0;
+}
+function kidContribution(k){let t=0;for(const y of YEARS)t+=kidGiveY(k,y);return t;}
+
+/* shared-fund (M3): solve equal monthly per father so the pool (university only) stays solvent */
+function parentActive(f,y){return y < f.born+60;}                       // contributes while under 60
+function simulatePool(mPerFather){
+  let fund=0,minB=0;
+  for(const y of YEARS){
+    const active=FATHERS.filter(f=>parentActive(f,y)).length;
+    let out=0,rep=0;
+    for(const k of KIDS){ out+=kidUniY(k,y); rep+=kidGiveY(k,y); }
+    fund += mPerFather*12*active + rep - out;
+    if(fund<minB) minB=fund;
+  }
+  return minB;
+}
+function solvePoolMonthly(){let lo=0,hi=40000;for(let i=0;i<40;i++){const mid=(lo+hi)/2; (simulatePool(mid)>=-1)?hi=mid:lo=mid;}return hi;}
+let POOL_M=0;
+
+/* father flows depend on model */
+function fatherKids(fkey){return KIDS.filter(k=>k.f===fkey);}
+function fatherPayY(f,y){            // father's OUTFLOW that year
+  const kids=fatherKids(f.key);
+  if(S.model==="M3"){
+    let pay = parentActive(f,y)? POOL_M*12 : 0;        // pooled university share
+    for(const k of kids) pay += kidSchoolY(k,y);        // school still paid directly
+    return pay;
+  }
+  let pay=0; for(const k of kids) pay+=kidCostY(k,y);   // M1/M2: pays his kids' costs as incurred
+  return pay;
+}
+function fatherReceiveY(f,y){        // repayments coming back to the father (M1 only)
+  if(S.model!=="M1") return 0;
+  let r=0; for(const k of fatherKids(f.key)) r+=kidGiveY(k,y); return r;
+}
+
+/* ============================== SCALES (fixed) ============================== */
+let SC={kidM:1,kidC:1,fatM:1,fatC:1};
+function computeScales(){
+  let kidM=0,kidC=0,fatM=0,fatC=0;
+  for(const k of KIDS){let ct=0,gt=0;
+    for(const y of YEARS){const c=kidCostY(k,y)/12, g=kidGiveY(k,y)/12; kidM=Math.max(kidM,c,g); ct+=kidCostY(k,y); gt+=kidGiveY(k,y); kidC=Math.max(kidC,ct,gt);}}
+  for(const f of FATHERS){let pt=0,rt=0;
+    for(const y of YEARS){const p=fatherPayY(f,y)/12, r=fatherReceiveY(f,y)/12; fatM=Math.max(fatM,p,r); pt+=fatherPayY(f,y); rt+=fatherReceiveY(f,y); fatC=Math.max(fatC,pt,rt);}}
+  if(S.scale==="global"){const m=Math.max(kidM,fatM), c=Math.max(kidC,fatC); SC={kidM:m,kidC:c,fatM:m,fatC:c};}
+  else SC={kidM:kidM||1,kidC:kidC||1,fatM:fatM||1,fatC:fatC||1};
+}
+
+/* ============================== FORMAT ============================== */
+const fmt=n=>new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(Math.round(n));
+function money(n){const v=Math.round(n); if(Math.abs(v)>=1e6)return CUR+" "+(v/1e6).toFixed(2)+"M"; if(Math.abs(v)>=1e3)return CUR+" "+fmt(v/1000)+"K"; return CUR+" "+fmt(v);}
+const moneyF=n=>CUR+" "+fmt(n);
+
+/* ============================== CHARTS (SVG) ============================== */
+/* grouped monthly bars: two series (cost, give) per year, fixed time + money */
+function chartMonthly(series, yMax, colors, labels){
+  const W=620,H=240,pl=58,pr=12,pt=14,pb=26, pw=W-pl-pr, ph=H-pt-pb;
+  const n=YEARS.length, bw=pw/n;
+  const xOf=i=>pl+i*bw, yOf=v=>pt+ph-(v/yMax)*ph;
+  let g="";
+  for(let t=0;t<=4;t++){const v=yMax*t/4, yy=yOf(v); g+=`<line x1="${pl}" y1="${yy}" x2="${W-pr}" y2="${yy}" stroke="#eef2f0"/><text x="${pl-6}" y="${yy+3}" fill="#8aa093" font-size="10" text-anchor="end">${money(v)}</text>`;}
+  YEARS.forEach((yr,i)=>{
+    const x=xOf(i);
+    series.forEach((ser,si)=>{const v=ser[i]; if(v>0){const h=(v/yMax)*ph, bwi=bw*0.4, xx=x+bw*0.08+si*bwi; g+=`<rect x="${xx}" y="${yOf(v)}" width="${Math.max(0.6,bwi-0.6)}" height="${h}" fill="${colors[si]}"><title>${yr}: ${labels[si]} ${moneyF(v)}/شهر</title></rect>`;}});
+    if((yr-NOW)%5===0||yr===END) g+=`<text x="${x+bw/2}" y="${H-pb+15}" fill="#8aa093" font-size="9" text-anchor="middle">${yr}</text>`;
+  });
+  return `<svg viewBox="0 0 ${W} ${H}">${g}</svg>`;
+}
+/* cumulative lines/areas: two series, fixed time + money */
+function chartCumulative(series, yMax, colors, labels){
+  const W=620,H=240,pl=58,pr=12,pt=14,pb=26, pw=W-pl-pr, ph=H-pt-pb;
+  const n=YEARS.length;
+  const xOf=i=>pl+ (n<2?0:i/(n-1)*pw), yOf=v=>pt+ph-(v/yMax)*ph;
+  let g="";
+  for(let t=0;t<=4;t++){const v=yMax*t/4, yy=yOf(v); g+=`<line x1="${pl}" y1="${yy}" x2="${W-pr}" y2="${yy}" stroke="#eef2f0"/><text x="${pl-6}" y="${yy+3}" fill="#8aa093" font-size="10" text-anchor="end">${money(v)}</text>`;}
+  series.forEach((ser,si)=>{
+    let run=0; const pts=ser.map((v,i)=>{run+=v; return [xOf(i), yOf(run)];});
+    const area=pts.map((p,i)=>`${i?'L':'M'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(" ")+` L${xOf(n-1)},${yOf(0)} L${xOf(0)},${yOf(0)} Z`;
+    g+=`<path d="${area}" fill="${colors[si]}" opacity="0.12"/>`;
+    g+=`<path d="${pts.map((p,i)=>`${i?'L':'M'}${p[0].toFixed(1)},${p[1].toFixed(1)}`).join(" ")}" fill="none" stroke="${colors[si]}" stroke-width="2.4"/>`;
+    g+=`<title>${labels[si]}: ${moneyF(run)}</title>`;
+  });
+  YEARS.forEach((yr,i)=>{ if((yr-NOW)%5===0||yr===END) g+=`<text x="${xOf(i)}" y="${H-pb+15}" fill="#8aa093" font-size="9" text-anchor="middle">${yr}</text>`;});
+  return `<svg viewBox="0 0 ${W} ${H}">${g}</svg>`;
+}
+function miniBars(arr,yMax,color){
+  const W=240,H=70,pl=4,pr=4,pt=4,pb=12,pw=W-pl-pr,ph=H-pt-pb,n=arr.length,bw=pw/n;
+  let g=`<line x1="${pl}" y1="${pt+ph}" x2="${W-pr}" y2="${pt+ph}" stroke="#e4eae6"/>`;
+  arr.forEach((v,i)=>{if(v>0){const h=(v/yMax)*ph; g+=`<rect x="${pl+i*bw}" y="${pt+ph-h}" width="${Math.max(0.6,bw-0.4)}" height="${h}" fill="${color}"/>`;}});
+  [NOW,2040,END].forEach(yr=>{const i=yr-NOW; g+=`<text x="${pl+i*bw}" y="${H-2}" fill="#9fb0a8" font-size="8" text-anchor="middle">${String(yr).slice(2)}</text>`;});
+  return `<svg viewBox="0 0 ${W} ${H}">${g}</svg>`;
+}
+
+/* ============================== SERIES BUILDERS ============================== */
+const kidCostSeries=k=>YEARS.map(y=>kidCostY(k,y)/12);
+const kidGiveSeries=k=>YEARS.map(y=>kidGiveY(k,y)/12);
+const fatherPaySeries=f=>YEARS.map(y=>fatherPayY(f,y)/12);
+const fatherRecSeries=f=>YEARS.map(y=>fatherReceiveY(f,y)/12);
+const totalByAll=()=>YEARS.map(y=>{let t=0; for(const f of FATHERS) t+=fatherPayY(f,y)/12; return t;});
+
+/* ============================== RENDER ============================== */
+const cssVar=v=>getComputedStyle(document.documentElement).getPropertyValue(v).trim();
+const COST=cssVar('--cost'), GIVE=cssVar('--give');
+
+function render(){
+  POOL_M = solvePoolMonthly();
+  computeScales();
+  renderPicker();
+  const m=document.getElementById('main');
+  if(S.scope==="overview") m.innerHTML=viewOverview();
+  else if(S.scope==="family") m.innerHTML=viewFamily(S.sel||FATHERS[0].key);
+  else if(S.scope==="father") m.innerHTML=viewFather(S.sel||FATHERS[0].key);
+  else m.innerHTML=viewKid(S.sel!=null?S.sel:0);
+}
+function renderPicker(){
+  const p=document.getElementById('picker');
+  if(S.scope==="overview"){p.innerHTML=""; return;}
+  let items=[];
+  if(S.scope==="kid") items=KIDS.map(k=>({id:k.id,ar:k.ar,color:k.color}));
+  else items=FATHERS.map(f=>({id:f.key,ar:(S.scope==="father"?"":"عائلة ")+f.ar,color:f.color}));
+  if(S.sel==null) S.sel=items[0].id;
+  p.innerHTML=items.map(it=>`<span class="pchip ${it.id===S.sel?'on':''}" data-id="${it.id}"><i style="background:${it.color}"></i>${it.ar}</span>`).join("");
+  p.querySelectorAll('.pchip').forEach(el=>el.onclick=()=>{const v=el.dataset.id; S.sel=(S.scope==="kid")?+v:v; render();});
+}
+
+/* ---------- Overview ---------- */
+function viewOverview(){
+  const totalTook=KIDS.reduce((a,k)=>a+kidTook(k),0);
+  const totalUni=KIDS.reduce((a,k)=>a+kidUniTotal(k),0);
+  const totalSchool=totalTook-totalUni;
+  const totalGive=KIDS.reduce((a,k)=>a+kidContribution(k),0);
+  const allM=totalByAll(); const peak=Math.max(...allM), avg=allM.reduce((a,b)=>a+b,0)/allM.length;
+  const modelName={M1:"كل أب لأبنائه + سداد",M2:"كل أب لأبنائه فقط",M3:"صندوق مشترك"}[S.model];
+  const kpis=[
+    ["إجمالي ما أُنفق (مأخوذ)",money(totalTook),"مدرسة + جامعة (٢٠٢٥–٢٠٦٠)","gold"],
+    ["تكلفة الجامعات",money(totalUni),`${KIDS.length} طالبًا × ${moneyF(S.uniBase)}/سنة`,""],
+    ["تكلفة المدارس",money(totalSchool),"عبد العليم فقط (٣٥ ألف/سنة)",""],
+    ["إجمالي السداد (مساهمات الأبناء)",money(totalGive), S.model==="M2"?"لا سداد في هذا النموذج":"سداد ميسّر بعد التخرّج","gold"],
+    ["متوسط الدفع الشهري (الكل)",money(avg),"على كامل المدة",""],
+    ["ذروة الدفع الشهري",money(peak),"أعلى شهر",""],
+  ];
+  // families table
+  let rows=FATHERS.map(f=>{
+    const kids=fatherKids(f.key);
+    const took=kids.reduce((a,k)=>a+kidTook(k),0);
+    const give=kids.reduce((a,k)=>a+kidContribution(k),0);
+    let pay=0; for(const y of YEARS) pay+=fatherPayY(f,y);
+    let rec=0; for(const y of YEARS) rec+=fatherReceiveY(f,y);
+    return `<tr><td><span class="pchip" style="border:none;padding:0;gap:6px"><i style="width:11px;height:11px;border-radius:3px;display:inline-block;background:${f.color}"></i>عائلة ${f.ar}</span></td>
+      <td class="num">${kids.length}</td><td class="num">${moneyF(took)}</td><td class="num">${moneyF(pay)}</td><td class="num">${moneyF(rec)}</td><td class="num">${moneyF(pay-rec)}</td></tr>`;
+  }).join("");
+  const tot=(()=>{const took=KIDS.reduce((a,k)=>a+kidTook(k),0);let pay=0,rec=0;for(const f of FATHERS)for(const y of YEARS){pay+=fatherPayY(f,y);rec+=fatherReceiveY(f,y);}return `<tr class="tot"><td>الإجمالي</td><td class="num">${KIDS.length}</td><td class="num">${moneyF(took)}</td><td class="num">${moneyF(pay)}</td><td class="num">${moneyF(rec)}</td><td class="num">${moneyF(pay-rec)}</td></tr>`;})();
+  // small multiples per kid (cost) on fixed scale
+  const sm=KIDS.map(k=>`<div class="sm"><div class="h"><span class="av" style="background:${k.color};width:26px;height:26px;font-size:.8rem">${k.ar[0]}</span>${k.ar}</div>${miniBars(kidCostSeries(k),SC.kidM,COST)}<div class="faint" style="font-size:.74rem;margin-top:3px">أخذ ${money(kidTook(k))} · سدّد ${money(kidContribution(k))}</div></div>`).join("");
+  return `
+    <div class="note">النموذج الحالي: <b>${modelName}</b> · التضخّم <b>${S.infl}%</b> · تكلفة الجامعة <b>${moneyF(S.uniBase)}/سنة</b> لكل طالب (توزيع متساوٍ = ٦٠٪ من ٥٠ ألف). المقياس: ${S.scale==="group"?"ثابت لكل فئة":"موحّد"} — أطوال الأعمدة متناسبة مع القيم.</div>
+    <div class="sec-t display">المؤشرات الرئيسية</div>
+    <div class="kpis">${kpis.map(k=>`<div class="kpi ${k[3]}"><div class="l">${k[0]}</div><div class="v num">${k[1]}</div><div class="n">${k[2]}</div></div>`).join("")}</div>
+    <div class="sec-t display">ملخّص العائلات <span class="s">— كم أخذ، كم دفع الأب، كم استُرجع</span></div>
+    <div class="card"><table><thead><tr><th>العائلة</th><th class="num">أبناء</th><th class="num">المأخوذ</th><th class="num">دفع الأب</th><th class="num">المسترجع</th><th class="num">الصافي</th></tr></thead><tbody>${rows}${tot}</tbody></table></div>
+    <div class="sec-t display">إجمالي الدفع الشهري عبر الزمن <span class="s">— من كل الآباء</span></div>
+    <div class="card"><div class="chart-cap">المتوسط ≈ ${moneyF(avg)}/شهر · الذروة ≈ ${moneyF(peak)}/شهر</div>${chartMonthly([allM],Math.max(...allM)*1.1||1,[cssVar('--green')],["إجمالي"])}</div>
+    <div class="sec-t display">كل الأشخاص على نفس المقياس <span class="s">— الدفعة الشهرية على الطفل (أحمر = تكلفة)</span></div>
+    <div class="smgrid">${sm}</div>`;
+}
+
+/* ---------- Family ---------- */
+function viewFamily(fkey){
+  const f=FMAP[fkey], kids=fatherKids(fkey);
+  const took=kids.reduce((a,k)=>a+kidTook(k),0), give=kids.reduce((a,k)=>a+kidContribution(k),0);
+  let pay=0,rec=0; for(const y of YEARS){pay+=fatherPayY(f,y);rec+=fatherReceiveY(f,y);}
+  const krows=kids.map(k=>`<tr><td>${k.ar}</td><td class="num">${k.born}</td><td class="num"><span dir="ltr">${uniSpan(k)[0]}–${uniSpan(k)[1]}</span></td><td class="num">${moneyF(kidTook(k))}</td><td class="num">${moneyF(kidContribution(k))}</td></tr>`).join("");
+  const branchPay=YEARS.map(y=>fatherPayY(f,y)/12), branchRec=YEARS.map(y=>fatherReceiveY(f,y)/12);
+  const branchPayA=YEARS.map(y=>fatherPayY(f,y)), branchRecA=YEARS.map(y=>fatherReceiveY(f,y));
+  return `
+    <div class="sec-t display"><span class="av" style="background:${f.color}">${f.ar[0]}</span> عائلة ${f.ar} <span class="s">— الأب من مواليد ${f.born} (يساهم حتى ${f.born+60})</span></div>
+    <div class="facts">
+      <div class="fact"><div class="l">عدد الأبناء</div><div class="v num">${kids.length}</div></div>
+      <div class="fact"><div class="l">إجمالي المأخوذ</div><div class="v num">${money(took)}</div></div>
+      <div class="fact"><div class="l">دفع الأب</div><div class="v num">${money(pay)}</div></div>
+      <div class="fact"><div class="l">المسترجع من الأبناء</div><div class="v num">${money(rec)}</div></div>
+      <div class="fact"><div class="l">صافي تكلفة الأب</div><div class="v num">${money(pay-rec)}</div></div>
+    </div>
+    <div class="card"><table><thead><tr><th>الابن</th><th class="num">الميلاد</th><th class="num">سنوات الجامعة</th><th class="num">المأخوذ</th><th class="num">المساهمة (سداد)</th></tr></thead><tbody>${krows}</tbody></table></div>
+    <div class="grid2">
+      <div class="card"><div class="chart-h">الدفعة الشهرية للأب</div><div class="chart-cap">أحمر = ما يدفعه · أخضر = ما يسترجعه</div>${chartMonthly([branchPay,branchRec],SC.fatM,[COST,GIVE],["دفع","استرجاع"])}<div class="legend"><span><i style="background:${COST}"></i>دفع الأب</span><span><i style="background:${GIVE}"></i>سداد الأبناء</span></div></div>
+      <div class="card"><div class="chart-h">التراكمي للأب</div><div class="chart-cap">إجمالي ما دُفع مقابل ما استُرجع</div>${chartCumulative([branchPayA,branchRecA],SC.fatC, [COST,GIVE],["مدفوع","مسترجع"])}</div>
+    </div>`;
+}
+
+/* ---------- Father ---------- */
+function viewFather(fkey){
+  const f=FMAP[fkey], kids=fatherKids(fkey);
+  const pay=fatherPaySeries(f), rec=fatherRecSeries(f);
+  const payA=YEARS.map(y=>fatherPayY(f,y)), recA=YEARS.map(y=>fatherReceiveY(f,y));
+  let payT=0,recT=0; for(const y of YEARS){payT+=fatherPayY(f,y);recT+=fatherReceiveY(f,y);}
+  const activeUntil=f.born+60;
+  return `
+    <div class="sec-t display"><span class="av" style="background:${f.color}">${f.ar[0]}</span> الأب: ${f.ar} <span class="s">— مواليد ${f.born} · يساهم حتى ${activeUntil} (٦٠ سنة)</span></div>
+    <div class="facts">
+      <div class="fact"><div class="l">أبناؤه</div><div class="v num">${kids.length}</div></div>
+      <div class="fact"><div class="l">إجمالي ما يدفع</div><div class="v num">${money(payT)}</div></div>
+      <div class="fact"><div class="l">إجمالي المسترجع</div><div class="v num">${money(recT)}</div></div>
+      <div class="fact"><div class="l">صافي التكلفة</div><div class="v num">${money(payT-recT)}</div></div>
+      <div class="fact"><div class="l">متوسط شهري</div><div class="v num">${money(payT/((END-NOW+1)*12))}</div></div>
+    </div>
+    <div class="grid2">
+      <div class="card"><div class="chart-h">الدفع الشهري عبر الزمن</div><div class="chart-cap">أحمر = دفع · أخضر = استرجاع (سداد الأبناء)</div>${chartMonthly([pay,rec],SC.fatM,[COST,GIVE],["دفع","استرجاع"])}<div class="legend"><span><i style="background:${COST}"></i>يدفع</span><span><i style="background:${GIVE}"></i>يسترجع</span></div></div>
+      <div class="card"><div class="chart-h">التراكمي</div><div class="chart-cap">المدفوع التراكمي مقابل المسترجع</div>${chartCumulative([payA,recA],SC.fatC,[COST,GIVE],["مدفوع","مسترجع"])}</div>
+    </div>
+    <div class="note">أبناؤه: ${kids.map(k=>k.ar).join("، ")}. في النموذج «صندوق مشترك» يساهم كل أب بمبلغ شهري متساوٍ (${moneyF(POOL_M)}) للجامعات حتى الستين، وتُدفع المدارس مباشرةً.</div>`;
+}
+
+/* ---------- Kid ---------- */
+function viewKid(id){
+  const k=KIDS[id], f=FMAP[k.f];
+  const cost=kidCostSeries(k), give=kidGiveSeries(k);
+  const costA=YEARS.map(y=>kidCostY(k,y)), giveA=YEARS.map(y=>kidGiveY(k,y));
+  const took=kidTook(k), giv=kidContribution(k), uni=kidUniTotal(k);
+  const [us,ue]=uniSpan(k); const repayStart=uniGrad(k)+REPAY_OFF;
+  return `
+    <div class="sec-t display"><span class="av" style="background:${k.color}">${k.ar[0]}</span> ${k.ar} <span class="s">— مواليد ${k.born} · من عائلة ${f.ar}</span></div>
+    <div class="facts">
+      <div class="fact"><div class="l">إجمالي المأخوذ</div><div class="v num">${money(took)}</div></div>
+      <div class="fact"><div class="l">منها الجامعة</div><div class="v num">${money(uni)}</div></div>
+      <div class="fact"><div class="l">المدرسة</div><div class="v num">${money(took-uni)}</div></div>
+      <div class="fact"><div class="l">المساهمة (سداد)</div><div class="v num">${money(giv)}</div></div>
+      <div class="fact"><div class="l">سنوات الجامعة</div><div class="v num"><span dir="ltr">${us}–${ue}</span></div></div>
+      <div class="fact"><div class="l">بدء السداد</div><div class="v num">${S.model==="M2"?"—":repayStart}</div></div>
+    </div>
+    <div class="grid2">
+      <div class="card"><div class="chart-h">الدفعة الشهرية: التكلفة مقابل العطاء</div><div class="chart-cap">أحمر = تكلفته الشهرية · أخضر = سداده الشهري (نفس مقياس كل الأبناء)</div>${chartMonthly([cost,give],SC.kidM,[COST,GIVE],["تكلفة","سداد"])}<div class="legend"><span><i style="background:${COST}"></i>تكلفة</span><span><i style="background:${GIVE}"></i>سداد/عطاء</span></div></div>
+      <div class="card"><div class="chart-h">القيم التراكمية</div><div class="chart-cap">إجمالي ما أخذه مقابل ما سدّده</div>${chartCumulative([costA,giveA],SC.kidC,[COST,GIVE],["المأخوذ","المسدّد"])}</div>
+    </div>
+    <div class="note">${S.model==="M2"?"النموذج الحالي «بلا سداد»: الابن لا يردّ، والأب يتحمّل التكلفة كاملةً.":`يردّ ${k.ar} ما أخذه من الجامعة (${money(uni)}) بأقساط شهرية بدون فوائد على ${REPAY_Y} سنوات تبدأ بعد ٣ سنوات من تخرّجه (${repayStart}).`}</div>`;
+}
+
+/* ============================== WIRING ============================== */
+document.getElementById('scopeSeg').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#scopeSeg button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+  S.scope=b.dataset.s; S.sel=null; render();
+});
+document.getElementById('scaleSeg').querySelectorAll('button').forEach(b=>b.onclick=()=>{
+  document.querySelectorAll('#scaleSeg button').forEach(x=>x.classList.remove('on')); b.classList.add('on');
+  S.scale=b.dataset.sc; render();
+});
+document.getElementById('modelSel').onchange=e=>{S.model=e.target.value; render();};
+document.getElementById('inflR').oninput=e=>{S.infl=+e.target.value; document.getElementById('inflV').textContent=S.infl+"%"; render();};
+document.getElementById('uniN').onchange=e=>{S.uniBase=Math.max(0,+e.target.value||0); render();};
+render();
+</script>
+</body>
+</html>
