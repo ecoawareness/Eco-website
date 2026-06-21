@@ -209,6 +209,38 @@ const uniSpan=c=>[c.b+18, c.b+18+UNI-1];
 function childUniCost(c,rate){let t=0; const[s,e]=uniSpan(c); for(let y=s;y<=e;y++){ if(y<NOW||c.uniFree) continue; t+=rate*Math.pow(1+INFL,Math.max(0,y-NOW)); } return t;}
 const uniCount=CHILDREN.filter(c=>!c.uniFree).length;
 
+/* ---- redefined scenarios + revolving family-fund cash-flow model ---- */
+const childUniRaw=(c,rate)=>{let t=0;const[s,e]=uniSpan(c);for(let y=Math.max(NOW,s);y<=e;y++)t+=rate*Math.pow(1+INFL,y-NOW);return t;};
+const uniAll=rate=>CHILDREN.reduce((a,c)=>a+childUniRaw(c,rate),0);
+const schoolTot=lifeBest;                       // remaining school cost (عبد العليم only)
+const PARENTS=[{ar:"فيصل",b:1978},{ar:"فراس",b:1980},{ar:"محمد",b:1983},{ar:"غياث",b:1987}];
+const parentEnd=p=>p.b+60;
+const parentMonths=PARENTS.reduce((a,p)=>a+Math.max(0,parentEnd(p)-NOW)*12,0);
+const REPAY_YEARS=10, SIM_END=2058;
+function schoolCostYear(y){return CHILDREN.reduce((a,c)=>{const k=stageAt(c,y).k; return a+(SCHOOL_STAGES.has(k)?(c.sch||0)*Math.pow(1+INFL,Math.max(0,y-NOW)):0);},0);}
+function simulate(rate,payF,m){            // m = monthly per active parent; returns lowest fund balance
+  let fund=0,minB=0;
+  for(let y=NOW;y<=SIM_END;y++){
+    const active=PARENTS.filter(p=>parentEnd(p)>y).length;
+    let cost=schoolCostYear(y), repay=0;
+    for(const c of CHILDREN){const[s,e]=uniSpan(c);
+      if(y>=Math.max(NOW,s)&&y<=e) cost+=rate*Math.pow(1+INFL,y-NOW)*payF;
+      const g=uniGrad(c); if(y>=g+1&&y<=g+REPAY_YEARS) repay+=(childUniRaw(c,rate)*payF)/REPAY_YEARS;
+    }
+    fund+=m*12*active+repay-cost; if(fund<minB)minB=fund;
+  }
+  return minB;
+}
+const solveMonthly=(rate,payF)=>{let lo=0,hi=60000;for(let i=0;i<44;i++){const mid=(lo+hi)/2; simulate(rate,payF,mid)>=-1?hi=mid:lo=mid;}return hi;};
+const SCEN={
+  best: {freeP:"٦٠٪", payF:0.40, rate:50000, T:schoolTot+uniAll(50000)*0.40, uni:uniAll(50000)*0.40, payN:"٥ من ١٢"},
+  like: {freeP:"٤٠٪", payF:0.60, rate:50000, T:schoolTot+uniAll(50000)*0.60, uni:uniAll(50000)*0.60, payN:"٧ من ١٢"},
+  worst:{freeP:"حنين فقط", payF:11/12, rate:60000, T:schoolTot+uniAll(60000)*(11/12), uni:uniAll(60000)*(11/12), payN:"١١ من ١٢"},
+};
+SCEN.best.m=solveMonthly(SCEN.best.rate,SCEN.best.payF);
+SCEN.like.m=solveMonthly(SCEN.like.rate,SCEN.like.payF);
+SCEN.worst.m=solveMonthly(SCEN.worst.rate,SCEN.worst.payF);
+
 /* ===== PAGE 1 ===== */
 function header(extra){
   return `<div class="hd">
@@ -255,7 +287,7 @@ function page1(){
     ${assume}
     <div class="sec-t display">الأبناء حسب الفروع <span class="s">— الحالة هذا العام الدراسي</span></div>
     <div class="branches">${branches}</div>
-    <div class="foot"><span>عائلة الحصني · تقرير التخطيط التعليمي والمالي</span><span>صفحة ١ من ٤</span></div>
+    <div class="foot"><span>عائلة الحصني · تقرير التخطيط التعليمي والمالي</span><span>صفحة ١ من ٥</span></div>
   </div>`;
 }
 
@@ -279,7 +311,7 @@ function page2(){
       <div class="chart"><h3>الإنفاق التعليمي السنوي المتوقّع</h3><div class="cap">مكدّس حسب المرحلة · الجامعة ٦٠ ألف (٥٠–٧٠) · تضخّم ${(INFL*100)}٪</div>${costSVG()}</div>
       <div class="chart"><h3>عبء التسجيل حسب السنة</h3><div class="cap">عدد الأبناء في المدرسة مقابل الجامعة</div>${loadSVG()}</div>
     </div>
-    <div class="foot"><span>القيم تقديرات تخطيطية بعملة ${CUR} — ليست نصيحة مالية</span><span>صفحة ٢ من ٤</span></div>
+    <div class="foot"><span>القيم تقديرات تخطيطية بعملة ${CUR} — ليست نصيحة مالية</span><span>صفحة ٢ من ٥</span></div>
   </div>`;
 }
 function costSVG(){
@@ -347,23 +379,23 @@ function page3(){
         <div class="play-grid">${adv}</div>
       </div>
     </div>
-    <div class="foot"><span>عائلة الحصني · المصدر: ورقة التخطيط All&nbsp;2023</span><span>صفحة ٣ من ٤</span></div>
+    <div class="foot"><span>عائلة الحصني · المصدر: ورقة التخطيط All&nbsp;2023</span><span>صفحة ٣ من ٥</span></div>
   </div>`;
 }
 
 /* ===== PAGE 4 — scholarships + detailed financial scenarios ===== */
 function page4(){
   const cards=[
-    {cls:"ideal", nm:"السيناريو المثالي", as:"منح جامعية واسعة — الجامعة شبه مجانية (على نهج منحة حنين)",
-     big:money(lifeBest), uni:"٠ (منح)", pay:"الأقل"},
-    {cls:"likely", nm:"السيناريو المرجّح", as:"٦٠ ألف/سنة للجامعة · منحة حنين فقط · تضخّم ٤٪",
-     big:money(life), uni:money(uniMid), pay:uniCount+" طالبًا"},
-    {cls:"worst", nm:"السيناريو الأسوأ", as:"٧٠ ألف/سنة لكل طالب · بلا منح إضافية",
-     big:money(lifeHigh), uni:money(uniHigh), pay:uniCount+" طالبًا"},
+    {cls:"ideal", nm:"السيناريو المثالي", as:"٦٠٪ من الأبناء بمنح جامعية · ٤٠٪ يدفعون ٤٠–٦٠ ألف/سنة",
+     big:money(SCEN.best.T), m:SCEN.best.m, uni:money(SCEN.best.uni), pay:SCEN.best.payN},
+    {cls:"likely", nm:"السيناريو المرجّح", as:"٤٠٪ بمنح · ٦٠٪ يدفعون ٤٠–٦٠ ألف/سنة",
+     big:money(SCEN.like.T), m:SCEN.like.m, uni:money(SCEN.like.uni), pay:SCEN.like.payN},
+    {cls:"worst", nm:"السيناريو الأسوأ", as:"بلا منح إضافية (حنين فقط) · ٦٠ ألف/سنة لكل طالب",
+     big:money(SCEN.worst.T), m:SCEN.worst.m, uni:money(SCEN.worst.uni), pay:SCEN.worst.payN},
   ].map(s=>`<div class="scard ${s.cls}">
       <div class="nm">${s.nm}</div><div class="as">${s.as}</div>
       <div class="big num">${s.big}</div><div class="biglab">إجمالي التعليم المتبقّي (حتى ${lastG})</div>
-      <div class="rw"><span>الادّخار الشهري</span><b class="num">${money((s.cls==='ideal'?lifeBest:s.cls==='likely'?life:lifeHigh)/monthsRem)}</b></div>
+      <div class="rw"><span>ادّخار الأب الشهري</span><b class="num">${moneyF(s.m)}</b></div>
       <div class="rw"><span>إجمالي الجامعات</span><b class="num">${s.uni}</b></div>
       <div class="rw"><span>طلاب يدفعون</span><b>${s.pay}</b></div>
     </div>`).join("");
@@ -389,7 +421,7 @@ function page4(){
       <div>
         <div class="sec-t display">السيناريوهات المالية الثلاثة <span class="s">— تُدرَس للتخطيط: المثالي · المرجّح · الأسوأ</span></div>
         <div class="scards">${cards}</div>
-        <div class="rangeline">النطاق الكامل: من <b>${money(lifeBest)}</b> (مثالي) إلى <b>${money(lifeHigh)}</b> (أسوأ). كل منحة جامعية تُقرّب الرقم من الحدّ الأدنى — والفجوة بين الأفضل والأسوأ تقارب <b>${money(lifeHigh-lifeBest)}</b>.</div>
+        <div class="rangeline">النطاق الكامل: من <b>${money(SCEN.best.T)}</b> (مثالي) إلى <b>${money(SCEN.worst.T)}</b> (أسوأ) — فجوة تقارب <b>${money(SCEN.worst.T-SCEN.best.T)}</b>. «ادّخار الأب الشهري» يفترض مساهمة الآباء الأربعة حتى الستين مع سداد الأبناء للصندوق (صفحة ٥).</div>
       </div>
       <div class="p4row" style="grid-template-columns:1.25fr 1fr; flex:1; min-height:0;">
         <div>
@@ -408,11 +440,66 @@ function page4(){
         </div>
       </div>
     </div>
-    <div class="foot"><span>عائلة الحصني · خطة المنح والمصاريف الجامعية</span><span>صفحة ٤ من ٤</span></div>
+    <div class="foot"><span>عائلة الحصني · خطة المنح والمصاريف الجامعية</span><span>صفحة ٤ من ٥</span></div>
   </div>`;
 }
 
-document.getElementById('report').innerHTML = page1()+page2()+page3()+page4();
+/* ===== PAGE 5 — revolving family education fund ===== */
+function page5(){
+  const fundPoints=[
+    ["👨‍👩‍👧‍👦","صندوق مشترك","يساهم الآباء الأربعة شهريًا في صندوق واحد لتعليم كل الأبناء — حتى يبلغ كل أب الستين."],
+    ["🎓","يغطّي الجامعة","يدفع الصندوق رسوم الجامعة لمن لم يحصل على منحة، مع أولوية للأكبر سنًّا أولًا."],
+    ["🔄","سداد ميسّر","يردّ كل ابن ما أخذه بأقساط شهرية بدون فوائد بعد التخرّج والعمل (≈ ١٠ سنوات)."],
+    ["♻️","صندوق متجدّد","تعود الأقساط لتموّل الأصغر سنًّا — فيتحوّل العبء الكبير إلى صندوق دوّار مستدام."],
+  ].map(p=>`<div class="src"><h4>${p[0]} ${p[1]}</h4><p>${p[2]}</p></div>`).join("");
+
+  const parentsRows=PARENTS.map(p=>{
+    const end=parentEnd(p), yrs=Math.max(0,end-NOW);
+    return `<tr><td>${p.ar} الحصني</td><td class="num">${p.b}</td><td class="num">${end}</td><td class="num">${yrs} سنة</td><td class="num">${moneyF(SCEN.like.m)}</td></tr>`;
+  }).join("");
+
+  const scenRows=[["المثالي",SCEN.best],["المرجّح",SCEN.like],["الأسوأ",SCEN.worst]]
+    .map(([nm,s])=>`<tr><td>${nm}</td><td>${s.freeP}</td><td class="num">${money(s.T)}</td><td class="num">${moneyF(s.m)}</td><td class="num">${moneyF(s.m*4)}</td></tr>`).join("");
+
+  const avgBorrow=uniAll(50000)*0.60/Math.max(1,Math.round(12*0.60)); // typical borrow (likely)
+  const inst=avgBorrow/(REPAY_YEARS*12);
+
+  return `<div class="page">${header(`صندوق تعليم العائلة<br><b>الخطة المالية</b>`)}
+    <div class="p4">
+      <div class="sec-t display">صندوق تعليم العائلة <span class="s">— صندوق دوّار يحوّل العبء إلى خطة مستدامة</span></div>
+      <div style="display:grid; grid-template-columns:repeat(4,1fr); gap:10px;">${fundPoints}</div>
+
+      <div class="p4row" style="grid-template-columns:1.3fr 1fr; flex:1; min-height:0; margin-top:4px;">
+        <div>
+          <div class="sec-t display">مساهمة الوالدين <span class="s">— حتى سنّ الستين، بالتساوي</span></div>
+          <table class="fin"><thead><tr><th>الأب</th><th>الميلاد</th><th>حتى سنة (٦٠)</th><th>سنوات المساهمة</th><th>نصيب شهري*</th></tr></thead><tbody>${parentsRows}</tbody></table>
+
+          <div class="sec-t display" style="margin-top:11px">خطة الادّخار الشهري — السيناريوهات الثلاثة</div>
+          <table class="fin"><thead><tr><th>السيناريو</th><th>أبناء بمنح</th><th>إجمالي التكلفة</th><th>نصيب الأب/شهر</th><th>إجمالي العائلة/شهر</th></tr></thead><tbody>${scenRows}</tbody></table>
+          <div class="rangeline">* النصيب الشهري لكل أب (السيناريو المرجّح). «إجمالي العائلة» بافتراض مساهمة الآباء الأربعة معًا؛ يقلّ تدريجيًا كلما بلغ أحدهم الستين، ويعوّضه تراكم المدّخرات وسداد الأبناء.</div>
+        </div>
+        <div>
+          <div class="sec-t display">خطة السداد الميسّرة للأبناء</div>
+          <div class="tipbox"><h4>شروط سهلة وعادلة</h4><ul>
+            <li>يبدأ السداد بعد سنة من التخرّج والبدء بالعمل.</li>
+            <li>بدون أي فوائد، على ${REPAY_YEARS} سنوات (≈ ${REPAY_YEARS*12} قسطًا).</li>
+            <li>مثال: من أخذ نحو ${money(avgBorrow)} يسدّد ≈ <b>${moneyF(inst)}/شهر</b> فقط.</li>
+            <li>يجوز تأجيل القسط عند التعطّل عن العمل دون غرامة.</li>
+            <li>تعود كل الأقساط للصندوق ليكمل الأصغر سنًّا تعليمهم.</li>
+          </ul></div>
+          <div class="callout" style="margin-top:11px">
+            <div class="t">⚠️ خطّط لأسوأ الاحتمالات</div>
+            <div class="v num">${moneyF(SCEN.worst.m)}<span style="font-size:12px"> /شهر للأب</span></div>
+            <p>في الأسوأ (بلا منح، ٦٠ ألف/سنة): ابدأ بهذا الرقم؛ وكل منحة جامعية يحصل عليها الأبناء تخفّضه نحو ${moneyF(SCEN.best.m)}/شهر في السيناريو المثالي.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span>عائلة الحصني · صندوق التعليم الدوّار وخطة الادّخار</span><span>صفحة ٥ من ٥</span></div>
+  </div>`;
+}
+
+document.getElementById('report').innerHTML = page1()+page2()+page3()+page4()+page5();
 </script>
 </body>
 </html>
