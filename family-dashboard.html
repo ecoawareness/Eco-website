@@ -1,0 +1,937 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>عائلة الحصني — Family Education &amp; Financial Planning Dashboard</title>
+<meta name="robots" content="noindex, nofollow">
+<meta name="description" content="A world-class education & financial planning dashboard for عائلة الحصني — grade timelines, cost forecasts, scenarios, insights and decision-making guidance.">
+<link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2214%22%20fill%3D%22%230d3a2a%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2244%22%20text-anchor%3D%22middle%22%20font-family%3D%22Georgia%2C%20serif%22%20font-weight%3D%22700%22%20font-size%3D%2236%22%20fill%3D%22%23e9c46a%22%3E%D8%AD%3C/text%3E%3C/svg%3E">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700;800&family=Tajawal:wght@400;500;700;800&family=Fraunces:ital,opsz,wght@0,9..144,500;0,9..144,600;1,9..144,500&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#07271c; --bg2:#0b3527; --panel:rgba(255,255,255,.045); --panel-2:rgba(255,255,255,.07);
+    --stroke:rgba(255,255,255,.10); --stroke-2:rgba(255,255,255,.16);
+    --ink:#eef6f1; --muted:#9fc2b2; --faint:#6f9384;
+    --gold:#e9c46a; --gold-2:#f4d58a; --lime:#a8e063; --green:#2bb673; --teal:#39c7c0;
+    --kg:#9b6dff; --primary:#39a0ed; --prep:#2bb673; --secondary:#e9a33b; --university:#ef6f6c; --grad:#7a8c84; --pre:#33514494;
+    --shadow:0 18px 50px -18px rgba(0,0,0,.6);
+    --radius:20px;
+  }
+  *{box-sizing:border-box}
+  html,body{margin:0}
+  body{
+    background:
+      radial-gradient(1200px 700px at 85% -10%, rgba(43,182,115,.18), transparent 60%),
+      radial-gradient(900px 600px at -5% 10%, rgba(57,199,192,.12), transparent 55%),
+      linear-gradient(160deg, var(--bg), var(--bg2) 55%, #06231a);
+    color:var(--ink); font-family:'Plus Jakarta Sans',system-ui,sans-serif;
+    min-height:100vh; line-height:1.5; letter-spacing:.1px; -webkit-font-smoothing:antialiased;
+  }
+  .ar{font-family:'Tajawal','Plus Jakarta Sans',sans-serif; direction:rtl; unicode-bidi:plaintext; font-weight:700}
+  .wrap{max-width:1280px; margin:0 auto; padding:28px clamp(14px,3vw,40px) 80px}
+  a{color:var(--lime)}
+  h1,h2,h3{margin:0; line-height:1.12; font-weight:700}
+  .serif{font-family:'Fraunces',Georgia,serif; font-weight:600}
+  .muted{color:var(--muted)} .faint{color:var(--faint)}
+
+  /* ---------- Header ---------- */
+  header.hero{
+    position:relative; overflow:hidden; border-radius:28px; padding:clamp(22px,3.5vw,40px);
+    background:linear-gradient(135deg, rgba(13,58,42,.85), rgba(7,39,28,.7));
+    border:1px solid var(--stroke-2); box-shadow:var(--shadow); margin-bottom:22px;
+  }
+  header.hero::after{content:""; position:absolute; inset:0; background:
+    radial-gradient(420px 220px at 90% 0%, rgba(233,196,106,.18), transparent 70%); pointer-events:none}
+  .lang-toggle{position:absolute; top:18px; right:18px; z-index:2; cursor:pointer;
+    padding:8px 16px; border-radius:999px; font:inherit; font-size:.82rem; font-weight:700;
+    background:var(--panel-2); color:var(--gold-2); border:1px solid var(--gold);
+    transition:.18s; font-family:'Tajawal','Plus Jakarta Sans',sans-serif}
+  .lang-toggle:hover{background:var(--gold); color:#06231a}
+  /* ---- RTL / Arabic mode ---- */
+  body.ar-mode{font-family:'Tajawal','Plus Jakarta Sans',sans-serif}
+  html[dir=rtl] .lang-toggle{right:auto; left:18px}
+  html[dir=rtl] .branch-stats{margin-left:0; margin-right:auto}
+  html[dir=rtl] .adv{border-left:none; border-right:3px solid var(--green)}
+  html[dir=rtl] .adv.gold{border-right-color:var(--gold)}
+  html[dir=rtl] .adv.teal{border-right-color:var(--teal)}
+  html[dir=rtl] .adv.red{border-right-color:var(--university)}
+  html[dir=rtl] table.tl tbody th{left:auto; right:0}
+  html[dir=rtl] table.tl thead th:first-child{left:auto; right:0}
+  body.ar-mode .serif{font-family:'Tajawal',serif; font-weight:800}
+  .crest{display:inline-flex; align-items:center; gap:12px; margin-bottom:14px}
+  .crest .mark{width:48px;height:48px;border-radius:14px;display:grid;place-items:center;
+    background:linear-gradient(145deg,#0d3a2a,#072a1e); border:1px solid var(--gold);
+    font-family:'Fraunces',serif; font-size:1.6rem; color:var(--gold); font-weight:600}
+  .crest .k{font-size:.72rem; letter-spacing:.28em; text-transform:uppercase; color:var(--gold-2)}
+  header.hero h1{font-size:clamp(1.9rem,4.4vw,3.1rem); letter-spacing:-.5px}
+  header.hero h1 .ar{font-size:1.08em; color:var(--gold-2)}
+  header.hero .sub{margin-top:10px; max-width:60ch; color:var(--muted); font-size:clamp(.95rem,1.4vw,1.06rem)}
+  .hero-meta{display:flex; flex-wrap:wrap; gap:10px; margin-top:18px}
+  .chip{display:inline-flex; align-items:center; gap:8px; padding:8px 14px; border-radius:999px;
+    background:var(--panel-2); border:1px solid var(--stroke); font-size:.82rem; color:var(--ink)}
+  .chip b{color:var(--gold-2)}
+  .chip .dot{width:8px;height:8px;border-radius:50%;background:var(--lime);box-shadow:0 0 10px var(--lime)}
+
+  /* ---------- KPI grid ---------- */
+  .kpis{display:grid; grid-template-columns:repeat(auto-fit,minmax(165px,1fr)); gap:14px; margin:22px 0}
+  .kpi{position:relative; padding:18px 18px 16px; border-radius:var(--radius); background:var(--panel);
+    border:1px solid var(--stroke); transition:.25s; overflow:hidden}
+  .kpi:hover{transform:translateY(-3px); border-color:var(--stroke-2); background:var(--panel-2)}
+  .kpi .lab{font-size:.74rem; text-transform:uppercase; letter-spacing:.12em; color:var(--faint)}
+  .kpi .val{font-family:'Fraunces',serif; font-size:clamp(1.5rem,3vw,2rem); margin-top:6px; line-height:1}
+  .kpi .note{font-size:.78rem; color:var(--muted); margin-top:7px}
+  .kpi .spark{position:absolute; right:-2px; bottom:-2px; opacity:.5}
+  .kpi.gold{background:linear-gradient(150deg,rgba(233,196,106,.16),rgba(233,196,106,.03)); border-color:rgba(233,196,106,.32)}
+  .kpi.gold .val{color:var(--gold-2)}
+
+  /* ---------- Section scaffolding ---------- */
+  section.card{background:var(--panel); border:1px solid var(--stroke); border-radius:var(--radius);
+    padding:clamp(18px,2.6vw,28px); margin:18px 0; box-shadow:var(--shadow)}
+  .sec-head{display:flex; align-items:flex-end; justify-content:space-between; gap:16px; flex-wrap:wrap; margin-bottom:18px}
+  .sec-head h2{font-size:clamp(1.2rem,2.4vw,1.6rem)} .sec-head .serif{}
+  .sec-head .kicker{font-size:.72rem; letter-spacing:.22em; text-transform:uppercase; color:var(--gold-2); margin-bottom:6px}
+  .sec-head p{margin:6px 0 0; color:var(--muted); max-width:62ch; font-size:.92rem}
+
+  /* ---------- Children grid ---------- */
+  #kids{display:block}
+  .branch{margin-bottom:20px}
+  .branch:last-child{margin-bottom:0}
+  .branch-head{display:flex; align-items:center; gap:10px; flex-wrap:wrap; margin:0 2px 12px;
+    padding-bottom:9px; border-bottom:1px solid var(--stroke)}
+  .branch-dot{width:12px;height:12px;border-radius:4px;flex:0 0 auto;box-shadow:0 0 10px -1px currentColor}
+  .branch-name{font-weight:700; font-size:1.04rem} .branch-name .ar{font-size:1.16rem}
+  .branch-stats{margin-left:auto; font-size:.8rem; color:var(--muted); font-variant-numeric:tabular-nums}
+  @media(max-width:520px){.branch-stats{margin-left:0; width:100%}}
+  .kids{display:grid; grid-template-columns:repeat(auto-fill,minmax(220px,1fr)); gap:14px}
+  .kid{padding:16px; border-radius:16px; background:var(--panel-2); border:1px solid var(--stroke); transition:.2s}
+  .kid:hover{border-color:var(--stroke-2); transform:translateY(-2px)}
+  .kid .top{display:flex; align-items:center; gap:12px; margin-bottom:12px}
+  .av{width:46px;height:46px;border-radius:13px;flex:0 0 auto;display:grid;place-items:center;
+    font-family:'Fraunces',serif; font-size:1.15rem; color:#06231a; font-weight:600}
+  .kid .nm{font-weight:700; font-size:1.02rem} .kid .nm .ar{font-size:1.12rem}
+  .kid .meta{font-size:.78rem; color:var(--muted)}
+  .stage-pill{display:inline-block; padding:3px 10px; border-radius:999px; font-size:.72rem; font-weight:600;
+    color:#06231a; margin-top:2px}
+  .kid .bar{height:7px; border-radius:999px; background:rgba(255,255,255,.08); margin:12px 0 7px; overflow:hidden}
+  .kid .bar > i{display:block; height:100%; border-radius:999px; background:linear-gradient(90deg,var(--green),var(--lime))}
+  .kid .grad{font-size:.74rem; color:var(--faint); display:flex; justify-content:space-between}
+
+  /* ---------- Timeline matrix ---------- */
+  .legend{display:flex; flex-wrap:wrap; gap:14px; margin-bottom:14px; font-size:.78rem; color:var(--muted)}
+  .legend span{display:inline-flex; align-items:center; gap:7px}
+  .legend i{width:13px;height:13px;border-radius:4px;display:inline-block}
+  .tl-scroll{overflow:auto; border-radius:14px; border:1px solid var(--stroke); max-height:560px}
+  table.tl{border-collapse:separate; border-spacing:0; font-size:.72rem; white-space:nowrap}
+  table.tl th,table.tl td{padding:6px 8px; text-align:center; border-bottom:1px solid rgba(255,255,255,.05)}
+  table.tl thead th{position:sticky; top:0; z-index:3; background:#0a2f22; color:var(--muted); font-weight:600;
+    border-bottom:1px solid var(--stroke-2)}
+  table.tl tbody th{position:sticky; left:0; z-index:2; background:#0a2f22; text-align:right; font-weight:700; min-width:140px}
+  table.tl thead th:first-child{position:sticky; left:0; z-index:4}
+  .cell{border-radius:6px; color:#06231a; font-weight:600; min-width:30px}
+  .col-now{box-shadow:inset 0 0 0 2px var(--gold)}
+  table.tl thead th.now-h{color:var(--gold-2)}
+
+  /* ---------- Controls / scenarios ---------- */
+  .grid2{display:grid; grid-template-columns:1.15fr .85fr; gap:18px}
+  @media(max-width:880px){.grid2{grid-template-columns:1fr}}
+  .controls{display:grid; grid-template-columns:1fr 1fr; gap:14px 18px}
+  @media(max-width:520px){.controls{grid-template-columns:1fr}}
+  .field{display:flex; flex-direction:column; gap:6px}
+  .field label{font-size:.78rem; color:var(--muted); display:flex; justify-content:space-between}
+  .field label b{color:var(--gold-2); font-variant-numeric:tabular-nums}
+  .field input[type=range]{width:100%; accent-color:var(--green)}
+  .field input[type=number],.field select{background:rgba(0,0,0,.25); border:1px solid var(--stroke);
+    color:var(--ink); padding:9px 11px; border-radius:10px; font:inherit; font-size:.88rem}
+  .presets{display:flex; flex-wrap:wrap; gap:8px; margin-bottom:6px}
+  .preset{cursor:pointer; padding:8px 14px; border-radius:999px; font-size:.8rem; font-weight:600;
+    background:var(--panel-2); border:1px solid var(--stroke); color:var(--ink); transition:.18s}
+  .preset:hover{border-color:var(--gold)}
+  .preset.active{background:linear-gradient(145deg,var(--gold),var(--gold-2)); color:#06231a; border-color:transparent}
+
+  /* ---------- Charts ---------- */
+  .chart-card{background:var(--panel-2); border:1px solid var(--stroke); border-radius:16px; padding:16px}
+  .chart-card h3{font-size:.95rem; margin-bottom:4px}
+  .chart-card .cap{font-size:.78rem; color:var(--muted); margin-bottom:10px}
+  svg{display:block; width:100%; height:auto; overflow:visible}
+  .tip-line{stroke:rgba(255,255,255,.12); stroke-dasharray:3 3}
+
+  /* ---------- Insight / advice cards ---------- */
+  .insights{display:grid; grid-template-columns:repeat(auto-fit,minmax(260px,1fr)); gap:14px}
+  .ins{padding:18px; border-radius:16px; background:var(--panel-2); border:1px solid var(--stroke); position:relative}
+  .ins .tag{font-size:.7rem; letter-spacing:.12em; text-transform:uppercase; color:var(--gold-2); font-weight:700}
+  .ins h3{font-size:1.02rem; margin:9px 0 7px} .ins p{margin:0; color:var(--muted); font-size:.9rem}
+  .ins.amber{border-color:rgba(233,163,59,.4)} .ins.red{border-color:rgba(239,111,108,.4)}
+  .ins.green{border-color:rgba(43,182,115,.4)}
+
+  .cols{columns:2; column-gap:22px} @media(max-width:760px){.cols{columns:1}}
+  .adv{break-inside:avoid; margin:0 0 14px; padding:16px 18px; border-radius:14px; background:var(--panel-2);
+    border:1px solid var(--stroke); border-left:3px solid var(--green)}
+  .adv.gold{border-left-color:var(--gold)} .adv.teal{border-left-color:var(--teal)} .adv.red{border-left-color:var(--university)}
+  .adv h3{font-size:.98rem; margin-bottom:6px; display:flex; gap:9px; align-items:center}
+  .adv h3 .ic{font-size:1.05rem}
+  .adv p{margin:0; color:var(--muted); font-size:.88rem}
+
+  table.fin{width:100%; border-collapse:collapse; font-size:.82rem; font-variant-numeric:tabular-nums}
+  table.fin th,table.fin td{padding:9px 10px; text-align:right; border-bottom:1px solid rgba(255,255,255,.06)}
+  table.fin th{color:var(--faint); font-weight:600; text-align:right; position:sticky; top:0; background:#0a2f22}
+  table.fin td:first-child,table.fin th:first-child{text-align:left}
+  table.fin tr.peak{background:rgba(239,111,108,.12)} table.fin tr.now{background:rgba(233,196,106,.1)}
+  .fin-scroll{max-height:340px; overflow:auto; border-radius:12px; border:1px solid var(--stroke)}
+
+  footer{margin-top:40px; text-align:center; color:var(--faint); font-size:.8rem}
+  .badge{display:inline-block; padding:2px 9px; border-radius:999px; background:var(--panel-2); border:1px solid var(--stroke); font-size:.72rem}
+  @media print{body{background:#fff;color:#000} .no-print{display:none}}
+</style>
+</head>
+<body>
+<div class="wrap">
+
+  <!-- ================= HERO ================= -->
+  <header class="hero">
+    <button class="lang-toggle no-print" id="langToggle" aria-label="Switch language">العربية</button>
+    <div class="crest">
+      <div class="mark">ح</div>
+      <div>
+        <div class="k" data-i18n="hero_kicker">Family Intelligence Dashboard</div>
+        <div class="faint" style="font-size:.8rem" data-i18n="hero_tagline">Education &middot; Finance &middot; Foresight</div>
+      </div>
+    </div>
+    <h1><span class="ar">عائلة الحصني</span> <span class="serif" style="font-weight:500" data-i18n="hero_title_suffix"> — The Hosny Family</span></h1>
+    <p class="sub" data-i18n="hero_sub">A living plan for every child's journey from KG to graduation — with cost forecasts,
+      peak-load planning, scenarios you can steer, and decision-making guidance built on your own data.</p>
+    <div class="hero-meta" id="heroMeta"></div>
+  </header>
+
+  <!-- ================= KPIs ================= -->
+  <div class="kpis" id="kpis"></div>
+
+  <!-- ================= CHILDREN ================= -->
+  <section class="card">
+    <div class="sec-head">
+      <div>
+        <div class="kicker" data-i18n="kids_kicker">The Family</div>
+        <h2 class="serif" data-i18n="kids_h2">Children at a glance</h2>
+        <p data-i18n="kids_p">Live status for each child this academic year — current grade, progress to graduation, and the year they finish school &amp; university.</p>
+      </div>
+      <div class="chip"><span class="dot"></span><b id="kidsCount"></b>&nbsp;<span data-i18n="children">children</span></div>
+    </div>
+    <div class="kids" id="kids"></div>
+  </section>
+
+  <!-- ================= TIMELINE MATRIX ================= -->
+  <section class="card">
+    <div class="sec-head">
+      <div>
+        <div class="kicker" data-i18n="tl_kicker">The Master Timeline</div>
+        <h2 class="serif" data-i18n="tl_h2">Grade-by-year map · 2011 → 2047</h2>
+        <p data-i18n="tl_p">Every child, every academic year, color-coded by stage. The gold column is the current academic year. Scroll horizontally to travel through time.</p>
+      </div>
+    </div>
+    <div class="legend" id="legend"></div>
+    <div class="tl-scroll"><div id="timeline"></div></div>
+  </section>
+
+  <!-- ================= FINANCIAL ENGINE ================= -->
+  <section class="card">
+    <div class="sec-head">
+      <div>
+        <div class="kicker" data-i18n="fin_kicker">Forecasts &amp; Scenarios</div>
+        <h2 class="serif" data-i18n="fin_h2">The money model — steer it</h2>
+        <p data-i18n="fin_p">Set the annual cost per stage, inflation, and university plan. Everything below recomputes instantly. Start from a preset, then fine-tune.</p>
+      </div>
+      <button class="preset no-print" id="resetBtn" data-i18n="fin_reset">↺ Reset to defaults</button>
+    </div>
+
+    <div class="presets no-print" id="presets"></div>
+
+    <div class="grid2">
+      <div class="controls" id="controls"></div>
+      <div class="chart-card">
+        <h3 data-i18n="load_h3">Enrolment load by year</h3>
+        <div class="cap" data-i18n="load_cap">How many children are in school vs university each year — your logistical &amp; financial pressure curve.</div>
+        <div id="loadChart"></div>
+      </div>
+    </div>
+
+    <div class="chart-card" style="margin-top:18px">
+      <h3 data-i18n="cost_h3">Projected annual education spend</h3>
+      <div class="cap"><span data-i18n="cost_cap">Stacked by stage, inflation-adjusted from the current year forward.</span> <span id="curNote"></span></div>
+      <div id="costChart"></div>
+    </div>
+  </section>
+
+  <!-- ================= AUTO INSIGHTS ================= -->
+  <section class="card">
+    <div class="sec-head">
+      <div>
+        <div class="kicker" data-i18n="ins_kicker">What the data is telling you</div>
+        <h2 class="serif" data-i18n="ins_h2">Insights &amp; takeaways</h2>
+        <p data-i18n="ins_p">Generated live from your timeline and current cost assumptions — these update as you change the model above.</p>
+      </div>
+    </div>
+    <div class="insights" id="insights"></div>
+  </section>
+
+  <!-- ================= FORECAST TABLE ================= -->
+  <section class="card">
+    <div class="sec-head">
+      <div>
+        <div class="kicker" data-i18n="fc_kicker">The numbers, year by year</div>
+        <h2 class="serif" data-i18n="fc_h2">Forecast ledger</h2>
+        <p data-i18n="fc_p">Projected spend and running total from now to the last graduation. Peak year highlighted in red, current year in gold.</p>
+      </div>
+    </div>
+    <div class="fin-scroll">
+      <table class="fin" id="finTable"></table>
+    </div>
+  </section>
+
+  <!-- ================= ADVICE / LESSONS ================= -->
+  <section class="card">
+    <div class="sec-head">
+      <div>
+        <div class="kicker" data-i18n="adv_kicker">Playbook</div>
+        <h2 class="serif" data-i18n="adv_h2">Financial advice, lessons &amp; decision-making tips</h2>
+        <p data-i18n="adv_p">A practical playbook for funding a large family's education — tailored to a long horizon with overlapping university years.</p>
+      </div>
+    </div>
+    <div class="cols" id="advice"></div>
+  </section>
+
+  <footer>
+    <span class="badge">Private · noindex</span> &nbsp; <span data-i18n="foot_built">Built for</span> <span class="ar">عائلة الحصني</span> ·
+    <span data-i18n="foot_src">Source: All&nbsp;2023 planning sheet</span> · <span id="builtOn"></span><br>
+    <span class="faint" style="font-size:.74rem" data-i18n="foot_disc">Figures are planning estimates you control — not financial advice. Verify costs with each institution.</span>
+  </footer>
+</div>
+
+<script>
+/* =====================================================================
+   DATA — عائلة الحصني (the Hosny family)
+   Birth years derived from the All-2023 grade matrix (KG1 at age 4),
+   validated as a strictly non-decreasing series. عائلة البابا excluded.
+   عبدالله & قمر (b. 2025) added per instruction.
+===================================================================== */
+const FAMILY_AR = "عائلة الحصني";
+/* عائلة الحصني — a clan of four branches (by father). Branch = the colour code
+   in the All-2023 sheet. Birth years derived from the grade matrix (KG1 @ age 4);
+   three not in the sheet are estimated (est:true) pending confirmation.
+   قمر & عبد الله (b.2025) added new. عائلة البابا excluded. */
+const BRANCHES = {
+  firas:    {ar:"فراس الحصني",  en:"Firas Al-Hosny",    c:"#f266cc"}, // magenta
+  muhammad: {ar:"محمد الحصني",  en:"Muhammad Al-Hosny", c:"#ff5a4d"}, // red
+  faisal:   {ar:"فيصل الحصني",  en:"Faisal Al-Hosny",   c:"#ffc02e"}, // (you)
+  ghiyath:  {ar:"غياث",         en:"Ghiyath",           c:"#39c7c0"},
+};
+const CHILDREN = [
+  {en:"Haneen",     ar:"حنين",       b:2007, g:"f", p:"firas"},
+  {en:"Muhammad",   ar:"محمد",       b:2008, g:"m", p:"firas"},
+  {en:"Noor",       ar:"نور",        b:2016, g:"f", p:"firas"},
+  {en:"Omar",       ar:"عمر",        b:2019, g:"m", p:"firas"},
+  {en:"Qamar",      ar:"قمر",        b:2025, g:"f", p:"firas",    isNew:true},
+  {en:"Ahmad",      ar:"أحمد",       b:2008, g:"m", p:"muhammad", est:true},
+  {en:"Raghad",     ar:"رغد",        b:2010, g:"f", p:"muhammad"},
+  {en:"Raneem",     ar:"رنيم",       b:2011, g:"f", p:"muhammad"},
+  {en:"Teem",       ar:"تيم",        b:2017, g:"m", p:"muhammad", est:true},
+  {en:"Sham",       ar:"شام",        b:2021, g:"f", p:"muhammad"},
+  {en:"Abd Al-Alim",ar:"عبد العليم", b:2015, g:"m", p:"faisal",   est:true},
+  {en:"Abdullah",   ar:"عبد الله",   b:2025, g:"m", p:"ghiyath",  isNew:true},
+];
+
+/* Grade ladder. index 0..18 ; index = academicYearStart - birth - 4 */
+const GRADES = [
+  {ar:"KG1",ar2:"تمهيدي ١",en:"KG1",st:"kg"},
+  {ar:"KG2",ar2:"تمهيدي ٢",en:"KG2",st:"kg"},
+  {ar:"أول",en:"Grade 1",st:"primary"},
+  {ar:"ثاني",en:"Grade 2",st:"primary"},
+  {ar:"ثالث",en:"Grade 3",st:"primary"},
+  {ar:"رابع",en:"Grade 4",st:"primary"},
+  {ar:"خامس",en:"Grade 5",st:"primary"},
+  {ar:"سادس",en:"Grade 6",st:"primary"},
+  {ar:"سابع",en:"Grade 7",st:"prep"},
+  {ar:"ثامن",en:"Grade 8",st:"prep"},
+  {ar:"تاسع",en:"Grade 9",st:"prep"},
+  {ar:"عاشر",en:"Grade 10",st:"secondary"},
+  {ar:"حادي عشر",en:"Grade 11",st:"secondary"},
+  {ar:"بكالوريا",en:"Grade 12",st:"secondary"},
+  {ar:"جامعة ١",en:"Uni Y1",st:"university"},
+  {ar:"جامعة ٢",en:"Uni Y2",st:"university"},
+  {ar:"جامعة ٣",en:"Uni Y3",st:"university"},
+  {ar:"جامعة ٤",en:"Uni Y4",st:"university"},
+  {ar:"جامعة ٥",en:"Uni Y5",st:"university"},
+];
+const STAGE_META = {
+  pre:        {c:"var(--pre)",        label:"Not yet in school", ar:"قبل المدرسة"},
+  kg:         {c:"var(--kg)",         label:"Kindergarten",      ar:"الروضة"},
+  primary:    {c:"var(--primary)",    label:"Primary (1–6)",     ar:"ابتدائي (١–٦)"},
+  prep:       {c:"var(--prep)",       label:"Preparatory (7–9)", ar:"إعدادي (٧–٩)"},
+  secondary:  {c:"var(--secondary)",  label:"Secondary (10–12)", ar:"ثانوي (١٠–١٢)"},
+  university: {c:"var(--university)",  label:"University",         ar:"جامعة"},
+  grad:       {c:"var(--grad)",       label:"Graduated",         ar:"متخرّج"},
+};
+const YEAR_FROM=2011, YEAR_TO=2047;
+
+/* ---- current academic year (Aug rollover) ---- */
+const now=new Date();
+const NOW_START = now.getMonth()>=7 ? now.getFullYear() : now.getFullYear()-1;
+
+/* =====================================================================
+   i18n — bilingual EN / AR
+===================================================================== */
+let LANG = 'en';
+const T = {
+  en:{
+    hero_kicker:"Family Intelligence Dashboard", hero_tagline:"Education · Finance · Foresight",
+    hero_title_suffix:" — The Hosny Family",
+    hero_sub:"A living plan for every child's journey from KG to graduation — with cost forecasts, peak-load planning, scenarios you can steer, and decision-making guidance built on your own data.",
+    kids_kicker:"The Family", kids_h2:"Children at a glance",
+    kids_p:"Live status for each child this academic year — current grade, progress to graduation, and the year they finish school & university.",
+    tl_kicker:"The Master Timeline", tl_h2:"Grade-by-year map · 2011 → 2047",
+    tl_p:"Every child, every academic year, color-coded by stage. The gold column is the current academic year. Scroll horizontally to travel through time.",
+    fin_kicker:"Forecasts & Scenarios", fin_h2:"The money model — steer it",
+    fin_p:"Set the annual cost per stage, inflation, and university plan. Everything below recomputes instantly. Start from a preset, then fine-tune.",
+    fin_reset:"↺ Reset to defaults",
+    load_h3:"Enrolment load by year", load_cap:"How many children are in school vs university each year — your logistical & financial pressure curve.",
+    cost_h3:"Projected annual education spend", cost_cap:"Stacked by stage, inflation-adjusted from the current year forward.",
+    ins_kicker:"What the data is telling you", ins_h2:"Insights & takeaways",
+    ins_p:"Generated live from your timeline and current cost assumptions — these update as you change the model above.",
+    fc_kicker:"The numbers, year by year", fc_h2:"Forecast ledger",
+    fc_p:"Projected spend and running total from now to the last graduation. Peak year highlighted in red, current year in gold.",
+    adv_kicker:"Playbook", adv_h2:"Financial advice, lessons & decision-making tips",
+    adv_p:"A practical playbook for funding a large family's education — tailored to a long horizon with overlapping university years.",
+    foot_built:"Built for", foot_src:"Source: All 2023 planning sheet",
+    foot_disc:"Figures are planning estimates you control — not financial advice. Verify costs with each institution.",
+    children:"children", child:"Child", enrolled:"enrolled", inUni:"in university", totalEnrolled:"total enrolled",
+    now:"now", peak:"peak", perYr:"/yr", est:"b.year est.", new:"new",
+    starts:"Starts KG1 in", graduated:"Graduated", school:"School", uni:"Uni",
+    acadYear:"Academic year", ages:"Ages", branches:"family branches", firstLast:"First → last graduation",
+    // KPIs
+    kpi_children:"Children", kpi_children_n:(p,g)=>`${p} pre-school · ${g} graduated`,
+    kpi_school:"In school now", kpi_school_n:"KG → Grade 12",
+    kpi_uni:"In university now", kpi_uni_n:y=>`${y}-year programmes`,
+    kpi_thisyr:"This year's spend", kpi_thisyr_n:a=>`academic ${a}`,
+    kpi_peak:"Peak annual spend", kpi_peak_n:y=>`in ${y}`,
+    kpi_life:"Remaining lifetime", kpi_life_n:r=>`${r}, all children`,
+    kpi_busy:"Busiest year", kpi_busy_n:y=>`enrolled at once · ${y}`,
+    // controls
+    c_kg:"KG / year", c_primary:"Primary / year", c_prep:"Preparatory / year",
+    c_secondary:"Secondary / year", c_university:"University / year",
+    c_inflation:"Inflation %/yr", c_uniYears:"University length (yrs)", c_uniAbroad:"Abroad cost ×",
+    c_currency:"Currency",
+    p_modest:"Modest / public", p_balanced:"Private (balanced)", p_premium:"Premium + abroad", p_custom:"Custom",
+    // table
+    th_year:"Academic year", th_enrol:"Enrolled", th_uni:"In uni", th_annual:"Annual spend", th_cum:"Cumulative",
+    curNote:(cur,inf,uy)=>`Currency ${cur} · inflation ${inf}%/yr · university ${uy} yrs`,
+  },
+  ar:{
+    hero_kicker:"لوحة ذكاء العائلة", hero_tagline:"تعليم · مال · استشراف",
+    hero_title_suffix:" — آل الحصني",
+    hero_sub:"خطة حيّة لرحلة كل طفل من الروضة حتى التخرّج — مع توقّعات للتكاليف، وتخطيط لسنوات الذروة، وسيناريوهات تتحكّم بها، وإرشادات لاتخاذ القرار مبنية على بياناتكم.",
+    kids_kicker:"العائلة", kids_h2:"الأبناء في لمحة",
+    kids_p:"الحالة الحالية لكل طفل هذا العام الدراسي — الصف الحالي، والتقدّم نحو التخرّج، وسنة إنهاء المدرسة والجامعة.",
+    tl_kicker:"الخط الزمني الرئيسي", tl_h2:"خريطة الصفوف عبر السنوات · ٢٠١١ ← ٢٠٤٧",
+    tl_p:"كل طفل، وكل عام دراسي، ملوّن حسب المرحلة. العمود الذهبي هو العام الدراسي الحالي. مرّر أفقيًا للتنقّل عبر الزمن.",
+    fin_kicker:"التوقّعات والسيناريوهات", fin_h2:"النموذج المالي — تحكّم به",
+    fin_p:"حدّد التكلفة السنوية لكل مرحلة، والتضخّم، وخطة الجامعة. كل ما بالأسفل يُعاد حسابه فورًا. ابدأ من إعداد جاهز ثم اضبط بدقّة.",
+    fin_reset:"↺ إعادة للافتراضي",
+    load_h3:"عبء التسجيل حسب السنة", load_cap:"كم طفلًا في المدرسة مقابل الجامعة كل عام — منحنى الضغط اللوجستي والمالي.",
+    cost_h3:"الإنفاق التعليمي السنوي المتوقّع", cost_cap:"مكدّس حسب المرحلة، ومعدّل بالتضخّم من العام الحالي فصاعدًا.",
+    ins_kicker:"ماذا تقول البيانات", ins_h2:"رؤى وخلاصات",
+    ins_p:"مولّدة مباشرةً من الخط الزمني وافتراضات التكلفة الحالية — تتحدّث عند تغييرك للنموذج بالأعلى.",
+    fc_kicker:"الأرقام، عامًا بعام", fc_h2:"دفتر التوقّعات",
+    fc_p:"الإنفاق المتوقّع والإجمالي التراكمي من الآن حتى آخر تخرّج. سنة الذروة بالأحمر، والعام الحالي بالذهبي.",
+    adv_kicker:"دليل العمل", adv_h2:"نصائح مالية ودروس وإرشادات لاتخاذ القرار",
+    adv_p:"دليل عملي لتمويل تعليم عائلة كبيرة — مصمّم لأفق طويل تتداخل فيه سنوات الجامعة.",
+    foot_built:"أُعدّت لـ", foot_src:"المصدر: ورقة التخطيط All 2023",
+    foot_disc:"الأرقام تقديرات تخطيطية تتحكّم بها — وليست نصيحة مالية. تحقّق من التكاليف مع كل مؤسسة.",
+    children:"أبناء", child:"الابن/الابنة", enrolled:"مُسجَّل", inUni:"في الجامعة", totalEnrolled:"إجمالي المسجَّلين",
+    now:"الآن", peak:"الذروة", perYr:"/سنة", est:"سنة الميلاد تقديرية", new:"جديد",
+    starts:"يبدأ الروضة في", graduated:"متخرّج", school:"المدرسة", uni:"الجامعة",
+    acadYear:"العام الدراسي", ages:"الأعمار", branches:"فروع العائلة", firstLast:"أول ← آخر تخرّج",
+    kpi_children:"الأبناء", kpi_children_n:(p,g)=>`${p} قبل المدرسة · ${g} متخرّج`,
+    kpi_school:"في المدرسة الآن", kpi_school_n:"الروضة ← الصف ١٢",
+    kpi_uni:"في الجامعة الآن", kpi_uni_n:y=>`برامج من ${y} سنوات`,
+    kpi_thisyr:"إنفاق هذا العام", kpi_thisyr_n:a=>`العام الدراسي ${a}`,
+    kpi_peak:"ذروة الإنفاق السنوي", kpi_peak_n:y=>`في ${y}`,
+    kpi_life:"المتبقّي مدى الحياة", kpi_life_n:r=>`${r}، لكل الأبناء`,
+    kpi_busy:"أكثر سنة ازدحامًا", kpi_busy_n:y=>`مُسجَّلون معًا · ${y}`,
+    c_kg:"الروضة / سنة", c_primary:"الابتدائي / سنة", c_prep:"الإعدادي / سنة",
+    c_secondary:"الثانوي / سنة", c_university:"الجامعة / سنة",
+    c_inflation:"التضخّم ٪/سنة", c_uniYears:"مدّة الجامعة (سنوات)", c_uniAbroad:"تكلفة الخارج ×",
+    c_currency:"العملة",
+    p_modest:"اقتصادي / حكومي", p_balanced:"خاص (متوازن)", p_premium:"فاخر + خارج", p_custom:"مخصّص",
+    th_year:"العام الدراسي", th_enrol:"المسجَّلون", th_uni:"بالجامعة", th_annual:"الإنفاق السنوي", th_cum:"التراكمي",
+    curNote:(cur,inf,uy)=>`العملة ${cur} · التضخّم ${inf}٪/سنة · الجامعة ${uy} سنوات`,
+  }
+};
+const t = k => (T[LANG][k]!==undefined ? T[LANG][k] : T.en[k]);
+function applyStatic(){
+  document.querySelectorAll('[data-i18n]').forEach(el=>{
+    const v=t(el.dataset.i18n); if(typeof v==='string') el.innerHTML=v;
+  });
+}
+
+/* =====================================================================
+   MODEL STATE (editable via controls)
+===================================================================== */
+const DEFAULTS = {
+  currency:"QAR",
+  kg:25000, primary:35000, prep:42000, secondary:48000, university:65000,
+  inflation:4.0, uniYears:4, uniAbroad:1.0
+};
+let M = {...DEFAULTS};
+const PRESETS = {
+  modest:  {kg:8000,  primary:12000, prep:14000, secondary:16000, university:30000, inflation:3.5, uniYears:4, uniAbroad:1.0},
+  balanced:{kg:25000, primary:35000, prep:42000, secondary:48000, university:65000, inflation:4.0, uniYears:4, uniAbroad:1.0},
+  premium: {kg:40000, primary:55000, prep:62000, secondary:70000, university:120000,inflation:5.0, uniYears:4, uniAbroad:1.6},
+};
+const PRESET_LABEL = {modest:"p_modest", balanced:"p_balanced", premium:"p_premium"};
+
+/* =====================================================================
+   CORE LOGIC
+===================================================================== */
+function gradeIdx(child, yearStart){ return yearStart - child.b - 4; }
+function stageAt(child, yearStart){
+  const i=gradeIdx(child,yearStart);
+  if(i<0) return {stage:"pre", idx:i, grade:null};
+  if(i>=14+M.uniYears) return {stage:"grad", idx:i, grade:null};
+  if(i>18) return {stage:"grad", idx:i, grade:null};
+  return {stage:GRADES[i].st, idx:i, grade:GRADES[i]};
+}
+function costOf(stage, yearStart){
+  let base = {kg:M.kg,primary:M.primary,prep:M.prep,secondary:M.secondary,university:M.university*M.uniAbroad}[stage];
+  if(base===undefined) return 0;
+  const infl = Math.pow(1+M.inflation/100, Math.max(0, yearStart-NOW_START));
+  return base*infl;
+}
+function schoolGradYear(c){ return c.b+4+13; }          // finishes Grade 12 (academic year start)
+function uniGradYear(c){ return c.b+4+13+M.uniYears; }   // finishes university
+
+const COST_STAGES=["kg","primary","prep","secondary","university"];
+function buildSeries(){
+  const rows=[];
+  for(let y=YEAR_FROM;y<=YEAR_TO;y++){
+    const r={year:y, byStage:{kg:0,primary:0,prep:0,secondary:0,university:0}, inSchool:0, inUni:0, total:0, enrolled:0};
+    for(const c of CHILDREN){
+      const s=stageAt(c,y).stage;
+      if(COST_STAGES.includes(s)){
+        r.enrolled++;
+        if(s==="university") r.inUni++; else r.inSchool++;
+        if(y>=NOW_START){ const cost=costOf(s,y); r.byStage[s]+=cost; r.total+=cost; }
+      }
+    }
+    rows.push(r);
+  }
+  return rows;
+}
+
+/* =====================================================================
+   FORMATTING
+===================================================================== */
+const fmt = n => new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(Math.round(n));
+function money(n){
+  const v=Math.round(n);
+  if(v>=1e6) return M.currency+" "+(v/1e6).toFixed(v>=1e7?1:2)+"M";
+  if(v>=1e3) return M.currency+" "+fmt(v/1000)+"K";
+  return M.currency+" "+fmt(v);
+}
+const moneyFull = n => M.currency+" "+fmt(n);
+function initials(c){ return (c.ar||c.en)[0]; }
+function avColor(c){
+  const base=BRANCHES[c.p].c;
+  return `linear-gradient(145deg, ${base}, ${base}cc)`;
+}
+function childCostNow(c){
+  const s=stageAt(c,NOW_START).stage;
+  return COST_STAGES.includes(s) ? costOf(s,NOW_START) : 0;
+}
+
+/* =====================================================================
+   RENDER: hero meta + KPIs
+===================================================================== */
+function renderHero(){
+  const ages=CHILDREN.map(c=>NOW_START+1-c.b);
+  const acad = NOW_START+"/"+(NOW_START+1);
+  const nBranch=new Set(CHILDREN.map(c=>c.p)).size;
+  const firstGrad=Math.min(...CHILDREN.map(schoolGradYear))+1;
+  const lastGrad=Math.max(...CHILDREN.map(uniGradYear))+1;
+  document.getElementById('heroMeta').innerHTML = [
+    `<span class="chip"><span class="dot"></span>${t('acadYear')} <b>${acad}</b></span>`,
+    `<span class="chip">👨‍👩‍👧‍👦 <b>${CHILDREN.length}</b> ${t('children')}</span>`,
+    `<span class="chip">🌿 <b>${nBranch}</b> ${t('branches')}</span>`,
+    `<span class="chip">🎂 ${t('ages')} <b>${Math.min(...ages)}–${Math.max(...ages)}</b></span>`,
+    `<span class="chip">🎓 ${t('firstLast')} <b>${firstGrad} – ${lastGrad}</b></span>`,
+  ].join("");
+  document.getElementById('builtOn').textContent = (LANG==='ar'?"حُدِّثت ":"rendered ")+now.toISOString().slice(0,10);
+  document.getElementById('curNote').textContent = t('curNote')(M.currency, M.inflation.toFixed(1), M.uniYears);
+}
+
+function renderKPIs(series){
+  const cur = series.find(r=>r.year===NOW_START) || {enrolled:0,inUni:0,inSchool:0,total:0};
+  let pre=0,grad=0;
+  for(const c of CHILDREN){ const s=stageAt(c,NOW_START).stage; if(s==="pre")pre++; if(s==="grad")grad++; }
+  const future=series.filter(r=>r.year>=NOW_START);
+  const peak=future.reduce((a,r)=>r.total>a.total?r:a,{total:0,year:NOW_START});
+  const lifetime=future.reduce((a,r)=>a+r.total,0);
+  const peakLoad=series.reduce((a,r)=>r.enrolled>a.enrolled?r:a,{enrolled:0});
+  const k=[
+    {lab:t('kpi_children'), val:CHILDREN.length, note:t('kpi_children_n')(pre,grad)},
+    {lab:t('kpi_school'), val:cur.inSchool, note:t('kpi_school_n')},
+    {lab:t('kpi_uni'), val:cur.inUni, note:t('kpi_uni_n')(M.uniYears)},
+    {lab:t('kpi_thisyr'), val:money(cur.total), note:t('kpi_thisyr_n')(`${NOW_START}/${NOW_START+1}`), gold:1},
+    {lab:t('kpi_peak'), val:money(peak.total), note:t('kpi_peak_n')(`${peak.year}/${peak.year+1}`), gold:1},
+    {lab:t('kpi_life'), val:money(lifetime), note:t('kpi_life_n')(`${NOW_START} → ${YEAR_TO}`), gold:1},
+    {lab:t('kpi_busy'), val:peakLoad.enrolled, note:t('kpi_busy_n')(peakLoad.year)},
+  ];
+  document.getElementById('kpis').innerHTML = k.map(x=>`
+    <div class="kpi ${x.gold?'gold':''}">
+      <div class="lab">${x.lab}</div>
+      <div class="val">${x.val}</div>
+      <div class="note">${x.note}</div>
+    </div>`).join("");
+}
+
+/* =====================================================================
+   RENDER: children cards
+===================================================================== */
+function gradeLabel(g){ return LANG==='ar'?g.ar:g.en; }
+function stageLabel(s){ return LANG==='ar'?STAGE_META[s].ar:STAGE_META[s].label; }
+function kidCard(c){
+  const st=stageAt(c,NOW_START);
+  const meta=STAGE_META[st.stage];
+  const age=NOW_START+1-c.b;
+  const prog=Math.max(0,Math.min(100, ((st.idx+1)/(14+M.uniYears))*100));
+  let statusTxt;
+  if(st.stage==="pre") statusTxt=`${t('starts')} ${c.b+4}`;
+  else if(st.stage==="grad") statusTxt=t('graduated');
+  else statusTxt = st.grade ? gradeLabel(st.grade) : stageLabel(st.stage);
+  const flags=[c.isNew?`<span class="badge" style="font-size:.6rem">${t('new')}</span>`:'',
+               c.est?`<span class="badge" style="font-size:.6rem" title="estimated birth year — please confirm">${t('est')}</span>`:''].join(' ');
+  const pri = LANG==='ar'?`<span class="ar">${c.ar}</span>`:c.en;
+  const sec = LANG==='ar'?c.en:`<span class="ar">${c.ar}</span>`;
+  return `<div class="kid">
+    <div class="top">
+      <div class="av" style="background:${avColor(c)}">${initials(c)}</div>
+      <div>
+        <div class="nm">${pri} ${flags}</div>
+        <div class="meta">${sec} · b. ${c.b} · ${LANG==='ar'?'العمر':'age'} ${age}</div>
+      </div>
+    </div>
+    <div class="stage-pill" style="background:${meta.c}">${statusTxt}</div>
+    <div class="bar"><i style="width:${prog}%"></i></div>
+    <div class="grad"><span>${t('school')} '${String(schoolGradYear(c)+1).slice(2)}</span><span>${t('uni')} '${String(uniGradYear(c)+1).slice(2)}</span></div>
+  </div>`;
+}
+function renderKids(){
+  document.getElementById('kidsCount').textContent=CHILDREN.length;
+  let html="";
+  for(const [key,br] of Object.entries(BRANCHES)){
+    const kids=CHILDREN.filter(c=>c.p===key);
+    if(!kids.length) continue;
+    const inSchool=kids.filter(c=>COST_STAGES.includes(stageAt(c,NOW_START).stage)).length;
+    const spend=kids.reduce((a,c)=>a+childCostNow(c),0);
+    const bn = LANG==='ar'?`<span class="ar">${br.ar}</span> <span class="faint">· ${br.en}</span>`
+                          :`${br.en} <span class="faint">· <span class="ar">${br.ar}</span></span>`;
+    html+=`<div class="branch">
+      <div class="branch-head">
+        <span class="branch-dot" style="background:${br.c}"></span>
+        <span class="branch-name">${bn}</span>
+        <span class="branch-stats">${kids.length} ${t('children')} · ${inSchool} ${t('enrolled')} · ${money(spend)}${t('perYr')}</span>
+      </div>
+      <div class="kids">${kids.map(kidCard).join("")}</div>
+    </div>`;
+  }
+  document.getElementById('kids').innerHTML=html;
+}
+
+/* =====================================================================
+   RENDER: timeline matrix
+===================================================================== */
+function gradeCellLabel(idx){
+  if(idx<2) return GRADES[idx].ar;          // KG1 / KG2
+  if(LANG==='ar') return GRADES[idx].ar;
+  if(idx<=13) return String(idx-1);          // grades 1..12
+  return 'U'+(idx-13);                        // U1..U5
+}
+function renderTimeline(){
+  document.getElementById('legend').innerHTML = Object.values(STAGE_META)
+    .map(m=>`<span><i style="background:${m.c}"></i>${LANG==='ar'?m.ar:m.label}</span>`).join("");
+  const years=[]; for(let y=YEAR_FROM;y<=YEAR_TO;y++) years.push(y);
+  let head=`<tr><th>${t('child')}</th>`+years.map(y=>
+    `<th class="${y===NOW_START?'now-h':''}">${String(y).slice(2)}</th>`).join("")+`</tr>`;
+  let body=CHILDREN.map(c=>{
+    const dot=`<span class="branch-dot" style="display:inline-block;width:9px;height:9px;border-radius:3px;margin:0 6px;background:${BRANCHES[c.p].c}"></span>`;
+    let cells=years.map(y=>{
+      const st=stageAt(c,y);
+      if(st.stage==="pre") return `<td></td>`;
+      const m=STAGE_META[st.stage];
+      const lbl = st.grade ? gradeCellLabel(st.idx) : (st.stage==="grad"?"✓":"");
+      const nowCls=y===NOW_START?'col-now':'';
+      return `<td><div class="cell ${nowCls} ${LANG==='ar'?'ar':''}" style="background:${m.c}" title="${c.en} · ${y}/${y+1} · ${st.grade?gradeLabel(st.grade):stageLabel(st.stage)}">${lbl}</div></td>`;
+    }).join("");
+    const nm = LANG==='ar'?`<span class="ar">${c.ar}</span>`:c.en;
+    return `<tr><th>${dot}${nm}</th>${cells}</tr>`;
+  }).join("");
+  document.getElementById('timeline').innerHTML=`<table class="tl"><thead>${head}</thead><tbody>${body}</tbody></table>`;
+}
+
+/* =====================================================================
+   RENDER: controls + presets
+===================================================================== */
+function renderControls(){
+  const C=[
+    {k:"kg",label:t('c_kg'),min:2000,max:60000,step:1000,money:1},
+    {k:"primary",label:t('c_primary'),min:5000,max:80000,step:1000,money:1},
+    {k:"prep",label:t('c_prep'),min:5000,max:90000,step:1000,money:1},
+    {k:"secondary",label:t('c_secondary'),min:5000,max:100000,step:1000,money:1},
+    {k:"university",label:t('c_university'),min:10000,max:200000,step:5000,money:1},
+    {k:"inflation",label:t('c_inflation'),min:0,max:10,step:.5,pct:1},
+    {k:"uniYears",label:t('c_uniYears'),min:3,max:6,step:1},
+    {k:"uniAbroad",label:t('c_uniAbroad'),min:1,max:2.5,step:.1,x:1},
+  ];
+  document.getElementById('controls').innerHTML = C.map(c=>{
+    const v=M[c.k];
+    const disp = c.money?moneyFull(v) : c.pct?v.toFixed(1)+"%" : c.x?"×"+v.toFixed(1) : v;
+    return `<div class="field">
+      <label>${c.label} <b id="v_${c.k}">${disp}</b></label>
+      <input type="range" data-k="${c.k}" min="${c.min}" max="${c.max}" step="${c.step}" value="${v}">
+    </div>`;
+  }).join("") + `
+    <div class="field">
+      <label>${t('c_currency')}</label>
+      <select id="curSel">
+        ${["QAR","USD","SAR","AED","EUR","GBP"].map(x=>`<option ${x===M.currency?'selected':''}>${x}</option>`).join("")}
+      </select>
+    </div>`;
+  document.querySelectorAll('#controls input[type=range]').forEach(inp=>{
+    inp.addEventListener('input',e=>{
+      const k=e.target.dataset.k; M[k]=parseFloat(e.target.value); markCustom(); recompute();
+    });
+  });
+  document.getElementById('curSel').addEventListener('change',e=>{M.currency=e.target.value; recompute();});
+}
+function renderPresets(){
+  document.getElementById('presets').innerHTML =
+    Object.keys(PRESETS).map(n=>`<div class="preset" data-p="${n}">${t(PRESET_LABEL[n])}</div>`).join("")
+    + `<div class="preset" data-p="__custom" id="customChip" style="display:none">${t('p_custom')}</div>`;
+  document.querySelectorAll('#presets .preset').forEach(el=>{
+    el.addEventListener('click',()=>{
+      const n=el.dataset.p; if(n==="__custom")return;
+      M={...M, ...PRESETS[n]};
+      setActivePreset(n); renderControls(); recompute();
+    });
+  });
+}
+function setActivePreset(n){
+  document.querySelectorAll('#presets .preset').forEach(e=>e.classList.toggle('active', e.dataset.p===n));
+  const cc=document.getElementById('customChip'); if(cc) cc.style.display = n==="__custom"?"inline-block":"none";
+}
+function markCustom(){ setActivePreset("__custom"); }
+function detectPreset(){
+  for(const [n,p] of Object.entries(PRESETS)){
+    if(Object.keys(p).every(k=>M[k]===p[k])){ setActivePreset(n); return; }
+  }
+  setActivePreset("__custom");
+}
+
+/* =====================================================================
+   SVG CHARTS (dependency-free)
+===================================================================== */
+function svgEl(w,h){ return `<svg viewBox="0 0 ${w} ${h}" preserveAspectRatio="xMidYMid meet">`; }
+function renderCostChart(series){
+  const data=series.filter(r=>r.year>=NOW_START);
+  const W=900,H=320,pl=64,pr=14,pt=18,pb=42;
+  const iw=W-pl-pr, ih=H-pt-pb;
+  const max=Math.max(1,...data.map(r=>r.total));
+  const bw=iw/data.length;
+  const order=["kg","primary","prep","secondary","university"];
+  const peak=data.reduce((a,r)=>r.total>a.total?r:a,data[0]);
+  let g="";
+  // gridlines
+  for(let i=0;i<=4;i++){ const yy=pt+ih-(ih*i/4); const val=max*i/4;
+    g+=`<line x1="${pl}" y1="${yy}" x2="${W-pr}" y2="${yy}" class="tip-line"/>
+        <text x="${pl-8}" y="${yy+4}" fill="var(--faint)" font-size="11" text-anchor="end">${money(val)}</text>`; }
+  // bars
+  data.forEach((r,i)=>{
+    let yAcc=pt+ih;
+    const x=pl+i*bw+bw*0.16, w=bw*0.68;
+    order.forEach(st=>{
+      const h=ih*(r.byStage[st]/max);
+      if(h>0.4){ yAcc-=h; g+=`<rect x="${x}" y="${yAcc}" width="${w}" height="${h}" fill="${STAGE_META[st].c}" rx="2">
+        <title>${r.year}/${r.year+1} · ${STAGE_META[st].label}: ${moneyFull(r.byStage[st])}</title></rect>`; }
+    });
+    if(r===peak){ g+=`<text x="${pl+i*bw+bw/2}" y="${yAcc-6}" fill="var(--gold-2)" font-size="11" text-anchor="middle" font-weight="700">${t('peak')}</text>`; }
+    if(r.year%3===0||r===data[0]||r===data[data.length-1]){
+      g+=`<text x="${pl+i*bw+bw/2}" y="${H-pb+18}" fill="var(--faint)" font-size="10" text-anchor="middle">'${String(r.year).slice(2)}</text>`; }
+  });
+  document.getElementById('costChart').innerHTML = svgEl(W,H)+g+`</svg>`;
+}
+function renderLoadChart(series){
+  const W=520,H=300,pl=30,pr=12,pt=14,pb=34, iw=W-pl-pr, ih=H-pt-pb;
+  const maxN=Math.max(1,...series.map(r=>r.enrolled));
+  const X=y=>pl+iw*((y-YEAR_FROM)/(YEAR_TO-YEAR_FROM));
+  const Y=n=>pt+ih-ih*(n/maxN);
+  const line=(key,col)=>{
+    let d=series.map((r,i)=>`${i?'L':'M'}${X(r.year).toFixed(1)},${Y(r[key]).toFixed(1)}`).join(" ");
+    return `<path d="${d}" fill="none" stroke="${col}" stroke-width="2.4" stroke-linejoin="round"/>`;
+  };
+  let g="";
+  for(let i=0;i<=maxN;i+= (maxN>8?2:1)){ const yy=Y(i);
+    g+=`<line x1="${pl}" y1="${yy}" x2="${W-pr}" y2="${yy}" class="tip-line"/>
+        <text x="${pl-6}" y="${yy+4}" fill="var(--faint)" font-size="10" text-anchor="end">${i}</text>`; }
+  // total area
+  let area=series.map((r,i)=>`${i?'L':'M'}${X(r.year).toFixed(1)},${Y(r.enrolled).toFixed(1)}`).join(" ")
+    +` L${X(YEAR_TO)},${pt+ih} L${X(YEAR_FROM)},${pt+ih} Z`;
+  g+=`<path d="${area}" fill="rgba(168,224,99,.10)"/>`;
+  g+=line("enrolled","var(--lime)")+line("inUni","var(--university)");
+  // now marker
+  g+=`<line x1="${X(NOW_START)}" y1="${pt}" x2="${X(NOW_START)}" y2="${pt+ih}" stroke="var(--gold)" stroke-width="1.5" stroke-dasharray="4 3"/>
+      <text x="${X(NOW_START)}" y="${pt-3}" fill="var(--gold-2)" font-size="10" text-anchor="middle">${t('now')}</text>`;
+  [YEAR_FROM,2020,2030,2040,YEAR_TO].forEach(y=>{
+    g+=`<text x="${X(y)}" y="${H-pb+18}" fill="var(--faint)" font-size="10" text-anchor="middle">${y}</text>`;});
+  const legW=LANG==='ar'?150:130;
+  g+=`<g font-size="10"><circle cx="${pl+6}" cy="${H-8}" r="4" fill="var(--lime)"/><text x="${pl+16}" y="${H-5}" fill="var(--muted)">${t('totalEnrolled')}</text>
+      <circle cx="${pl+legW}" cy="${H-8}" r="4" fill="var(--university)"/><text x="${pl+legW+10}" y="${H-5}" fill="var(--muted)">${t('inUni')}</text></g>`;
+  document.getElementById('loadChart').innerHTML=svgEl(W,H)+g+`</svg>`;
+}
+
+/* =====================================================================
+   RENDER: insights (auto) + forecast table
+===================================================================== */
+function renderInsights(series){
+  const future=series.filter(r=>r.year>=NOW_START);
+  const peak=future.reduce((a,r)=>r.total>a.total?r:a,future[0]);
+  const peakLoad=series.reduce((a,r)=>r.enrolled>a.enrolled?r:a,series[0]);
+  const uniPeak=series.reduce((a,r)=>r.inUni>a.inUni?r:a,series[0]);
+  const lifetime=future.reduce((a,r)=>a+r.total,0);
+  const cur=series.find(r=>r.year===NOW_START)||{total:0};
+  const yearsToPeak=peak.year-NOW_START;
+  const monthly=lifetime/Math.max(1,(YEAR_TO-NOW_START))/12;
+  const lastBusy=[...series].reverse().find(r=>r.enrolled>0);
+  const mult=(peak.total/Math.max(1,cur.total)).toFixed(1);
+  const peakYr=`${peak.year}/${peak.year+1}`, uniYr=`${uniPeak.year}/${uniPeak.year+1}`, busyYr=`${peakLoad.year}/${peakLoad.year+1}`;
+  const horizon=YEAR_TO-NOW_START, lastY=lastBusy?lastBusy.year+1:YEAR_TO;
+  const ins = LANG==='ar' ? [
+    {cls:"red",tag:"ذروة الضغط",h:`${peakYr} هو أغلى أعوامكم`,
+     p:`متوقّع ${moneyFull(peak.total)} — نحو ${mult}× إنفاق هذا العام، وعلى بُعد ${yearsToPeak} سنة. ابدأ تخصيص مبلغ له من الآن.`},
+    {cls:"amber",tag:"ازدحام الجامعة",h:`حتى ${uniPeak.inUni} في الجامعة معًا`,
+     p:`حوالي ${uniYr} يتداخل عدّة أبناء في الجامعة — أعلى مرحلة من حيث الكلفة. هذه نافذة تأمين المنح أو المدّخرات.`},
+    {cls:"",tag:"اللوجستيات",h:`${peakLoad.enrolled} أبناء مُسجَّلون في آنٍ واحد`,
+     p:`أكثر أعوامكم ازدحامًا دراسيًا هو ${busyYr}. خطّط للمواصلات والزي ومواعيد الرسوم وفق هذا العبء لا عبء اليوم.`},
+    {cls:"green",tag:"الأفق الطويل",h:`التزام يمتد ${horizon} سنة`,
+     p:`إجمالي الإنفاق التعليمي المتبقّي ~${moneyFull(lifetime)} — بمعدّل ${money(monthly)}/شهر إن ادُّخر بانتظام. آخر طفل يُنهي نحو ${lastY}.`},
+  ] : [
+    {cls:"red",tag:"Peak pressure",h:`${peakYr} is your costliest year`,
+     p:`Projected ${moneyFull(peak.total)} — about ${mult}× this year's spend, and ${yearsToPeak} year${yearsToPeak===1?'':'s'} away. Start ring-fencing for it now.`},
+    {cls:"amber",tag:"University crunch",h:`Up to ${uniPeak.inUni} in university at once`,
+     p:`Around ${uniYr} several children overlap at university — the highest unit-cost stage. This is the window to have scholarships or savings locked in.`},
+    {cls:"",tag:"Logistics",h:`${peakLoad.enrolled} children enrolled simultaneously`,
+     p:`Your busiest schooling year is ${busyYr}. Plan transport, uniforms and fee deadlines around this load, not today's.`},
+    {cls:"green",tag:"The long horizon",h:`A ${horizon}-year commitment`,
+     p:`Total remaining education spend is ~${moneyFull(lifetime)} — averaging ${money(monthly)}/month if saved steadily. The last child finishes around ${lastY}.`},
+  ];
+  document.getElementById('insights').innerHTML=ins.map(i=>`
+    <div class="ins ${i.cls}"><div class="tag">${i.tag}</div><h3>${i.h}</h3><p>${i.p}</p></div>`).join("");
+}
+function renderFinTable(series){
+  const future=series.filter(r=>r.year>=NOW_START && r.total>0);
+  const peak=future.reduce((a,r)=>r.total>a.total?r:a,future[0]||{total:0});
+  let run=0;
+  let rows=future.map(r=>{
+    run+=r.total;
+    const cls = r.year===peak.year?'peak':(r.year===NOW_START?'now':'');
+    return `<tr class="${cls}">
+      <td>${r.year}/${String(r.year+1).slice(2)}</td>
+      <td>${r.enrolled}</td><td>${r.inUni}</td>
+      <td>${moneyFull(r.total)}</td><td>${moneyFull(run)}</td></tr>`;
+  }).join("");
+  document.getElementById('finTable').innerHTML=`
+    <thead><tr><th>${t('th_year')}</th><th>${t('th_enrol')}</th><th>${t('th_uni')}</th><th>${t('th_annual')}</th><th>${t('th_cum')}</th></tr></thead>
+    <tbody>${rows}</tbody>`;
+}
+
+/* =====================================================================
+   STATIC PLAYBOOK
+===================================================================== */
+const ADVICE=[
+  {c:"gold",ic:"🏦",h:"Build a dedicated education fund",p:"Separate education savings from everyday money. With a 20-year horizon, even modest monthly contributions compound dramatically — pay your future self first, automatically, on payday.",
+   har:"أنشئ صندوقًا تعليميًا مخصّصًا",par:"افصل مدّخرات التعليم عن مال المعيشة اليومي. مع أفق ٢٠ عامًا، حتى المساهمات الشهرية المتواضعة تتراكم بقوة — ادفع لنفسك المستقبلية أولًا، تلقائيًا، يوم الراتب."},
+  {c:"red",ic:"⛰️",h:"Pre-fund your peak years",p:"Your costs aren't flat — they spike when several children hit secondary and university together. Treat each peak year as a sinking fund: divide its cost by the months remaining and save that amount now.",
+   har:"موّل سنوات الذروة مسبقًا",par:"تكاليفكم ليست ثابتة — ترتفع حين يبلغ عدّة أبناء الثانوي والجامعة معًا. عامل كل سنة ذروة كصندوق ادّخار: اقسم كلفتها على الأشهر المتبقّية وادّخر ذلك المبلغ الآن."},
+  {c:"teal",ic:"📉",h:"Assume real inflation",p:"School fees historically outpace general inflation. Model 4–5%+ and revisit yearly. A plan that looks affordable at 0% inflation can be 60% larger over 15 years.",
+   har:"افترض تضخّمًا واقعيًا",par:"رسوم المدارس تتجاوز تاريخيًا التضخّم العام. اعتمد ٤–٥٪+ وراجعها سنويًا. خطة تبدو ميسورة عند تضخّم ٠٪ قد تكبر ٦٠٪ خلال ١٥ عامًا."},
+  {c:"",ic:"🎯",h:"Stagger big life costs",p:"Where you have a choice — cars, home upgrades, large trips — schedule them in the valleys of the enrolment curve, not the peaks. Look at the load chart before committing.",
+   har:"وزّع النفقات الكبرى",par:"حيثما تملك الخيار — سيارات، تحسينات للمنزل، رحلات كبيرة — جدوِلها في قيعان منحنى التسجيل لا في ذُراه. انظر إلى منحنى العبء قبل الالتزام."},
+  {c:"gold",ic:"🎓",h:"Make scholarships a strategy, not a hope",p:"For the university crunch, start the merit/needs scholarship search 2–3 years early per child. One funded year at university can equal several years of school fees.",
+   har:"اجعل المنح استراتيجية لا أمنية",par:"لازدحام الجامعة، ابدأ البحث عن منح التفوّق/الحاجة قبل ٢–٣ سنوات لكل طفل. سنة جامعية مموّلة قد تعادل عدّة سنوات من رسوم المدرسة."},
+  {c:"teal",ic:"🧮",h:"Use the 10/10/10 rule for big choices",p:"For any major decision (private vs public, local vs abroad), ask: how will I feel about this in 10 minutes, 10 months, 10 years? It separates emotional spikes from long-term value.",
+   har:"استخدم قاعدة ١٠/١٠/١٠ للقرارات الكبيرة",par:"لأي قرار كبير (خاص أم حكومي، محلي أم خارج)، اسأل: كيف سأشعر بعد ١٠ دقائق، ١٠ أشهر، ١٠ سنوات؟ تفصل بين الاندفاع العاطفي والقيمة بعيدة المدى."},
+  {c:"",ic:"🛟",h:"Hold a fee-shock buffer",p:"Keep 6–12 months of total fees in liquid savings. It protects the children's continuity if income dips, so you never have to disrupt a school year under pressure.",
+   har:"احتفظ باحتياطي لصدمات الرسوم",par:"اِبقِ ٦–١٢ شهرًا من إجمالي الرسوم في مدّخرات سائلة. يحمي استمرار الأبناء إن تراجع الدخل، فلا تضطر لتعطيل عام دراسي تحت الضغط."},
+  {c:"red",ic:"🔍",h:"Run a pre-mortem each year",p:"Imagine it's 2035 and the plan failed — why? Usually: underestimated inflation, no buffer, or overlapping universities. Naming the failure now lets you design against it.",
+   har:"أجرِ «تشريحًا مسبقًا» كل عام",par:"تخيّل أننا في ٢٠٣٥ وفشلت الخطة — لماذا؟ عادةً: تضخّم مُستهان به، أو غياب احتياطي، أو تداخل جامعات. تسمية الفشل الآن يتيح التصميم ضدّه."},
+  {c:"teal",ic:"⚖️",h:"Weigh opportunity cost, not just price",p:"The real cost of a premium school is what that money could have become invested, plus the next child's needs. Compare options against your whole-family plan, not in isolation.",
+   har:"وازِن كلفة الفرصة لا السعر فقط",par:"الكلفة الحقيقية لمدرسة فاخرة هي ما كان يمكن أن يصبح المال لو استُثمر، إضافةً لاحتياجات الطفل التالي. قارن الخيارات مقابل خطة العائلة كاملةً لا منعزلةً."},
+  {c:"gold",ic:"🤝",h:"Ask about sibling & multi-year discounts",p:"With many children, sibling discounts, annual-payment discounts and locked multi-year tuition can save real money. Negotiate as a long-term, multi-child family — you have leverage.",
+   har:"اسأل عن خصومات الإخوة والسنوات المتعدّدة",par:"مع كثرة الأبناء، تُوفّر خصومات الإخوة والدفع السنوي وتثبيت الرسوم لسنوات أموالًا حقيقية. تفاوض كعائلة متعدّدة الأبناء طويلة الأمد — لديك ورقة قوّة."},
+  {c:"",ic:"📅",h:"Review on a fixed cadence",p:"Money plans drift. Put one 'family CFO' hour on the calendar each year (e.g. before re-enrolment) to update costs here, check the buffer, and rebalance savings.",
+   har:"راجع وفق إيقاع ثابت",par:"الخطط المالية تنحرف. خصّص ساعة «مدير مالي للعائلة» كل عام (مثلًا قبل إعادة التسجيل) لتحديث التكاليف هنا، وفحص الاحتياطي، وإعادة موازنة المدّخرات."},
+  {c:"teal",ic:"🌍",h:"Decide the abroad question early",p:"Studying abroad can multiply university cost. Decide the default policy per child years ahead so you can save toward the real number — and adjust the 'Abroad ×' control to see the impact.",
+   har:"احسم مسألة الدراسة بالخارج مبكرًا",par:"الدراسة بالخارج قد تضاعف كلفة الجامعة. احسم السياسة الافتراضية لكل طفل قبل سنوات لتدّخر نحو الرقم الحقيقي — واضبط مفتاح «تكلفة الخارج ×» لرؤية الأثر."},
+];
+function renderAdvice(){
+  document.getElementById('advice').innerHTML=ADVICE.map(a=>{
+    const h=LANG==='ar'?a.har:a.h, p=LANG==='ar'?a.par:a.p;
+    return `<div class="adv ${a.c}"><h3><span class="ic">${a.ic}</span>${h}</h3><p>${p}</p></div>`;
+  }).join("");
+}
+
+/* =====================================================================
+   ORCHESTRATION
+===================================================================== */
+function recompute(){
+  const series=buildSeries();
+  renderHero();
+  renderKPIs(series);
+  renderKids();
+  renderInsights(series);
+  renderFinTable(series);
+  renderCostChart(series);
+  renderLoadChart(series);
+  // refresh control value labels
+  ["kg","primary","prep","secondary","university"].forEach(k=>{const e=document.getElementById('v_'+k); if(e)e.textContent=moneyFull(M[k]);});
+  const vi=document.getElementById('v_inflation'); if(vi)vi.textContent=M.inflation.toFixed(1)+"%";
+  const vu=document.getElementById('v_uniYears'); if(vu)vu.textContent=M.uniYears;
+  const va=document.getElementById('v_uniAbroad'); if(va)va.textContent="×"+M.uniAbroad.toFixed(1);
+}
+function renderAll(){
+  applyStatic();
+  renderTimeline();   // depends on LANG (labels) but not on cost model
+  renderControls();
+  renderPresets();
+  renderAdvice();
+  detectPreset();
+  recompute();
+}
+function setLang(l){
+  LANG=l;
+  document.documentElement.lang=l;
+  document.documentElement.dir = l==='ar'?'rtl':'ltr';
+  document.body.classList.toggle('ar-mode', l==='ar');
+  document.getElementById('langToggle').textContent = l==='ar'?'English':'العربية';
+  renderAll();
+}
+function init(){
+  document.getElementById('langToggle').addEventListener('click',()=>setLang(LANG==='ar'?'en':'ar'));
+  document.getElementById('resetBtn').addEventListener('click',()=>{
+    M={...DEFAULTS}; renderControls(); detectPreset(); recompute();
+  });
+  setLang('en');
+}
+init();
+</script>
+</body>
+</html>
