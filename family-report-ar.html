@@ -1,0 +1,310 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<title>تقرير عائلة الحصني — التعليم والتمويل</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;900&family=Tajawal:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+  @page { size: A4 landscape; margin: 0; }
+  :root{
+    --ink:#16302a; --muted:#5d716a; --faint:#8aa093; --line:#e4eae6; --paper:#f6f9f7; --card:#ffffff;
+    --green:#137a52; --gold:#a9791a; --green-soft:#e7f3ec;
+    --kg:#8b5cf6; --primary:#2f6fed; --prep:#0ea371; --secondary:#e08a1e; --university:#e0533f; --grad:#aeb8b1; --pre:#eef2f0;
+    --firas:#d6249f; --muhammad:#e8590c; --faisal:#b58900; --ghiyath:#0d9488;
+  }
+  *{box-sizing:border-box; margin:0; padding:0}
+  html,body{ background:#cdd5d0; -webkit-print-color-adjust:exact; print-color-adjust:exact; }
+  body{ font-family:'Tajawal','Cairo',sans-serif; color:var(--ink); font-size:12px; line-height:1.45; }
+  .display{ font-family:'Cairo','Tajawal',sans-serif; }
+  .num{ font-family:'Cairo',sans-serif; font-feature-settings:"tnum"; }
+  .muted{color:var(--muted)} .faint{color:var(--faint)}
+
+  .page{ width:297mm; height:210mm; padding:9mm 11mm; background:#fff; overflow:hidden;
+    page-break-after:always; position:relative; display:flex; flex-direction:column; }
+  .page:last-child{ page-break-after:auto; }
+  @media screen{ .page{ margin:10px auto; box-shadow:0 6px 24px rgba(0,0,0,.18); } }
+
+  /* ---- header ---- */
+  .hd{ display:flex; align-items:center; gap:12px; padding-bottom:9px; border-bottom:2px solid var(--green);
+    margin-bottom:11px; }
+  .crest{ width:46px;height:46px;border-radius:12px; background:linear-gradient(145deg,#137a52,#0c5a3c);
+    color:#fff; display:grid; place-items:center; font-family:'Cairo'; font-weight:900; font-size:24px; flex:0 0 auto;}
+  .hd h1{ font-family:'Cairo'; font-weight:900; font-size:25px; line-height:1.1; color:#0e3c2b;}
+  .hd .sub{ color:var(--muted); font-size:12.5px; margin-top:2px;}
+  .hd .right{ margin-right:auto; text-align:left; color:var(--faint); font-size:10.5px; line-height:1.5;}
+  .hd .right b{ color:var(--green); font-size:12px;}
+
+  .chips{ display:flex; gap:7px; flex-wrap:wrap; margin-bottom:11px;}
+  .chip{ background:var(--green-soft); border:1px solid #d2e7da; color:#1c5a40; border-radius:999px;
+    padding:4px 11px; font-size:11px; font-weight:500;}
+  .chip b{ color:#0e3c2b; font-weight:700;}
+
+  /* ---- KPIs ---- */
+  .kpis{ display:grid; grid-template-columns:repeat(6,1fr); gap:8px; margin-bottom:12px;}
+  .kpi{ background:var(--paper); border:1px solid var(--line); border-radius:11px; padding:9px 11px;}
+  .kpi.gold{ background:#fbf4e4; border-color:#eedcb4;}
+  .kpi .l{ font-size:9.5px; color:var(--faint); font-weight:600;}
+  .kpi .v{ font-family:'Cairo'; font-weight:800; font-size:19px; line-height:1.05; margin-top:3px; color:#0e3c2b;}
+  .kpi.gold .v{ color:#8a6310;}
+  .kpi .n{ font-size:9px; color:var(--muted); margin-top:3px;}
+
+  .sec-t{ font-family:'Cairo'; font-weight:700; font-size:15px; color:#0e3c2b; margin-bottom:9px;
+    display:flex; align-items:center; gap:8px;}
+  .sec-t::before{ content:""; width:5px; height:17px; border-radius:3px; background:var(--green);}
+  .sec-t .s{ font-size:11px; color:var(--muted); font-weight:500;}
+
+  /* ---- branches / kids ---- */
+  .branches{ display:flex; flex-direction:column; gap:9px; flex:1;}
+  .branch{ border:1px solid var(--line); border-radius:12px; padding:8px 10px; background:#fff;}
+  .b-head{ display:flex; align-items:center; gap:8px; margin-bottom:7px;}
+  .b-dot{ width:11px;height:11px;border-radius:3px; flex:0 0 auto;}
+  .b-name{ font-family:'Cairo'; font-weight:700; font-size:13px;}
+  .b-stat{ margin-right:auto; font-size:10.5px; color:var(--muted);}
+  .kid-row{ display:flex; gap:8px; flex-wrap:wrap;}
+  .kid{ flex:1 1 0; min-width:120px; display:flex; gap:8px; align-items:center; background:var(--paper);
+    border:1px solid var(--line); border-radius:9px; padding:6px 8px;}
+  .av{ width:30px;height:30px;border-radius:8px; flex:0 0 auto; color:#fff; display:grid; place-items:center;
+    font-family:'Cairo'; font-weight:700; font-size:13px;}
+  .kid .nm{ font-weight:700; font-size:12px; line-height:1.15;}
+  .kid .mt{ font-size:9.5px; color:var(--muted);}
+  .pill{ display:inline-block; color:#fff; border-radius:999px; padding:1px 7px; font-size:9px; font-weight:700; margin-top:2px;}
+
+  /* ---- timeline ---- */
+  table.tl{ border-collapse:collapse; width:100%; font-size:9px; table-layout:fixed;}
+  table.tl th,table.tl td{ text-align:center; padding:0; border:1px solid #eef2f0;}
+  table.tl thead th{ font-family:'Cairo'; font-weight:600; color:var(--muted); font-size:8.5px; height:18px;}
+  table.tl thead th.nowh{ color:#fff; background:var(--gold);}
+  table.tl tbody th{ text-align:right; font-weight:700; font-size:10px; width:96px; padding:0 6px; white-space:nowrap;}
+  table.tl td .c{ height:17px; display:flex; align-items:center; justify-content:center; color:#fff;
+    font-weight:700; font-size:8.5px; font-family:'Cairo';}
+  table.tl td.now{ outline:2px solid var(--gold); outline-offset:-2px;}
+  .b-dot.sm{ width:8px;height:8px; display:inline-block; margin-left:5px;}
+  .legend{ display:flex; gap:13px; flex-wrap:wrap; font-size:10px; color:var(--muted); margin-bottom:8px;}
+  .legend span{ display:inline-flex; align-items:center; gap:6px;}
+  .legend i{ width:12px;height:12px;border-radius:3px;}
+
+  .charts{ display:grid; grid-template-columns:1.35fr 1fr; gap:12px; margin-top:11px; flex:1;}
+  .chart{ border:1px solid var(--line); border-radius:12px; padding:9px 11px; background:#fff; display:flex; flex-direction:column;}
+  .chart h3{ font-family:'Cairo'; font-weight:700; font-size:12.5px; margin-bottom:2px;}
+  .chart .cap{ font-size:9.5px; color:var(--muted); margin-bottom:6px;}
+  .chart svg{ width:100%; height:auto; flex:1;}
+
+  /* ---- page 3 ---- */
+  .p3grid{ display:grid; grid-template-columns:37% 1fr; gap:14px; flex:1; min-height:0;}
+  .col-side{ display:flex; flex-direction:column; min-height:0;}
+  .ins .ic{ padding:7px 10px;} .ins h4{ font-size:11.5px;} .ins p{ font-size:9.5px;}
+  table.fin{ width:100%; border-collapse:collapse; font-size:9.7px;}
+  table.fin th,table.fin td{ padding:2.5px 6px; text-align:center; border-bottom:1px solid var(--line);}
+  table.fin th{ background:var(--green-soft); color:#1c5a40; font-weight:700; font-size:10px;}
+  table.fin td:first-child,table.fin th:first-child{ text-align:right;}
+  table.fin tr.peak td{ background:#fdecea;} table.fin tr.now td{ background:#fbf4e4;}
+  .ins{ display:flex; flex-direction:column; gap:8px;}
+  .ic{ border:1px solid var(--line); border-right:4px solid var(--green); border-radius:9px; padding:8px 11px; background:#fff;}
+  .ic.red{ border-right-color:var(--university);} .ic.amber{ border-right-color:var(--secondary);} .ic.green{border-right-color:var(--prep);}
+  .ic .t{ font-size:9.5px; color:var(--gold); font-weight:700;}
+  .ic h4{ font-family:'Cairo'; font-size:12.5px; margin:2px 0 3px; color:#0e3c2b;}
+  .ic p{ font-size:10px; color:var(--muted); line-height:1.4;}
+  .play{ grid-column:1 / -1; }
+  .play-grid{ columns:3; column-gap:13px;}
+  .adv{ break-inside:avoid; border:1px solid var(--line); border-radius:9px; padding:7px 10px; margin-bottom:8px; background:var(--paper);}
+  .adv h4{ font-family:'Cairo'; font-size:11.5px; margin-bottom:2px; display:flex; gap:6px;}
+  .adv p{ font-size:9.5px; color:var(--muted); line-height:1.4;}
+
+  .foot{ margin-top:auto; padding-top:7px; border-top:1px solid var(--line); display:flex; justify-content:space-between;
+    font-size:9px; color:var(--faint);}
+</style>
+</head>
+<body>
+<div id="report"></div>
+
+<script>
+/* ===== data (mirrors family-dashboard.html) — عائلة الحصني ===== */
+const BRANCHES={
+  firas:{ar:"أبناء فراس الحصني",c:"var(--firas)"},
+  muhammad:{ar:"أبناء محمد الحصني",c:"var(--muhammad)"},
+  faisal:{ar:"ابن فيصل الحصني",c:"var(--faisal)"},
+  ghiyath:{ar:"ابن غياث",c:"var(--ghiyath)"},
+};
+const CHILDREN=[
+  {ar:"حنين",b:2007,p:"firas"},{ar:"محمد",b:2008,p:"firas"},{ar:"نور",b:2016,p:"firas"},
+  {ar:"عمر",b:2019,p:"firas"},{ar:"قمر",b:2025,p:"firas"},
+  {ar:"أحمد",b:2008,p:"muhammad"},{ar:"رغد",b:2010,p:"muhammad"},{ar:"رنيم",b:2011,p:"muhammad"},
+  {ar:"تيم",b:2017,p:"muhammad"},{ar:"شام",b:2021,p:"muhammad"},
+  {ar:"عبد العليم",b:2015,p:"faisal"},{ar:"عبد الله",b:2025,p:"ghiyath"},
+];
+const GRADES=["KG1","KG2","أول","ثاني","ثالث","رابع","خامس","سادس","سابع","ثامن","تاسع","عاشر","حادي عشر","بكالوريا","جامعة ١","جامعة ٢","جامعة ٣","جامعة ٤","جامعة ٥"];
+const STG={pre:{c:"var(--pre)",ar:"قبل المدرسة"},kg:{c:"var(--kg)",ar:"روضة"},primary:{c:"var(--primary)",ar:"ابتدائي (١–٦)"},
+  prep:{c:"var(--prep)",ar:"إعدادي (٧–٩)"},secondary:{c:"var(--secondary)",ar:"ثانوي (١٠–١٢)"},
+  university:{c:"var(--university)",ar:"جامعة"},grad:{c:"var(--grad)",ar:"متخرّج"}};
+const stageKey=i=> i<0?"pre": i<=1?"kg": i<=7?"primary": i<=10?"prep": i<=13?"secondary": i<=13+UNI?"university":"grad";
+const YEAR_FROM=2011, YEAR_TO=2047, UNI=4, CUR="ر.ق";
+const COSTS={kg:25000,primary:35000,prep:42000,secondary:48000,university:65000}, INFL=0.04;
+const now=new Date(); const NOW=now.getMonth()>=7?now.getFullYear():now.getFullYear()-1;
+const idx=(c,y)=>y-c.b-4;
+function stageAt(c,y){const i=idx(c,y); return {i,k:stageKey(i)};}
+function cost(k,y){ if(!COSTS[k])return 0; return COSTS[k]*Math.pow(1+INFL,Math.max(0,y-NOW)); }
+const schoolGrad=c=>c.b+4+13+1, uniGrad=c=>c.b+4+13+UNI+1;
+function series(){const r=[];for(let y=YEAR_FROM;y<=YEAR_TO;y++){const o={y,st:{kg:0,primary:0,prep:0,secondary:0,university:0},en:0,uni:0,sc:0,tot:0};
+  for(const c of CHILDREN){const k=stageAt(c,y).k; if(COSTS[k]){o.en++; k==="university"?o.uni++:o.sc++; if(y>=NOW){const v=cost(k,y);o.st[k]+=v;o.tot+=v;}}} r.push(o);} return r;}
+const fmt=n=>new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(Math.round(n));
+function money(n){const v=Math.round(n); if(v>=1e6)return CUR+" "+(v/1e6).toFixed(v>=1e7?1:2)+"M"; if(v>=1e3)return CUR+" "+fmt(v/1000)+"K"; return CUR+" "+fmt(v);}
+const moneyF=n=>CUR+" "+fmt(n);
+const cssvar=v=>getComputedStyle(document.documentElement).getPropertyValue(v.replace('var(','').replace(')','')).trim();
+
+const S=series();
+const cur=S.find(r=>r.y===NOW)||{sc:0,uni:0,tot:0,en:0};
+const fut=S.filter(r=>r.y>=NOW);
+const peak=fut.reduce((a,r)=>r.tot>a.tot?r:a,fut[0]);
+const uniPeak=S.reduce((a,r)=>r.uni>a.uni?r:a,S[0]);
+const busy=S.reduce((a,r)=>r.en>a.en?r:a,S[0]);
+const life=fut.reduce((a,r)=>a+r.tot,0);
+let pre=0,grad=0; for(const c of CHILDREN){const k=stageAt(c,NOW).k; if(k==="pre")pre++; if(k==="grad")grad++;}
+const ages=CHILDREN.map(c=>NOW+1-c.b);
+const firstG=Math.min(...CHILDREN.map(schoolGrad)), lastG=Math.max(...CHILDREN.map(uniGrad));
+
+/* ===== PAGE 1 ===== */
+function header(extra){
+  return `<div class="hd">
+    <div class="crest">ح</div>
+    <div><h1 class="display">لوحة عائلة الحصني</h1>
+      <div class="sub">تخطيط التعليم والتمويل · رؤى وتوقّعات وسيناريوهات — مبنية على بياناتكم</div></div>
+    <div class="right">${extra||`العام الدراسي<br><b>${NOW}/${NOW+1}</b>`}</div>
+  </div>`;
+}
+function kpi(l,v,n,gold){return `<div class="kpi ${gold?'gold':''}"><div class="l">${l}</div><div class="v num">${v}</div><div class="n">${n}</div></div>`;}
+function page1(){
+  const chips=[`العام الدراسي <b>${NOW}/${NOW+1}</b>`,`<b>${CHILDREN.length}</b> أبناء`,`<b>4</b> فروع للعائلة`,
+    `الأعمار <b>${Math.min(...ages)}–${Math.max(...ages)}</b>`,`أول ← آخر تخرّج <b>${firstG} – ${lastG}</b>`]
+    .map(c=>`<span class="chip">${c}</span>`).join("");
+  const kpis=[
+    kpi("الأبناء",CHILDREN.length,`${pre} قبل المدرسة · ${grad} متخرّج`),
+    kpi("في المدرسة الآن",cur.sc,"الروضة ← الصف ١٢"),
+    kpi("في الجامعة الآن",cur.uni,`برامج ${UNI} سنوات`),
+    kpi("إنفاق هذا العام",money(cur.tot),`${NOW}/${NOW+1}`,1),
+    kpi("ذروة الإنفاق",money(peak.tot),`في ${peak.y}/${peak.y+1}`,1),
+    kpi("المتبقّي مدى الحياة",money(life),`حتى ${YEAR_TO}`,1),
+  ].join("");
+  let branches="";
+  for(const[key,br]of Object.entries(BRANCHES)){
+    const kids=CHILDREN.filter(c=>c.p===key); if(!kids.length)continue;
+    const sc=kids.filter(c=>COSTS[stageAt(c,NOW).k]).length;
+    const sp=kids.reduce((a,c)=>{const k=stageAt(c,NOW).k; return a+(COSTS[k]?cost(k,NOW):0);},0);
+    const cards=kids.map(c=>{
+      const s=stageAt(c,NOW), st=STG[s.k], age=NOW+1-c.b;
+      let status = s.k==="pre"?`يبدأ ${c.b+4}`: s.k==="grad"?"متخرّج": GRADES[s.i];
+      return `<div class="kid"><div class="av" style="background:${br.c}">${c.ar[0]}</div>
+        <div><div class="nm">${c.ar}</div><div class="mt">العمر ${age} · مواليد ${c.b}</div>
+        <span class="pill" style="background:${st.c}">${status}</span></div></div>`;
+    }).join("");
+    branches+=`<div class="branch"><div class="b-head"><span class="b-dot" style="background:${br.c}"></span>
+      <span class="b-name">${br.ar}</span>
+      <span class="b-stat">${kids.length} أبناء · ${sc} مُسجَّل · ${money(sp)}/سنة</span></div>
+      <div class="kid-row">${cards}</div></div>`;
+  }
+  return `<div class="page">${header()}
+    <div class="chips">${chips}</div>
+    <div class="kpis">${kpis}</div>
+    <div class="sec-t display">الأبناء حسب الفروع <span class="s">— الحالة هذا العام الدراسي</span></div>
+    <div class="branches">${branches}</div>
+    <div class="foot"><span>عائلة الحصني · تقرير التخطيط التعليمي والمالي</span><span>صفحة ١ من ٣</span></div>
+  </div>`;
+}
+
+/* ===== PAGE 2 — timeline + charts ===== */
+function gradeCell(i){ if(i<2)return GRADES[i]; if(i<=13)return String(i-1); return 'U'+(i-13); }
+function page2(){
+  const legend=Object.values(STG).map(s=>`<span><i style="background:${s.c}"></i>${s.ar}</span>`).join("");
+  const years=[];for(let y=YEAR_FROM;y<=YEAR_TO;y++)years.push(y);
+  const head=`<tr><th></th>`+years.map(y=>`<th class="${y===NOW?'nowh':''}">${String(y).slice(2)}</th>`).join("")+`</tr>`;
+  const body=CHILDREN.map(c=>{
+    const cells=years.map(y=>{const s=stageAt(c,y); if(s.k==="pre")return"<td></td>";
+      const st=STG[s.k]; const lbl=s.k==="grad"?"✓":gradeCell(s.i);
+      return `<td class="${y===NOW?'now':''}"><div class="c" style="background:${st.c}">${lbl}</div></td>`;}).join("");
+    return `<tr><th><span class="b-dot sm" style="background:${BRANCHES[c.p].c}"></span>${c.ar}</th>${cells}</tr>`;
+  }).join("");
+  return `<div class="page">${header(`خريطة الصفوف<br><b>2011 – 2047</b>`)}
+    <div class="sec-t display">الخط الزمني الرئيسي <span class="s">— كل طفل وكل عام، ملوّن حسب المرحلة (العمود الذهبي = العام الحالي)</span></div>
+    <div class="legend">${legend}</div>
+    <table class="tl"><thead>${head}</thead><tbody>${body}</tbody></table>
+    <div class="charts">
+      <div class="chart"><h3>الإنفاق التعليمي السنوي المتوقّع</h3><div class="cap">مكدّس حسب المرحلة · معدّل بالتضخّم ${(INFL*100)}٪</div>${costSVG()}</div>
+      <div class="chart"><h3>عبء التسجيل حسب السنة</h3><div class="cap">عدد الأبناء في المدرسة مقابل الجامعة</div>${loadSVG()}</div>
+    </div>
+    <div class="foot"><span>القيم تقديرات تخطيطية بعملة ${CUR} — ليست نصيحة مالية</span><span>صفحة ٢ من ٣</span></div>
+  </div>`;
+}
+function costSVG(){
+  const d=S.filter(r=>r.y>=NOW); const W=560,H=230,pl=58,pr=8,pt=10,pb=26,iw=W-pl-pr,ih=H-pt-pb;
+  const max=Math.max(1,...d.map(r=>r.tot)); const bw=iw/d.length; const order=["kg","primary","prep","secondary","university"];
+  const col={kg:cssvar('--kg'),primary:cssvar('--primary'),prep:cssvar('--prep'),secondary:cssvar('--secondary'),university:cssvar('--university')};
+  let g="";
+  for(let i=0;i<=4;i++){const yy=pt+ih-ih*i/4; g+=`<line x1="${pl}" y1="${yy}" x2="${W-pr}" y2="${yy}" stroke="#eef2f0"/><text x="${pl-5}" y="${yy+3}" fill="#8aa093" font-size="9" text-anchor="end">${money(max*i/4)}</text>`;}
+  d.forEach((r,i)=>{let acc=pt+ih; const x=pl+i*bw+bw*0.16,w=bw*0.68;
+    order.forEach(s=>{const h=ih*(r.st[s]/max); if(h>0.4){acc-=h; g+=`<rect x="${x}" y="${acc}" width="${w}" height="${h}" fill="${col[s]}"/>`;}});
+    if(r===peak)g+=`<text x="${pl+i*bw+bw/2}" y="${acc-3}" fill="${cssvar('--gold')}" font-size="9" font-weight="700" text-anchor="middle">ذروة</text>`;
+    if(r.y%3===0||i===0||i===d.length-1)g+=`<text x="${pl+i*bw+bw/2}" y="${H-pb+13}" fill="#8aa093" font-size="8" text-anchor="middle">${String(r.y).slice(2)}</text>`;});
+  return `<svg viewBox="0 0 ${W} ${H}">${g}</svg>`;
+}
+function loadSVG(){
+  const W=420,H=230,pl=24,pr=8,pt=10,pb=26,iw=W-pl-pr,ih=H-pt-pb; const maxN=Math.max(1,...S.map(r=>r.en));
+  const X=y=>pl+iw*((y-YEAR_FROM)/(YEAR_TO-YEAR_FROM)), Y=n=>pt+ih-ih*(n/maxN);
+  let g="";
+  for(let i=0;i<=maxN;i+=(maxN>8?2:1)){const yy=Y(i); g+=`<line x1="${pl}" y1="${yy}" x2="${W-pr}" y2="${yy}" stroke="#eef2f0"/><text x="${pl-4}" y="${yy+3}" fill="#8aa093" font-size="8" text-anchor="end">${i}</text>`;}
+  let area=S.map((r,i)=>`${i?'L':'M'}${X(r.y).toFixed(1)},${Y(r.en).toFixed(1)}`).join(" ")+` L${X(YEAR_TO)},${pt+ih} L${X(YEAR_FROM)},${pt+ih} Z`;
+  g+=`<path d="${area}" fill="rgba(19,122,82,.10)"/>`;
+  const line=(k,c)=>`<path d="${S.map((r,i)=>`${i?'L':'M'}${X(r.y).toFixed(1)},${Y(r[k]).toFixed(1)}`).join(" ")}" fill="none" stroke="${c}" stroke-width="2"/>`;
+  g+=line("en",cssvar('--green'))+line("uni",cssvar('--university'));
+  g+=`<line x1="${X(NOW)}" y1="${pt}" x2="${X(NOW)}" y2="${pt+ih}" stroke="${cssvar('--gold')}" stroke-width="1.3" stroke-dasharray="3 2"/><text x="${X(NOW)}" y="${pt-2}" fill="${cssvar('--gold')}" font-size="8" text-anchor="middle">الآن</text>`;
+  [YEAR_FROM,2025,2035,YEAR_TO].forEach(y=>g+=`<text x="${X(y)}" y="${H-pb+13}" fill="#8aa093" font-size="8" text-anchor="middle">${y}</text>`);
+  g+=`<g font-size="8.5"><rect x="${pl}" y="${H-11}" width="9" height="3" fill="${cssvar('--green')}"/><text x="${pl+13}" y="${H-8}" fill="#5d716a">إجمالي المسجَّلين</text><rect x="${pl+105}" y="${H-11}" width="9" height="3" fill="${cssvar('--university')}"/><text x="${pl+118}" y="${H-8}" fill="#5d716a">في الجامعة</text></g>`;
+  return `<svg viewBox="0 0 ${W} ${H}">${g}</svg>`;
+}
+
+/* ===== PAGE 3 — ledger + insights + playbook ===== */
+function page3(){
+  // ledger: from now, every year until none enrolled, but cap rows ~ pick key years
+  const rows=fut.filter(r=>r.tot>0);
+  let run=0; const ledger=rows.map(r=>{run+=r.tot; const cls=r.y===peak.y?'peak':(r.y===NOW?'now':'');
+    return `<tr class="${cls}"><td>${r.y}/${String(r.y+1).slice(2)}</td><td class="num">${r.en}</td><td class="num">${r.uni}</td><td class="num">${moneyF(r.tot)}</td><td class="num">${moneyF(run)}</td></tr>`;}).join("");
+  const mult=(peak.tot/Math.max(1,cur.tot)).toFixed(1);
+  const monthly=life/Math.max(1,(YEAR_TO-NOW))/12;
+  const ins=[
+    {c:"red",t:"ذروة الضغط",h:`${peak.y}/${peak.y+1} هو أغلى أعوامكم`,p:`متوقّع ${moneyF(peak.tot)} — نحو ${mult}× إنفاق هذا العام. ابدأ تخصيص مبلغ له من الآن.`},
+    {c:"amber",t:"ازدحام الجامعة",h:`حتى ${uniPeak.uni} في الجامعة معًا`,p:`حوالي ${uniPeak.y}/${uniPeak.y+1} يتداخل عدّة أبناء في الجامعة — أعلى مرحلة كلفةً. نافذة تأمين المنح والمدّخرات.`},
+    {c:"",t:"اللوجستيات",h:`${busy.en} أبناء مُسجَّلون معًا`,p:`أكثر أعوامكم ازدحامًا هو ${busy.y}/${busy.y+1}. خطّط للمواصلات والرسوم وفق هذا العبء.`},
+    {c:"green",t:"الأفق الطويل",h:`التزام يمتد ${YEAR_TO-NOW} سنة`,p:`الإجمالي المتبقّي ~${moneyF(life)} — بمعدّل ${money(monthly)}/شهر إن ادُّخر بانتظام.`},
+  ].map(i=>`<div class="ic ${i.c}"><div class="t">${i.t}</div><h4 class="display">${i.h}</h4><p>${i.p}</p></div>`).join("");
+  const adv=[
+    ["🏦","صندوق تعليمي مخصّص","افصل مدّخرات التعليم عن مال المعيشة؛ المساهمة الشهرية المنتظمة تتراكم بقوة عبر ٢٠ عامًا."],
+    ["⛰️","موّل سنوات الذروة مسبقًا","عامل كل سنة ذروة كصندوق ادّخار: اقسم كلفتها على الأشهر المتبقّية وادّخرها الآن."],
+    ["📉","افترض تضخّمًا واقعيًا","رسوم المدارس تفوق التضخّم العام؛ اعتمد ٤–٥٪+ وراجع الخطة سنويًا."],
+    ["🎓","اجعل المنح استراتيجية","ابدأ البحث عن منح التفوّق قبل ٢–٣ سنوات لكل طفل؛ سنة مموّلة تعادل سنوات مدرسية."],
+    ["🛟","احتفظ باحتياطي للرسوم","اِبقِ ٦–١٢ شهرًا من الرسوم سائلة لحماية استمرار الأبناء عند تراجع الدخل."],
+    ["⚖️","وازِن كلفة الفرصة","قارن خيارات المدارس مقابل خطة العائلة كاملةً لا منعزلةً عن احتياجات بقية الأبناء."],
+    ["🤝","خصومات الإخوة","تفاوض كعائلة متعدّدة الأبناء: خصومات الإخوة والدفع السنوي وتثبيت الرسوم توفّر الكثير."],
+    ["🌍","احسم مسألة الخارج مبكرًا","الدراسة بالخارج تضاعف الكلفة؛ احسم السياسة لكل طفل لتدّخر نحو الرقم الحقيقي."],
+    ["📅","راجع وفق إيقاع ثابت","خصّص ساعة «مدير مالي للعائلة» سنويًا قبل إعادة التسجيل لتحديث التكاليف وموازنة المدّخرات."],
+  ].map(a=>`<div class="adv"><h4 class="display"><span>${a[0]}</span>${a[1]}</h4><p>${a[2]}</p></div>`).join("");
+  return `<div class="page">${header(`التوقّعات والإرشادات<br><b>حتى ${YEAR_TO}</b>`)}
+    <div class="p3grid">
+      <div class="col-ledger">
+        <div class="sec-t display">دفتر التوقّعات <span class="s">— الإنفاق السنوي والتراكمي</span></div>
+        <table class="fin"><thead><tr><th>العام</th><th>المسجَّلون</th><th>بالجامعة</th><th>الإنفاق السنوي</th><th>التراكمي</th></tr></thead><tbody>${ledger}</tbody></table>
+      </div>
+      <div class="col-side">
+        <div class="sec-t display">رؤى وخلاصات</div>
+        <div class="ins">${ins}</div>
+        <div class="sec-t display" style="margin-top:11px">دليل العمل <span class="s">— نصائح مالية ودروس وإرشادات للقرار</span></div>
+        <div class="play-grid">${adv}</div>
+      </div>
+    </div>
+    <div class="foot"><span>عائلة الحصني · المصدر: ورقة التخطيط All&nbsp;2023</span><span>صفحة ٣ من ٣</span></div>
+  </div>`;
+}
+
+document.getElementById('report').innerHTML = page1()+page2()+page3();
+</script>
+</body>
+</html>
