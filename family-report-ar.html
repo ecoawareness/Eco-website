@@ -112,6 +112,36 @@
   .adv h4{ font-family:'Cairo'; font-size:11.5px; margin-bottom:2px; display:flex; gap:6px;}
   .adv p{ font-size:9.5px; color:var(--muted); line-height:1.4;}
 
+  .assume{ background:#fbf7ec; border:1px solid #eedcb4; border-radius:9px; padding:6px 11px; margin-bottom:11px;
+    font-size:10px; color:#6b5314; line-height:1.5;} .assume b{ color:#8a6310;}
+
+  /* ---- page 4 ---- */
+  .p4{ display:flex; flex-direction:column; gap:11px; flex:1; min-height:0;}
+  .p4row{ display:grid; gap:13px;}
+  .callout{ background:#fdecea; border:1px solid #f3c4be; border-right:5px solid var(--university); border-radius:11px; padding:10px 13px;}
+  .callout .t{ font-size:10px; color:#a23a2c; font-weight:700;}
+  .callout .v{ font-family:'Cairo'; font-weight:900; font-size:21px; color:#b3382a; margin:3px 0; line-height:1.1;}
+  .callout p{ font-size:10px; color:#7a4a43; line-height:1.45;}
+  .scards{ display:grid; grid-template-columns:repeat(3,1fr); gap:12px;}
+  .scard{ border:1px solid var(--line); border-radius:12px; padding:11px 13px;}
+  .scard.ideal{ border-top:4px solid var(--green); background:#f2faf6;}
+  .scard.likely{ border-top:4px solid var(--gold); background:#fbf7ec;}
+  .scard.worst{ border-top:4px solid var(--university); background:#fdf1ef;}
+  .scard .nm{ font-family:'Cairo'; font-weight:800; font-size:14.5px;}
+  .scard .as{ font-size:9.5px; color:var(--muted); margin:2px 0 8px; min-height:26px;}
+  .scard .big{ font-family:'Cairo'; font-weight:900; font-size:23px; line-height:1;}
+  .scard.ideal .big{color:#137a52;} .scard.likely .big{color:#8a6310;} .scard.worst .big{color:#b3382a;}
+  .scard .biglab{ font-size:9px; color:var(--muted); margin:3px 0 8px;}
+  .scard .rw{ display:flex; justify-content:space-between; border-top:1px dashed var(--line); padding-top:4px; margin-top:4px; font-size:10px; color:var(--muted);}
+  .scard .rw b{ font-family:'Cairo'; color:var(--ink);}
+  .rangeline{ font-size:10px; color:var(--muted); margin-top:7px;} .rangeline b{color:var(--ink); font-family:'Cairo';}
+  .src{ border:1px solid var(--line); border-radius:9px; padding:7px 10px; background:var(--paper); margin-bottom:7px; break-inside:avoid;}
+  .src h4{ font-family:'Cairo'; font-size:11.5px; color:#0e3c2b; margin-bottom:2px; display:flex; gap:6px; align-items:center;}
+  .src p{ font-size:9.5px; color:var(--muted); line-height:1.4;}
+  .src .free{ margin-right:auto; background:var(--green-soft); color:#1c5a40; border-radius:999px; padding:1px 7px; font-size:8.5px; font-weight:700;}
+  .tipbox{ background:var(--green-soft); border:1px solid #d2e7da; border-radius:9px; padding:8px 11px;}
+  .tipbox h4{ font-family:'Cairo'; font-size:11.5px; color:#1c5a40; margin-bottom:4px;}
+  .tipbox ul{ margin:0; padding-right:16px;} .tipbox li{ font-size:9.7px; color:#33614a; line-height:1.5; margin-bottom:1px;}
   .foot{ margin-top:auto; padding-top:7px; border-top:1px solid var(--line); display:flex; justify-content:space-between;
     font-size:9px; color:var(--faint);}
 </style>
@@ -128,11 +158,11 @@ const BRANCHES={
   ghiyath:{ar:"ابن غياث",c:"var(--ghiyath)"},
 };
 const CHILDREN=[
-  {ar:"حنين",b:2007,p:"firas"},{ar:"محمد",b:2008,p:"firas"},{ar:"نور",b:2016,p:"firas"},
-  {ar:"عمر",b:2019,p:"firas"},{ar:"قمر",b:2025,p:"firas"},
-  {ar:"أحمد",b:2008,p:"muhammad"},{ar:"رغد",b:2010,p:"muhammad"},{ar:"رنيم",b:2011,p:"muhammad"},
-  {ar:"تيم",b:2017,p:"muhammad"},{ar:"شام",b:2021,p:"muhammad"},
-  {ar:"عبد العليم",b:2015,p:"faisal"},{ar:"عبد الله",b:2025,p:"ghiyath"},
+  {ar:"حنين",b:2007,p:"firas",sch:0,uniFree:true},{ar:"محمد",b:2008,p:"firas",sch:0},{ar:"نور",b:2016,p:"firas",sch:0},
+  {ar:"عمر",b:2019,p:"firas",sch:0},{ar:"قمر",b:2025,p:"firas",sch:0},
+  {ar:"أحمد",b:2008,p:"muhammad",sch:0},{ar:"رغد",b:2010,p:"muhammad",sch:0},{ar:"رنيم",b:2011,p:"muhammad",sch:0},
+  {ar:"تيم",b:2017,p:"muhammad",sch:0},{ar:"شام",b:2021,p:"muhammad",sch:0},
+  {ar:"عبد العليم",b:2015,p:"faisal",sch:35000},{ar:"عبد الله",b:2025,p:"ghiyath",sch:0},
 ];
 const GRADES=["KG1","KG2","أول","ثاني","ثالث","رابع","خامس","سادس","سابع","ثامن","تاسع","عاشر","حادي عشر","بكالوريا","جامعة ١","جامعة ٢","جامعة ٣","جامعة ٤","جامعة ٥"];
 const STG={pre:{c:"var(--pre)",ar:"قبل المدرسة"},kg:{c:"var(--kg)",ar:"روضة"},primary:{c:"var(--primary)",ar:"ابتدائي (١–٦)"},
@@ -140,29 +170,44 @@ const STG={pre:{c:"var(--pre)",ar:"قبل المدرسة"},kg:{c:"var(--kg)",ar:
   university:{c:"var(--university)",ar:"جامعة"},grad:{c:"var(--grad)",ar:"متخرّج"}};
 const stageKey=i=> i<0?"pre": i<=1?"kg": i<=7?"primary": i<=10?"prep": i<=13?"secondary": i<=13+UNI?"university":"grad";
 const YEAR_FROM=2011, YEAR_TO=2047, UNI=4, CUR="ر.ق";
-const COSTS={kg:25000,primary:35000,prep:42000,secondary:48000,university:65000}, INFL=0.04;
+const SCHOOL_STAGES=new Set(["kg","primary","prep","secondary"]);
+const UNI_LOW=50000, UNI_MID=60000, UNI_HIGH=70000, INFL=0.04;
 const now=new Date(); const NOW=now.getMonth()>=7?now.getFullYear():now.getFullYear()-1;
 const idx=(c,y)=>y-c.b-4;
 function stageAt(c,y){const i=idx(c,y); return {i,k:stageKey(i)};}
-function cost(k,y){ if(!COSTS[k])return 0; return COSTS[k]*Math.pow(1+INFL,Math.max(0,y-NOW)); }
+const enrolledK=k=> SCHOOL_STAGES.has(k)||k==="university";
+function childCost(c,k,y,uni){ const infl=Math.pow(1+INFL,Math.max(0,y-NOW));
+  if(k==="university") return c.uniFree?0:uni*infl;
+  if(SCHOOL_STAGES.has(k)) return (c.sch||0)*infl;
+  return 0; }
 const schoolGrad=c=>c.b+4+13+1, uniGrad=c=>c.b+4+13+UNI+1;
-function series(){const r=[];for(let y=YEAR_FROM;y<=YEAR_TO;y++){const o={y,st:{kg:0,primary:0,prep:0,secondary:0,university:0},en:0,uni:0,sc:0,tot:0};
-  for(const c of CHILDREN){const k=stageAt(c,y).k; if(COSTS[k]){o.en++; k==="university"?o.uni++:o.sc++; if(y>=NOW){const v=cost(k,y);o.st[k]+=v;o.tot+=v;}}} r.push(o);} return r;}
+function series(uni){const r=[];for(let y=YEAR_FROM;y<=YEAR_TO;y++){const o={y,st:{kg:0,primary:0,prep:0,secondary:0,university:0},en:0,uni:0,sc:0,tot:0};
+  for(const c of CHILDREN){const k=stageAt(c,y).k; if(enrolledK(k)){o.en++; k==="university"?o.uni++:o.sc++; if(y>=NOW){const v=childCost(c,k,y,uni);o.st[k]+=v;o.tot+=v;}}} r.push(o);} return r;}
 const fmt=n=>new Intl.NumberFormat('en-US',{maximumFractionDigits:0}).format(Math.round(n));
 function money(n){const v=Math.round(n); if(v>=1e6)return CUR+" "+(v/1e6).toFixed(v>=1e7?1:2)+"M"; if(v>=1e3)return CUR+" "+fmt(v/1000)+"K"; return CUR+" "+fmt(v);}
 const moneyF=n=>CUR+" "+fmt(n);
 const cssvar=v=>getComputedStyle(document.documentElement).getPropertyValue(v.replace('var(','').replace(')','')).trim();
 
-const S=series();
+const S=series(UNI_MID);
 const cur=S.find(r=>r.y===NOW)||{sc:0,uni:0,tot:0,en:0};
 const fut=S.filter(r=>r.y>=NOW);
 const peak=fut.reduce((a,r)=>r.tot>a.tot?r:a,fut[0]);
 const uniPeak=S.reduce((a,r)=>r.uni>a.uni?r:a,S[0]);
 const busy=S.reduce((a,r)=>r.en>a.en?r:a,S[0]);
 const life=fut.reduce((a,r)=>a+r.tot,0);
+const lifeLow=series(UNI_LOW).filter(r=>r.y>=NOW).reduce((a,r)=>a+r.tot,0);
+const lifeHigh=series(UNI_HIGH).filter(r=>r.y>=NOW).reduce((a,r)=>a+r.tot,0);
 let pre=0,grad=0; for(const c of CHILDREN){const k=stageAt(c,NOW).k; if(k==="pre")pre++; if(k==="grad")grad++;}
 const ages=CHILDREN.map(c=>NOW+1-c.b);
 const firstG=Math.min(...CHILDREN.map(schoolGrad)), lastG=Math.max(...CHILDREN.map(uniGrad));
+// ---- scenario + scholarship helpers ----
+const lifeBest=series(0).filter(r=>r.y>=NOW).reduce((a,r)=>a+r.tot,0);   // all uni on scholarship → schools only
+const uniTot=rate=>series(rate).filter(r=>r.y>=NOW).reduce((a,r)=>a+r.st.university,0);
+const uniLow=uniTot(UNI_LOW), uniMid=uniTot(UNI_MID), uniHigh=uniTot(UNI_HIGH);
+const monthsRem=Math.max(1,(lastG-NOW)*12);
+const uniSpan=c=>[c.b+18, c.b+18+UNI-1];
+function childUniCost(c,rate){let t=0; const[s,e]=uniSpan(c); for(let y=s;y<=e;y++){ if(y<NOW||c.uniFree) continue; t+=rate*Math.pow(1+INFL,Math.max(0,y-NOW)); } return t;}
+const uniCount=CHILDREN.filter(c=>!c.uniFree).length;
 
 /* ===== PAGE 1 ===== */
 function header(extra){
@@ -184,13 +229,14 @@ function page1(){
     kpi("في الجامعة الآن",cur.uni,`برامج ${UNI} سنوات`),
     kpi("إنفاق هذا العام",money(cur.tot),`${NOW}/${NOW+1}`,1),
     kpi("ذروة الإنفاق",money(peak.tot),`في ${peak.y}/${peak.y+1}`,1),
-    kpi("المتبقّي مدى الحياة",money(life),`حتى ${YEAR_TO}`,1),
+    kpi("المتبقّي مدى الحياة",money(life),`بين ${money(lifeLow)} و ${money(lifeHigh)}`,1),
   ].join("");
+  const assume=`<div class="assume"><b>الافتراضات:</b> مدارس فراس ومحمد وغياث مجانية · حنين منحة جامعية (صيدلة — جامعة قطر) · عبد العليم مدرسة دولية ٣٥ ألف/سنة · الجامعات ٥٠–٧٠ ألف/سنة · تضخّم ٤٪.</div>`;
   let branches="";
   for(const[key,br]of Object.entries(BRANCHES)){
     const kids=CHILDREN.filter(c=>c.p===key); if(!kids.length)continue;
-    const sc=kids.filter(c=>COSTS[stageAt(c,NOW).k]).length;
-    const sp=kids.reduce((a,c)=>{const k=stageAt(c,NOW).k; return a+(COSTS[k]?cost(k,NOW):0);},0);
+    const sc=kids.filter(c=>enrolledK(stageAt(c,NOW).k)).length;
+    const sp=kids.reduce((a,c)=>{const k=stageAt(c,NOW).k; return a+childCost(c,k,NOW,UNI_MID);},0);
     const cards=kids.map(c=>{
       const s=stageAt(c,NOW), st=STG[s.k], age=NOW+1-c.b;
       let status = s.k==="pre"?`يبدأ ${c.b+4}`: s.k==="grad"?"متخرّج": GRADES[s.i];
@@ -206,9 +252,10 @@ function page1(){
   return `<div class="page">${header()}
     <div class="chips">${chips}</div>
     <div class="kpis">${kpis}</div>
+    ${assume}
     <div class="sec-t display">الأبناء حسب الفروع <span class="s">— الحالة هذا العام الدراسي</span></div>
     <div class="branches">${branches}</div>
-    <div class="foot"><span>عائلة الحصني · تقرير التخطيط التعليمي والمالي</span><span>صفحة ١ من ٣</span></div>
+    <div class="foot"><span>عائلة الحصني · تقرير التخطيط التعليمي والمالي</span><span>صفحة ١ من ٤</span></div>
   </div>`;
 }
 
@@ -229,10 +276,10 @@ function page2(){
     <div class="legend">${legend}</div>
     <table class="tl"><thead>${head}</thead><tbody>${body}</tbody></table>
     <div class="charts">
-      <div class="chart"><h3>الإنفاق التعليمي السنوي المتوقّع</h3><div class="cap">مكدّس حسب المرحلة · معدّل بالتضخّم ${(INFL*100)}٪</div>${costSVG()}</div>
+      <div class="chart"><h3>الإنفاق التعليمي السنوي المتوقّع</h3><div class="cap">مكدّس حسب المرحلة · الجامعة ٦٠ ألف (٥٠–٧٠) · تضخّم ${(INFL*100)}٪</div>${costSVG()}</div>
       <div class="chart"><h3>عبء التسجيل حسب السنة</h3><div class="cap">عدد الأبناء في المدرسة مقابل الجامعة</div>${loadSVG()}</div>
     </div>
-    <div class="foot"><span>القيم تقديرات تخطيطية بعملة ${CUR} — ليست نصيحة مالية</span><span>صفحة ٢ من ٣</span></div>
+    <div class="foot"><span>القيم تقديرات تخطيطية بعملة ${CUR} — ليست نصيحة مالية</span><span>صفحة ٢ من ٤</span></div>
   </div>`;
 }
 function costSVG(){
@@ -300,11 +347,72 @@ function page3(){
         <div class="play-grid">${adv}</div>
       </div>
     </div>
-    <div class="foot"><span>عائلة الحصني · المصدر: ورقة التخطيط All&nbsp;2023</span><span>صفحة ٣ من ٣</span></div>
+    <div class="foot"><span>عائلة الحصني · المصدر: ورقة التخطيط All&nbsp;2023</span><span>صفحة ٣ من ٤</span></div>
   </div>`;
 }
 
-document.getElementById('report').innerHTML = page1()+page2()+page3();
+/* ===== PAGE 4 — scholarships + detailed financial scenarios ===== */
+function page4(){
+  const cards=[
+    {cls:"ideal", nm:"السيناريو المثالي", as:"منح جامعية واسعة — الجامعة شبه مجانية (على نهج منحة حنين)",
+     big:money(lifeBest), uni:"٠ (منح)", pay:"الأقل"},
+    {cls:"likely", nm:"السيناريو المرجّح", as:"٦٠ ألف/سنة للجامعة · منحة حنين فقط · تضخّم ٤٪",
+     big:money(life), uni:money(uniMid), pay:uniCount+" طالبًا"},
+    {cls:"worst", nm:"السيناريو الأسوأ", as:"٧٠ ألف/سنة لكل طالب · بلا منح إضافية",
+     big:money(lifeHigh), uni:money(uniHigh), pay:uniCount+" طالبًا"},
+  ].map(s=>`<div class="scard ${s.cls}">
+      <div class="nm">${s.nm}</div><div class="as">${s.as}</div>
+      <div class="big num">${s.big}</div><div class="biglab">إجمالي التعليم المتبقّي (حتى ${lastG})</div>
+      <div class="rw"><span>الادّخار الشهري</span><b class="num">${money((s.cls==='ideal'?lifeBest:s.cls==='likely'?life:lifeHigh)/monthsRem)}</b></div>
+      <div class="rw"><span>إجمالي الجامعات</span><b class="num">${s.uni}</b></div>
+      <div class="rw"><span>طلاب يدفعون</span><b>${s.pay}</b></div>
+    </div>`).join("");
+
+  const perStudent=CHILDREN.map(c=>{
+    const[s,e]=uniSpan(c); const cost=childUniCost(c,UNI_MID);
+    const status=c.uniFree?'<span style="color:#137a52;font-weight:700">منحة — صيدلة، جامعة قطر</span>'
+      :(s<=NOW&&e>=NOW?'حالياً':(e<NOW?'منتهٍ':'متوقّع'));
+    return `<tr><td>${c.ar}</td><td>${BRANCHES[c.p].ar.replace('أبناء ','').replace('ابن ','')}</td>
+      <td class="num">${s}–${e}</td><td class="num">${c.uniFree?'—':moneyF(cost)}</td><td>${status}</td></tr>`;
+  }).join("");
+
+  const sources=[
+    ["🎓","منح جامعة قطر (QU)","إعفاء كامل/جزئي من الرسوم للمتفوّقين أكاديميًا — وهي مسار حنين الحالي.","مجاني للمتفوّقين"],
+    ["🏛️","منح مؤسسة قطر / حمد بن خليفة","المدينة التعليمية والجامعات الفرعية — منح حاجة وتفوّق وتغطية واسعة.",""],
+    ["📜","بعثات وزارة التعليم العالي","للدراسة داخل قطر أو بالخارج وفق التخصصات ذات الأولوية الوطنية.",""],
+    ["🔬","منح التخصصات المطلوبة","الصيدلة والطب والهندسة والحاسب غالبًا الأعلى دعمًا وفرصًا.",""],
+    ["🌍","منح ومساعدات خارجية","Merit/Need من جامعات الخارج — تتطلب SAT/IELTS ومعدّلًا قويًا.",""],
+  ].map(s=>`<div class="src"><h4>${s[0]} ${s[1]} ${s[3]?`<span class="free">${s[3]}</span>`:''}</h4><p>${s[2]}</p></div>`).join("");
+
+  return `<div class="page">${header(`المنح الجامعية<br><b>والخطة المالية</b>`)}
+    <div class="p4">
+      <div>
+        <div class="sec-t display">السيناريوهات المالية الثلاثة <span class="s">— تُدرَس للتخطيط: المثالي · المرجّح · الأسوأ</span></div>
+        <div class="scards">${cards}</div>
+        <div class="rangeline">النطاق الكامل: من <b>${money(lifeBest)}</b> (مثالي) إلى <b>${money(lifeHigh)}</b> (أسوأ). كل منحة جامعية تُقرّب الرقم من الحدّ الأدنى — والفجوة بين الأفضل والأسوأ تقارب <b>${money(lifeHigh-lifeBest)}</b>.</div>
+      </div>
+      <div class="p4row" style="grid-template-columns:1.25fr 1fr; flex:1; min-height:0;">
+        <div>
+          <div class="sec-t display">تكلفة كل طالب جامعي <span class="s">— تقدير عند ٦٠ ألف/سنة</span></div>
+          <table class="fin"><thead><tr><th>الطالب</th><th>الفرع</th><th>سنوات الجامعة</th><th>التكلفة</th><th>الحالة</th></tr></thead><tbody>${perStudent}</tbody></table>
+        </div>
+        <div>
+          <div class="sec-t display">المنح الجامعية ومصادرها</div>
+          ${sources}
+          <div class="tipbox"><h4>كيف نرفع فرص المنحة؟</h4><ul>
+            <li>ابدأ التحضير قبل ٢–٣ سنوات من تخرّج كل طالب.</li>
+            <li>حافظ على معدّل تراكمي مرتفع وأنشطة قيادية وتطوّعية.</li>
+            <li>جهّز اختبارات SAT / IELTS / TOEFL مبكرًا.</li>
+            <li>قدّم لعدّة منح بالتوازي — المنحة الواحدة قد تعادل سنوات رسوم.</li>
+          </ul></div>
+        </div>
+      </div>
+    </div>
+    <div class="foot"><span>عائلة الحصني · خطة المنح والمصاريف الجامعية</span><span>صفحة ٤ من ٤</span></div>
+  </div>`;
+}
+
+document.getElementById('report').innerHTML = page1()+page2()+page3()+page4();
 </script>
 </body>
 </html>
