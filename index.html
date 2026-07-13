@@ -9,26 +9,30 @@
   <meta property="og:description" content="We build awareness, run campaigns, and create real environmental impact — aligned with Qatar National Vision 2030.">
   <meta property="og:url" content="https://ecoawarenessqa.org/">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#15803d">
+  <meta name="theme-color" content="#101312">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
   <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="script.js" defer></script>
 </head>
 <body>
 
   <header class="nav">
     <div class="container nav-inner">
       <a class="brand" href="index.html">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3C11.5 3 4.5 9.5 3 20.5c0 .3.2.5.5.5C14.5 19.5 21 12.5 21 3zM5.6 18.4C7.5 12 12 7.5 18.4 5.6 16.5 12 12 16.5 5.6 18.4z"/><path d="M6 18c3-6 6-9 12-12-6 3-9 6-12 12z"/></svg>
+        <!-- LOGO — replace the <svg> below with <img src="assets/img/logo.png" alt=""> -->
+        <span class="logo-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3C11.5 3 4.5 9.5 3 20.5c0 .3.2.5.5.5C14.5 19.5 21 12.5 21 3z"/></svg></span>
         EcoAwareness
       </a>
       <nav aria-label="Main">
-        <ul class="nav-links">
-          <li class="nav-home"><a href="index.html" aria-current="page">Home</a></li>
+        <ul class="nav-menu">
+          <li><a href="index.html" aria-current="page">Home</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="opportunities.html">Opportunities</a></li>
-          <li><a class="btn nav-cta" href="opportunities.html">Get Involved</a></li>
+          <li><a class="btn" href="mailto:ecoawarenessme@gmail.com">Contact</a></li>
         </ul>
       </nav>
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
     </div>
   </header>
 
@@ -36,68 +40,103 @@
 
     <!-- ===================== HERO ===================== -->
     <section class="hero">
+      <div class="container hero-grid">
+        <div>
+          <span class="eyebrow">EcoAwareness · Doha, Qatar</span>
+          <h1>Youth-led climate action in Qatar.</h1>
+          <p class="sub">We build awareness, run campaigns, and create real environmental impact — aligned with Qatar National Vision 2030.</p>
+          <div class="hero-actions">
+            <a class="btn" href="#work">See Our Work</a>
+            <a class="btn ghost" href="opportunities.html">Get Involved</a>
+          </div>
+        </div>
+        <figure class="ph r-4x5 reveal">
+          <!-- HERO IMAGE — replace the svg + figcaption with <img src="assets/img/hero.jpg" alt="EcoAwareness team in action"> -->
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4.5-4.5L7 20"/></svg>
+          <figcaption>Hero image · 4:5</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <!-- ===================== PROOF: PRESS ===================== -->
+    <section class="section">
       <div class="container">
-        <span class="eyebrow">Doha, Qatar</span>
-        <h1>EcoAwareness</h1>
-        <p class="lead">Youth-led climate action in Qatar.</p>
-        <p class="sub">We build awareness, run campaigns, and create real environmental impact — aligned with Qatar National Vision 2030.</p>
-        <div class="hero-actions">
-          <a class="btn" href="#work">See Our Work</a>
-          <a class="btn ghost" href="opportunities.html">Get Involved</a>
+        <div class="center"><span class="eyebrow">As Featured In</span></div>
+        <!--
+          LOGO WALL — to use a real logo, replace the text inside a slot with:
+            <img src="assets/logos/gulf-times.png" alt="Gulf Times">
+          The CSS keeps every logo greyscale and at a uniform height automatically.
+        -->
+        <div class="press-row reveal">
+          <div class="press-logo">Gulf Times</div>
+          <div class="press-logo">Qatar News Agency</div>
+          <div class="press-logo">Al-Sharq</div>
+          <div class="press-logo">Education Above All</div>
+          <div class="press-logo">Earthna</div>
         </div>
       </div>
     </section>
 
-    <!-- ===================== PROOF ===================== -->
+    <!-- ===================== PROOF: PARTNERS ===================== -->
     <section class="section">
       <div class="container">
-        <h2 class="eyebrow" style="margin-bottom:1rem;">As Featured In</h2>
-        <!--
-          LOGO SLOTS — to use a real logo, replace the text inside a slot with:
-            <img src="assets/logos/gulf-times.png" alt="Gulf Times">
-          (create an assets/logos/ folder and drop the image files there)
-        -->
-        <div class="logos">
-          <div class="logo-slot">Gulf Times</div>
-          <div class="logo-slot">Qatar News Agency</div>
-          <div class="logo-slot">Al-Sharq</div>
-          <div class="logo-slot">Education Above All</div>
-          <div class="logo-slot">Earthna</div>
+        <div class="section-head reveal">
+          <span class="eyebrow">Our Partners</span>
         </div>
-
-        <h2 class="eyebrow" style="margin:2.5rem 0 0;">Our Partners</h2>
-        <div class="partner-card">
-          <span class="mark" aria-hidden="true">♻️</span>
+        <div class="partner-card reveal">
+          <!-- PARTNER LOGO — replace the text with <img src="assets/logos/elite-paper.png" alt="Elite Paper Recycling"> -->
+          <span class="partner-logo">Logo</span>
           <div>
             <strong>Elite Paper Recycling</strong>
-            <span class="muted">Recycling partner — powering The Last Page campaign.</span>
+            <p>Recycling partner — powering The Last Page campaign.</p>
           </div>
         </div>
       </div>
     </section>
 
     <!-- ===================== WHAT WE DO ===================== -->
-    <section class="section soft" id="work">
+    <section class="section" id="work">
       <div class="container">
-        <div class="section-head">
+        <div class="section-head reveal">
           <span class="eyebrow">What We Do</span>
           <h2>Awareness, education, and real-world action</h2>
         </div>
         <div class="cards">
-          <div class="card">
-            <span class="icon" aria-hidden="true">📢</span>
-            <h3>Awareness</h3>
-            <p>Climate content reaching young people across Qatar through social media and digital campaigns.</p>
+          <div class="card reveal">
+            <figure class="ph r-16x10">
+              <!-- Replace with <img src="assets/img/awareness.jpg" alt=""> -->
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4.5-4.5L7 20"/></svg>
+              <figcaption>Photo · 16:10</figcaption>
+            </figure>
+            <div class="card-body">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="m3 11 18-5v12L3 14v-3z"/><path d="M11.6 16.8a3 3 0 1 1-5.8-1.6"/></svg>
+              <h3>Awareness</h3>
+              <p>Climate content reaching young people across Qatar through social media and digital campaigns.</p>
+            </div>
           </div>
-          <div class="card">
-            <span class="icon" aria-hidden="true">🎓</span>
-            <h3>Workshops</h3>
-            <p>Hands-on environmental education with schools and organizations.</p>
+          <div class="card reveal d1">
+            <figure class="ph r-16x10">
+              <!-- Replace with <img src="assets/img/workshops.jpg" alt=""> -->
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4.5-4.5L7 20"/></svg>
+              <figcaption>Photo · 16:10</figcaption>
+            </figure>
+            <div class="card-body">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><path d="M21.42 10.92a1 1 0 0 0-.02-1.84L12.83 5.18a2 2 0 0 0-1.66 0L2.6 9.08a1 1 0 0 0 0 1.83l8.57 3.91a2 2 0 0 0 1.66 0z"/><path d="M22 10v6"/><path d="M6 12.5V16a6 3 0 0 0 12 0v-3.5"/></svg>
+              <h3>Workshops</h3>
+              <p>Hands-on environmental education with schools and organizations.</p>
+            </div>
           </div>
-          <div class="card">
-            <span class="icon" aria-hidden="true">♻️</span>
-            <h3>Campaigns</h3>
-            <p>Real-world action, like The Last Page, our recycling campaign with Elite Paper Recycling.</p>
+          <div class="card reveal d2">
+            <figure class="ph r-16x10">
+              <!-- Replace with <img src="assets/img/campaigns.jpg" alt=""> -->
+              <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4.5-4.5L7 20"/></svg>
+              <figcaption>Photo · 16:10</figcaption>
+            </figure>
+            <div class="card-body">
+              <svg class="icon" viewBox="0 0 24 24" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><polyline points="1 20 1 14 7 14"/><path d="M3.51 9a9 9 0 0 1 14.85-3.36L23 10M1 14l4.64 4.36A9 9 0 0 0 20.49 15"/></svg>
+              <h3>Campaigns</h3>
+              <p>Real-world action, like The Last Page, our recycling campaign with Elite Paper Recycling.</p>
+            </div>
           </div>
         </div>
       </div>
@@ -105,16 +144,23 @@
 
     <!-- ===================== CURRENT CAMPAIGN =====================
          To feature a future campaign, swap out everything inside this
-         <section> — eyebrow, title, description, and the button link.
+         <section> — image, eyebrow, title, description, and button link.
     -->
     <section class="section">
       <div class="container">
-        <div class="campaign">
-          <span class="eyebrow">Current Campaign</span>
-          <h2>📖 The Last Page</h2>
-          <p>A recycling campaign turning Qatar's discarded books and paper into a second life — in partnership with Elite Paper Recycling.</p>
-          <!-- Point this button at a campaign page or post when ready -->
-          <a class="btn" href="https://www.instagram.com/ecoawareness.qa" target="_blank" rel="noopener">Learn More</a>
+        <div class="feature reveal">
+          <figure class="ph">
+            <!-- CAMPAIGN IMAGE — replace with <img src="assets/img/last-page.jpg" alt="The Last Page campaign"> -->
+            <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4.5-4.5L7 20"/></svg>
+            <figcaption>Campaign photo</figcaption>
+          </figure>
+          <div class="feature-body">
+            <span class="eyebrow">Current Campaign</span>
+            <h2>The Last Page</h2>
+            <p>A recycling campaign turning Qatar's discarded books and paper into a second life — in partnership with Elite Paper Recycling.</p>
+            <!-- Point this button at a campaign page or post when ready -->
+            <a class="btn ghost" href="https://www.instagram.com/ecoawareness.qa" target="_blank" rel="noopener">Learn More →</a>
+          </div>
         </div>
       </div>
     </section>
@@ -122,11 +168,13 @@
     <!-- ===================== NEXT STEP ===================== -->
     <section class="cta-band">
       <div class="container">
-        <h2>Want to be part of this?</h2>
-        <p>Join the team, or bring us to your school or organization.</p>
-        <div class="hero-actions">
-          <a class="btn" href="opportunities.html">Get Involved</a>
-          <a class="btn ghost" href="mailto:ecoawarenessme@gmail.com">Email Us</a>
+        <div class="cta-inner reveal">
+          <h2>Want to be part of this?</h2>
+          <p>Join the team, or bring us to your school or organization.</p>
+          <div class="hero-actions">
+            <a class="btn light" href="opportunities.html">Get Involved</a>
+            <a class="btn light-ghost" href="mailto:ecoawarenessme@gmail.com">Email Us</a>
+          </div>
         </div>
       </div>
     </section>
@@ -137,7 +185,8 @@
     <div class="container">
       <div class="footer-inner">
         <a class="brand" href="index.html">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3C11.5 3 4.5 9.5 3 20.5c0 .3.2.5.5.5C14.5 19.5 21 12.5 21 3zM5.6 18.4C7.5 12 12 7.5 18.4 5.6 16.5 12 12 16.5 5.6 18.4z"/></svg>
+          <!-- LOGO — replace the <svg> below with <img src="assets/img/logo.png" alt=""> -->
+          <span class="logo-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3C11.5 3 4.5 9.5 3 20.5c0 .3.2.5.5.5C14.5 19.5 21 12.5 21 3z" fill="#7ccb99"/></svg></span>
           EcoAwareness
         </a>
         <ul class="footer-links">

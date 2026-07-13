@@ -10,12 +10,16 @@ Every push to `main` deploys automatically to Vercel via GitHub Actions.
 | `index.html` | Home — hero, press & partners, what we do, current campaign |
 | `about.html` | About — mission, how we work, story, team, recognition |
 | `opportunities.html` | Join us + opportunities table for youth |
-| `styles.css` | All styling. Brand colors are at the top in `:root` |
+| `styles.css` | All styling. Brand tokens are at the top in `:root` |
+| `script.js` | Mobile menu + scroll animations (no dependencies) |
 
 ## How to edit common things
 
-- **Swap the current campaign** — in `index.html`, find the `CURRENT CAMPAIGN` comment and replace the title, text, and button link inside that section.
-- **Add press/partner logos** — create an `assets/logos/` folder, drop images in, then replace the text inside a `logo-slot` div with `<img src="assets/logos/name.png" alt="Outlet Name">`.
+- **Add your logo** — drop it at `assets/img/logo.png`, then in the nav and footer of each page replace the `<svg>` inside `<span class="logo-mark">` with `<img src="assets/img/logo.png" alt="">` (marked with a `LOGO` comment).
+- **Add press logos** — create `assets/logos/`, drop images in, then replace the text inside a `press-logo` div with `<img src="assets/logos/gulf-times.png" alt="Gulf Times">`. The CSS automatically makes every logo greyscale and uniform height (color returns on hover).
+- **Add the partner logo** — same idea: replace the text inside `<span class="partner-logo">` with an `<img>`.
+- **Add photos** — every grey box is a `<figure class="ph ...">`; replace the `<svg>` + `<figcaption>` inside it with `<img src="assets/img/your-photo.jpg" alt="…">`. The box crops any photo to the right shape automatically.
+- **Swap the current campaign** — in `index.html`, find the `CURRENT CAMPAIGN` comment and replace the image, title, text, and button link inside that section.
 - **Set the Apply form** — in `opportunities.html`, replace both `https://forms.gle/REPLACE-WITH-YOUR-FORM-ID` links with your real Google Form URL.
 - **Add an opportunity row** — in `opportunities.html`, copy the `<tr>` template from the comment above the table.
 - **Fill placeholders** — anything in *[square brackets]* (story paragraphs, team names, recognition bullets) is waiting for real content.

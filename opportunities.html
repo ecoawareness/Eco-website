@@ -9,26 +9,30 @@
   <meta property="og:description" content="Join the team, or find climate competitions, programs, and scholarships for youth in Qatar.">
   <meta property="og:url" content="https://ecoawarenessqa.org/opportunities">
   <meta property="og:type" content="website">
-  <meta name="theme-color" content="#15803d">
+  <meta name="theme-color" content="#101312">
   <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
   <link rel="stylesheet" href="styles.css">
+  <script>document.documentElement.classList.add('js')</script>
+  <script src="script.js" defer></script>
 </head>
 <body>
 
   <header class="nav">
     <div class="container nav-inner">
       <a class="brand" href="index.html">
-        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3C11.5 3 4.5 9.5 3 20.5c0 .3.2.5.5.5C14.5 19.5 21 12.5 21 3zM5.6 18.4C7.5 12 12 7.5 18.4 5.6 16.5 12 12 16.5 5.6 18.4z"/></svg>
+        <!-- LOGO — replace the <svg> below with <img src="assets/img/logo.png" alt=""> -->
+        <span class="logo-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3C11.5 3 4.5 9.5 3 20.5c0 .3.2.5.5.5C14.5 19.5 21 12.5 21 3z"/></svg></span>
         EcoAwareness
       </a>
       <nav aria-label="Main">
-        <ul class="nav-links">
-          <li class="nav-home"><a href="index.html">Home</a></li>
+        <ul class="nav-menu">
+          <li><a href="index.html">Home</a></li>
           <li><a href="about.html">About</a></li>
           <li><a href="opportunities.html" aria-current="page">Opportunities</a></li>
-          <li><a class="btn nav-cta" href="#join">Get Involved</a></li>
+          <li><a class="btn" href="mailto:ecoawarenessme@gmail.com">Contact</a></li>
         </ul>
       </nav>
+      <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
     </div>
   </header>
 
@@ -37,11 +41,11 @@
     <!-- ===================== JOIN ===================== -->
     <section class="hero" id="join">
       <div class="container">
-        <span class="eyebrow">🤝 Join EcoAwareness</span>
-        <h1 style="font-size:clamp(2rem,7vw,3rem);">Do more than talk about the climate.</h1>
-        <p class="sub" style="margin-top:1rem;">We're always looking for young people who want to do more than talk about the climate.</p>
+        <span class="eyebrow">Join EcoAwareness</span>
+        <h1>Do more than talk<br>about the climate.</h1>
+        <p class="sub" style="margin-top:1.4rem;">We're always looking for young people who want to do more than talk about the climate.</p>
 
-        <p style="margin-top:1.5rem; font-weight:650;">We need help with:</p>
+        <p style="margin-top:2rem; font-weight:650; color:var(--ink);">We need help with:</p>
         <ul class="chips">
           <li>Outreach</li>
           <li>Social Media</li>
@@ -56,12 +60,12 @@
     </section>
 
     <!-- ===================== OPPORTUNITIES FOR YOUTH ===================== -->
-    <section class="section soft">
+    <section class="section">
       <div class="container">
-        <div class="section-head">
-          <span class="eyebrow">🌍 Opportunities for Youth</span>
+        <div class="section-head reveal">
+          <span class="eyebrow">Opportunities for Youth</span>
           <h2>Open right now</h2>
-          <p class="muted">Competitions, programs, and scholarships in climate and sustainability that young people in Qatar can apply to.</p>
+          <p style="margin-top:0.75rem;">Competitions, programs, and scholarships in climate and sustainability that young people in Qatar can apply to.</p>
         </div>
 
         <!--
@@ -76,7 +80,7 @@
             <td><a href="https://example.org" target="_blank" rel="noopener">Apply</a></td>
           </tr>
         -->
-        <div class="table-wrap">
+        <div class="table-wrap reveal">
           <table>
             <thead>
               <tr>
@@ -109,19 +113,21 @@
           </table>
         </div>
 
-        <p class="muted" style="margin-top:1rem; font-size:0.9rem;">Know an opportunity we should share? <a href="mailto:ecoawarenessme@gmail.com">Email us</a>.</p>
+        <p style="margin-top:1.25rem; font-size:0.9rem;">Know an opportunity we should share? <a href="mailto:ecoawarenessme@gmail.com">Email us</a>.</p>
       </div>
     </section>
 
     <!-- ===================== NEXT STEP ===================== -->
-    <section class="cta-band">
+    <section class="cta-band" style="padding-top:4.5rem;">
       <div class="container">
-        <h2>Ready to act?</h2>
-        <p>Apply to join the team — or write to us about anything else.</p>
-        <div class="hero-actions">
-          <!-- Same Google Form link as above — update both when you have it -->
-          <a class="btn" href="https://forms.gle/REPLACE-WITH-YOUR-FORM-ID" target="_blank" rel="noopener">Apply to Join</a>
-          <a class="btn ghost" href="mailto:ecoawarenessme@gmail.com">Email Us</a>
+        <div class="cta-inner reveal">
+          <h2>Ready to act?</h2>
+          <p>Apply to join the team — or write to us about anything else.</p>
+          <div class="hero-actions">
+            <!-- Same Google Form link as above — update both when you have it -->
+            <a class="btn light" href="https://forms.gle/REPLACE-WITH-YOUR-FORM-ID" target="_blank" rel="noopener">Apply to Join</a>
+            <a class="btn light-ghost" href="mailto:ecoawarenessme@gmail.com">Email Us</a>
+          </div>
         </div>
       </div>
     </section>
@@ -132,7 +138,8 @@
     <div class="container">
       <div class="footer-inner">
         <a class="brand" href="index.html">
-          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3C11.5 3 4.5 9.5 3 20.5c0 .3.2.5.5.5C14.5 19.5 21 12.5 21 3zM5.6 18.4C7.5 12 12 7.5 18.4 5.6 16.5 12 12 16.5 5.6 18.4z"/></svg>
+          <!-- LOGO — replace the <svg> below with <img src="assets/img/logo.png" alt=""> -->
+          <span class="logo-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3C11.5 3 4.5 9.5 3 20.5c0 .3.2.5.5.5C14.5 19.5 21 12.5 21 3z" fill="#7ccb99"/></svg></span>
           EcoAwareness
         </a>
         <ul class="footer-links">
