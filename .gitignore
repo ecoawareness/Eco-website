@@ -1,19 +1,5 @@
-# Vercel
-.vercel
-
-# Environment / secrets — never commit real keys
+.claude/
 .env
-.env.*
-!.env.example
-
-# Dependencies
-node_modules/
-
-# Editor / OS cruft
 .DS_Store
-Thumbs.db
-.idea/
-.vscode/
-
-# Claude Code machine-local settings (per-developer, not shared)
-.claude/settings.local.json
+node_modules/
+.vercel

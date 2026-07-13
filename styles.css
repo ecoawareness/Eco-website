@@ -1,0 +1,391 @@
+/* ==========================================================================
+   EcoAwareness — ecoawarenessqa.org
+   One shared stylesheet for all pages. Mobile-first.
+   Brand colors live in :root — change them once, they apply everywhere.
+   ========================================================================== */
+
+:root {
+  --green: #15803d;
+  --green-dark: #0f5c2c;
+  --green-deep: #0b3d1f;
+  --tint: #ecf5ef;
+  --ink: #17221d;
+  --muted: #56675e;
+  --bg: #ffffff;
+  --bg-soft: #f6f9f7;
+  --line: #e2eae4;
+  --radius: 12px;
+  --maxw: 1060px;
+  --font: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
+          "Helvetica Neue", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; }
+
+body {
+  font-family: var(--font);
+  font-size: 1rem;
+  line-height: 1.65;
+  color: var(--ink);
+  background: var(--bg);
+  -webkit-font-smoothing: antialiased;
+}
+
+img { max-width: 100%; height: auto; display: block; }
+
+a { color: var(--green-dark); }
+
+.container {
+  max-width: var(--maxw);
+  margin: 0 auto;
+  padding: 0 1.25rem;
+}
+
+/* ---- Typography ---------------------------------------------------------- */
+
+h1, h2, h3 { line-height: 1.15; letter-spacing: -0.02em; font-weight: 750; }
+
+h1 { font-size: clamp(2.4rem, 9vw, 3.6rem); }
+h2 { font-size: clamp(1.5rem, 5vw, 2rem); margin-bottom: 0.75rem; }
+h3 { font-size: 1.125rem; margin-bottom: 0.35rem; }
+
+.lead { font-size: clamp(1.15rem, 4vw, 1.4rem); font-weight: 600; }
+
+.eyebrow {
+  display: block;
+  font-size: 0.8rem;
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--green);
+  margin-bottom: 0.6rem;
+}
+
+.muted { color: var(--muted); }
+
+.placeholder { color: var(--muted); font-style: italic; }
+
+/* ---- Buttons -------------------------------------------------------------- */
+
+.btn {
+  display: inline-block;
+  padding: 0.7rem 1.4rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--green);
+  background: var(--green);
+  color: #fff;
+  font-weight: 650;
+  font-size: 0.95rem;
+  text-decoration: none;
+  transition: background 0.15s ease, border-color 0.15s ease;
+}
+
+.btn:hover { background: var(--green-dark); border-color: var(--green-dark); }
+
+.btn.ghost { background: transparent; color: var(--green-dark); }
+
+.btn.ghost:hover { background: var(--tint); }
+
+/* ---- Nav ------------------------------------------------------------------ */
+
+.nav {
+  position: sticky;
+  top: 0;
+  z-index: 10;
+  background: rgba(255, 255, 255, 0.94);
+  backdrop-filter: blur(8px);
+  border-bottom: 1px solid var(--line);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  height: 60px;
+}
+
+.brand {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-weight: 800;
+  font-size: 1.05rem;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+.brand svg { width: 22px; height: 22px; fill: var(--green); flex: none; }
+
+.nav-links {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  list-style: none;
+}
+
+.nav-home { display: none; }           /* brand mark already links home on small phones */
+
+.nav-links a {
+  text-decoration: none;
+  color: var(--muted);
+  font-weight: 600;
+  font-size: 0.95rem;
+}
+
+.nav-links a:hover, .nav-links a[aria-current="page"] { color: var(--green-dark); }
+
+.nav-cta { display: none; }            /* hidden on small phones to keep the bar clean */
+
+@media (min-width: 560px) {
+  .nav-links { gap: 1.25rem; }
+  .nav-home { display: list-item; }
+  .nav-cta { display: inline-block; padding: 0.45rem 1.1rem; font-size: 0.875rem; }
+}
+
+/* ---- Sections ------------------------------------------------------------- */
+
+.section { padding: 3.5rem 0; }
+.section.soft { background: var(--bg-soft); }
+.section-head { max-width: 620px; margin-bottom: 2rem; }
+
+@media (min-width: 760px) {
+  .section { padding: 5rem 0; }
+}
+
+/* ---- Hero ------------------------------------------------------------------ */
+
+.hero {
+  padding: 4.5rem 0 4rem;
+  background:
+    radial-gradient(ellipse 90% 70% at 85% -10%, var(--tint) 0%, transparent 60%),
+    var(--bg);
+  text-align: left;
+}
+
+.hero .lead { color: var(--green-dark); margin: 0.9rem 0 0.75rem; }
+
+.hero p.sub { max-width: 560px; color: var(--muted); font-size: 1.05rem; }
+
+.hero-actions { display: flex; flex-wrap: wrap; gap: 0.75rem; margin-top: 1.75rem; }
+
+@media (min-width: 760px) {
+  .hero { padding: 6.5rem 0 5.5rem; }
+}
+
+/* ---- Proof: press + partners ----------------------------------------------- */
+
+.logos {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  align-items: stretch;
+}
+
+.logo-slot {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 64px;
+  min-width: 130px;
+  flex: 1 1 130px;
+  max-width: 200px;
+  padding: 0.75rem 1rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+  color: var(--muted);
+  font-weight: 700;
+  font-size: 0.9rem;
+  text-align: center;
+}
+
+.logo-slot img { max-height: 40px; width: auto; }
+
+.partner-card {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-top: 1rem;
+  padding: 1.25rem 1.5rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-left: 4px solid var(--green);
+  border-radius: var(--radius);
+}
+
+.partner-card .mark { font-size: 1.75rem; flex: none; }
+
+.partner-card strong { display: block; font-size: 1.05rem; }
+
+/* ---- Cards (What We Do) ------------------------------------------------------ */
+
+.cards { display: grid; gap: 1rem; }
+
+@media (min-width: 820px) { .cards { grid-template-columns: repeat(3, 1fr); } }
+
+.card {
+  padding: 1.5rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.card .icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 44px;
+  height: 44px;
+  border-radius: 10px;
+  background: var(--tint);
+  font-size: 1.35rem;
+  margin-bottom: 0.9rem;
+}
+
+.card p { color: var(--muted); font-size: 0.95rem; }
+
+/* ---- Campaign highlight ------------------------------------------------------ */
+
+.campaign {
+  padding: 2rem 1.5rem;
+  background: var(--tint);
+  border: 1px solid #d7e8dd;
+  border-radius: 16px;
+}
+
+.campaign h2 { margin-bottom: 0.5rem; }
+
+.campaign p { max-width: 640px; color: var(--green-deep); }
+
+.campaign .btn { margin-top: 1.25rem; }
+
+@media (min-width: 760px) { .campaign { padding: 3rem 2.5rem; } }
+
+/* ---- Steps (About: How We Work) ---------------------------------------------- */
+
+.steps { display: grid; gap: 1.25rem; list-style: none; counter-reset: step; }
+
+@media (min-width: 760px) { .steps { grid-template-columns: repeat(3, 1fr); } }
+
+.steps li { counter-increment: step; }
+
+.steps li::before {
+  content: counter(step);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 50%;
+  background: var(--green);
+  color: #fff;
+  font-weight: 700;
+  margin-bottom: 0.6rem;
+}
+
+.steps p { color: var(--muted); font-size: 0.95rem; }
+
+/* ---- Team grid ----------------------------------------------------------------- */
+
+.team {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 0.75rem;
+  list-style: none;
+}
+
+@media (min-width: 760px) { .team { grid-template-columns: repeat(3, 1fr); } }
+
+.team li {
+  padding: 1rem 1.25rem;
+  background: #fff;
+  border: 1px solid var(--line);
+  border-radius: var(--radius);
+}
+
+.team strong { display: block; }
+
+.team span { color: var(--muted); font-size: 0.9rem; }
+
+/* ---- Recognition list ------------------------------------------------------------ */
+
+.recognition { list-style: none; display: grid; gap: 0.6rem; }
+
+.recognition li { padding-left: 1.6rem; position: relative; color: var(--muted); }
+
+.recognition li::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0.55em;
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  background: var(--green);
+}
+
+/* ---- Role chips (Opportunities) ---------------------------------------------------- */
+
+.chips { display: flex; flex-wrap: wrap; gap: 0.5rem; list-style: none; margin: 1rem 0 1.5rem; }
+
+.chips li {
+  padding: 0.4rem 0.95rem;
+  background: var(--tint);
+  color: var(--green-deep);
+  border-radius: 999px;
+  font-weight: 650;
+  font-size: 0.9rem;
+}
+
+/* ---- Opportunities table -------------------------------------------------------------- */
+
+.table-wrap { overflow-x: auto; border: 1px solid var(--line); border-radius: var(--radius); }
+
+table { width: 100%; min-width: 560px; border-collapse: collapse; background: #fff; }
+
+th, td { padding: 0.85rem 1rem; text-align: left; font-size: 0.95rem; }
+
+th {
+  background: var(--bg-soft);
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: var(--muted);
+  border-bottom: 1px solid var(--line);
+}
+
+td { border-bottom: 1px solid var(--line); vertical-align: top; }
+
+tr:last-child td { border-bottom: none; }
+
+/* ---- CTA band --------------------------------------------------------------------------- */
+
+.cta-band { background: var(--tint); text-align: center; padding: 3.5rem 0; }
+
+.cta-band h2 { margin-bottom: 0.4rem; }
+
+.cta-band p { color: var(--green-deep); margin-bottom: 1.5rem; }
+
+.cta-band .hero-actions { justify-content: center; margin-top: 0; }
+
+/* ---- Footer -------------------------------------------------------------------------------- */
+
+.footer { background: var(--green-deep); color: #cfe3d6; padding: 2.75rem 0 2.25rem; font-size: 0.95rem; }
+
+.footer a { color: #fff; text-decoration: none; font-weight: 600; }
+
+.footer a:hover { text-decoration: underline; }
+
+.footer-inner { display: flex; flex-wrap: wrap; gap: 1rem 2.5rem; align-items: center; justify-content: space-between; }
+
+.footer .brand { color: #fff; }
+
+.footer .brand svg { fill: #7ccb99; }
+
+.footer-links { display: flex; flex-wrap: wrap; gap: 1.25rem; list-style: none; }
+
+.footer .fine { margin-top: 1.5rem; font-size: 0.85rem; color: #9dbfaa; }
