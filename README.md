@@ -15,9 +15,8 @@ Every push to `main` deploys automatically to Vercel via GitHub Actions.
 
 ## How to edit common things
 
-- **Add your logo** — drop it at `assets/img/logo.png`, then in the nav and footer of each page replace the `<svg>` inside `<span class="logo-mark">` with `<img src="assets/img/logo.png" alt="">` (marked with a `LOGO` comment).
-- **Add press logos** — create `assets/logos/`, drop images in, then replace the text inside a `press-logo` div with `<img src="assets/logos/gulf-times.png" alt="Gulf Times">`. The CSS automatically makes every logo greyscale and uniform height (color returns on hover).
-- **Add the partner logo** — same idea: replace the text inside `<span class="partner-logo">` with an `<img>`.
+- **Logos are live** — the EcoAwareness logo (`assets/img/logo-small.png`) is in the nav, footer, and favicon; Gulf Times, QNA, and Al-Sharq are in the press wall; Education Above All and Earthna are partner tiles. To add another press outlet, copy a `press-logo` div and point it at a new file in `assets/logos/` — the CSS makes every logo greyscale and uniform height (color returns on hover).
+- **Elite Paper Recycling logo still needed** — replace the text inside `<span class="partner-logo">` in `index.html` with `<img src="assets/logos/elite-paper.png" alt="Elite Paper Recycling">` once you have the file.
 - **Add photos** — every grey box is a `<figure class="ph ...">`; replace the `<svg>` + `<figcaption>` inside it with `<img src="assets/img/your-photo.jpg" alt="…">`. The box crops any photo to the right shape automatically.
 - **Swap the current campaign** — in `index.html`, find the `CURRENT CAMPAIGN` comment and replace the image, title, text, and button link inside that section.
 - **Set the Apply form** — in `opportunities.html`, replace both `https://forms.gle/REPLACE-WITH-YOUR-FORM-ID` links with your real Google Form URL.

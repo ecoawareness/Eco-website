@@ -9,8 +9,9 @@
   <meta property="og:description" content="We build awareness, run campaigns, and create real environmental impact — aligned with Qatar National Vision 2030.">
   <meta property="og:url" content="https://ecoawarenessqa.org/">
   <meta property="og:type" content="website">
+  <meta property="og:image" content="https://ecoawarenessqa.org/assets/img/logo.png">
   <meta name="theme-color" content="#101312">
-  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌱</text></svg>">
+  <link rel="icon" type="image/png" href="assets/img/logo-small.png">
   <link rel="stylesheet" href="styles.css">
   <script>document.documentElement.classList.add('js')</script>
   <script src="script.js" defer></script>
@@ -20,8 +21,7 @@
   <header class="nav">
     <div class="container nav-inner">
       <a class="brand" href="index.html">
-        <!-- LOGO — replace the <svg> below with <img src="assets/img/logo.png" alt=""> -->
-        <span class="logo-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3C11.5 3 4.5 9.5 3 20.5c0 .3.2.5.5.5C14.5 19.5 21 12.5 21 3z"/></svg></span>
+        <span class="logo-mark"><img src="assets/img/logo-small.png" alt=""></span>
         EcoAwareness
       </a>
       <nav aria-label="Main">
@@ -63,16 +63,14 @@
       <div class="container">
         <div class="center"><span class="eyebrow">As Featured In</span></div>
         <!--
-          LOGO WALL — to use a real logo, replace the text inside a slot with:
-            <img src="assets/logos/gulf-times.png" alt="Gulf Times">
+          LOGO WALL — drop more outlets in as new coverage lands:
+            <div class="press-logo"><img src="assets/logos/outlet.png" alt="Outlet Name"></div>
           The CSS keeps every logo greyscale and at a uniform height automatically.
         -->
         <div class="press-row reveal">
-          <div class="press-logo">Gulf Times</div>
-          <div class="press-logo">Qatar News Agency</div>
-          <div class="press-logo">Al-Sharq</div>
-          <div class="press-logo">Education Above All</div>
-          <div class="press-logo">Earthna</div>
+          <div class="press-logo"><img src="assets/logos/gulf-times.svg" alt="Gulf Times"></div>
+          <div class="press-logo"><img src="assets/logos/qna.png" alt="Qatar News Agency"></div>
+          <div class="press-logo"><img src="assets/logos/al-sharq.png" alt="Al-Sharq"></div>
         </div>
       </div>
     </section>
@@ -90,6 +88,10 @@
             <strong>Elite Paper Recycling</strong>
             <p>Recycling partner — powering The Last Page campaign.</p>
           </div>
+        </div>
+        <div class="partner-tiles">
+          <div class="partner-tile reveal"><img src="assets/logos/eaa.png" alt="Education Above All"></div>
+          <div class="partner-tile reveal d1"><img src="assets/logos/earthna.png" alt="Earthna — Member of Qatar Foundation"></div>
         </div>
       </div>
     </section>
@@ -185,8 +187,7 @@
     <div class="container">
       <div class="footer-inner">
         <a class="brand" href="index.html">
-          <!-- LOGO — replace the <svg> below with <img src="assets/img/logo.png" alt=""> -->
-          <span class="logo-mark"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3C11.5 3 4.5 9.5 3 20.5c0 .3.2.5.5.5C14.5 19.5 21 12.5 21 3z" fill="#7ccb99"/></svg></span>
+          <span class="logo-mark"><img src="assets/img/logo-small.png" alt=""></span>
           EcoAwareness
         </a>
         <ul class="footer-links">
