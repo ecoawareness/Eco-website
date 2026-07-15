@@ -1,196 +1,958 @@
-<!DOCTYPE html>
-<html lang="en">
+﻿<!DOCTYPE html>
+<html lang="en" dir="ltr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>About — EcoAwareness</title>
-  <meta name="description" content="EcoAwareness is a youth-led environmental organization based in Doha, Qatar. Founded by students, we work to increase climate awareness and drive real environmental action.">
-  <meta property="og:title" content="About — EcoAwareness">
-  <meta property="og:description" content="Youth-led, founded by students in Doha, Qatar. Our mission: make climate awareness impossible to ignore — and turn it into action.">
-  <meta property="og:url" content="https://ecoawarenessqa.org/about">
-  <meta property="og:type" content="website">
-  <meta property="og:image" content="https://ecoawarenessqa.org/assets/img/logo.png">
-  <meta name="theme-color" content="#101312">
-  <link rel="icon" type="image/png" href="assets/img/logo-small.png">
-  <link rel="stylesheet" href="styles.css">
-  <script>document.documentElement.classList.add('js')</script>
-  <script src="script.js" defer></script>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About EcoAwareness — EcoHub</title>
+    <meta name="description" content="Why four students in Qatar built EcoHub: one place to find environmental groups and events, and a verified record of the work you show up for.">
+    <link rel="canonical" href="https://ecoawarenessqa.org/about.html">
+    <meta property="og:type" content="website">
+    <meta property="og:site_name" content="EcoHub">
+    <meta property="og:locale" content="en_QA">
+    <meta property="og:title" content="About EcoAwareness — EcoHub">
+    <meta property="og:description" content="Why four students in Qatar built EcoHub: one place to find environmental groups and events, and a verified record of the work you show up for.">
+    <meta property="og:url" content="https://ecoawarenessqa.org/about.html">
+    <meta property="og:image" content="https://ecoawarenessqa.org/assets/opt/og-image.png">
+    <meta name="twitter:card" content="summary_large_image">
+    <meta name="twitter:title" content="About EcoAwareness — EcoHub">
+    <meta name="twitter:description" content="Why four students in Qatar built EcoHub: one place to find environmental groups and events, and a verified record of the work you show up for.">
+    <meta name="twitter:image" content="https://ecoawarenessqa.org/assets/opt/og-image.png">
+    <link rel="icon" type="image/svg+xml" href="data:image/svg+xml,%3Csvg%20xmlns%3D%22http%3A//www.w3.org/2000/svg%22%20viewBox%3D%220%200%2064%2064%22%3E%3Crect%20width%3D%2264%22%20height%3D%2264%22%20rx%3D%2212%22%20fill%3D%22%231a5c38%22/%3E%3Ctext%20x%3D%2232%22%20y%3D%2245%22%20text-anchor%3D%22middle%22%20font-family%3D%22Georgia%2C%20serif%22%20font-style%3D%22italic%22%20font-weight%3D%22700%22%20font-size%3D%2240%22%20fill%3D%22%23fff%22%3EE%3C/text%3E%3Ccircle%20cx%3D%2247%22%20cy%3D%2218%22%20r%3D%225%22%20fill%3D%22%23a8e063%22/%3E%3C/svg%3E">
+    <link rel="apple-touch-icon" href="assets/opt/logo.png">
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=DM+Sans:wght@300;400;500;700&family=Noto+Naskh+Arabic:wght@400;500;600&display=swap" rel="stylesheet">
+    <script src="https://code.iconify.design/iconify-icon/1.0.7/iconify-icon.min.js"></script>
+
+    <style>
+        :root {
+            --ink: #0a0a0a;
+            --paper: #f5f0e8;
+            --green: #1a5c38;
+            --green-light: #2d7a4f;
+            --lime: #a8e063;
+            --sand: #e8dfc8;
+            --rust: #c4622d;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        html { scroll-behavior: smooth; }
+        body {
+            background: var(--paper);
+            color: var(--ink);
+            font-family: 'DM Sans', sans-serif;
+            overflow-x: hidden;
+        }
+        body.ar { font-family: 'Noto Naskh Arabic', serif; direction: rtl; }
+
+        /* Grain */
+        body::before {
+            content: '';
+            position: fixed; inset: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.04'/%3E%3C/svg%3E");
+            pointer-events: none; z-index: 1000; opacity: 0.4;
+        }
+
+        /* Language toggle */
+        #lang-toggle { display: none; }
+        .lang-dot { width: 6px; height: 6px; background: var(--lime); border-radius: 50%; }
+
+        /* NAV */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; z-index: 900;
+            padding: 1.25rem 2.5rem;
+            display: flex; align-items: center; justify-content: space-between;
+            transition: background 0.4s;
+        }
+        nav.over-dark .nav-logo,
+        nav.over-dark .nav-links a { color: #fff; }
+        nav.over-dark .nav-cta { background: #fff !important; color: var(--green) !important; }
+        nav.scrolled {
+            background: rgba(245,240,232,0.93);
+            backdrop-filter: blur(14px);
+            border-bottom: 1px solid rgba(0,0,0,0.07);
+        }
+        nav.scrolled.over-dark { background: transparent; backdrop-filter: none; border-bottom: none; }
+        nav:not(.over-dark).scrolled .nav-logo,
+        nav:not(.over-dark).scrolled .nav-links a { color: var(--ink); }
+        nav:not(.over-dark).scrolled .nav-cta { background: var(--green) !important; color: #fff !important; }
+        .nav-logo {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.4rem; color: var(--ink); text-decoration: none;
+            display: flex; align-items: center; gap: 0.5rem;
+            transition: color 0.3s;
+        }
+        body.ar .nav-logo { font-family: 'Noto Naskh Arabic', serif; }
+        .nav-logo-dot { width: 8px; height: 8px; background: var(--lime); border-radius: 50%; }
+        .nav-links { display: flex; align-items: center; gap: 2rem; }
+        .nav-links a {
+            font-size: 0.875rem; font-weight: 400; color: var(--ink);
+            text-decoration: none; opacity: 0.85; transition: opacity 0.2s, color 0.3s;
+        }
+        .nav-links a:hover { opacity: 1; }
+        .nav-cta {
+            background: var(--green) !important; color: #fff !important;
+            opacity: 1 !important; padding: 0.6rem 1.4rem; border-radius: 100px;
+            transition: all 0.2s !important;
+        }
+        /* MOBILE NAV TOGGLE */
+        .nav-toggle {
+            display: none;
+            background: transparent; border: 0; cursor: pointer;
+            padding: 0.5rem; width: 42px; height: 42px;
+            flex-direction: column; justify-content: center; gap: 5px;
+            position: relative; z-index: 900;
+        }
+        .nav-toggle span {
+            display: block; width: 22px; height: 2px; background: var(--ink);
+            border-radius: 2px; transition: transform 0.3s, opacity 0.3s, background 0.3s;
+        }
+        nav.over-dark .nav-toggle span { background: #fff; }
+        nav:not(.over-dark).scrolled .nav-toggle span { background: var(--ink); }
+        .nav-toggle.active span:nth-child(1) { transform: translateY(7px) rotate(45deg); }
+        .nav-toggle.active span:nth-child(2) { opacity: 0; }
+        .nav-toggle.active span:nth-child(3) { transform: translateY(-7px) rotate(-45deg); }
+
+        /* ── NAV BACKDROP ── */
+        .nav-backdrop {
+            display: none;
+            position: fixed; inset: 0;
+            background: rgba(0,0,0,0.45);
+            z-index: 902;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+        .nav-backdrop.show { opacity: 1; pointer-events: auto; }
+        @media (max-width: 860px) { .nav-backdrop { display: block; } }
+
+        @media (max-width: 860px) {
+            nav { padding: 1rem 1.25rem; }
+            .nav-toggle { display: flex; }
+            .nav-links {
+                position: fixed; top: 0; right: 0;
+                width: min(320px, 85vw); height: 100vh; height: 100dvh; overflow-y: auto; -webkit-overflow-scrolling: touch;
+                background: var(--paper);
+                flex-direction: column; align-items: stretch; justify-content: flex-start;
+                padding: 5rem 2rem max(2rem, env(safe-area-inset-bottom));
+                gap: 0.4rem;
+                transform: translateX(100%);
+                transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+                box-shadow: -8px 0 40px rgba(0,0,0,0.15);
+                z-index: 890;
+            }
+            .nav-links.open { transform: translateX(0); }
+            .nav-links a { padding: 0.85rem 0; font-size: 1rem; opacity: 1 !important; color: var(--ink) !important; border-bottom: 1px solid rgba(0,0,0,0.06); }
+            .nav-links a.nav-cta { margin-top: 1rem; text-align: center; border-bottom: 0; padding: 0.8rem 1.4rem; background: var(--green) !important; color: #fff !important; }
+        }
+
+        /* Page transition */
+        #page-transition {
+            position: fixed; inset: 0; z-index: 9999;
+            background: var(--green);
+            display: flex; align-items: center; justify-content: center;
+            opacity: 1;
+            transition: opacity 550ms cubic-bezier(0.4, 0, 0.2, 1);
+            pointer-events: none;
+            will-change: opacity;
+        }
+        #transition-logo {
+            width: 4.5rem; height: 4.5rem;
+            transform: scale(0.92);
+            transition: transform 650ms cubic-bezier(0.25, 1, 0.5, 1);
+            will-change: transform;
+        }
+        #page-transition.leaving #transition-logo { transform: scale(1.08); }
+
+        /* HERO */
+        .about-hero {
+            background: var(--green);
+            color: #fff;
+            position: relative;
+            padding: 10rem clamp(1.5rem, 6vw, 6rem) 0;
+            overflow: hidden;
+        }
+        .about-hero-bg {
+            position: absolute; inset: 0;
+            background:
+                radial-gradient(ellipse 70% 50% at 20% 30%, rgba(168,224,99,0.18) 0%, transparent 60%),
+                radial-gradient(ellipse 60% 60% at 85% 80%, rgba(196,98,45,0.12) 0%, transparent 55%);
+            pointer-events: none;
+        }
+        .about-hero-inner {
+            max-width: 1400px; margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1.2fr 0.8fr;
+            gap: 3rem;
+            align-items: end;
+            padding-bottom: 5rem;
+            position: relative; z-index: 2;
+        }
+        .about-eyebrow {
+            font-size: 0.75rem; font-weight: 500;
+            color: var(--lime);
+            letter-spacing: 0.25em; text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+        .about-hero h1 {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: clamp(3rem, 7vw, 6.5rem);
+            line-height: 1.02;
+            letter-spacing: -0.02em;
+        }
+        body.ar .about-hero h1 { font-family: 'Noto Naskh Arabic', serif; line-height: 1.25; }
+        .about-hero h1 em {
+            font-style: italic;
+            color: var(--lime);
+            display: block;
+        }
+        body.ar .about-hero h1 em { font-style: normal; display: inline; }
+        .about-hero-num {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(4rem, 10vw, 9rem);
+            line-height: 1;
+            color: rgba(255,255,255,0.85);
+            margin-bottom: 1.25rem;
+        }
+        .about-hero-desc {
+            font-size: 1rem;
+            color: rgba(255,255,255,0.75);
+            line-height: 1.65;
+            max-width: 380px;
+            margin-left: auto;
+            font-weight: 300;
+        }
+        body.ar .about-hero-desc { margin-left: 0; margin-right: auto; }
+
+        /* Curved bottom scoop into paper */
+        .about-scoop {
+            position: relative;
+            height: clamp(80px, 10vw, 140px);
+            background: var(--green);
+        }
+        .about-scoop::before {
+            content: '';
+            position: absolute; inset: 0;
+            background: var(--paper);
+            border-top-left-radius: 50% 100%;
+            border-top-right-radius: 50% 100%;
+        }
+
+        /* Team photo placeholder */
+        .team-photo-wrap {
+            background: var(--paper);
+            padding: 0 clamp(1.5rem, 6vw, 6rem) 4rem;
+            margin-top: -6vw;
+            position: relative; z-index: 3;
+        }
+        .team-photo {
+            max-width: 1400px; margin: 0 auto;
+            border-radius: 32px;
+            overflow: hidden;
+            position: relative;
+            aspect-ratio: 16 / 9;
+            box-shadow: 0 24px 60px -20px rgba(10,10,10,0.25);
+        }
+        .team-photo img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+        }
+        .team-photo-caption {
+            position: absolute;
+            left: 2rem; bottom: 1.5rem;
+            color: #fff;
+            font-size: 0.8rem;
+            letter-spacing: 0.15em;
+            text-transform: uppercase;
+            background: rgba(10,10,10,0.35);
+            backdrop-filter: blur(8px);
+            padding: 0.5rem 0.9rem;
+            border-radius: 100px;
+        }
+        body.ar .team-photo-caption { left: auto; right: 2rem; letter-spacing: 0; text-transform: none; }
+
+        /* Our Story */
+        .our-story {
+            background: var(--paper);
+            padding: 6rem clamp(1.5rem, 6vw, 6rem);
+        }
+        .our-story-grid {
+            max-width: 1400px; margin: 0 auto;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 5rem;
+            align-items: start;
+        }
+        .story-eyebrow {
+            font-size: 0.75rem; font-weight: 500;
+            color: var(--green);
+            letter-spacing: 0.25em; text-transform: uppercase;
+            margin-bottom: 1.5rem;
+        }
+        .our-story h2 {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: clamp(2.5rem, 5vw, 4rem);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 2.5rem;
+        }
+        body.ar .our-story h2 { font-family: 'Noto Naskh Arabic', serif; line-height: 1.3; }
+        .our-story h2 em {
+            font-style: italic;
+            color: var(--green);
+        }
+        body.ar .our-story h2 em { font-style: normal; }
+        .story-body p {
+            font-size: 1rem;
+            line-height: 1.75;
+            color: rgba(10,10,10,0.65);
+            margin-bottom: 1.25rem;
+            font-weight: 300;
+        }
+
+        /* Team block — full width section below story */
+        .team-section {
+            background: var(--paper);
+            padding: 0 clamp(1.5rem, 6vw, 6rem) 6rem;
+        }
+        .team-section-inner {
+            max-width: 1400px; margin: 0 auto;
+            padding-top: 4rem;
+            border-top: 1px solid rgba(10,10,10,0.08);
+        }
+        .team-eyebrow {
+            font-size: 0.75rem; font-weight: 500;
+            color: var(--green);
+            letter-spacing: 0.25em; text-transform: uppercase;
+            margin-bottom: 1.25rem;
+        }
+        .team-heading {
+            font-family: 'Instrument Serif', serif;
+            font-weight: 400;
+            font-size: clamp(2.2rem, 4.5vw, 3.5rem);
+            line-height: 1.1;
+            letter-spacing: -0.02em;
+            margin-bottom: 3rem;
+            max-width: 720px;
+        }
+        body.ar .team-heading { font-family: 'Noto Naskh Arabic', serif; line-height: 1.3; }
+        .team-heading em { font-style: italic; color: var(--green); }
+        body.ar .team-heading em { font-style: normal; }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 2.5rem 3rem;
+        }
+        .team-card {
+            display: grid;
+            grid-template-columns: 160px 1fr;
+            gap: 1.5rem;
+            align-items: start;
+        }
+        .team-avatar {
+            width: 160px; height: 200px;
+            border-radius: 20px;
+            overflow: hidden;
+            background: rgba(10,10,10,0.05);
+            flex-shrink: 0;
+            position: relative;
+        }
+        .team-avatar img {
+            width: 100%; height: 100%;
+            object-fit: cover; display: block;
+            transition: transform 0.6s cubic-bezier(0.25,1,0.5,1);
+        }
+        .team-card:hover .team-avatar img { transform: scale(1.04); }
+        .team-info h3 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 1.2rem;
+            font-weight: 500;
+            margin-bottom: 0.35rem;
+        }
+        body.ar .team-info h3 { font-family: 'Noto Naskh Arabic', serif; }
+        .team-role {
+            color: var(--green);
+            font-size: 0.85rem;
+            font-weight: 500;
+            margin-bottom: 0.75rem;
+        }
+        .team-bio {
+            font-size: 0.92rem;
+            color: rgba(10,10,10,0.6);
+            line-height: 1.6;
+            font-weight: 300;
+        }
+        @media (max-width: 900px) {
+            .about-hero-inner { grid-template-columns: 1fr; gap: 2rem; }
+            .about-hero-desc { max-width: 100%; margin-left: 0; }
+            .our-story-grid { grid-template-columns: 1fr; gap: 3rem; }
+            .team-grid { grid-template-columns: 1fr; gap: 2rem; }
+        }
+        @media (max-width: 520px) {
+            .team-card { grid-template-columns: 1fr; }
+            .team-avatar { width: 100%; height: 240px; }
+        }
+
+        /* Values strip */
+        .values {
+            background: var(--paper);
+            padding: 4rem clamp(1.5rem, 6vw, 6rem) 6rem;
+        }
+        .values-grid {
+            max-width: 1400px; margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 2rem;
+            padding-top: 4rem;
+            border-top: 1px solid rgba(10,10,10,0.08);
+        }
+        .value-card h3 {
+            font-family: 'Instrument Serif', serif;
+            font-size: 1.5rem;
+            font-style: italic;
+            color: var(--green);
+            margin-bottom: 0.75rem;
+        }
+        body.ar .value-card h3 { font-family: 'Noto Naskh Arabic', serif; font-style: normal; }
+        .value-card p {
+            font-size: 0.95rem;
+            line-height: 1.65;
+            color: rgba(10,10,10,0.6);
+            font-weight: 300;
+        }
+        @media (max-width: 760px) {
+            .values-grid { grid-template-columns: 1fr; }
+        }
+
+        /* CTA strip */
+        .about-cta {
+            background: var(--green);
+            color: #fff;
+            padding: clamp(5rem, 10vw, 8rem) clamp(1.5rem, 6vw, 6rem);
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+        .about-cta h2 {
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(2rem, 4.5vw, 3.5rem);
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+        }
+        body.ar .about-cta h2 { font-family: 'Noto Naskh Arabic', serif; line-height: 1.3; }
+        .about-cta h2 em { font-style: italic; color: var(--lime); }
+        body.ar .about-cta h2 em { font-style: normal; }
+        .about-cta p {
+            color: rgba(255,255,255,0.7);
+            max-width: 560px; margin: 0 auto 2.5rem;
+            font-size: 1rem; line-height: 1.7; font-weight: 300;
+        }
+        .about-cta .cta-btn {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            background: var(--lime);
+            color: var(--ink);
+            padding: 0.95rem 2rem;
+            border-radius: 100px;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.95rem;
+            transition: transform 0.2s;
+        }
+        .about-cta .cta-btn:hover { transform: translateY(-2px); }
+
+        /* FOOTER */
+        footer {
+            background: var(--paper);
+            color: var(--ink);
+            position: relative;
+            overflow: hidden;
+        }
+        .footer-curve {
+            display: block;
+            width: 100%;
+            height: clamp(48px, 7vw, 90px);
+            background: var(--green);
+            position: relative; z-index: 1;
+            line-height: 0;
+        }
+        .footer-curve svg { display: block; width: 100%; height: 100%; }
+        .footer-meta {
+            display: flex; justify-content: space-between;
+            padding: 2.5rem clamp(1.5rem, 6vw, 6rem) 0;
+            font-size: 0.8rem;
+            color: rgba(10,10,10,0.45);
+            flex-wrap: wrap; gap: 1rem;
+            position: relative; z-index: 2;
+        }
+        .footer-meta .meta-addr { display: flex; align-items: center; gap: 0.5rem; }
+        .footer-meta .meta-addr::before {
+            content: '';
+            width: 14px; height: 14px;
+            border: 1.5px solid currentColor; border-radius: 50% 50% 50% 0;
+            transform: rotate(-45deg);
+        }
+        .footer-grid {
+            max-width: 1200px; margin: 0 auto;
+            padding: 4rem clamp(1.5rem, 6vw, 6rem) 2rem;
+            display: grid;
+            grid-template-columns: 1.3fr 1fr 1fr 1fr;
+            gap: 3rem 2rem;
+            position: relative; z-index: 2;
+        }
+        .footer-brand-block .footer-logo {
+            display: inline-flex; align-items: center; gap: 0.5rem;
+            font-family: Georgia, serif; font-style: italic; font-weight: 600;
+            font-size: 1.6rem; color: var(--ink); text-decoration: none;
+            margin-bottom: 1.25rem;
+        }
+        .footer-brand-block .footer-logo::before {
+            content: ''; width: 10px; height: 10px;
+            background: var(--lime); border-radius: 50%;
+            display: inline-block;
+        }
+        body.ar .footer-brand-block .footer-logo { font-family: 'Noto Naskh Arabic', serif; font-style: normal; }
+        .footer-tagline {
+            font-size: 0.95rem; line-height: 1.6;
+            color: rgba(10,10,10,0.6); max-width: 280px;
+        }
+        .footer-col h4 {
+            font-family: 'DM Sans', sans-serif;
+            font-size: 0.7rem; font-weight: 500;
+            text-transform: uppercase; letter-spacing: 0.2em;
+            color: rgba(10,10,10,0.4);
+            margin-bottom: 1.25rem;
+        }
+        body.ar .footer-col h4 { font-family: 'Noto Naskh Arabic', serif; letter-spacing: 0; }
+        .footer-col ul { list-style: none; padding: 0; margin: 0; display: flex; flex-direction: column; gap: 0.75rem; }
+        .footer-col a {
+            font-size: 1rem; color: var(--ink); text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer-col a:hover { color: var(--green); }
+        .footer-watermark {
+            position: absolute;
+            left: 0; right: 0; bottom: -2vw;
+            font-family: 'Instrument Serif', serif;
+            font-size: clamp(6rem, 22vw, 22rem);
+            font-style: italic;
+            color: rgba(26,92,56,0.06);
+            text-align: center;
+            line-height: 0.85;
+            pointer-events: none;
+            white-space: nowrap;
+            z-index: 1;
+            user-select: none;
+        }
+        body.ar .footer-watermark { font-family: 'Noto Naskh Arabic', serif; font-style: normal; }
+        .footer-bottom {
+            border-top: 1px solid rgba(10,10,10,0.08);
+            padding: 1.5rem clamp(1.5rem, 6vw, 6rem);
+            display: flex; justify-content: space-between; align-items: center;
+            font-size: 0.75rem; color: rgba(10,10,10,0.4);
+            flex-wrap: wrap; gap: 1rem;
+            position: relative; z-index: 2;
+        }
+        .footer-socials { display: flex; gap: 1rem; }
+        .footer-socials a {
+            width: 32px; height: 32px; display: inline-flex;
+            align-items: center; justify-content: center;
+            border-radius: 50%; border: 1px solid rgba(10,10,10,0.12);
+            color: rgba(10,10,10,0.5); text-decoration: none;
+            transition: all 0.2s;
+        }
+        .footer-socials a:hover { border-color: var(--green); color: var(--green); }
+        @media (max-width: 900px) {
+            .footer-grid { grid-template-columns: 1fr 1fr; }
+            .footer-brand-block { grid-column: 1 / -1; }
+        }
+        @media (max-width: 560px) {
+            .footer-grid { grid-template-columns: 1fr; }
+            .footer-meta { flex-direction: column; }
+            .footer-bottom { flex-direction: column; text-align: center; }
+        }
+
+        /* Reveal */
+        .reveal {
+            opacity: 0; transform: translateY(20px);
+            transition: opacity 0.6s cubic-bezier(0.25,1,0.5,1), transform 0.6s cubic-bezier(0.25,1,0.5,1);
+        }
+        .reveal.visible { opacity: 1; transform: none; }
+    
+        /* Respect users who prefer reduced motion */
+        @media (prefers-reduced-motion: reduce) {
+            *, *::before, *::after {
+                animation-duration: 0.01ms !important;
+                animation-iteration-count: 1 !important;
+                transition-duration: 0.01ms !important;
+            }
+            html { scroll-behavior: auto !important; }
+        }
+    </style>
 </head>
 <body>
 
-  <header class="nav">
-    <div class="container nav-inner">
-      <a class="brand" href="index.html">
-        <span class="logo-mark"><img src="assets/img/logo-small.png" alt=""></span>
-        EcoAwareness
-      </a>
-      <nav aria-label="Main">
-        <ul class="nav-menu">
-          <li><a href="index.html">Home</a></li>
-          <li><a href="about.html" aria-current="page">About</a></li>
-          <li><a href="opportunities.html">Opportunities</a></li>
-          <li><a class="btn" href="mailto:ecoawarenessme@gmail.com">Contact</a></li>
-        </ul>
-      </nav>
-      <button class="nav-toggle" aria-label="Menu" aria-expanded="false"><span></span><span></span></button>
+<!-- LANG TOGGLE -->
+<button id="lang-toggle" onclick="toggleLang()">
+    <span class="lang-dot"></span>
+    <span id="lang-label">العربية</span>
+</button>
+
+<!-- NAV -->
+<nav id="navbar" class="over-dark">
+    <a href="index.html" class="nav-logo">
+        <span class="nav-logo-dot"></span>
+        <span data-en="EcoAwareness" data-ar="EcoAwareness" style="font-family: Georgia, serif; font-style: italic; font-weight: 600;">EcoAwareness</span>
+    </a>
+    <div class="nav-links" id="nav-links">
+        <a href="index.html" data-en="Home" data-ar="الرئيسية">Home</a>
+        <a href="challenges.html" data-en="Challenges" data-ar="التحديات">Challenges</a>
+        <a href="signup.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a>
+        <a href="about.html" data-en="About" data-ar="من نحن" style="opacity:1;">About</a>
+        <a href="faq.html" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a>
+        <a href="signin.html" data-en="Sign In" data-ar="تسجيل الدخول">Sign In</a>
+        <a href="signup.html" class="nav-cta" data-en="Join Free" data-ar="انضم مجانًا">Join Free</a>
     </div>
-  </header>
+    <button id="nav-toggle" class="nav-toggle" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
 
-  <main>
-
-    <!-- ===================== WHO WE ARE ===================== -->
-    <section class="hero">
-      <div class="container">
-        <span class="eyebrow">Who We Are</span>
-        <h1>Founded by students.<br>Driven by impact.</h1>
-        <p class="sub" style="margin-top:1.4rem;">EcoAwareness is a youth-led environmental organization based in Doha, Qatar. Founded by students, we work to increase climate awareness and drive real environmental action across the country.</p>
-        <figure class="ph r-21x9 reveal" style="margin-top:2.75rem;">
-          <!-- TEAM PHOTO — replace with <img src="assets/img/team-wide.jpg" alt="The EcoAwareness team"> -->
-          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4.5-4.5L7 20"/></svg>
-          <figcaption>Team photo · wide</figcaption>
-        </figure>
-      </div>
-    </section>
-
-    <!-- ===================== MISSION ===================== -->
-    <section class="section">
-      <div class="container">
-        <span class="eyebrow">Our Mission</span>
-        <p class="statement reveal">To make climate awareness impossible to ignore in Qatar — and to turn that awareness into action.</p>
-      </div>
-    </section>
-
-    <!-- ===================== HOW WE WORK ===================== -->
-    <section class="section">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">How We Work</span>
-          <h2>From awareness to action</h2>
+<!-- HERO -->
+<section class="about-hero">
+    <div class="about-hero-bg"></div>
+    <div class="about-hero-inner">
+        <div>
+            <div class="about-eyebrow" data-en="Who we are" data-ar="من نحن">Who we are</div>
+            <h1>
+                <span data-en="The people building" data-ar="الأشخاص الذين يبنون">The people building</span>
+                <em data-en="EcoAwareness." data-ar="الوعي البيئي.">EcoAwareness.</em>
+            </h1>
         </div>
-        <ol class="steps">
-          <li class="reveal">
-            <h3>Awareness</h3>
-            <p>Content that reaches young people where they already are.</p>
-          </li>
-          <li class="reveal d1">
-            <h3>Education</h3>
-            <p>Workshops with schools and organizations.</p>
-          </li>
-          <li class="reveal d2">
-            <h3>Action</h3>
-            <p>Campaigns that create measurable impact.</p>
-          </li>
-        </ol>
-      </div>
-    </section>
-
-    <!-- ===================== OUR STORY =====================
-         Replace the placeholder paragraphs below with your real story.
-    -->
-    <section class="section">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Our Story</span>
-          <h2>How EcoAwareness started</h2>
+        <div>
+            <div class="about-hero-num">04</div>
+            <p class="about-hero-desc" data-en="Started in Doha by students who kept hearing the same question: where can I actually help?"
+               data-ar="بدأت في الدوحة على يد طلاب كانوا يسمعون السؤال نفسه دائمًا: أين يمكنني أن أساعد فعلاً؟">
+                Started in Doha by students who kept hearing the same question: where can I actually help?
+            </p>
         </div>
-        <div style="max-width:680px; display:grid; gap:1.25rem;">
-          <p class="placeholder">[Placeholder — how it began: the moment or problem that made you start EcoAwareness, and who was there at the beginning.]</p>
-          <p class="placeholder">[Placeholder — what happened next: the first campaign or workshop, early wins, and how the team grew.]</p>
-          <p class="placeholder">[Placeholder — where it's going: what EcoAwareness is building toward over the next few years.]</p>
-        </div>
-      </div>
-    </section>
-
-    <!-- ===================== TEAM =====================
-         Add or remove <li> blocks as the team changes. Replace each
-         figure's contents with <img src="assets/img/team/name.jpg" alt="">.
-    -->
-    <section class="section">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Our Team</span>
-          <h2>The people behind it</h2>
-        </div>
-        <ul class="team">
-          <li class="reveal">
-            <figure class="ph r-1x1"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4.5-4.5L7 20"/></svg><figcaption>Photo</figcaption></figure>
-            <strong>Full Name</strong><span>Founder</span>
-          </li>
-          <li class="reveal">
-            <figure class="ph r-1x1"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4.5-4.5L7 20"/></svg><figcaption>Photo</figcaption></figure>
-            <strong>Full Name</strong><span>Co-Founder</span>
-          </li>
-          <li class="reveal d1">
-            <figure class="ph r-1x1"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4.5-4.5L7 20"/></svg><figcaption>Photo</figcaption></figure>
-            <strong>Full Name</strong><span>Head of Outreach</span>
-          </li>
-          <li class="reveal d1">
-            <figure class="ph r-1x1"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4.5-4.5L7 20"/></svg><figcaption>Photo</figcaption></figure>
-            <strong>Full Name</strong><span>Head of Content</span>
-          </li>
-          <li class="reveal d2">
-            <figure class="ph r-1x1"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4.5-4.5L7 20"/></svg><figcaption>Photo</figcaption></figure>
-            <strong>Full Name</strong><span>Head of Design</span>
-          </li>
-          <li class="reveal d2">
-            <figure class="ph r-1x1"><svg viewBox="0 0 24 24" fill="none" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><circle cx="9" cy="9" r="2"/><path d="m21 15-4.5-4.5L7 20"/></svg><figcaption>Photo</figcaption></figure>
-            <strong>Full Name</strong><span>Events Lead</span>
-          </li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ===================== RECOGNITION =====================
-         Replace the placeholder bullets with real credentials, roles,
-         speaking engagements, awards, and press mentions.
-    -->
-    <section class="section">
-      <div class="container">
-        <div class="section-head reveal">
-          <span class="eyebrow">Recognition</span>
-          <h2>Credentials &amp; press</h2>
-        </div>
-        <ul class="recognition reveal">
-          <li class="placeholder">[Placeholder — UN role, delegation, or program participation]</li>
-          <li class="placeholder">[Placeholder — speaking engagement or conference appearance]</li>
-          <li class="placeholder">[Placeholder — award or competition result]</li>
-          <li class="placeholder">[Placeholder — press feature with outlet name and year]</li>
-        </ul>
-      </div>
-    </section>
-
-    <!-- ===================== NEXT STEP ===================== -->
-    <section class="cta-band" style="padding-top:4.5rem;">
-      <div class="container">
-        <div class="cta-inner reveal">
-          <h2>Work with us</h2>
-          <p>Schools, sponsors, and partners — we'd love to hear from you.</p>
-          <div class="hero-actions">
-            <a class="btn light" href="mailto:ecoawarenessme@gmail.com">Contact Us</a>
-            <a class="btn light-ghost" href="https://www.instagram.com/ecoawareness.qa" target="_blank" rel="noopener">Follow on Instagram</a>
-          </div>
-        </div>
-      </div>
-    </section>
-
-  </main>
-
-  <footer class="footer">
-    <div class="container">
-      <div class="footer-inner">
-        <a class="brand" href="index.html">
-          <span class="logo-mark"><img src="assets/img/logo-small.png" alt=""></span>
-          EcoAwareness
-        </a>
-        <ul class="footer-links">
-          <li><a href="mailto:ecoawarenessme@gmail.com">ecoawarenessme@gmail.com</a></li>
-          <li><a href="https://www.instagram.com/ecoawareness.qa" target="_blank" rel="noopener">@ecoawareness.qa</a></li>
-          <li>Doha, Qatar</li>
-        </ul>
-      </div>
-      <p class="fine">© 2026 EcoAwareness · Youth-led climate action aligned with Qatar National Vision 2030</p>
     </div>
-  </footer>
+</section>
+<div class="about-scoop"></div>
 
+<!-- Team photo -->
+<section class="team-photo-wrap">
+    <div class="team-photo reveal">
+        <picture>
+            <source type="image/webp" srcset="assets/opt/team-community.webp">
+            <img src="assets/opt/team-community.jpg" alt="EcoAwareness volunteers and community members together" width="1600" height="1067" loading="lazy" decoding="async">
+        </picture>
+        <div class="team-photo-caption" data-en="The EcoAwareness community" data-ar="مجتمع الوعي البيئي">The EcoAwareness community</div>
+    </div>
+</section>
+
+<!-- Our Story -->
+<section class="our-story">
+    <div class="our-story-grid" style="grid-template-columns: 1fr; max-width: 880px;">
+        <div class="reveal">
+            <div class="story-eyebrow" data-en="Our story" data-ar="قصتنا">Our story</div>
+            <h2>
+                <span data-en="Built by students," data-ar="بُنيت من قبل الطلاب،">Built by students,</span>
+                <em data-en="for students." data-ar="من أجل الطلاب.">for students.</em>
+            </h2>
+            <div class="story-body">
+                <p data-en="In Qatar, a lot of environmental work happens through someone forwarding a poster, a WhatsApp message, or an Instagram story. If you miss it, you miss it."
+                   data-ar="في قطر، كثير من العمل البيئي يصل عبر شخص يرسل إعلانًا أو رسالة واتساب أو ستوري إنستغرام. إذا فاتك، فقد فاتك.">
+                    In Qatar, a lot of environmental work happens through someone forwarding a poster, a WhatsApp message, or an Instagram story. If you miss it, you miss it.
+                </p>
+                <p data-en="We saw this firsthand. As students ourselves, we watched friends give up on projects because they couldn't verify their work, and others miss opportunities they would've loved — simply because no one told them."
+                   data-ar="رأينا هذا بأنفسنا. كطلاب، شاهدنا أصدقاءنا يتخلون عن مشاريع لأنهم لم يستطيعوا التحقق من عملهم، وآخرين يفوتون فرصًا كانوا سيحبونها — ببساطة لأنه لم يخبرهم أحد.">
+                    We saw this firsthand. As students ourselves, we watched friends give up on projects because they couldn't verify their work, and others miss opportunities they would've loved — simply because no one told them.
+                </p>
+                <p data-en="EcoAwareness is our attempt to make that simpler: one place to find groups, events, and a record of the work you showed up for."
+                   data-ar="الوعي البيئي هو محاولتنا لتبسيط ذلك: مكان واحد للعثور على الجهات والفعاليات وسجل لما شاركت فيه.">
+                    EcoAwareness is our attempt to make that simpler: one place to find groups, events, and a record of the work you showed up for.
+                </p>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Team -->
+<section class="team-section">
+    <div class="team-section-inner">
+        <div class="reveal">
+            <div class="team-eyebrow" data-en="The team" data-ar="الفريق">The team</div>
+            <h2 class="team-heading">
+                <span data-en="Four students," data-ar="أربعة طلاب،">Four students,</span>
+                <em data-en="one mission.">one mission.</em>
+            </h2>
+        </div>
+        <div class="team-grid">
+            <div class="team-card reveal">
+                <div class="team-avatar">
+                    <picture>
+                        <source type="image/webp" srcset="assets/opt/elfatih.webp">
+                        <img src="assets/opt/elfatih.jpg" alt="Mohamed Elfatih" width="900" height="1053" loading="lazy" decoding="async"
+                             onerror="this.onerror=null;this.src='assets/opt/team-fallback.jpg';">
+                    </picture>
+                </div>
+                <div class="team-info">
+                    <h3 data-en="Mohamed Elfatih" data-ar="محمد الفاتح">Mohamed Elfatih</h3>
+                    <div class="team-role" data-en="Founder &amp; CEO" data-ar="المؤسس والرئيس التنفيذي">Founder &amp; CEO</div>
+                    <p class="team-bio" data-en="The one who believed first. Mohamed isn't the deepest specialist in any single lane — he's the person who sees how all of them fit together. He brought the team, holds the vision, and keeps the relentless belief that Qatari students deserve better than scattered WhatsApp groups and lost volunteer hours."
+                       data-ar="هو من آمن أولاً. محمد ليس المتخصص الأعمق في مجال واحد — إنه الشخص الذي يرى كيف تتناسب جميعها معًا. جمع الفريق، ويحمل الرؤية، ويحافظ على الإيمان الدؤوب بأن الطلاب القطريين يستحقون أفضل من مجموعات واتساب المتناثرة وساعات التطوع الضائعة.">
+                        The one who believed first. Mohamed isn't the deepest specialist in any single lane — he's the person who sees how all of them fit together. He brought the team, holds the vision, and keeps the relentless belief that Qatari students deserve better than scattered WhatsApp groups and lost volunteer hours.
+                    </p>
+                </div>
+            </div>
+
+            <div class="team-card reveal">
+                <div class="team-avatar">
+                    <img src="assets/Firas.jpeg" alt="Mohamed Firas" loading="lazy" decoding="async">
+                </div>
+                <div class="team-info">
+                    <h3 data-en="Mohamed Firas" data-ar="محمد فراس">Mohamed Firas</h3>
+                    <div class="team-role" data-en="Head of Media &amp; Brand" data-ar="رئيس الإعلام والعلامة التجارية">Head of Media &amp; Brand</div>
+                    <p class="team-bio" data-en="Turns the platform into stories students actually want to share. Runs EcoAwareness's content, social, and the trend-watching that keeps us speaking the language of Qatar's youth instead of talking at them."
+                       data-ar="يحول المنصة إلى قصص يريد الطلاب مشاركتها فعلاً. يدير محتوى الوعي البيئي ووسائل التواصل الاجتماعي ومتابعة الاتجاهات التي تبقينا نتحدث بلغة شباب قطر بدلاً من مخاطبتهم من الأعلى.">
+                        Turns the platform into stories students actually want to share. Runs EcoAwareness's content, social, and the trend-watching that keeps us speaking the language of Qatar's youth instead of talking at them.
+                    </p>
+                </div>
+            </div>
+
+            <div class="team-card reveal">
+                <div class="team-avatar">
+                    <img src="assets/ahmed.jpg.jpeg" alt="Ahmed" loading="lazy" decoding="async">
+                </div>
+                <div class="team-info">
+                    <h3 data-en="Ahmed" data-ar="أحمد">Ahmed</h3>
+                    <div class="team-role" data-en="Head of Tech" data-ar="رئيس التقنية">Head of Tech</div>
+                    <p class="team-bio" data-en="Ships the product. Every feature, every line of code, every late-night deploy that keeps EcoAwareness running is Ahmed's doing. If it works on your phone, it's because he stayed up making sure it does."
+                       data-ar="هو من يُنتج المنتج. كل ميزة، كل سطر من التعليمات البرمجية، كل نشر في وقت متأخر من الليل يجعل الوعي البيئي يعمل هو من فعل أحمد. إذا كان يعمل على هاتفك، فذلك لأنه سهر للتأكد من أنه يعمل.">
+                        Ships the product. Every feature, every line of code, every late-night deploy that keeps EcoAwareness running is Ahmed's doing. If it works on your phone, it's because he stayed up making sure it does.
+                    </p>
+                </div>
+            </div>
+
+            <div class="team-card reveal">
+                <div class="team-avatar">
+                    <img src="assets/mishal.jpg.jpeg" alt="Mohamed Mishal" loading="lazy" decoding="async">
+                </div>
+                <div class="team-info">
+                    <h3 data-en="Mohamed Mishal" data-ar="محمد مشعل">Mohamed Mishal</h3>
+                    <div class="team-role" data-en="Head of Ideas" data-ar="رئيس الأفكار">Head of Ideas</div>
+                    <p class="team-bio" data-en="The one who walks in with the wild idea that turns out to be exactly right. Drives product direction and creative thinking — when a feature feels smart instead of obvious, there's a good chance Mishal said it first."
+                       data-ar="هو من يأتي بالفكرة الجريئة التي تتضح أنها الصواب بالضبط. يقود اتجاه المنتج والتفكير الإبداعي — عندما تبدو الميزة ذكية بدلاً من واضحة، فهناك احتمال كبير أن مشعل قالها أولاً.">
+                        The one who walks in with the wild idea that turns out to be exactly right. Drives product direction and creative thinking — when a feature feels smart instead of obvious, there's a good chance Mishal said it first.
+                    </p>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+<!-- Values -->
+<section class="values">
+    <div class="values-grid">
+        <div class="value-card reveal">
+            <h3 data-en="Verified impact" data-ar="أثر موثق">Verified impact</h3>
+            <p data-en="Every hour logged is backed by an organizer. No more paper slips, no more lost records."
+               data-ar="كل ساعة يتم تسجيلها مدعومة من قبل منظم. لا مزيد من القسائم الورقية، لا مزيد من السجلات المفقودة.">
+                Every hour logged is backed by an organizer. No more paper slips, no more lost records.
+            </p>
+        </div>
+        <div class="value-card reveal">
+            <h3 data-en="Built for Qatar" data-ar="صُمم لقطر">Built for Qatar</h3>
+            <p data-en="Arabic-first when you need it. English-first when you don't. Tuned for local schools, NGOs, and events."
+               data-ar="العربية أولاً عندما تحتاجها. الإنجليزية أولاً عندما لا تحتاجها. مضبوطة للمدارس المحلية والمنظمات غير الحكومية والفعاليات.">
+                Arabic-first when you need it. English-first when you don't. Tuned for local schools, NGOs, and events.
+            </p>
+        </div>
+        <div class="value-card reveal">
+            <h3 data-en="Student-owned" data-ar="مملوكة للطلاب">Student-owned</h3>
+            <p data-en="We're young. We're learning. We're building this together with the community we're part of."
+               data-ar="نحن صغار. نحن نتعلم. نحن نبني هذا معًا مع المجتمع الذي ننتمي إليه.">
+                We're young. We're learning. We're building this together with the community we're part of.
+            </p>
+        </div>
+    </div>
+</section>
+
+<!-- CTA -->
+<section class="about-cta">
+    <h2>
+        <span data-en="Want to help us" data-ar="هل تريد مساعدتنا">Want to help us</span>
+        <em data-en="build this?" data-ar="في بناء هذا؟">build this?</em>
+    </h2>
+    <p data-en="We're looking for students, schools, NGOs, and companies who want to make environmental work easier to join. Say hi."
+       data-ar="نبحث عن طلاب ومدارس ومنظمات وشركات تريد أن تجعل العمل البيئي أسهل للمشاركة. قل مرحبًا.">
+        We're looking for students, schools, NGOs, and companies who want to make environmental work easier to join. Say hi.
+    </p>
+    <a href="mailto:ecoawarenessme@gmail.com" class="cta-btn">
+        <span data-en="Get in touch" data-ar="تواصل معنا">Get in touch</span>
+        <iconify-icon icon="solar:arrow-right-linear"></iconify-icon>
+    </a>
+</section>
+
+<!-- FOOTER -->
+<footer>
+    <div class="footer-curve" aria-hidden="true"><svg viewBox="0 0 1440 90" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg"><path d="M0,90 C360,-10 1080,-10 1440,90 L1440,90 L0,90 Z" fill="var(--paper)"/></svg></div>
+    <div class="footer-meta">
+        <div class="meta-addr" data-en="Education City, Doha, Qatar" data-ar="المدينة التعليمية، الدوحة، قطر">Education City, Doha, Qatar</div>
+        <div data-en="© 2026 EcoAwareness Qatar. All rights reserved." data-ar="© 2026 الوعي البيئي قطر. جميع الحقوق محفوظة.">© 2026 EcoAwareness Qatar. All rights reserved.</div>
+    </div>
+    <div class="footer-grid">
+        <div class="footer-brand-block">
+            <a href="index.html" class="footer-logo" data-en="EcoAwareness" data-ar="EcoAwareness">EcoAwareness</a>
+            <p class="footer-tagline" data-en="A practical home for Qatar's environmental events, groups, and volunteer records."
+               data-ar="مساحة عملية لفعاليات قطر البيئية والجهات وسجلات التطوع.">
+                A practical home for Qatar's environmental events, groups, and volunteer records.
+            </p>
+        </div>
+        <div class="footer-col">
+            <h4 data-en="Platform" data-ar="المنصة">Platform</h4>
+            <ul>
+                <li><a href="challenges.html" data-en="Challenges" data-ar="التحديات">Challenges</a></li>
+                <li><a href="dashboard.html" data-en="Dashboard" data-ar="لوحة التحكم">Dashboard</a></li>
+                <li><a href="signup.html" data-en="Opportunities" data-ar="الفرص">Opportunities</a></li>
+                <li><a href="signup.html" data-en="Network" data-ar="الشبكة">Network</a></li>
+                <li><a href="dashboard.html" data-en="Resources" data-ar="الموارد">Resources</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 data-en="Features" data-ar="الميزات">Features</h4>
+            <ul>
+                <li><a href="dashboard.html" data-en="My Impact" data-ar="أثري">My Impact</a></li>
+                <li><a href="dashboard.html" data-en="Eco ID" data-ar="الهوية البيئية">Eco ID</a></li>
+                <li><a href="dashboard.html" data-en="My Events" data-ar="فعالياتي">My Events</a></li>
+                <li><a href="faq.html" data-en="FAQ" data-ar="الأسئلة الشائعة">FAQ</a></li>
+            </ul>
+        </div>
+        <div class="footer-col">
+            <h4 data-en="Company" data-ar="الشركة">Company</h4>
+            <ul>
+                <li><a href="about.html" data-en="About Us" data-ar="من نحن">About Us</a></li>
+                <li><a href="privacy.html" data-en="Privacy Policy" data-ar="سياسة الخصوصية">Privacy Policy</a></li>
+                <li><a href="terms.html" data-en="Terms of Use" data-ar="شروط الاستخدام">Terms of Use</a></li>
+                <li><a href="mailto:ecoawarenessme@gmail.com" data-en="Contact" data-ar="اتصل بنا">Contact</a></li>
+            </ul>
+        </div>
+    </div>
+    <div class="footer-watermark" aria-hidden="true">EcoAwareness</div>
+    <div class="footer-bottom">
+        <div data-en="Built by young people in Qatar, for people ready to show up." data-ar="بناه شباب في قطر لمن يريدون المشاركة فعلاً.">Built by young people in Qatar, for people ready to show up.</div>
+        <div class="footer-socials">
+            <a href="#" aria-label="Instagram"><iconify-icon icon="solar:instagram-linear" width="16"></iconify-icon></a>
+            <a href="#" aria-label="LinkedIn"><iconify-icon icon="solar:link-circle-linear" width="16"></iconify-icon></a>
+            <a href="mailto:ecoawarenessme@gmail.com" aria-label="Email"><iconify-icon icon="solar:letter-linear" width="16"></iconify-icon></a>
+        </div>
+    </div>
+</footer>
+
+<!-- Page transition -->
+<div id="page-transition">
+    <img id="transition-logo" src="assets/opt/logo.png" alt="EcoAwareness">
+</div>
+
+<script>
+    const navbar = document.getElementById('navbar');
+    const aboutHero = document.querySelector('.about-hero');
+    function syncNav() {
+        const heroBottom = aboutHero.getBoundingClientRect().bottom;
+        navbar.classList.toggle('scrolled', window.scrollY > 40);
+        navbar.classList.toggle('over-dark', heroBottom > 80);
+    }
+    window.addEventListener('scroll', syncNav, { passive: true });
+    syncNav();
+
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(e => {
+            if (e.isIntersecting) {
+                e.target.classList.add('visible');
+                observer.unobserve(e.target);
+            }
+        });
+    }, { threshold: 0.12 });
+    document.querySelectorAll('.reveal').forEach(el => observer.observe(el));
+
+    let isArabic = localStorage.getItem('lang') === 'ar';
+    function applyLang() {
+        document.body.classList.toggle('ar', isArabic);
+        document.documentElement.lang = isArabic ? 'ar' : 'en';
+        document.documentElement.dir = isArabic ? 'rtl' : 'ltr';
+        document.querySelectorAll('[data-en]').forEach(el => {
+            const val = isArabic ? el.getAttribute('data-ar') : el.getAttribute('data-en');
+            if (val) el.innerHTML = val;
+        });
+        document.getElementById('lang-label').textContent = isArabic ? 'English' : 'العربية';
+    }
+    function toggleLang() {
+        isArabic = !isArabic;
+        localStorage.setItem('lang', isArabic ? 'ar' : 'en');
+        applyLang();
+    }
+    applyLang();
+
+    // ── MOBILE NAV TOGGLE ──
+    (function() {
+        const toggle = document.getElementById('nav-toggle');
+        const links = document.getElementById('nav-links');
+        const backdrop = document.getElementById('nav-backdrop');
+        if (!toggle || !links) return;
+
+        function openNav() {
+            toggle.classList.add('active');
+            links.classList.add('open');
+            if (backdrop) backdrop.classList.add('show');
+            document.body.style.overflow = 'hidden';
+        }
+        function closeNav() {
+            toggle.classList.remove('active');
+            links.classList.remove('open');
+            if (backdrop) backdrop.classList.remove('show');
+            document.body.style.overflow = '';
+        }
+
+        toggle.addEventListener('click', () => {
+            links.classList.contains('open') ? closeNav() : openNav();
+        });
+        if (backdrop) backdrop.addEventListener('click', closeNav);
+        links.querySelectorAll('a').forEach(a => a.addEventListener('click', closeNav));
+        document.addEventListener('keydown', e => { if (e.key === 'Escape') closeNav(); });
+    })();
+
+    // ── PAGE TRANSITION ──
+    document.addEventListener('DOMContentLoaded', () => {
+        const overlay = document.getElementById('page-transition');
+        const logo = document.getElementById('transition-logo');
+        if (!overlay || !logo) return;
+        requestAnimationFrame(() => {
+            overlay.style.opacity = '0';
+            logo.style.transform = 'scale(1)';
+        });
+        document.querySelectorAll('a').forEach(link => {
+            link.addEventListener('click', function(e) {
+                const url = this.getAttribute('href');
+                const tgt = this.getAttribute('target');
+                if (!url || url.startsWith('#') || url.startsWith('mailto:') || url.startsWith('tel:') || url.startsWith('javascript:') || tgt === '_blank' || (this.hostname && this.hostname !== window.location.hostname)) return;
+                e.preventDefault();
+                overlay.classList.add('leaving');
+                overlay.style.opacity = '1';
+                setTimeout(() => { window.location.href = url; }, 450);
+            });
+        });
+        window.addEventListener('pageshow', e => {
+            if (e.persisted) {
+                overlay.classList.remove('leaving');
+                overlay.style.opacity = '0';
+                logo.style.transform = 'scale(1)';
+            }
+        });
+    });
+</script>
+<div class="nav-backdrop" id="nav-backdrop"></div>
+<script src="assets/js/ecohub-enhancements.js"></script>
 </body>
 </html>
